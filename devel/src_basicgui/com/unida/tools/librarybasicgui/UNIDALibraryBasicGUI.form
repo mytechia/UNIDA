@@ -301,7 +301,7 @@
             </Component>
             <Component class="javax.swing.JButton" name="jButtonSuscribe">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Suscribe State"/>
+                <Property name="text" type="java.lang.String" value="Subscribe To State"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonSuscribeActionPerformed"/>

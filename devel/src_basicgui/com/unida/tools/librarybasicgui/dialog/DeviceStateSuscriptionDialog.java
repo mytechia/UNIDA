@@ -171,8 +171,7 @@ public class DeviceStateSuscriptionDialog extends javax.swing.JDialog
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents()
-    {
+    private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
         jTextStateID = new javax.swing.JTextField();
@@ -185,16 +184,14 @@ public class DeviceStateSuscriptionDialog extends javax.swing.JDialog
         jTextStateBaseIRI = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Device state suscription");
+        setTitle("Device state subscription");
 
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("State ID to query:");
 
-        jButtonSuscribeTo.setText("Suscribe");
-        jButtonSuscribeTo.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        jButtonSuscribeTo.setText("Subscribe");
+        jButtonSuscribeTo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonSuscribeToActionPerformed(evt);
             }
         });
@@ -206,11 +203,9 @@ public class DeviceStateSuscriptionDialog extends javax.swing.JDialog
         jTextInfoValueID.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         jTextInfoValueID.setMinimumSize(new java.awt.Dimension(10, 39));
 
-        jButtonUnsuscribeTo.setText("Unsuscribe");
-        jButtonUnsuscribeTo.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        jButtonUnsuscribeTo.setText("Unsubscribe");
+        jButtonUnsuscribeTo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonUnsuscribeToActionPerformed(evt);
             }
         });

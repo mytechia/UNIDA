@@ -56,7 +56,7 @@ public class StateConditionNary extends StateCondition
             byte[] idData = new byte[EndianConversor.LONG_SIZE_BYTES];
 
             // number of stateValues
-            EndianConversor.uintToLittleEndian(stateValues.size(), idData, 0);
+            EndianConversor.shortToLittleEndian((short)stateValues.size(), idData, 0);
             dataStream.write(idData, 0, EndianConversor.INT_SIZE_BYTES);
 
             for (StateValue stateValue : stateValues)
@@ -79,8 +79,8 @@ public class StateConditionNary extends StateCondition
     @Override
     public int decodePayload(byte[] bytes, int initIndex, IUniDAOntologyCodec ontologyCodec) throws MessageFormatException
     {
-        long numberOfValues = EndianConversor.byteArrayLittleEndianToUInt(bytes, initIndex);
-        initIndex += EndianConversor.INT_SIZE_BYTES;
+        int numberOfValues = EndianConversor.byteArrayLittleEndianToShort(bytes, initIndex);
+        initIndex += EndianConversor.SHORT_SIZE_BYTES;
 
         this.stateValues = new ArrayList<>();
         String valueId;

@@ -59,9 +59,10 @@ public abstract class RuleAction
 
             EndianConversor.shortToLittleEndian((short)this.getType().getValue(), idData, 0);
             dataStream.write(idData, 0, EndianConversor.INT_SIZE_BYTES);
-
-            // device ID for action destination
+            
+            // UniDA address for action destination
             dataStream.write(this.getActionDestination().getGatewayId().getID());
+            // device ID for action destination
             EndianConversor.shortToLittleEndian(this.getActionDestination().getDeviceId(), idData, 0);
             dataStream.write(idData, 0, EndianConversor.SHORT_SIZE_BYTES);
 
@@ -80,11 +81,13 @@ public abstract class RuleAction
     public int decodePayload(byte[] bytes, int initIndex, IUniDAOntologyCodec ontologyCodec) throws MessageFormatException
     {
 
-        // device ID for action destination
+        // UniDA address for action destination
         UniDAAddress actionDestinationAddress = new UniDAAddress();
         initIndex += actionDestinationAddress.decodeAddress(bytes, initIndex);
+        // device ID for action destination
         short dId = EndianConversor.byteArrayLittleEndianToShort(bytes, initIndex);
         initIndex += EndianConversor.SHORT_SIZE_BYTES;
+        
         this.setActionDestination(new DeviceID(actionDestinationAddress, dId));
 
         return initIndex;

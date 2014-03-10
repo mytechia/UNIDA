@@ -135,7 +135,7 @@ public class CommandsDialog extends javax.swing.JDialog {
      *  An UniDA command identified by @commandId is sent
      *  The @value1 argument is optional, and represents a parameter for the command
      */
-    private void sendExecuteCommandMsg(String funcId, String commandId, String value1) {
+    private void sendExecuteCommandMsg(String funcId, String commandId, String values) {
         try {            
             IDevice device = instantiationFacade.getDeviceManageFacade().findById(deviceId);
             ControlCommandMetadata commandMetadata = 
@@ -146,7 +146,7 @@ public class CommandsDialog extends javax.swing.JDialog {
                     device,
                     functionalityMetadata,
                     commandMetadata, 
-                    value1.length()>0?new String[]{value1}:new String[0], 
+                    DomoParsing.valuesInStringToArray(values), 
                     new CommandsDialog.OpCback());
         } catch (InternalErrorException | InstanceNotFoundException ex) {
             JOptionPane.showMessageDialog(this, ex.toString());
@@ -160,8 +160,7 @@ public class CommandsDialog extends javax.swing.JDialog {
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents()
-    {
+    private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
         jTextInfoExecution = new javax.swing.JTextField();
@@ -177,7 +176,7 @@ public class CommandsDialog extends javax.swing.JDialog {
         jTextCommandID = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Device state");
+        setTitle("Device command");
 
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Functionality ID:");
@@ -187,10 +186,8 @@ public class CommandsDialog extends javax.swing.JDialog {
         jTextInfoExecution.setMinimumSize(new java.awt.Dimension(10, 39));
 
         jButtonSendCommand.setText("Send Command");
-        jButtonSendCommand.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        jButtonSendCommand.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonSendCommandActionPerformed(evt);
             }
         });

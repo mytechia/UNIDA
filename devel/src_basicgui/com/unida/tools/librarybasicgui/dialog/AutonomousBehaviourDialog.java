@@ -84,8 +84,7 @@ public class AutonomousBehaviourDialog extends javax.swing.JDialog {
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents()
-    {
+    private void initComponents() {
 
         jScrollPaneABRules = new javax.swing.JScrollPane();
         jTableABRules = new javax.swing.JTable();
@@ -107,11 +106,10 @@ public class AutonomousBehaviourDialog extends javax.swing.JDialog {
         jButtonAddABRule = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Autonomous Behaviour management");
+        setTitle("Autonomous behaviour management");
 
         jTableABRules.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][]
-            {
+            new Object [][] {
                 {null, null, null, null, null, null},
                 {null, null, null, null, null, null},
                 {null, null, null, null, null, null},
@@ -122,19 +120,15 @@ public class AutonomousBehaviourDialog extends javax.swing.JDialog {
                 {null, null, null, null, null, null},
                 {null, null, null, null, null, null}
             },
-            new String []
-            {
+            new String [] {
                 "Trigger Source", "Notification Type", "Trigger State", "Action Destination", "Action Command", "Action Params"
             }
-        )
-        {
-            boolean[] canEdit = new boolean []
-            {
+        ) {
+            boolean[] canEdit = new boolean [] {
                 false, false, false, false, false, false
             };
 
-            public boolean isCellEditable(int rowIndex, int columnIndex)
-            {
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
             }
         });
@@ -145,10 +139,8 @@ public class AutonomousBehaviourDialog extends javax.swing.JDialog {
         jLabel1.setText("Reglas de Comportamiento Autónomo:");
 
         jButtonRemoveABRule.setText("Eliminar Regla");
-        jButtonRemoveABRule.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        jButtonRemoveABRule.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonRemoveABRuleActionPerformed(evt);
             }
         });
@@ -166,10 +158,8 @@ public class AutonomousBehaviourDialog extends javax.swing.JDialog {
         jLabel7.setText("Parámetros de la acción:");
 
         jButtonAddABRule.setText("Añadir Regla");
-        jButtonAddABRule.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        jButtonAddABRule.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonAddABRuleActionPerformed(evt);
             }
         });

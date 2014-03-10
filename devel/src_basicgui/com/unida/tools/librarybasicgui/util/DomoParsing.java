@@ -38,9 +38,11 @@ import java.util.Collection;
 public class DomoParsing 
 {
     
+    private final static String VALUES_SEPARATOR = ";";
+    
     private static DomoParsing instance = null;
     
-    private String defaultOntologyNamespace = null;
+    private String defaultOntologyNamespace = null;        
     
     
     /*
@@ -111,6 +113,14 @@ public class DomoParsing
             s += "]; ";
         }
         return s.substring(0, s.length() - 2);
+    }
+    
+    public static String [] valuesInStringToArray(String values)
+    {
+        
+        String[] valuesArray = values.split(VALUES_SEPARATOR);
+        return valuesArray;
+        
     }
     
     

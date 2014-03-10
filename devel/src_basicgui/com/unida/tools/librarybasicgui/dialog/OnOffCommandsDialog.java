@@ -74,8 +74,7 @@ public class OnOffCommandsDialog extends javax.swing.JDialog
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents()
-    {
+    private void initComponents() {
 
         jButtonExecuteON = new javax.swing.JButton();
         jButtonExecuteOFF = new javax.swing.JButton();
@@ -83,26 +82,22 @@ public class OnOffCommandsDialog extends javax.swing.JDialog
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("On/Off commands");
+        setTitle("On/Off command");
         setName("commandsDialog"); // NOI18N
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jButtonExecuteON.setText("Execute ON command");
         jButtonExecuteON.setName(""); // NOI18N
-        jButtonExecuteON.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        jButtonExecuteON.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonExecuteONActionPerformed(evt);
             }
         });
         getContentPane().add(jButtonExecuteON, new org.netbeans.lib.awtextra.AbsoluteConstraints(9, 5, -1, -1));
 
         jButtonExecuteOFF.setText("Execute OFF command");
-        jButtonExecuteOFF.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        jButtonExecuteOFF.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonExecuteOFFActionPerformed(evt);
             }
         });
