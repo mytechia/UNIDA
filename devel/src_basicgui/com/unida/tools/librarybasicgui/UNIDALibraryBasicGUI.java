@@ -68,14 +68,16 @@ public class UNIDALibraryBasicGUI extends javax.swing.JFrame
      */
     public UNIDALibraryBasicGUI()
     {
-        initComponents();
-
+        
+        // GUI
+        initComponents();        
         initGUIButtonsState();
-
         initGUITablesState();
 
+        // UniDA
         launchUniDA();
 
+        // This thread will refresh the table that displays UniDA gateways information
         new Thread(new Refresher()).start();
     }
 
