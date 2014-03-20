@@ -73,6 +73,8 @@ public interface IDeviceOperationCallback {
 
     /** Notifies the states of a device after a send comand operation
      *
+     * NOTE: This kind of command is not supported yet
+     * 
      * @param dev The device
      * @param cmd The command to execute on the device
      * @param params Paramters of the command

@@ -236,15 +236,10 @@ public class DefaultDeviceAccessLayerCallback implements IUnidaNetworkFacadeCall
                 if (this.ticket.getType() == OperationTypes.SEND_COMMAND)
                 {
                     this.operationCallback.notifyCommandExecution(ticket, device, functionality, command);
-                } else
-                {
-                    if (this.ticket.getType() == OperationTypes.WRITE_STATE)
-                    {
-                        this.operationCallback.notifyWriteDeviceStateResult(ticket, device);
-                    }
-                }
+                } 
+                //OperationTypes.SEND_COMMAND_QUERY_STATE -> are processed as responses to query state operations
             }
-            //OperationTypes.SEND_COMMAND_QUERY_STATE -> are processed as responses to query state operations
+            
             finishCallback();
         }
     }
