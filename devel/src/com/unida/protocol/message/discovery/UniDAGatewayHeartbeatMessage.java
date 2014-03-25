@@ -29,6 +29,7 @@ import com.mytechia.commons.framework.simplemessageprotocol.exception.MessageFor
 import com.unida.protocol.message.ErrorCode;
 import com.unida.protocol.message.MessageType;
 import com.unida.library.device.ontology.IUniDAOntologyCodec;
+import com.unida.protocol.UniDAAddress;
 import com.unida.protocol.message.UniDAMessage;
 
 
@@ -56,6 +57,7 @@ public class UniDAGatewayHeartbeatMessage extends UniDAMessage
     public UniDAGatewayHeartbeatMessage(IUniDAOntologyCodec ontologyCodec, ErrorCode errCode)
     {
         super(ontologyCodec);
+        setDestination(UniDAAddress.BROADCAST_ADDRESS);
         setCommandType(MessageType.GatewayHeartbeat.getTypeValue());
         setErrorCode(errCode.getTypeValue());
     }
