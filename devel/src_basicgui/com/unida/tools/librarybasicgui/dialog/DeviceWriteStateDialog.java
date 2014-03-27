@@ -116,9 +116,9 @@ public class DeviceWriteStateDialog extends javax.swing.JDialog
         try
         {
             IDevice device = instantiationFacade.getDeviceManageFacade().findById(deviceId);
-            DeviceStateMetadata stateMetadata =
-                    new DeviceStateMetadata(DomoParsing.instance().getDefaultOntologyNamespace() + stateId, new DeviceStateValue[0]);
             DeviceStateValue stateValue = new DeviceStateValue(valueID, value);
+            DeviceStateMetadata stateMetadata =
+                    new DeviceStateMetadata(DomoParsing.instance().getDefaultOntologyNamespace() + stateId, new DeviceStateValue[] {stateValue});            
             this.instantiationFacade.getDeviceOperationFacade().asyncWriteDeviceState(device, stateMetadata, stateValue, new OpCback());
         } catch (InternalErrorException | InstanceNotFoundException ex)
         {

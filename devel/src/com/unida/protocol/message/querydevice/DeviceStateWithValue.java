@@ -42,7 +42,7 @@ package com.unida.protocol.message.querydevice;
  * @author Gervasio Varela
  * @version 1
  */
-public class DeviceStateValue
+public class DeviceStateWithValue
 {
 
     private String stateId;
@@ -50,7 +50,7 @@ public class DeviceStateValue
     private String value;
 
 
-    public DeviceStateValue(String stateId, String valueId, String value)
+    public DeviceStateWithValue(String stateId, String valueId, String value)
     {
         this.stateId = stateId;
         this.valueId = valueId;

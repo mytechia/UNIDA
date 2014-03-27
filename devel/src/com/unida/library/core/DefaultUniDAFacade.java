@@ -34,13 +34,9 @@ import com.unida.library.device.ontology.IUniDAOntologyCodec;
 import com.unida.library.device.ontology.exception.ClassNotFoundInOntologyException;
 import com.unida.library.device.DeviceID;
 import com.unida.library.device.Gateway;
-import com.unida.library.device.GatewayDeviceIO;
-import com.unida.library.device.PhysicalDevice;
 import com.unida.library.device.exception.UniDAIDFormatException;
 import com.unida.library.notification.INotificationCallback;
 import com.unida.library.device.to.DeviceConversionOperations;
-import com.unida.library.device.to.DeviceTO;
-import com.unida.library.device.to.GatewayDeviceIOTO;
 import com.unida.library.device.to.GatewayTO;
 import com.unida.log.UniDALoggers;
 import com.unida.library.manage.IUniDAManagementFacade;
@@ -57,7 +53,7 @@ import com.unida.protocol.message.discovery.UniDAGatewayHeartbeatMessage;
 import com.unida.protocol.message.notification.UniDANotificationMessage;
 import com.unida.protocol.message.notification.UniDANotificationSuscriptionRequestMessage;
 import com.unida.protocol.message.notification.UniDANotificationUnsuscriptionRequestMessage;
-import com.unida.protocol.message.querydevice.DeviceStateValue;
+import com.unida.protocol.message.querydevice.DeviceStateWithValue;
 import com.unida.protocol.message.querydevice.UniDAQueryDeviceReplyMessage;
 import com.unida.protocol.message.querydevice.UniDAQueryDeviceRequestMessage;
 import com.unida.protocol.message.querydevicestate.UniDAQueryDeviceStateReplyMessage;
@@ -68,7 +64,6 @@ import com.unida.protocol.reception.LinkedListUniDAProtocolMessageProcessingQueu
 import com.unida.protocol.reception.UniDAProtocolMessageReceiver;
 import com.unida.protocol.message.sendcommand.UniDASendCommandToDeviceMessage;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.logging.Level;
 
 /**
@@ -330,13 +325,13 @@ public class DefaultUniDAFacade extends AbstractUniDAFacadeHelper implements IUn
                     if (reply.getErrorCode() == ErrorCode.Ok.getTypeValue())
                     {
 
-                        Collection<DeviceStateValue> states = reply.getStateValues();
+                        Collection<DeviceStateWithValue> states = reply.getStateValues();
 
                         String[] stateIds = new String[states.size()];
                         String[] valueIds = new String[states.size()];
                         String[] values = new String[states.size()];
                         int i = 0;
-                        for (DeviceStateValue stv : states)
+                        for (DeviceStateWithValue stv : states)
                         {
                             stateIds[i] = stv.getStateId();
                             valueIds[i] = stv.getValueId();
@@ -529,9 +524,7 @@ public class DefaultUniDAFacade extends AbstractUniDAFacadeHelper implements IUn
 
                 } catch (UniDAIDFormatException ex)
                 {
-                } catch (ClassNotFoundInOntologyException ex)
-                {
-                } catch (InternalErrorException ex)
+                } catch (ClassNotFoundInOntologyException | InternalErrorException ex)
                 {
                 }
 

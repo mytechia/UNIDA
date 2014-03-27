@@ -24,6 +24,7 @@ package com.unida.protocol.message.querydevicestate;
 import com.mytechia.commons.framework.simplemessageprotocol.exception.MessageFormatException;
 import com.mytechia.commons.util.conversion.EndianConversor;
 import com.unida.library.device.DeviceID;
+import com.unida.library.device.ontology.DeviceStateValue;
 import com.unida.library.device.ontology.IUniDAOntologyCodec;
 import com.unida.protocol.message.ErrorCode;
 import com.unida.protocol.message.MessageType;
@@ -70,7 +71,18 @@ public class UniDAWriteDeviceStateRequestMessage extends UniDADeviceMessage
     {
         super(message, ontologyCodec);
     }
-   
+
+    
+    public String getStateId() 
+    {
+        return stateId;
+    }
+
+    public DeviceStateValue getStateValue()
+    {
+        return new DeviceStateValue(this.valueId, this.value);
+    }
+               
 
     @Override
     protected MessageRType getMessageType()
@@ -128,6 +140,7 @@ public class UniDAWriteDeviceStateRequestMessage extends UniDADeviceMessage
 
         return dataStream.toByteArray();
     }
+        
 
     @Override
     public int hashCode()

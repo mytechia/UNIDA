@@ -100,6 +100,8 @@ public enum MessageType {
             return QueryDeviceStatesReply;
         else if (typeValue == ExecuteCommand.typeValue)
             return ExecuteCommand;
+        else if (typeValue == WriteState.typeValue)
+            return WriteState;
         else if (typeValue == SuscribeTo.typeValue)
             return SuscribeTo;
         else if (typeValue == UnsuscribeFrom.typeValue)

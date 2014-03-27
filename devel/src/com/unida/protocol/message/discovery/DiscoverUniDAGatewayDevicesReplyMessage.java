@@ -28,6 +28,7 @@ package com.unida.protocol.message.discovery;
 
 import com.mytechia.commons.framework.simplemessageprotocol.exception.MessageFormatException;
 import com.mytechia.commons.util.conversion.EndianConversor;
+import com.unida.library.device.exception.UniDAIDFormatException;
 import com.unida.library.device.ontology.IUniDAOntologyCodec;
 import com.unida.protocol.UniDAAddress;
 import com.unida.library.device.to.DeviceTO;
@@ -41,6 +42,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
+import java.util.Objects;
 
 /**
  * <p><b>Description:</b></br>
@@ -67,7 +69,7 @@ public class DiscoverUniDAGatewayDevicesReplyMessage extends UniDAMessage {
         setCommandType(MessageType.DiscoverGatewayDevicesReply.getTypeValue());
         setErrorCode(errCode.getTypeValue());
         this.gw = gw;
-        this.devices = new ArrayList<DeviceTO>(devices.size());
+        this.devices = new ArrayList<>(devices.size());
         this.devices.addAll(devices);
         setDestination(UniDAAddress.BROADCAST_ADDRESS);
     }
@@ -227,7 +229,7 @@ public class DiscoverUniDAGatewayDevicesReplyMessage extends UniDAMessage {
             int numIOs = EndianConversor.byteArrayLittleEndianToShort(bytes, offset); //num IOs
             offset += EndianConversor.SHORT_SIZE_BYTES;
             
-            ArrayList<GatewayDeviceIOTO> gwIoList = new ArrayList<GatewayDeviceIOTO>(numIOs);
+            ArrayList<GatewayDeviceIOTO> gwIoList = new ArrayList<>(numIOs);
             short ioId, statesLen;
             long stateId;
             for(int i=0; i<numIOs; i++) {
@@ -238,7 +240,7 @@ public class DiscoverUniDAGatewayDevicesReplyMessage extends UniDAMessage {
                 statesLen = EndianConversor.byteArrayLittleEndianToShort(bytes, offset);
                 offset += EndianConversor.SHORT_SIZE_BYTES;
                 
-                ArrayList<String> statesList = new ArrayList<String>(statesLen);
+                ArrayList<String> statesList = new ArrayList<>(statesLen);
                 for(int j=0; j<statesLen; j++) {
                     stateId = EndianConversor.byteArrayLittleEndianToUInt(bytes, offset);
                     offset += EndianConversor.INT_SIZE_BYTES;
@@ -261,8 +263,8 @@ public class DiscoverUniDAGatewayDevicesReplyMessage extends UniDAMessage {
             int numUsedIOs;
             long classId;
             String devClass, devModel, devManufacturer, devDesc;
-            ArrayList<GatewayDeviceIOTO> devIoList = null;
-            this.devices = new ArrayList<DeviceTO>(numDevs);
+            ArrayList<GatewayDeviceIOTO> devIoList;
+            this.devices = new ArrayList<>(numDevs);
             for (int i = 0; i < numDevs; i++) {
 
                 devId = EndianConversor.byteArrayLittleEndianToShort(bytes, offset); //device id
@@ -288,7 +290,7 @@ public class DiscoverUniDAGatewayDevicesReplyMessage extends UniDAMessage {
                 numUsedIOs = EndianConversor.byteArrayLittleEndianToShort(bytes, offset); //num states
                 offset += EndianConversor.SHORT_SIZE_BYTES;
 
-                devIoList = new ArrayList<GatewayDeviceIOTO>(numUsedIOs);
+                devIoList = new ArrayList<>(numUsedIOs);
                 for (int j = 0; j < numUsedIOs; j++) {
                     ioId = EndianConversor.byteArrayLittleEndianToShort(bytes, offset);
                     offset += EndianConversor.SHORT_SIZE_BYTES;
@@ -305,7 +307,7 @@ public class DiscoverUniDAGatewayDevicesReplyMessage extends UniDAMessage {
             this.gw = new GatewayTO(this.source.toString(), gwModel, gwManufacturer, true, null, gwClass, 0l, "1", opState, new Date(), gwIoList, devices);
             
             return offset;
-        } catch (Exception ex) {
+        } catch (UniDAIDFormatException ex) {
             throw new MessageFormatException(ex.getLocalizedMessage());
         }
 
@@ -314,9 +316,9 @@ public class DiscoverUniDAGatewayDevicesReplyMessage extends UniDAMessage {
     
     private GatewayDeviceIOTO getGatewayIO(ArrayList<GatewayDeviceIOTO> gwIOList, short ioId)
     {
-        for(GatewayDeviceIOTO gw : gwIOList) {
-            if (gw.getId() == ioId) {
-                return gw;
+        for(GatewayDeviceIOTO gwIOTO : gwIOList) {
+            if (gwIOTO.getId() == ioId) {
+                return gwIOTO;
             }
         }
         
@@ -336,9 +338,14 @@ public class DiscoverUniDAGatewayDevicesReplyMessage extends UniDAMessage {
         if (this.gw != other.gw && (this.gw == null || !this.gw.equals(other.gw))) {
             return false;
         }
-        if (this.devices.size() != other.devices.size() && (this.devices == null || !this.devices.equals(other.devices))) {
-            return false;
-        }
-        return true;
+        return this.devices.size() == other.devices.size() || (this.devices != null && this.devices.equals(other.devices));
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        hash = 59 * hash + Objects.hashCode(this.gw);
+        hash = 59 * hash + Objects.hashCode(this.devices);
+        return hash;
     }
 }
