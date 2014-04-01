@@ -414,7 +414,7 @@ public class DefaultUniDAFacade extends AbstractUniDAFacadeHelper implements IUn
                 {
                     if ((reply.getErrorCode() == ErrorCode.Ok.getTypeValue()) || (reply.getErrorCode() == ErrorCode.Null.getTypeValue()))
                     {
-                        cback.notifyState(reply.getOpId(), reply.getDeviceID(), reply.getStateId(), reply.getValueId(), reply.getValue());
+                        cback.notifyState(reply.getOpId(), reply.getDeviceID(), reply.getStateId(), reply.getValueId(), reply.getValueRaw());
                     }
                 } else
                 {

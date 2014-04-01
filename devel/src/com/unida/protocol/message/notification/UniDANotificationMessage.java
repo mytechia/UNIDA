@@ -59,18 +59,18 @@ public class UniDANotificationMessage extends UniDADeviceMessage
     private long opId;
     private String stateId;
     private String valueId;
-    private String value;
+    private String valueRaw;
 
 
     public UniDANotificationMessage(IUniDAOntologyCodec ontologyCodec,
-            long opId, DeviceID deviceId, String stateId, String valueId, String value)
+            long opId, DeviceID deviceId, String stateId, String valueId, String valueRaw)
     {
         super(ontologyCodec, deviceId);
         setCommandType(MessageType.Notification.getTypeValue());
         this.opId = opId;
         this.stateId = stateId;
         this.valueId = valueId;
-        this.value = value;
+        this.valueRaw = valueRaw;
     }
 
 
@@ -80,9 +80,9 @@ public class UniDANotificationMessage extends UniDADeviceMessage
     }
 
 
-    public String getValue()
+    public String getValueRaw()
     {
-        return value;
+        return valueRaw;
     }
 
 
@@ -122,7 +122,7 @@ public class UniDANotificationMessage extends UniDADeviceMessage
             EndianConversor.uintToLittleEndian(getOntologyCodec().encodeId(this.valueId), idData, 0);          
             dataStream.write(idData, 0, EndianConversor.INT_SIZE_BYTES);
 
-            writeString(dataStream, this.value);
+            writeString(dataStream, this.valueRaw);
 
         }
         catch(IOException ioEx) {
@@ -154,7 +154,7 @@ public class UniDANotificationMessage extends UniDADeviceMessage
 
         //value
         offset += readString(string, bytes, offset);
-        this.value = string.toString();
+        this.valueRaw = string.toString();
 
         return offset;
 
@@ -197,7 +197,7 @@ public class UniDANotificationMessage extends UniDADeviceMessage
 
     @Override
     public String toString() {
-        return super.toString() + "; UniDANotificationMessage{" + "opId=" + opId + ", stateId=" + stateId + ", valueId=" + valueId + ", value=" + value + '}';
+        return super.toString() + "; UniDANotificationMessage{" + "opId=" + opId + ", stateId=" + stateId + ", valueId=" + valueId + ", value=" + valueRaw + '}';
     }
        
     
