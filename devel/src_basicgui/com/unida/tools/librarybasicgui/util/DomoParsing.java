@@ -104,7 +104,7 @@ public class DomoParsing
             s += stateMetadata.getShortId() + "[";
             for (int i = 0; i < stateMetadata.getPossibleValues().length; i++) 
             {
-                s += stateMetadata.getPossibleValues()[i].getShortId() + ": " + stateMetadata.getPossibleValues()[i].getValue();
+                s += stateMetadata.getPossibleValues()[i].getValueIdShort() + ": " + stateMetadata.getPossibleValues()[i].getValueRaw();
                 if (i < stateMetadata.getPossibleValues().length - 1) 
                 {
                     s += ", ";

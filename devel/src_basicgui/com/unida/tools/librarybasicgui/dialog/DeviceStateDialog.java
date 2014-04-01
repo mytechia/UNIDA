@@ -280,8 +280,8 @@ public class DeviceStateDialog extends javax.swing.JDialog
         public void notifyQueryDeviceStateResult(OperationTicket ticket, IDevice dev, DeviceState state)
         {
             jTextInfoExecution.setText("¡yuju!");
-            jTextInfoStateValue.setText(state.getValue().getValue());
-            jTextInfoStateValueID.setText(state.getValue().getShortId());
+            jTextInfoStateValue.setText(state.getValue().getValueRaw());
+            jTextInfoStateValueID.setText(state.getValue().getValueIdShort());
         }
 
         @Override

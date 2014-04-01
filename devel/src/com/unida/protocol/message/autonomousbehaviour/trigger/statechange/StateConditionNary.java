@@ -26,6 +26,7 @@ package com.unida.protocol.message.autonomousbehaviour.trigger.statechange;
 import com.mytechia.commons.framework.simplemessageprotocol.Message;
 import com.mytechia.commons.framework.simplemessageprotocol.exception.MessageFormatException;
 import com.mytechia.commons.util.conversion.EndianConversor;
+import com.unida.library.device.ontology.DeviceStateValue;
 import com.unida.library.device.ontology.IUniDAOntologyCodec;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -39,7 +40,7 @@ import java.util.Collection;
 public class StateConditionNary extends StateCondition
 {
 
-    private Collection<StateValue> stateValues;
+    private Collection<DeviceStateValue> stateValues;
 
     public StateConditionNary(StateConditionEnum type)
     {
@@ -59,7 +60,7 @@ public class StateConditionNary extends StateCondition
             EndianConversor.shortToLittleEndian((short)stateValues.size(), idData, 0);
             dataStream.write(idData, 0, EndianConversor.INT_SIZE_BYTES);
 
-            for (StateValue stateValue : stateValues)
+            for (DeviceStateValue stateValue : stateValues)
             {
                 EndianConversor.uintToLittleEndian(ontologyCodec.encodeId(stateValue.getValueID()), idData, 0);
                 dataStream.write(idData, 0, EndianConversor.INT_SIZE_BYTES);
@@ -95,7 +96,7 @@ public class StateConditionNary extends StateCondition
             valueBuilder = new StringBuilder(10);
             initIndex += Message.readStringFromBytes(valueBuilder, bytes, initIndex);
 
-            this.stateValues.add(new StateValue(valueId, valueBuilder.toString()));
+            this.stateValues.add(new DeviceStateValue(valueId, valueBuilder.toString()));
         }
 
         return initIndex;

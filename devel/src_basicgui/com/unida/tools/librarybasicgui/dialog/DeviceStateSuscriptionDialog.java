@@ -304,8 +304,8 @@ public class DeviceStateSuscriptionDialog extends javax.swing.JDialog
         @Override
         public void notifyState(NotificationTicket nt, IDevice dev, DeviceState state)
         {
-            jTextInfoValueID.setText(state.getValue().getShortId());
-            jTextInfoValueValue.setText(state.getValue().getValue());
+            jTextInfoValueID.setText(state.getValue().getValueIdShort());
+            jTextInfoValueValue.setText(state.getValue().getValueRaw());
         }
     }
 }

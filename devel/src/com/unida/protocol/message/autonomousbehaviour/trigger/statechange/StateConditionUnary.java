@@ -26,6 +26,7 @@ package com.unida.protocol.message.autonomousbehaviour.trigger.statechange;
 import com.mytechia.commons.framework.simplemessageprotocol.Message;
 import com.mytechia.commons.framework.simplemessageprotocol.exception.MessageFormatException;
 import com.mytechia.commons.util.conversion.EndianConversor;
+import com.unida.library.device.ontology.DeviceStateValue;
 import com.unida.library.device.ontology.IUniDAOntologyCodec;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -37,7 +38,7 @@ import java.io.IOException;
 public class StateConditionUnary extends StateCondition
 {
     
-    private StateValue stateValue;
+    private DeviceStateValue stateValue;
     
 
     public StateConditionUnary(StateConditionEnum type)
@@ -78,7 +79,7 @@ public class StateConditionUnary extends StateCondition
         StringBuilder valueBuilder = new StringBuilder(10);
         initIndex += Message.readStringFromBytes(valueBuilder, bytes, initIndex);
         
-        this.stateValue = new StateValue(valueId, valueBuilder.toString());
+        this.stateValue = new DeviceStateValue(valueId, valueBuilder.toString());
         
         return initIndex;
     }

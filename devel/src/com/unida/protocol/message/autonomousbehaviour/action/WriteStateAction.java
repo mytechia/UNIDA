@@ -25,8 +25,8 @@ package com.unida.protocol.message.autonomousbehaviour.action;
 import com.mytechia.commons.framework.simplemessageprotocol.Message;
 import com.mytechia.commons.framework.simplemessageprotocol.exception.MessageFormatException;
 import com.mytechia.commons.util.conversion.EndianConversor;
+import com.unida.library.device.ontology.DeviceStateValue;
 import com.unida.library.device.ontology.IUniDAOntologyCodec;
-import com.unida.protocol.message.autonomousbehaviour.trigger.statechange.StateValue;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
@@ -39,7 +39,7 @@ public class WriteStateAction extends RuleAction
     
     private String stateId;
     
-    private StateValue stateValue;
+    private DeviceStateValue stateValue;
         
 
     
@@ -54,12 +54,12 @@ public class WriteStateAction extends RuleAction
     }
 
     
-    public StateValue getStateChange()
+    public DeviceStateValue getStateChange()
     {
         return stateValue;
     }
 
-    public void setStateChange(StateValue stateValue)
+    public void setStateChange(DeviceStateValue stateValue)
     {
         this.stateValue = stateValue;
     }
@@ -107,7 +107,7 @@ public class WriteStateAction extends RuleAction
         StringBuilder valueBuilder = new StringBuilder(10);
         initIndex += Message.readStringFromBytes(valueBuilder, bytes, initIndex);
         
-        this.setStateChange(new StateValue(valueId, valueBuilder.toString()));
+        this.setStateChange(new DeviceStateValue(valueId, valueBuilder.toString()));
         
         return initIndex;
     }

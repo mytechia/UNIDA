@@ -214,8 +214,8 @@ public class DeviceStatesDialog extends javax.swing.JDialog
             for (DeviceState state : states)
             {
                 jTableDeviceStates.getModel().setValueAt(state.getId().toString(), stateRow, 0);
-                jTableDeviceStates.getModel().setValueAt(state.getValue().getId(), stateRow, 1);
-                jTableDeviceStates.getModel().setValueAt(state.getValue().getValue(), stateRow, 2);
+                jTableDeviceStates.getModel().setValueAt(state.getValue().getValueID(), stateRow, 1);
+                jTableDeviceStates.getModel().setValueAt(state.getValue().getValueRaw(), stateRow, 2);
                 stateRow++;
             }
         }

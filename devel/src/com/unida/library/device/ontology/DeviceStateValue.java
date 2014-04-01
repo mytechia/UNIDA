@@ -59,14 +59,14 @@ public class DeviceStateValue implements Serializable
         this.value = value;
     }
 
-    public String getId()
+    public String getValueID()
     {
         return id;
     }
     
-    public String getShortId()
+    public String getValueIdShort()
     {
-        String[] split = getId().split("#");
+        String[] split = getValueID().split("#");
         if (split.length >= 2) {
             return split[1];
         }
@@ -74,12 +74,13 @@ public class DeviceStateValue implements Serializable
     }
 
 
-    public String getValue()
+    public String getValueRaw()
     {
         return value;
     }
-
-    public void setValue(String value)
+    
+    
+    public void setValueRaw(String value)
     {
         this.value = value;
     }

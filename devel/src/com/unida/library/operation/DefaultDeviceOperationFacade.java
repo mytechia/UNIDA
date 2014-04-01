@@ -151,7 +151,7 @@ public class DefaultDeviceOperationFacade implements IDeviceOperationFacade
                 DefaultDeviceAccessLayerCallback dalCback = new DefaultDeviceAccessLayerCallback(this, ot, dev, state, callback);
                 addDALCallback(dalCback);
                 dalInstance.writeDeviceState(ot.getId(), dev.getId(), state.getId(), 
-                        stateValue.getId(), stateValue.getValue(), dalCback);
+                        stateValue.getValueID(), stateValue.getValueRaw(), dalCback);
                 return ot;
             } catch (InstanceNotFoundException ex)
             {

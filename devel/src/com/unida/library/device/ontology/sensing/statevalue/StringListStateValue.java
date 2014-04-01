@@ -23,21 +23,16 @@
 
 package com.unida.library.device.ontology.sensing.statevalue;
 
-import com.unida.library.device.ontology.DeviceStateMetadata;
+
 import com.unida.library.device.ontology.DeviceStateValue;
 import java.util.ArrayList;
 import java.util.Collection;
 
 
 /**
- * <p><b>
- * </b></br>
- *
- * </p>
- *
  * <p><b>Creation date:</b> 07-02-2010</p>
  *
- * <p><b>Changelog:</b></br>
+ * <p><b>Changelog:</b>
  * <ul>
  * <li>1 - 07-02-2010<\br> Initial release</li>
  * </ul>
@@ -70,8 +65,8 @@ public class StringListStateValue extends DeviceStateValue
     {
         super(valueId, "");
         this.header = header;
-        this.macList = new ArrayList<String>(macList);
-        this.setValue(codeListValue());
+        this.macList = new ArrayList<>(macList);
+        this.setValueRaw(codeListValue());
     }
 
 
@@ -83,7 +78,7 @@ public class StringListStateValue extends DeviceStateValue
             offset += 1;
             int numMacs = Integer.parseInt(parts[offset]);
             offset += 1;
-            this.macList = new ArrayList<String>(numMacs);
+            this.macList = new ArrayList<>(numMacs);
             for(int i=0; (i+offset+1<parts.length && i<numMacs); i++) {
                 this.macList.add(parts[i+offset+1]);
             }
@@ -93,7 +88,7 @@ public class StringListStateValue extends DeviceStateValue
 
     private String codeListValue()
     {
-        StringBuffer sb = new StringBuffer(this.header);sb.append(";");
+        StringBuilder sb = new StringBuilder(this.header);sb.append(";");
         sb.append(macList.size()); sb.append(";");
         for(String mac : macList) {
             sb.append(mac);
@@ -106,9 +101,9 @@ public class StringListStateValue extends DeviceStateValue
     public Collection<String> getList()
     {
         if (this.macList != null)
-            return new ArrayList<String>(this.macList);
+            return new ArrayList<>(this.macList);
         else
-            return new ArrayList<String>(0);
+            return new ArrayList<>(0);
     }
 
 
