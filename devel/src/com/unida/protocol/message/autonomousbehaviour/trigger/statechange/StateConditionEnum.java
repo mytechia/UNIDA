@@ -30,6 +30,7 @@ package com.unida.protocol.message.autonomousbehaviour.trigger.statechange;
 public enum StateConditionEnum 
 {
     
+    NO_CONDITION(0),
     EQUALS(1),
     DIFFERENT_TO(2),
     GREATER_THAN(3),
@@ -52,7 +53,10 @@ public enum StateConditionEnum
     public static StateConditionEnum fromValue(int givenValue)
     {
 
-        if (givenValue == DIFFERENT_TO.ordinal()) {
+        if (givenValue == NO_CONDITION.ordinal()) {
+            return NO_CONDITION;
+        }
+        else if (givenValue == DIFFERENT_TO.ordinal()) {
             return DIFFERENT_TO;
         }
         else if (givenValue == GREATER_THAN.ordinal()) {
