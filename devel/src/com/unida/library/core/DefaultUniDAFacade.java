@@ -67,11 +67,11 @@ import java.util.Collection;
 import java.util.logging.Level;
 
 /**
- * <p><b> </b></br>
+ * <p><b> </b>
  *
  * </p>
  *
- * <p><b>Creation date:</b> 19-01-2010</p> <p><b>Changelog:</b></br> <ul> <li>1
+ * <p><b>Creation date:</b> 19-01-2010</p> <p><b>Changelog:</b> <ul> <li>1
  * - 19-01-2010<\br> Initial release</li> </ul> </p>
  *
  * @author Gervasio Varela
@@ -185,7 +185,7 @@ public class DefaultUniDAFacade extends AbstractUniDAFacadeHelper implements IUn
     public void suscribeTo(long notificationId, DeviceID deviceId, String stateId, String[] params, INotificationCallback callback) throws CommunicationException
     {
         addNotificationCallback(notificationId, deviceId, callback);
-        this.commChannel.sendMessage(deviceId, new UniDANotificationSuscriptionRequestMessage(this.ontologyCodec, notificationId, deviceId, stateId, params));
+        this.commChannel.sendMessage(deviceId, new UniDANotificationSuscriptionRequestMessage(this.ontologyCodec, notificationId, deviceId, stateId));
     }
 
     @Override
@@ -247,11 +247,7 @@ public class DefaultUniDAFacade extends AbstractUniDAFacadeHelper implements IUn
             {
                 return false;
             }
-            if ((this.deviceId == null) ? (other.deviceId != null) : !this.deviceId.equals(other.deviceId))
-            {
-                return false;
-            }
-            return true;
+            return !((this.deviceId == null) ? (other.deviceId != null) : !this.deviceId.equals(other.deviceId));
         }
 
         @Override

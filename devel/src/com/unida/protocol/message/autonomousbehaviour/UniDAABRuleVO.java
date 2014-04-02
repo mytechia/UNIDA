@@ -90,7 +90,7 @@ public class UniDAABRuleVO {
         initIndex += EndianConversor.INT_SIZE_BYTES;
                 
         // Trigger payload
-        if (triggerType == RuleTriggerEnum.STATE_CHANGE)
+        if (triggerType != RuleTriggerEnum.UNKNOWN)
         {
             this.trigger = new StateChangeTrigger();
         }
@@ -101,7 +101,7 @@ public class UniDAABRuleVO {
         initIndex += EndianConversor.INT_SIZE_BYTES;
         
         // Action payload
-        if (actionType == RuleActionEnum.UNKNOWN)
+        if (actionType != RuleActionEnum.UNKNOWN)
         {
             this.action = new CommandExecutionAction();
         }
