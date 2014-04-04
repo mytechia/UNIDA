@@ -22,7 +22,7 @@
  *
  *****************************************************************************
  */
-package com.unida.library.operation;
+package com.unida.library.operation.device;
 
 import com.mytechia.commons.framework.exception.InternalErrorException;
 import com.mytechia.commons.framework.modelaction.exception.InstanceNotFoundException;
@@ -35,17 +35,17 @@ import com.unida.library.device.Gateway;
 import com.unida.library.device.IDevice;
 import com.unida.library.device.ontology.ControlFunctionalityMetadata;
 import com.unida.library.device.ontology.DeviceStateValue;
-import com.unida.library.operation.group.IGroupOperationManager;
+import com.unida.library.operation.device.group.IGroupOperationManager;
 import com.unida.library.notification.IDeviceStateNotificationCallback;
 import com.unida.library.notification.INotificationSuscriptionManager;
 import com.unida.library.notification.NotificationTicket;
-import com.unida.library.operation.exception.NotEnabledDeviceErrorException;
+import com.unida.library.operation.device.exception.NotEnabledDeviceErrorException;
 import com.unida.library.manage.IUniDAManagementFacade;
 import java.util.LinkedList;
 import java.util.Queue;
 
 /**
- * <p><b>Description:</b></br>
+ * <p><b>Description:</b>
  * Default implementation of the IDeviceOperationFacade. It provides an entry
  * point to interact with the real hardware devices through send command
  * operations, read state operations and notification suscription.
@@ -53,7 +53,7 @@ import java.util.Queue;
  *
  * <p><b>Creation date:</b> 15-01-2010</p>
  *
- * <p><b>Changelog:</b></br>
+ * <p><b>Changelog:</b>
  * <ul>
  * <li>1 - 15-01-2010<\br> Initial release</li>
  * </ul>

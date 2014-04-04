@@ -40,6 +40,7 @@ public class UniDAABAddMessage extends UniDAMessage
 
     private long opId;
     private UniDAABRuleVO rule;
+    
 
     public UniDAABAddMessage(IUniDAOntologyCodec ontologyCodec, long opId, UniDAABRuleVO rule)
     {

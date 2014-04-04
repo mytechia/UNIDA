@@ -126,7 +126,7 @@ public class DefaultMessageFactory implements IMessageFactory
         else if (msgType == MessageType.ABRemoveRule.getTypeValue())
             return createUnidaRemoveABRuleMessage(msgType, msgData);
         else {
-             throw new MessageFormatException("Unsupported message type.");
+             throw new MessageFormatException("Unsupported message type: " + msgType + ".");
         }
             
         

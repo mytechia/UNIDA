@@ -54,7 +54,7 @@ import java.util.Set;
 public abstract class AbstractUniDAFacadeHelper
 {
 
-    private static final long OP_EXPIRATION_TIME = 150000; //2 secs
+    private static final long OP_EXPIRATION_TIME = 15;
 
 
     protected Map<OperationEntry, IUnidaNetworkFacadeCallback> opCallbacks;

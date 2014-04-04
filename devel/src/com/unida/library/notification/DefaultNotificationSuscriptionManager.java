@@ -34,7 +34,7 @@ import com.unida.library.device.DeviceGroup;
 import com.unida.library.device.DeviceID;
 import com.unida.library.device.Gateway;
 import com.unida.library.device.IDevice;
-import com.unida.library.operation.exception.NotEnabledDeviceErrorException;
+import com.unida.library.operation.device.exception.NotEnabledDeviceErrorException;
 import com.unida.library.manage.IUniDAManagementFacade;
 import java.util.ArrayList;
 import java.util.Arrays;

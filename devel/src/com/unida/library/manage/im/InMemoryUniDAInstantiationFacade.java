@@ -27,36 +27,37 @@ import com.mytechia.commons.framework.exception.InternalErrorException;
 import com.mytechia.commons.framework.modelaction.action.periodic.PeriodicAction;
 import com.mytechia.commons.framework.modelaction.action.periodic.PeriodicActionsProcessor;
 import com.mytechia.commons.framework.simplemessageprotocol.exception.CommunicationException;
-import com.unida.library.device.ontology.IDeviceAccessLayerOntologyFacade;
-import com.unida.library.device.ontology.IUniDAOntologyCodec;
-import com.unida.library.device.ontology.exception.OntologyLoadingErrorException;
 import com.unida.library.IUniDAInstantiationFacade;
 import com.unida.library.UniDAFactory;
-import com.unida.library.operation.group.DefaultGroupOperationManager;
-import com.unida.library.operation.group.IGroupOperationManager;
-import com.unida.library.notification.DefaultNotificationSuscriptionManager;
-import com.unida.library.notification.INotificationSuscriptionManager;
-import com.unida.library.operation.DefaultDeviceOperationFacade;
-import com.unida.library.operation.IDeviceOperationFacade;
+import com.unida.library.core.DefaultUniDAFacade;
+import com.unida.library.device.ontology.IDeviceAccessLayerOntologyFacade;
+import com.unida.library.device.ontology.IUniDAOntologyCodec;
+import com.unida.library.device.ontology.dogont.DogOntCodec;
+import com.unida.library.device.ontology.dogont.DogOntFacade;
+import com.unida.library.device.ontology.exception.OntologyLoadingErrorException;
 import com.unida.library.manage.IUniDAManagementFacade;
 import com.unida.library.manage.discovery.PeriodicCheckGatewayStateAction;
-import com.unida.protocol.IUniDACommChannel;
-import com.unida.library.core.DefaultUniDAFacade;
+import com.unida.library.notification.DefaultNotificationSuscriptionManager;
+import com.unida.library.notification.INotificationSuscriptionManager;
+import com.unida.library.operation.device.DefaultDeviceOperationFacade;
+import com.unida.library.operation.device.IDeviceOperationFacade;
+import com.unida.library.operation.device.group.DefaultGroupOperationManager;
+import com.unida.library.operation.device.group.IGroupOperationManager;
+import com.unida.library.operation.gateway.DefaultGatewayOperationFacade;
+import com.unida.library.operation.gateway.IGatewayOperationFacade;
 import com.unida.protocol.DefaultMessageFactory;
-import com.unida.protocol.message.discovery.DiscoverUniDAGatewayDevicesRequestMessage;
+import com.unida.protocol.IUniDACommChannel;
 import com.unida.protocol.udp.UDPUniDACommChannel;
-import com.unida.library.device.ontology.dogont.DogOntFacade;
-import com.unida.library.device.ontology.dogont.DogOntCodec;
 import java.util.ArrayList;
 
 /**
- * <p><b>Description:</b></br>
+ * <p><b>Description:</b>
  * Default implementation of the IUniDAInstantiationFacade interface.
  * </p>
  *
  * <p><b>Creation date:</b> 27-01-2013</p>
  *
- * <p><b>Changelog:</b></br>
+ * <p><b>Changelog:</b>
  * <ul>
  * <li>1 - 27-01-2013<\br> Initial release.</li>
  * </ul>
@@ -69,13 +70,20 @@ public class InMemoryUniDAInstantiationFacade implements IUniDAInstantiationFaca
 {
 
 
+    private boolean initialized = false;
+    
 
     private INotificationSuscriptionManager notificationManager = null;
+    
     private IDeviceOperationFacade deviceOperationFacade = null;
+    
+    private IGatewayOperationFacade gatewayOperationFacade = null;
 
     private InMemoryUniDAManagementFacade deviceManageFacade = null;
 
     private IDeviceAccessLayerOntologyFacade ontologyFacade = null;
+    
+    private IUniDAOntologyCodec ontologyCodec;
 
 
     protected UniDAFactory dalFactory = null;
@@ -85,43 +93,36 @@ public class InMemoryUniDAInstantiationFacade implements IUniDAInstantiationFaca
     protected IUniDACommChannel commChannel;
 
     protected PeriodicActionsProcessor periodicActionsProcessor;
-    
-    private IUniDAOntologyCodec ontologyCodec;
+              
+     
 
 
-    private boolean initialized = false;
-    
-
-
-    /**
-     * Constructor.
-     * 
-     * @param dogOntologyPath
-     * @param deviceDBPath
-     */
-
-    public InMemoryUniDAInstantiationFacade()
-    {
-
-    }
-
-
+    @Override
     public IUniDAManagementFacade getDeviceManageFacade()
     {
         return deviceManageFacade;
     }
 
+    @Override
     public IDeviceOperationFacade getDeviceOperationFacade()
     {
         return deviceOperationFacade;
     }
 
+    @Override
     public IDeviceAccessLayerOntologyFacade getOntologyFacade()
     {
         return ontologyFacade;
     }
+    
+    @Override
+    public IGatewayOperationFacade getGatewayOperationFacade()
+    {
+        return gatewayOperationFacade;
+    }
 
 
+    @Override
     public boolean isInitialized()
     {
         return this.initialized;
@@ -133,6 +134,7 @@ public class InMemoryUniDAInstantiationFacade implements IUniDAInstantiationFaca
      * 
      * @throws InternalErrorException
      */
+    @Override
     public void initialize() throws InternalErrorException
     {
         setupOntologyFacade();
@@ -140,14 +142,17 @@ public class InMemoryUniDAInstantiationFacade implements IUniDAInstantiationFaca
         setupDeviceManageFacade();
 
         setupDeviceOperationFacade();
+        
+        setupGatewayOperationFacade();
 
-        setupPeriodicActions();
+        setupPeriodicActions();        
 
         this.initialized = true;
     }
 
     
 
+    @Override
     public void free() throws InternalErrorException
     {
         this.initialized = false;
@@ -194,33 +199,25 @@ public class InMemoryUniDAInstantiationFacade implements IUniDAInstantiationFaca
 
         this.deviceOperationFacade =
                 new DefaultDeviceOperationFacade(dalFactory, gom, this.notificationManager, this.deviceManageFacade);
-
-        //this.deviceManageFacade.setDeviceOperationFacade(deviceOperationFacade);
-        //this.deviceManageFacade.setNotificationSuscriptionManager(notificationManager);
-
+        
+    }
+    
+    protected void setupGatewayOperationFacade()
+    {
+        
+        this.gatewayOperationFacade = new DefaultGatewayOperationFacade(commChannel, ontologyCodec);
+        
     }
 
 
     protected void setupPeriodicActions()
     {
 
-        ArrayList<PeriodicAction> actions = new ArrayList<PeriodicAction>(1);
+        ArrayList<PeriodicAction> actions = new ArrayList<>(1);
         actions.add(new PeriodicCheckGatewayStateAction(90*1000, deviceManageFacade));
         this.periodicActionsProcessor = new PeriodicActionsProcessor(actions);
         this.periodicActionsProcessor.startChecking();
 
-    }
-
-    
-    @Override
-    public void forceAnnounce() throws InternalErrorException {
-        if (this.isInitialized()) {
-            try {
-                this.commChannel.broadcastMessage(new DiscoverUniDAGatewayDevicesRequestMessage(this.ontologyCodec));
-            } catch (CommunicationException ex) {
-                throw new InternalErrorException(ex);
-            }
-        }
     }
     
     

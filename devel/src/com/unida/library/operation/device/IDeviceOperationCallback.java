@@ -20,7 +20,7 @@
  * 
  ******************************************************************************/
 
-package com.unida.library.operation;
+package com.unida.library.operation.device;
 
 import com.unida.library.device.IDevice;
 import com.unida.library.device.ontology.DeviceState;

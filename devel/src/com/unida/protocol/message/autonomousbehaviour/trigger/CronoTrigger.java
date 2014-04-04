@@ -40,35 +40,33 @@ public class CronoTrigger extends RuleTrigger
     private short hour;
     private short min;
 
+    
+    public CronoTrigger(){}
+    
+    
+    public CronoTrigger(short weekday, short hour, short min)
+    {
+        this.weekday = weekday;
+        this.hour = hour;
+        this.min = min;
+    }
+    
+    
     public short getWeekday()
     {
         return weekday;
     }
-
-    public void setWeekday(short weekday)
-    {
-        this.weekday = weekday;
-    }
-
+   
     public short getHour()
     {
         return hour;
     }
-
-    public void setHour(short hour)
-    {
-        this.hour = hour;
-    }
-
+    
     public short getMin()
     {
         return min;
     }
-
-    public void setMin(short min)
-    {
-        this.min = min;
-    }
+  
 
     @Override
     byte[] codeRule(IUniDAOntologyCodec ontologyCodec) throws MessageFormatException
@@ -92,15 +90,15 @@ public class CronoTrigger extends RuleTrigger
     public int decodePayload(byte[] bytes, int initIndex, IUniDAOntologyCodec ontologyCodec) throws MessageFormatException
     {
         // week day        
-        this.setWeekday(EndianConversor.byteArrayLittleEndianToShort(bytes, initIndex));
+        this.weekday = EndianConversor.byteArrayLittleEndianToShort(bytes, initIndex);
         initIndex += EndianConversor.SHORT_SIZE_BYTES;
         
         // hour
-        this.setHour(EndianConversor.byteArrayLittleEndianToShort(bytes, initIndex));
+        this.hour = EndianConversor.byteArrayLittleEndianToShort(bytes, initIndex);
         initIndex += EndianConversor.SHORT_SIZE_BYTES;
         
         // min
-        this.setMin(EndianConversor.byteArrayLittleEndianToShort(bytes, initIndex));
+        this.min = EndianConversor.byteArrayLittleEndianToShort(bytes, initIndex);
         initIndex += EndianConversor.SHORT_SIZE_BYTES;
         
         return initIndex;

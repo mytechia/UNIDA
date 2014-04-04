@@ -44,35 +44,30 @@ public class CommandExecutionAction extends RuleAction
     private String[] params;
     
     
+    public CommandExecutionAction() {}
+    
+    
+    public CommandExecutionAction(String funcId, String cmdId, String[] params)
+    {
+        this.funcId = funcId;
+        this.cmdId = cmdId;
+        this.params = params;
+    }
+    
 
     public String getCmdId() {
         return cmdId;
     }
-
-    public void setCmdId(String cmdId) {
-        this.cmdId = cmdId;
-    }
-
     
     public String getFuncId()
     {
         return funcId;
     }
-
-    public void setFuncId(String funcId)
-    {
-        this.funcId = funcId;
-    }
-        
-
+           
     public String[] getParams() {
         return params;
     }
-
-    public void setParams(String[] params) {
-        this.params = params;
-    }
-    
+       
 
     @Override
     byte[] codeAction(IUniDAOntologyCodec ontologyCodec) throws MessageFormatException
@@ -117,14 +112,14 @@ public class CommandExecutionAction extends RuleAction
         initIndex += EndianConversor.INT_SIZE_BYTES;
         
         // command ID      
-        this.setCmdId(ontologyCodec.decodeId(EndianConversor.byteArrayLittleEndianToUInt(bytes, initIndex)));
+        this.cmdId = ontologyCodec.decodeId(EndianConversor.byteArrayLittleEndianToUInt(bytes, initIndex));
         initIndex += EndianConversor.INT_SIZE_BYTES;
 
         // command parameters
         StringBuilder string = new StringBuilder(10);
         int numParams = EndianConversor.byteArrayLittleEndianToShort(bytes, initIndex);
         initIndex += EndianConversor.SHORT_SIZE_BYTES;
-        this.setParams(new String[numParams]);
+        this.params = new String[numParams];
         for(int i=0; i<numParams; i++) {
             initIndex += Message.readStringFromBytes(string, bytes, initIndex);
             this.getParams()[i] = string.toString();

@@ -20,7 +20,7 @@
  * 
  ******************************************************************************/
 
-package com.unida.library.operation.group;
+package com.unida.library.operation.device.group;
 
 
 import com.mytechia.commons.framework.exception.InternalErrorException;
@@ -30,8 +30,8 @@ import com.unida.library.device.DeviceGroup;
 import com.unida.library.device.IDevice;
 import com.unida.library.device.ontology.ControlFunctionalityMetadata;
 import com.unida.library.device.ontology.DeviceStateValue;
-import com.unida.library.operation.IDeviceOperationCallback;
-import com.unida.library.operation.OperationTicket;
+import com.unida.library.operation.device.IDeviceOperationCallback;
+import com.unida.library.operation.device.OperationTicket;
 
 /**
  * <p><b>

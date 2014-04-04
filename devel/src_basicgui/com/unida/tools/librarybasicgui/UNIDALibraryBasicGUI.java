@@ -38,6 +38,7 @@ import com.unida.library.device.GatewayDeviceIO;
 import com.unida.library.device.IDevice;
 import com.unida.library.device.PhysicalDevice;
 import com.unida.library.manage.im.InMemoryUniDAInstantiationFacade;
+import com.unida.tools.librarybasicgui.dialog.AutonomousBehaviourDialog;
 import com.unida.tools.librarybasicgui.dialog.DeviceWriteStateDialog;
 import java.util.Collection;
 import javax.swing.JOptionPane;
@@ -315,7 +316,8 @@ public class UNIDALibraryBasicGUI extends javax.swing.JFrame
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents() {
+    private void initComponents()
+    {
 
         jPanelGatewaysInfo = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -349,7 +351,8 @@ public class UNIDALibraryBasicGUI extends javax.swing.JFrame
         jScrollPaneGatewaysInfo.setPreferredSize(new java.awt.Dimension(453, 300));
 
         jTableGatewaysInfo.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
+            new Object [][]
+            {
                 {null, null},
                 {null, null},
                 {null, null},
@@ -360,15 +363,19 @@ public class UNIDALibraryBasicGUI extends javax.swing.JFrame
                 {null, null},
                 {null, null}
             },
-            new String [] {
+            new String []
+            {
                 "Gateway ID", "State"
             }
-        ) {
-            boolean[] canEdit = new boolean [] {
+        )
+        {
+            boolean[] canEdit = new boolean []
+            {
                 false, false
             };
 
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
+            public boolean isCellEditable(int rowIndex, int columnIndex)
+            {
                 return canEdit [columnIndex];
             }
         });
@@ -380,7 +387,8 @@ public class UNIDALibraryBasicGUI extends javax.swing.JFrame
         jScrollPaneDeviceIOsInfo.setPreferredSize(new java.awt.Dimension(453, 150));
 
         jTableDeviceIOsInfo.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
+            new Object [][]
+            {
                 {null, null},
                 {null, null},
                 {null, null},
@@ -390,15 +398,19 @@ public class UNIDALibraryBasicGUI extends javax.swing.JFrame
                 {null, null},
                 {null, null}
             },
-            new String [] {
+            new String []
+            {
                 "Device IO", "Supported States"
             }
-        ) {
-            boolean[] canEdit = new boolean [] {
+        )
+        {
+            boolean[] canEdit = new boolean []
+            {
                 false, false
             };
 
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
+            public boolean isCellEditable(int rowIndex, int columnIndex)
+            {
                 return canEdit [columnIndex];
             }
         });
@@ -409,7 +421,8 @@ public class UNIDALibraryBasicGUI extends javax.swing.JFrame
         jScrollPaneDevicesInfo.setPreferredSize(new java.awt.Dimension(453, 150));
 
         jTableDevicesInfo.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
+            new Object [][]
+            {
                 {null, null, null},
                 {null, null, null},
                 {null, null, null},
@@ -419,15 +432,19 @@ public class UNIDALibraryBasicGUI extends javax.swing.JFrame
                 {null, null, null},
                 {null, null, null}
             },
-            new String [] {
+            new String []
+            {
                 "Device ID", "DeviceType", "Conected IOs"
             }
-        ) {
-            boolean[] canEdit = new boolean [] {
+        )
+        {
+            boolean[] canEdit = new boolean []
+            {
                 false, false, false
             };
 
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
+            public boolean isCellEditable(int rowIndex, int columnIndex)
+            {
                 return canEdit [columnIndex];
             }
         });
@@ -439,16 +456,20 @@ public class UNIDALibraryBasicGUI extends javax.swing.JFrame
         jPanelGatewaysButtons.setLayout(new javax.swing.BoxLayout(jPanelGatewaysButtons, javax.swing.BoxLayout.X_AXIS));
 
         jButtonForceAnnounce.setText("Force Announce");
-        jButtonForceAnnounce.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        jButtonForceAnnounce.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 jButtonForceAnnounceActionPerformed(evt);
             }
         });
         jPanelGatewaysButtons.add(jButtonForceAnnounce);
 
         jButtonAB.setText("Manage Autonomous Behaviours");
-        jButtonAB.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        jButtonAB.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 jButtonABActionPerformed(evt);
             }
         });
@@ -460,32 +481,40 @@ public class UNIDALibraryBasicGUI extends javax.swing.JFrame
         jPanelDevicesButtons.setLayout(new javax.swing.BoxLayout(jPanelDevicesButtons, javax.swing.BoxLayout.X_AXIS));
 
         jButtonCommands.setText("Command");
-        jButtonCommands.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        jButtonCommands.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 jButtonCommandsActionPerformed(evt);
             }
         });
         jPanelDevicesButtons.add(jButtonCommands);
 
         jButtonOnOffCommands.setText("On/Off Commands");
-        jButtonOnOffCommands.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        jButtonOnOffCommands.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 jButtonOnOffCommandsActionPerformed(evt);
             }
         });
         jPanelDevicesButtons.add(jButtonOnOffCommands);
 
         jButtonStates.setText("Read All States");
-        jButtonStates.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        jButtonStates.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 jButtonStatesActionPerformed(evt);
             }
         });
         jPanelDevicesButtons.add(jButtonStates);
 
         jButtonState.setText("Read One State");
-        jButtonState.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        jButtonState.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 jButtonStateActionPerformed(evt);
             }
         });
@@ -493,16 +522,20 @@ public class UNIDALibraryBasicGUI extends javax.swing.JFrame
 
         jButtonWriteState.setText("Write One State");
         jButtonWriteState.setActionCommand("jButtonWriteState");
-        jButtonWriteState.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        jButtonWriteState.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 jButtonWriteStateActionPerformed(evt);
             }
         });
         jPanelDevicesButtons.add(jButtonWriteState);
 
         jButtonSuscribe.setText("Subscribe To State");
-        jButtonSuscribe.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        jButtonSuscribe.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 jButtonSuscribeActionPerformed(evt);
             }
         });
@@ -570,7 +603,7 @@ public class UNIDALibraryBasicGUI extends javax.swing.JFrame
     private void jButtonForceAnnounceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonForceAnnounceActionPerformed
         try
         {
-            instantiationFacade.forceAnnounce();
+            instantiationFacade.getGatewayOperationFacade().forceAnnounce();
         } catch (InternalErrorException ex)
         {
             JOptionPane.showMessageDialog(this, ex.toString());
@@ -605,6 +638,12 @@ public class UNIDALibraryBasicGUI extends javax.swing.JFrame
     }//GEN-LAST:event_jButtonSuscribeActionPerformed
 
     private void jButtonABActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonABActionPerformed
+        Object selectedGateway = jTableGatewaysInfo.getModel().getValueAt(jTableGatewaysInfo.getSelectionModel().getMinSelectionIndex(), 0);
+        if (null != selectedGateway)
+        {
+            AutonomousBehaviourDialog dialog = new AutonomousBehaviourDialog(this, false, instantiationFacade, selectedGateway.toString());
+            dialog.setVisible(true);
+        }
     }//GEN-LAST:event_jButtonABActionPerformed
 
     private void jButtonCommandsActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jButtonCommandsActionPerformed

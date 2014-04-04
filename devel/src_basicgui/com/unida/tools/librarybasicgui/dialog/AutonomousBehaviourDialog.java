@@ -1,82 +1,118 @@
-/*******************************************************************************
- *   
- *   Copyright (C) 2013 Mytech Ingenieria Aplicada <http://www.mytechia.com>
- *   Copyright (C) 2013 Victor Sonora <victor@vsonora.com>
- * 
- *   This file is part of UNIDA.
+/**
+ * *****************************************************************************
  *
- *   UNIDA is free software: you can redistribute it and/or modify
- *   it under the terms of the GNU Affero General Public License as published by
- *   the Free Software Foundation, either version 3 of the License, or
- *   (at your option) any later version.
+ * Copyright (C) 2013 Mytech Ingenieria Aplicada <http://www.mytechia.com>
+ * Copyright (C) 2013 Victor Sonora <victor@vsonora.com>
  *
- *   UNIDA is distributed in the hope that it will be useful,
- *   but WITHOUT ANY WARRANTY; without even the implied warranty of
- *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *   GNU Affero General Public License for more details.
+ * This file is part of UNIDA.
  *
- *   You should have received a copy of the GNU Affero General Public License
- *   along with UNIDA.  If not, see <http://www.gnu.org/licenses/>.
- * 
- ******************************************************************************/
-
-
+ * UNIDA is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU Affero General Public License as published by the Free
+ * Software Foundation, either version 3 of the License, or (at your option) any
+ * later version.
+ *
+ * UNIDA is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
+ * details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with UNIDA. If not, see <http://www.gnu.org/licenses/>.
+ *
+ *****************************************************************************
+ */
 package com.unida.tools.librarybasicgui.dialog;
 
 import com.mytechia.commons.framework.exception.InternalErrorException;
 import com.mytechia.commons.framework.modelaction.exception.InstanceNotFoundException;
+import com.unida.library.device.DeviceID;
 import com.unida.library.device.Gateway;
+import com.unida.library.device.exception.UniDAIDFormatException;
 import com.unida.library.manage.im.InMemoryUniDAInstantiationFacade;
 import com.unida.library.notification.NotificationTicket;
-
+import com.unida.protocol.UniDAAddress;
+import com.unida.protocol.message.autonomousbehaviour.UniDAABRuleVO;
+import com.unida.protocol.message.autonomousbehaviour.action.CommandExecutionAction;
+import com.unida.protocol.message.autonomousbehaviour.action.RuleAction;
+import com.unida.protocol.message.autonomousbehaviour.trigger.CronoTrigger;
+import com.unida.protocol.message.autonomousbehaviour.trigger.RuleTrigger;
+import com.unida.protocol.message.autonomousbehaviour.trigger.StateChangeTrigger;
+import com.unida.protocol.message.autonomousbehaviour.trigger.statechange.StateConditionNull;
+import com.unida.tools.librarybasicgui.util.DomoParsing;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
- *  Dialog class that handles everything related to the autonomous behaviour rules
- * associated with an UniDA gateway
- *  TODO
+ * Dialog class that handles everything related to the autonomous behaviour
+ * rules associated with an UniDA gateway
+ *
  * @author victor
  */
-public class AutonomousBehaviourDialog extends javax.swing.JDialog {
-    
+public class AutonomousBehaviourDialog extends javax.swing.JDialog
+{
+
     private InMemoryUniDAInstantiationFacade instantiationFacade;
     private String gatewayAddress;
-    private NotificationTicket notificationTicket = null;
+    
 
     /**
      * Creates new form AutonomousBehaviourDialog
+     *
+     * @param parent
+     * @param modal
+     * @param instantiationFacade
+     * @param gatewayAddress
      */
     public AutonomousBehaviourDialog(java.awt.Frame parent, boolean modal,
-            InMemoryUniDAInstantiationFacade instantiationFacade, String gatewayAddress) {
+            InMemoryUniDAInstantiationFacade instantiationFacade, String gatewayAddress)
+    {
         super(parent, modal);
-        initComponents();        
+        
+        initComponents();
+        
         this.instantiationFacade = instantiationFacade;
         this.gatewayAddress = gatewayAddress;
+        
         this.setTitle(this.getTitle() + ": " + gatewayAddress);
+        
         jButtonRemoveABRule.setEnabled(false);
-        jTableABRules.setEnabled(false);
+        
+        hideTriggerPanels();
+        jPanelStateChangeTrigger.setVisible(true);
+        
+        hideActionPanels();
+        jPanelCommandExecutionAction.setVisible(true);
+        
+        this.jTextCommandActionCommandBaseIRI.setText(DomoParsing.instance().getDefaultOntologyNamespace());
+        this.jTextCommandActionFunctionalityBaseIRI.setText(DomoParsing.instance().getDefaultOntologyNamespace());
+        this.jTextStateChangeTriggerStateBaseIRI.setText(DomoParsing.instance().getDefaultOntologyNamespace());        
+    }
+    
+
+    private void hideTriggerPanels()
+    {
+        this.jPanelCronoTrigger.setVisible(false);
+        this.jPanelStateChangeTrigger.setVisible(false);
     }
 
-    
-    private void refreshABActionToAdd() {
-        this.jTextTriggerSource.setText("");
-        this.jTextNotificationType.setText("");
-        this.jTextTriggerState.setText("");
-        this.jTextActionDestination.setText("");
-        this.jTextActionCommand.setText("");
-        this.jTextActionParams.setText("");
+    private void hideActionPanels()
+    {
+        this.jPanelCommandExecutionAction.setVisible(false);
     }
-    
-    private void loadABRules() {
-        try {
+
+    private void loadABRules()
+    {
+        try
+        {
             Gateway gateway = instantiationFacade.getDeviceManageFacade().findDeviceGatewayById(gatewayAddress);
-            
-        } catch (InternalErrorException | InstanceNotFoundException ex) {
+
+        } catch (InternalErrorException | InstanceNotFoundException ex)
+        {
             JOptionPane.showMessageDialog(this, ex.toString());
         }
     }
-    
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -84,85 +120,396 @@ public class AutonomousBehaviourDialog extends javax.swing.JDialog {
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents() {
+    private void initComponents()
+    {
 
+        buttonGroupTriggerType = new javax.swing.ButtonGroup();
+        buttonGroupActionType = new javax.swing.ButtonGroup();
         jScrollPaneABRules = new javax.swing.JScrollPane();
         jTableABRules = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
         jButtonRemoveABRule = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JSeparator();
         jLabel2 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jTextTriggerSourceDeviceNumber = new javax.swing.JTextField();
+        jTextActionDestination = new javax.swing.JTextField();
+        jButtonAddABRule = new javax.swing.JButton();
+        jPanelTriggerContainer = new javax.swing.JPanel();
+        jPanelStateChangeTrigger = new javax.swing.JPanel();
+        jLabel6 = new javax.swing.JLabel();
+        jTextStateChangeTriggerStateBaseIRI = new javax.swing.JTextField();
+        jTextStateChangeTriggerStateID = new javax.swing.JTextField();
+        jPanelCronoTrigger = new javax.swing.JPanel();
+        jLabel8 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
+        jTextCronoTriggerHour = new javax.swing.JTextField();
+        jTextCronoTriggerWeekday = new javax.swing.JTextField();
+        jTextCronoTriggerMin = new javax.swing.JTextField();
+        jPanelActionContainer = new javax.swing.JPanel();
+        jPanelCommandExecutionAction = new javax.swing.JPanel();
+        jTextCommandActionFunctionalityBaseIRI = new javax.swing.JTextField();
+        jTextCommandActionFunctionalityID = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
-        jTextTriggerSource = new javax.swing.JTextField();
-        jTextNotificationType = new javax.swing.JTextField();
-        jTextTriggerState = new javax.swing.JTextField();
-        jTextActionDestination = new javax.swing.JTextField();
-        jTextActionCommand = new javax.swing.JTextField();
-        jTextActionParams = new javax.swing.JTextField();
-        jButtonAddABRule = new javax.swing.JButton();
+        jTextCommandActionCommandBaseIRI = new javax.swing.JTextField();
+        jTextCommandActionCommandID = new javax.swing.JTextField();
+        jLabel11 = new javax.swing.JLabel();
+        jTextCommandActionValue = new javax.swing.JTextField();
+        jPanelTriggerType = new javax.swing.JPanel();
+        jRadioCronoTrigger = new javax.swing.JRadioButton();
+        jRadioPeriodicTrigger = new javax.swing.JRadioButton();
+        jRadioStateChangeTrigger = new javax.swing.JRadioButton();
+        jPanelActionType = new javax.swing.JPanel();
+        jRadioLinkStateAction = new javax.swing.JRadioButton();
+        jRadioWriteStateAction = new javax.swing.JRadioButton();
+        jRadioCommandAction = new javax.swing.JRadioButton();
+        jTextActionDestinationDeviceNumber = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Autonomous behaviour management");
 
         jTableABRules.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null}
+            new Object [][]
+            {
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
-            new String [] {
-                "Trigger Source", "Notification Type", "Trigger State", "Action Destination", "Action Command", "Action Params"
+            new String []
+            {
+                "Trigger Type", "Trigger", "Action Type", "Action", "Index"
             }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false
+        )
+        {
+            Class[] types = new Class []
+            {
+                java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Integer.class
+            };
+            boolean[] canEdit = new boolean []
+            {
+                false, false, false, false, false
             };
 
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
+            public Class getColumnClass(int columnIndex)
+            {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex)
+            {
                 return canEdit [columnIndex];
             }
         });
         jTableABRules.setColumnSelectionAllowed(true);
         jScrollPaneABRules.setViewportView(jTableABRules);
         jTableABRules.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        if (jTableABRules.getColumnModel().getColumnCount() > 0)
+        {
+            jTableABRules.getColumnModel().getColumn(0).setPreferredWidth(150);
+            jTableABRules.getColumnModel().getColumn(0).setMaxWidth(150);
+            jTableABRules.getColumnModel().getColumn(2).setPreferredWidth(150);
+            jTableABRules.getColumnModel().getColumn(2).setMaxWidth(150);
+            jTableABRules.getColumnModel().getColumn(4).setPreferredWidth(50);
+            jTableABRules.getColumnModel().getColumn(4).setMaxWidth(50);
+        }
 
-        jLabel1.setText("Reglas de Comportamiento Autónomo:");
+        jLabel1.setText("Autonomous Behaviour Rules:");
 
-        jButtonRemoveABRule.setText("Eliminar Regla");
-        jButtonRemoveABRule.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        jButtonRemoveABRule.setText("Delete Rule");
+        jButtonRemoveABRule.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 jButtonRemoveABRuleActionPerformed(evt);
             }
         });
 
-        jLabel2.setText("Dirección UniDA del Trigger:");
+        jLabel2.setText("Trigger UniDA device number:");
 
-        jLabel3.setText("Tipo de notificación:");
+        jLabel5.setText("Action UniDA address:");
 
-        jLabel4.setText("Estado para el Trigger:");
-
-        jLabel5.setText("Dirección UniDA para la Acción:");
-
-        jLabel6.setText("Comando de la acción:");
-
-        jLabel7.setText("Parámetros de la acción:");
-
-        jButtonAddABRule.setText("Añadir Regla");
-        jButtonAddABRule.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        jButtonAddABRule.setText("Add Rule");
+        jButtonAddABRule.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 jButtonAddABRuleActionPerformed(evt);
             }
         });
+
+        jPanelTriggerContainer.setBorder(javax.swing.BorderFactory.createTitledBorder("Trigger data"));
+        jPanelTriggerContainer.setLayout(new java.awt.CardLayout());
+
+        jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel6.setText("State ID to query:");
+
+        javax.swing.GroupLayout jPanelStateChangeTriggerLayout = new javax.swing.GroupLayout(jPanelStateChangeTrigger);
+        jPanelStateChangeTrigger.setLayout(jPanelStateChangeTriggerLayout);
+        jPanelStateChangeTriggerLayout.setHorizontalGroup(
+            jPanelStateChangeTriggerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelStateChangeTriggerLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanelStateChangeTriggerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelStateChangeTriggerLayout.createSequentialGroup()
+                        .addComponent(jTextStateChangeTriggerStateBaseIRI, javax.swing.GroupLayout.DEFAULT_SIZE, 311, Short.MAX_VALUE)
+                        .addGap(26, 26, 26)
+                        .addComponent(jTextStateChangeTriggerStateID, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanelStateChangeTriggerLayout.createSequentialGroup()
+                        .addGap(114, 114, 114)
+                        .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())))
+        );
+        jPanelStateChangeTriggerLayout.setVerticalGroup(
+            jPanelStateChangeTriggerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelStateChangeTriggerLayout.createSequentialGroup()
+                .addGap(18, 18, 18)
+                .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanelStateChangeTriggerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jTextStateChangeTriggerStateID, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextStateChangeTriggerStateBaseIRI, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(150, Short.MAX_VALUE))
+        );
+
+        jPanelTriggerContainer.add(jPanelStateChangeTrigger, "card3");
+
+        jLabel8.setText("Weekday:");
+
+        jLabel9.setText("Hour:");
+
+        jLabel10.setText("Minute:");
+
+        javax.swing.GroupLayout jPanelCronoTriggerLayout = new javax.swing.GroupLayout(jPanelCronoTrigger);
+        jPanelCronoTrigger.setLayout(jPanelCronoTriggerLayout);
+        jPanelCronoTriggerLayout.setHorizontalGroup(
+            jPanelCronoTriggerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelCronoTriggerLayout.createSequentialGroup()
+                .addGap(26, 26, 26)
+                .addGroup(jPanelCronoTriggerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel9)
+                    .addComponent(jLabel10)
+                    .addComponent(jLabel8))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 159, Short.MAX_VALUE)
+                .addGroup(jPanelCronoTriggerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jTextCronoTriggerMin, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextCronoTriggerHour, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextCronoTriggerWeekday, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(53, 53, 53))
+        );
+        jPanelCronoTriggerLayout.setVerticalGroup(
+            jPanelCronoTriggerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelCronoTriggerLayout.createSequentialGroup()
+                .addGap(44, 44, 44)
+                .addGroup(jPanelCronoTriggerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel8)
+                    .addComponent(jTextCronoTriggerWeekday, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(24, 24, 24)
+                .addGroup(jPanelCronoTriggerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel9)
+                    .addComponent(jTextCronoTriggerHour, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(23, 23, 23)
+                .addGroup(jPanelCronoTriggerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jTextCronoTriggerMin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel10))
+                .addContainerGap(65, Short.MAX_VALUE))
+        );
+
+        jPanelTriggerContainer.add(jPanelCronoTrigger, "card2");
+
+        jPanelActionContainer.setBorder(javax.swing.BorderFactory.createTitledBorder("Action data"));
+        jPanelActionContainer.setLayout(new java.awt.CardLayout());
+
+        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel3.setText("Functionality ID:");
+
+        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel4.setText("Command ID to send:");
+
+        jLabel11.setText("Value (leave blank if not needed):");
+
+        javax.swing.GroupLayout jPanelCommandExecutionActionLayout = new javax.swing.GroupLayout(jPanelCommandExecutionAction);
+        jPanelCommandExecutionAction.setLayout(jPanelCommandExecutionActionLayout);
+        jPanelCommandExecutionActionLayout.setHorizontalGroup(
+            jPanelCommandExecutionActionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelCommandExecutionActionLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanelCommandExecutionActionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanelCommandExecutionActionLayout.createSequentialGroup()
+                        .addComponent(jTextCommandActionFunctionalityBaseIRI)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jTextCommandActionFunctionalityID, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanelCommandExecutionActionLayout.createSequentialGroup()
+                        .addComponent(jTextCommandActionCommandBaseIRI)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jTextCommandActionCommandID, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(12, 12, 12))
+            .addGroup(jPanelCommandExecutionActionLayout.createSequentialGroup()
+                .addGroup(jPanelCommandExecutionActionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanelCommandExecutionActionLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanelCommandExecutionActionLayout.createSequentialGroup()
+                        .addGap(22, 22, 22)
+                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanelCommandExecutionActionLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jTextCommandActionValue, javax.swing.GroupLayout.PREFERRED_SIZE, 317, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanelCommandExecutionActionLayout.createSequentialGroup()
+                        .addGap(40, 40, 40)
+                        .addComponent(jLabel11)))
+                .addContainerGap(149, Short.MAX_VALUE))
+        );
+        jPanelCommandExecutionActionLayout.setVerticalGroup(
+            jPanelCommandExecutionActionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelCommandExecutionActionLayout.createSequentialGroup()
+                .addGap(12, 12, 12)
+                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanelCommandExecutionActionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jTextCommandActionFunctionalityID, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextCommandActionFunctionalityBaseIRI, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanelCommandExecutionActionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jTextCommandActionCommandBaseIRI, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextCommandActionCommandID, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jTextCommandActionValue, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(132, 132, 132))
+        );
+
+        jPanelActionContainer.add(jPanelCommandExecutionAction, "card2");
+
+        jPanelTriggerType.setBorder(javax.swing.BorderFactory.createTitledBorder("Trigger type"));
+
+        buttonGroupTriggerType.add(jRadioCronoTrigger);
+        jRadioCronoTrigger.setFont(new java.awt.Font("Lucida Grande", 0, 12)); // NOI18N
+        jRadioCronoTrigger.setText("Crono");
+        jRadioCronoTrigger.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                jRadioCronoTriggerActionPerformed(evt);
+            }
+        });
+
+        buttonGroupTriggerType.add(jRadioPeriodicTrigger);
+        jRadioPeriodicTrigger.setFont(new java.awt.Font("Lucida Grande", 0, 12)); // NOI18N
+        jRadioPeriodicTrigger.setText("Periodic");
+        jRadioPeriodicTrigger.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                jRadioPeriodicTriggerActionPerformed(evt);
+            }
+        });
+
+        buttonGroupTriggerType.add(jRadioStateChangeTrigger);
+        jRadioStateChangeTrigger.setFont(new java.awt.Font("Lucida Grande", 0, 12)); // NOI18N
+        jRadioStateChangeTrigger.setSelected(true);
+        jRadioStateChangeTrigger.setText("State change");
+        jRadioStateChangeTrigger.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                jRadioStateChangeTriggerActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanelTriggerTypeLayout = new javax.swing.GroupLayout(jPanelTriggerType);
+        jPanelTriggerType.setLayout(jPanelTriggerTypeLayout);
+        jPanelTriggerTypeLayout.setHorizontalGroup(
+            jPanelTriggerTypeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelTriggerTypeLayout.createSequentialGroup()
+                .addGap(72, 72, 72)
+                .addComponent(jRadioCronoTrigger)
+                .addGap(29, 29, 29)
+                .addComponent(jRadioPeriodicTrigger)
+                .addGap(34, 34, 34)
+                .addComponent(jRadioStateChangeTrigger)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanelTriggerTypeLayout.setVerticalGroup(
+            jPanelTriggerTypeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelTriggerTypeLayout.createSequentialGroup()
+                .addGap(25, 25, 25)
+                .addGroup(jPanelTriggerTypeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jRadioCronoTrigger)
+                    .addComponent(jRadioPeriodicTrigger)
+                    .addComponent(jRadioStateChangeTrigger))
+                .addContainerGap(26, Short.MAX_VALUE))
+        );
+
+        jPanelActionType.setBorder(javax.swing.BorderFactory.createTitledBorder("Action Type"));
+
+        buttonGroupActionType.add(jRadioLinkStateAction);
+        jRadioLinkStateAction.setFont(new java.awt.Font("Lucida Grande", 0, 12)); // NOI18N
+        jRadioLinkStateAction.setText("Link state");
+        jRadioLinkStateAction.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                jRadioLinkStateActionActionPerformed(evt);
+            }
+        });
+
+        buttonGroupActionType.add(jRadioWriteStateAction);
+        jRadioWriteStateAction.setFont(new java.awt.Font("Lucida Grande", 0, 12)); // NOI18N
+        jRadioWriteStateAction.setText("Write State");
+        jRadioWriteStateAction.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                jRadioWriteStateActionActionPerformed(evt);
+            }
+        });
+
+        buttonGroupActionType.add(jRadioCommandAction);
+        jRadioCommandAction.setFont(new java.awt.Font("Lucida Grande", 0, 12)); // NOI18N
+        jRadioCommandAction.setSelected(true);
+        jRadioCommandAction.setText("Command");
+        jRadioCommandAction.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                jRadioCommandActionActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanelActionTypeLayout = new javax.swing.GroupLayout(jPanelActionType);
+        jPanelActionType.setLayout(jPanelActionTypeLayout);
+        jPanelActionTypeLayout.setHorizontalGroup(
+            jPanelActionTypeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelActionTypeLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jRadioLinkStateAction)
+                .addGap(36, 36, 36)
+                .addComponent(jRadioCommandAction)
+                .addGap(30, 30, 30)
+                .addComponent(jRadioWriteStateAction)
+                .addGap(58, 58, 58))
+        );
+        jPanelActionTypeLayout.setVerticalGroup(
+            jPanelActionTypeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelActionTypeLayout.createSequentialGroup()
+                .addGap(24, 24, 24)
+                .addGroup(jPanelActionTypeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jRadioLinkStateAction)
+                    .addComponent(jRadioWriteStateAction)
+                    .addComponent(jRadioCommandAction))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -174,35 +521,39 @@ public class AutonomousBehaviourDialog extends javax.swing.JDialog {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 341, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(365, 365, 365)
-                        .addComponent(jButtonRemoveABRule))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(23, 23, 23)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel4))
+                            .addComponent(jPanelTriggerType, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jPanelTriggerContainer, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jTextTriggerState, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextNotificationType, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextTriggerSource, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(50, 50, 50)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel5)
-                            .addComponent(jLabel6)
-                            .addComponent(jLabel7))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jTextActionParams, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextActionCommand, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextActionDestination, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jPanelActionType, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jPanelActionContainer, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(370, 370, 370)
-                        .addComponent(jButtonAddABRule)))
-                .addContainerGap(33, Short.MAX_VALUE))
+                        .addContainerGap()
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 341, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addGap(15, 15, 15)
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jTextTriggerSourceDeviceNumber, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel5)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jTextActionDestination, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jTextActionDestinationDeviceNumber, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(86, 86, 86))
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(426, 426, 426)
+                        .addComponent(jButtonAddABRule))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(425, 425, 425)
+                        .addComponent(jButtonRemoveABRule)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -213,63 +564,190 @@ public class AutonomousBehaviourDialog extends javax.swing.JDialog {
                 .addComponent(jScrollPaneABRules, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jButtonRemoveABRule)
-                .addGap(29, 29, 29)
+                .addGap(12, 12, 12)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(40, 40, 40)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(jLabel5)
-                    .addComponent(jTextTriggerSource, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextActionDestination, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jTextTriggerSourceDeviceNumber, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextActionDestination, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextActionDestinationDeviceNumber, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(jLabel6)
-                    .addComponent(jTextNotificationType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextActionCommand, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4)
-                    .addComponent(jLabel7)
-                    .addComponent(jTextTriggerState, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextActionParams, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(29, 29, 29)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jPanelActionType, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanelTriggerType, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(15, 15, 15)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanelActionContainer, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(jPanelTriggerContainer, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jButtonAddABRule)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(18, 18, 18))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+
     private void jButtonRemoveABRuleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRemoveABRuleActionPerformed
-        if (jTableABRules.getSelectedColumnCount() > 0) {
-            
+        if (jTableABRules.getSelectedColumnCount() > 0)
+        {
+
         }
     }//GEN-LAST:event_jButtonRemoveABRuleActionPerformed
 
-    private void jButtonAddABRuleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAddABRuleActionPerformed
-        // TODO add your handling code here:
+
+
+    private void jButtonAddABRuleActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jButtonAddABRuleActionPerformed
+    {//GEN-HEADEREND:event_jButtonAddABRuleActionPerformed
+        
+        try
+        {
+            UniDAABRuleVO rule = getRuleFromUserInput();
+            
+            // send message
+            instantiationFacade.getGatewayOperationFacade().addABRule(new UniDAAddress(gatewayAddress), rule);
+        } catch (InternalErrorException ex)
+        {
+            JOptionPane.showMessageDialog(this, ex.toString());
+        }
+        
     }//GEN-LAST:event_jButtonAddABRuleActionPerformed
 
-   
+    private UniDAABRuleVO getRuleFromUserInput() throws UniDAIDFormatException
+    {
+        // trigger
+        RuleTrigger trigger = null;
+        if (jRadioCronoTrigger.isSelected())
+        {
+            trigger = new CronoTrigger(
+                    Short.valueOf(jTextCronoTriggerWeekday.getText()),
+                    Short.valueOf(jTextCronoTriggerHour.getText()),
+                    Short.valueOf(jTextCronoTriggerMin.getText()));
+        } else if (jRadioPeriodicTrigger.isSelected())
+        {
+            // TODO
+        } else if (jRadioStateChangeTrigger.isSelected())
+        {
+            DeviceID deviceID = new DeviceID(
+                    new UniDAAddress(gatewayAddress), 
+                    Short.valueOf(jTextTriggerSourceDeviceNumber.getText()));
+            trigger = new StateChangeTrigger(
+                    deviceID, 
+                    jTextStateChangeTriggerStateBaseIRI.getText() + jTextStateChangeTriggerStateID,
+                    new StateConditionNull());
+        }
+
+        // action
+        RuleAction action = null;
+        if (jRadioCommandAction.isSelected())
+        {            
+            action = new CommandExecutionAction(
+                    this.jTextCommandActionFunctionalityBaseIRI.getText() + this.jTextCommandActionFunctionalityID,
+                    this.jTextCommandActionCommandBaseIRI.getText() + this.jTextCommandActionCommandID,
+                    new String[0]);
+        } else if (jRadioLinkStateAction.isSelected())
+        {
+            // TODO
+        } else if (jRadioWriteStateAction.isSelected())
+        {
+            // TODO
+        }
+        action.setActionDestination(new DeviceID(new UniDAAddress(
+                jTextActionDestination.getText()), 
+                Short.valueOf(jTextActionDestinationDeviceNumber.getText())));
+
+        
+        return new UniDAABRuleVO(trigger, action);
+    }
+
+
+    private void jRadioCronoTriggerActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jRadioCronoTriggerActionPerformed
+    {//GEN-HEADEREND:event_jRadioCronoTriggerActionPerformed
+        hideTriggerPanels();
+        this.jPanelCronoTrigger.setVisible(true);
+    }//GEN-LAST:event_jRadioCronoTriggerActionPerformed
+
+
+    private void jRadioPeriodicTriggerActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jRadioPeriodicTriggerActionPerformed
+    {//GEN-HEADEREND:event_jRadioPeriodicTriggerActionPerformed
+        hideTriggerPanels();
+
+    }//GEN-LAST:event_jRadioPeriodicTriggerActionPerformed
+
+
+    private void jRadioStateChangeTriggerActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jRadioStateChangeTriggerActionPerformed
+    {//GEN-HEADEREND:event_jRadioStateChangeTriggerActionPerformed
+        hideTriggerPanels();
+        this.jPanelStateChangeTrigger.setVisible(true);
+    }//GEN-LAST:event_jRadioStateChangeTriggerActionPerformed
+
+
+    private void jRadioLinkStateActionActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jRadioLinkStateActionActionPerformed
+    {//GEN-HEADEREND:event_jRadioLinkStateActionActionPerformed
+        hideActionPanels();
+
+    }//GEN-LAST:event_jRadioLinkStateActionActionPerformed
+
+
+    private void jRadioCommandActionActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jRadioCommandActionActionPerformed
+    {//GEN-HEADEREND:event_jRadioCommandActionActionPerformed
+        hideActionPanels();
+        this.jPanelCommandExecutionAction.setVisible(true);
+    }//GEN-LAST:event_jRadioCommandActionActionPerformed
+
+
+    private void jRadioWriteStateActionActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jRadioWriteStateActionActionPerformed
+    {//GEN-HEADEREND:event_jRadioWriteStateActionActionPerformed
+        hideActionPanels();
+
+    }//GEN-LAST:event_jRadioWriteStateActionActionPerformed
+
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.ButtonGroup buttonGroupActionType;
+    private javax.swing.ButtonGroup buttonGroupTriggerType;
     private javax.swing.JButton jButtonAddABRule;
     private javax.swing.JButton jButtonRemoveABRule;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
+    private javax.swing.JPanel jPanelActionContainer;
+    private javax.swing.JPanel jPanelActionType;
+    private javax.swing.JPanel jPanelCommandExecutionAction;
+    private javax.swing.JPanel jPanelCronoTrigger;
+    private javax.swing.JPanel jPanelStateChangeTrigger;
+    private javax.swing.JPanel jPanelTriggerContainer;
+    private javax.swing.JPanel jPanelTriggerType;
+    private javax.swing.JRadioButton jRadioCommandAction;
+    private javax.swing.JRadioButton jRadioCronoTrigger;
+    private javax.swing.JRadioButton jRadioLinkStateAction;
+    private javax.swing.JRadioButton jRadioPeriodicTrigger;
+    private javax.swing.JRadioButton jRadioStateChangeTrigger;
+    private javax.swing.JRadioButton jRadioWriteStateAction;
     private javax.swing.JScrollPane jScrollPaneABRules;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTable jTableABRules;
-    private javax.swing.JTextField jTextActionCommand;
     private javax.swing.JTextField jTextActionDestination;
-    private javax.swing.JTextField jTextActionParams;
-    private javax.swing.JTextField jTextNotificationType;
-    private javax.swing.JTextField jTextTriggerSource;
-    private javax.swing.JTextField jTextTriggerState;
+    private javax.swing.JTextField jTextActionDestinationDeviceNumber;
+    private javax.swing.JTextField jTextCommandActionCommandBaseIRI;
+    private javax.swing.JTextField jTextCommandActionCommandID;
+    private javax.swing.JTextField jTextCommandActionFunctionalityBaseIRI;
+    private javax.swing.JTextField jTextCommandActionFunctionalityID;
+    private javax.swing.JTextField jTextCommandActionValue;
+    private javax.swing.JTextField jTextCronoTriggerHour;
+    private javax.swing.JTextField jTextCronoTriggerMin;
+    private javax.swing.JTextField jTextCronoTriggerWeekday;
+    private javax.swing.JTextField jTextStateChangeTriggerStateBaseIRI;
+    private javax.swing.JTextField jTextStateChangeTriggerStateID;
+    private javax.swing.JTextField jTextTriggerSourceDeviceNumber;
     // End of variables declaration//GEN-END:variables
 }

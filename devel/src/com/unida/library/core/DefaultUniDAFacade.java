@@ -457,9 +457,10 @@ public class DefaultUniDAFacade extends AbstractUniDAFacadeHelper implements IUn
                 }
                 catch (InstanceNotFoundException ex)
                 {
+                    
                     DiscoverUniDAGatewayDevicesRequestMessage discoverRequest = new DiscoverUniDAGatewayDevicesRequestMessage(ontologyCodec);
                     discoverRequest.setDestination(heartbeat.getSource());
-//                    discoverRequest.setSource(heartbeat.getDestination());
+                    
                     try
                     {
                         commChannel.sendMessage(heartbeat.getSource(), discoverRequest);
@@ -499,23 +500,6 @@ public class DefaultUniDAFacade extends AbstractUniDAFacadeHelper implements IUn
 
                     Gateway gateway = DeviceConversionOperations.createDeviceGateway(gatewayTO, ontologyFacade);
                     
-//                    HashMap<Short, GatewayDeviceIO> ioMap = new HashMap<>();
-//                    for (GatewayDeviceIO io : gateway.getIoList())
-//                    {
-//                        ioMap.put(io.getId(), io);
-//                    }
-
-//                    for (DeviceTO devTO : reply.getDevices())
-//                    {
-//
-//                        PhysicalDevice device = DeviceConversionOperations.createPhysicalDevice(devTO, ontologyFacade.getDeviceClassById(devTO.getDeviceClass()));
-//                        for (GatewayDeviceIOTO ioTO : devTO.getConnectedIOs())
-//                        {
-//                            device.connectToIO(ioMap.get(ioTO.getId()));
-//                        }
-//
-//                    }
-
                     devManagement.newGatewayDiscovered(gateway);
 
                 } catch (UniDAIDFormatException ex)

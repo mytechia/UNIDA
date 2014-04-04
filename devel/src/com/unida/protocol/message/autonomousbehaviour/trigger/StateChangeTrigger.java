@@ -68,32 +68,18 @@ public class StateChangeTrigger extends RuleTrigger
     public DeviceID getTriggerSource()
     {
         return triggerSource;
-    }
-
-    public void setTriggerSource(DeviceID triggerSource)
-    {
-        this.triggerSource = triggerSource;
-    }
+    }  
 
     public String getStateId()
     {
         return stateId;
-    }
-
-    public void setStateId(String stateId)
-    {
-        this.stateId = stateId;
-    }
+    }   
 
     public StateCondition getStateCondition()
     {
         return stateCondition;
     }
-
-    public void setStateCondition(StateCondition stateCondition)
-    {
-        this.stateCondition = stateCondition;
-    }
+   
 
     @Override
     byte[] codeRule(IUniDAOntologyCodec ontologyCodec) throws MessageFormatException
@@ -129,10 +115,10 @@ public class StateChangeTrigger extends RuleTrigger
         initIndex += triggerSourceAddress.decodeAddress(bytes, initIndex);
         short dId = EndianConversor.byteArrayLittleEndianToShort(bytes, initIndex);
         initIndex += EndianConversor.SHORT_SIZE_BYTES;
-        this.setTriggerSource(new DeviceID(triggerSourceAddress, dId));
+        this.triggerSource = new DeviceID(triggerSourceAddress, dId);
 
         // state ID
-        this.setStateId(ontologyCodec.decodeId(EndianConversor.byteArrayLittleEndianToUInt(bytes, initIndex)));
+        this.stateId = ontologyCodec.decodeId(EndianConversor.byteArrayLittleEndianToUInt(bytes, initIndex));
         initIndex += EndianConversor.INT_SIZE_BYTES;
 
         // type of the state condition

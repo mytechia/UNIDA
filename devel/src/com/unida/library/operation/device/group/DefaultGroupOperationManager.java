@@ -20,7 +20,7 @@
  * 
  ******************************************************************************/
 
-package com.unida.library.operation.group;
+package com.unida.library.operation.device.group;
 
 
 import com.mytechia.commons.framework.exception.InternalErrorException;
@@ -36,8 +36,8 @@ import com.unida.library.device.PhysicalDevice;
 import com.unida.library.device.ontology.ControlFunctionalityMetadata;
 import com.unida.library.device.ontology.DeviceStateValue;
 import com.unida.library.manage.IUniDAManagementFacade;
-import com.unida.library.operation.IDeviceOperationCallback;
-import com.unida.library.operation.OperationTicket;
+import com.unida.library.operation.device.IDeviceOperationCallback;
+import com.unida.library.operation.device.OperationTicket;
 import java.util.Collection;
 import java.util.LinkedList;
 

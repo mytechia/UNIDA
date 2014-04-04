@@ -20,7 +20,7 @@
  * 
  ******************************************************************************/
 
-package com.unida.library.operation;
+package com.unida.library.operation.device;
 
 import com.mytechia.commons.util.id.Identifier;
 

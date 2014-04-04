@@ -20,37 +20,35 @@
  * 
  ******************************************************************************/
 
-package com.unida.library.operation.exception;
-
-
-import com.mytechia.commons.framework.exception.InternalErrorException;
-import com.unida.library.device.IDevice;
-
+package com.unida.library.operation.device;
 
 /**
  * <p><b>
+ * Enumeration of the different types of operation failures that the DAL device
+ * support.
  * </b></br>
  *
  * </p>
  *
- * <p><b>Creation date:</b> 28-02-2010</p>
+ * <p><b>Creation date:</b> 18-01-2010</p>
  *
  * <p><b>Changelog:</b></br>
  * <ul>
- * <li>1 - 28-02-2010<\br> Initial release</li>
+ * <li>1 - 18-01-2010<\br> Initial release</li>
  * </ul>
  * </p>
  *
  * @author Gervasio Varela
  * @version 1
  */
-public class NotEnabledDeviceErrorException extends InternalErrorException
+public enum OperationFailures
 {
 
-    public NotEnabledDeviceErrorException(IDevice device)
-    {
-        super("The requested operation cannot be done because the device '"+device.getId()+"' is not associated to a gateway.");
-    }
+
+    RESPONSE_EXPIRATION, //an operation response doesn't arrive before the operation wait time expires
+    OPERATION_ERROR, //an error has ocurred with the device
+    UNEXPECTED_ERROR,
+    UNKNOWN_STATE,
 
 
 }

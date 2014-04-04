@@ -25,9 +25,10 @@
 package com.unida.library;
 
 import com.mytechia.commons.framework.exception.InternalErrorException;
-import com.unida.library.manage.IUniDAManagementFacade;
-import com.unida.library.operation.IDeviceOperationFacade;
 import com.unida.library.device.ontology.IDeviceAccessLayerOntologyFacade;
+import com.unida.library.manage.IUniDAManagementFacade;
+import com.unida.library.operation.device.IDeviceOperationFacade;
+import com.unida.library.operation.gateway.IGatewayOperationFacade;
 
 
 /**
@@ -54,6 +55,9 @@ public interface IUniDAInstantiationFacade
 
 
     IDeviceOperationFacade getDeviceOperationFacade();
+    
+    
+    IGatewayOperationFacade getGatewayOperationFacade();
 
 
     IDeviceAccessLayerOntologyFacade getOntologyFacade();
@@ -66,7 +70,5 @@ public interface IUniDAInstantiationFacade
 
 
     void free() throws InternalErrorException;
-
-
-    void forceAnnounce() throws InternalErrorException;
+   
 }
