@@ -49,6 +49,13 @@ public class UniDAABAddMessage extends UniDAMessage
         this.opId = opId;
         this.rule = rule;
     }
+    
+    
+    public UniDAABAddMessage(byte[] message, IUniDAOntologyCodec ontologyCodec) throws MessageFormatException
+    {
+        super(message, ontologyCodec);
+    }
+    
 
     @Override
     protected int decodeMessagePayload(byte[] bytes, int initIndex) throws MessageFormatException

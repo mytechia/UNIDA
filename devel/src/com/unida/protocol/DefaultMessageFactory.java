@@ -33,6 +33,7 @@ import com.unida.protocol.message.ErrorCode;
 import com.unida.protocol.message.MessageType;
 import com.unida.protocol.message.UniDAMessage;
 import com.unida.protocol.message.ack.UniDAOperationAckMessage;
+import com.unida.protocol.message.autonomousbehaviour.UniDAABAddMessage;
 import com.unida.protocol.message.autonomousbehaviour.UniDAABRemoveMessage;
 import com.unida.protocol.message.debug.UnidaDebugInfoMessage;
 import com.unida.protocol.message.debug.UnidaDebugInitMessage;
@@ -60,13 +61,13 @@ import com.unida.protocol.message.statusreport.UniDAGatewayStatusReportRequestMe
  * It contains the logic to create every type of message that is used
  * by the HI3 DAL communications protocol.
  * 
- * </b></br>
+ * </b>
  *
  * </p>
  *
  * <p><b>Creation date:</b> 26-01-2010</p>
  *
- * <p><b>Changelog:</b></br>
+ * <p><b>Changelog:</b>
  * <ul>
  * <li>1 - 26-01-2010<\br> Initial release</li>
  * </ul>
@@ -123,6 +124,8 @@ public class DefaultMessageFactory implements IMessageFactory
             return createUnidaDebugInitMessage(msgType, msgData);
         else if (msgType == MessageType.DebugData.getTypeValue())
             return createUnidaDebugDataMessage(msgType, msgData);
+        else if (msgType == MessageType.ABAddRule.getTypeValue())
+            return createUnidaAddABRuleMessage(msgType, msgData);
         else if (msgType == MessageType.ABRemoveRule.getTypeValue())
             return createUnidaRemoveABRuleMessage(msgType, msgData);
         else {
@@ -336,6 +339,19 @@ public class DefaultMessageFactory implements IMessageFactory
             else {
                 return new UniDAGatewayStatusReportReplyMessage(msgData, ontologyCodec);
             }
+        }
+        else {
+            return null;
+        }
+
+    }
+    
+    
+    UniDAABAddMessage createUnidaAddABRuleMessage(byte msgType, byte[] msgData) throws MessageFormatException
+    {
+
+        if (msgType == MessageType.ABAddRule.getTypeValue()) {
+            return new UniDAABAddMessage(msgData, ontologyCodec);
         }
         else {
             return null;

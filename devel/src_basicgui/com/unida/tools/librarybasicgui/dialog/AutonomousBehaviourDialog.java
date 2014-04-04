@@ -635,7 +635,7 @@ public class AutonomousBehaviourDialog extends javax.swing.JDialog
                     Short.valueOf(jTextTriggerSourceDeviceNumber.getText()));
             trigger = new StateChangeTrigger(
                     deviceID, 
-                    jTextStateChangeTriggerStateBaseIRI.getText() + jTextStateChangeTriggerStateID,
+                    jTextStateChangeTriggerStateBaseIRI.getText() + jTextStateChangeTriggerStateID.getText(),
                     new StateConditionNull());
         }
 
@@ -644,8 +644,8 @@ public class AutonomousBehaviourDialog extends javax.swing.JDialog
         if (jRadioCommandAction.isSelected())
         {            
             action = new CommandExecutionAction(
-                    this.jTextCommandActionFunctionalityBaseIRI.getText() + this.jTextCommandActionFunctionalityID,
-                    this.jTextCommandActionCommandBaseIRI.getText() + this.jTextCommandActionCommandID,
+                    this.jTextCommandActionFunctionalityBaseIRI.getText() + this.jTextCommandActionFunctionalityID.getText(),
+                    this.jTextCommandActionCommandBaseIRI.getText() + this.jTextCommandActionCommandID.getText(),
                     new String[0]);
         } else if (jRadioLinkStateAction.isSelected())
         {
