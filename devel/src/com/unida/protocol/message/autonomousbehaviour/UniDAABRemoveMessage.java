@@ -29,6 +29,7 @@ package com.unida.protocol.message.autonomousbehaviour;
 import com.mytechia.commons.framework.simplemessageprotocol.exception.MessageFormatException;
 import com.mytechia.commons.util.conversion.EndianConversor;
 import com.unida.library.device.ontology.IUniDAOntologyCodec;
+import com.unida.protocol.UniDAAddress;
 import com.unida.protocol.message.ErrorCode;
 import com.unida.protocol.message.MessageType;
 import com.unida.protocol.message.UniDAMessage;
@@ -45,9 +46,9 @@ public class UniDAABRemoveMessage extends UniDAMessage
     private long opId;
     private short unidaABruleID;
 
-    public UniDAABRemoveMessage(IUniDAOntologyCodec ontologyCodec, short ruleID, long opId)
+    public UniDAABRemoveMessage(UniDAAddress destination, IUniDAOntologyCodec ontologyCodec, short ruleID, long opId)
     {
-        super(ontologyCodec);
+        super(destination, ontologyCodec);
         this.unidaABruleID = ruleID;
         this.opId = opId;
         setCommandType(MessageType.ABRemoveRule.getTypeValue());

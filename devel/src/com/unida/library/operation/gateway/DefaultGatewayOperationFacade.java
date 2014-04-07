@@ -73,7 +73,7 @@ public class DefaultGatewayOperationFacade implements IGatewayOperationFacade
         
         try
         {
-            this.commChannel.sendMessage(gatewayAddress, new UniDAABAddMessage(ontologyCodec, getOpId(), rule));
+            this.commChannel.sendMessage(gatewayAddress, new UniDAABAddMessage(gatewayAddress, ontologyCodec, getOpId(), rule));
         } catch (CommunicationException ex)
         {
             throw new InternalErrorException(ex);

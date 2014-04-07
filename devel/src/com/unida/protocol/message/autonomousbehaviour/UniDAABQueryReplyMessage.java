@@ -29,6 +29,7 @@ package com.unida.protocol.message.autonomousbehaviour;
 import com.mytechia.commons.framework.simplemessageprotocol.exception.MessageFormatException;
 import com.mytechia.commons.util.conversion.EndianConversor;
 import com.unida.library.device.ontology.IUniDAOntologyCodec;
+import com.unida.protocol.UniDAAddress;
 import com.unida.protocol.message.MessageType;
 import com.unida.protocol.message.UniDAMessage;
 import java.io.ByteArrayOutputStream;
@@ -45,8 +46,8 @@ public class UniDAABQueryReplyMessage extends UniDAMessage {
     private long opId;
     private List<UniDAABRuleVO> ABRules;
 
-    public UniDAABQueryReplyMessage(IUniDAOntologyCodec ontologyCodec, long opId) {
-        super(ontologyCodec);
+    public UniDAABQueryReplyMessage(UniDAAddress destination, IUniDAOntologyCodec ontologyCodec, long opId) {
+        super(destination, ontologyCodec);
         setCommandType(MessageType.ABQueryReply.getTypeValue());
         this.opId = opId;
         this.ABRules = new ArrayList<>();

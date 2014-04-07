@@ -58,7 +58,7 @@ public abstract class RuleAction
             byte[] idData = new byte[EndianConversor.INT_SIZE_BYTES];
 
             EndianConversor.shortToLittleEndian((short)this.getType().getValue(), idData, 0);
-            dataStream.write(idData, 0, EndianConversor.INT_SIZE_BYTES);
+            dataStream.write(idData, 0, EndianConversor.SHORT_SIZE_BYTES);
             
             // UniDA address for action destination
             dataStream.write(this.getActionDestination().getGatewayId().getID());
