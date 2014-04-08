@@ -20,7 +20,7 @@
  * 
  ******************************************************************************/
 
-package com.unida.library.operation.device;
+package com.unida.library.operation;
 
 import com.mytechia.commons.util.id.Identifier;
 
@@ -32,13 +32,13 @@ import com.mytechia.commons.util.id.Identifier;
  * request information about its pending operation and it will be used as
  * an identifier when the DAL notifies back results or errors about the
  * operation.
- * </b></br>
+ * </b>
  *
  * </p>
  *
  * <p><b>Creation date:</b> 18-01-2010</p>
  *
- * <p><b>Changelog:</b></br>
+ * <p><b>Changelog:</b>
  * <ul>
  * <li>1 - 18-01-2010<\br> Initial release</li>
  * </ul>
@@ -76,10 +76,7 @@ public class OperationTicket extends Identifier
             return false;
         }
         final OperationTicket other = (OperationTicket) obj;
-        if (super.equals(other) && (this.type != other.type && (this.type == null || !this.type.equals(other.type)))) {
-            return false;
-        }
-        return true;
+        return !super.equals(other) || (this.type == other.type || (this.type != null && this.type.equals(other.type)));
     }
 
 

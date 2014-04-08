@@ -29,25 +29,31 @@ package com.unida.library.core;
 import com.mytechia.commons.framework.exception.InternalErrorException;
 import com.mytechia.commons.framework.modelaction.exception.InstanceNotFoundException;
 import com.mytechia.commons.framework.simplemessageprotocol.exception.CommunicationException;
-import com.unida.library.device.ontology.IDeviceAccessLayerOntologyFacade;
-import com.unida.library.device.ontology.IUniDAOntologyCodec;
-import com.unida.library.device.ontology.exception.ClassNotFoundInOntologyException;
 import com.unida.library.device.DeviceID;
 import com.unida.library.device.Gateway;
 import com.unida.library.device.exception.UniDAIDFormatException;
-import com.unida.library.notification.INotificationCallback;
+import com.unida.library.device.ontology.IDeviceAccessLayerOntologyFacade;
+import com.unida.library.device.ontology.IUniDAOntologyCodec;
+import com.unida.library.device.ontology.exception.ClassNotFoundInOntologyException;
 import com.unida.library.device.to.DeviceConversionOperations;
 import com.unida.library.device.to.GatewayTO;
-import com.unida.log.UniDALoggers;
 import com.unida.library.manage.IUniDAManagementFacade;
+import com.unida.library.notification.INotificationInternalCallback;
+import com.unida.library.operation.device.IOperationInternalCallback;
+import com.unida.library.operation.gateway.IAutonomousBehaviourInternalCallback;
+import com.unida.log.UniDALoggers;
 import com.unida.protocol.IUniDACommChannel;
+import com.unida.protocol.UniDAAddress;
+import com.unida.protocol.handling.IUniDAProtocolMessageHandler;
+import com.unida.protocol.handling.UniDAProtocolMessageProcessor;
+import com.unida.protocol.handling.exception.UnsupportedMessageTypeErrorException;
 import com.unida.protocol.message.ErrorCode;
 import com.unida.protocol.message.MessageType;
 import com.unida.protocol.message.UniDAMessage;
 import com.unida.protocol.message.ack.UniDAOperationAckMessage;
+import com.unida.protocol.message.autonomousbehaviour.UniDAABQueryReplyMessage;
+import com.unida.protocol.message.autonomousbehaviour.UniDAABQueryRequestMessage;
 import com.unida.protocol.message.discovery.DiscoverUniDAGatewayDevicesReplyMessage;
-import com.unida.protocol.handling.IUniDAProtocolMessageHandler;
-import com.unida.protocol.handling.UniDAProtocolMessageProcessor;
 import com.unida.protocol.message.discovery.DiscoverUniDAGatewayDevicesRequestMessage;
 import com.unida.protocol.message.discovery.UniDAGatewayHeartbeatMessage;
 import com.unida.protocol.message.notification.UniDANotificationMessage;
@@ -59,10 +65,10 @@ import com.unida.protocol.message.querydevice.UniDAQueryDeviceRequestMessage;
 import com.unida.protocol.message.querydevicestate.UniDAQueryDeviceStateReplyMessage;
 import com.unida.protocol.message.querydevicestate.UniDAQueryDeviceStateRequestMessage;
 import com.unida.protocol.message.querydevicestate.UniDAWriteDeviceStateRequestMessage;
+import com.unida.protocol.message.sendcommand.UniDASendCommandToDeviceMessage;
 import com.unida.protocol.reception.IUniDAProtocolMessageProcessingQueue;
 import com.unida.protocol.reception.LinkedListUniDAProtocolMessageProcessingQueue;
 import com.unida.protocol.reception.UniDAProtocolMessageReceiver;
-import com.unida.protocol.message.sendcommand.UniDASendCommandToDeviceMessage;
 import java.util.Collection;
 import java.util.logging.Level;
 
@@ -114,17 +120,20 @@ public class DefaultUniDAFacade extends AbstractUniDAFacadeHelper implements IUn
     private void registerMessageProcessors()
     {
 
-        this.msgProcessor.registerMessageHandler(new DiscoverUniDAGatewayReplyMessageHandler());
+        this.msgProcessor.registerMessageHandler(new UniDADiscoverGatewayReplyMessageHandler());
         this.msgProcessor.registerMessageHandler(new UniDANotificationMessageHandler());
         this.msgProcessor.registerMessageHandler(new UniDAOperationAckMessageHandler());
         this.msgProcessor.registerMessageHandler(new UniDAQueryDeviceReplyMessageHandler());
         this.msgProcessor.registerMessageHandler(new UniDAQueryDeviceStateReplyMessageHandler());
         this.msgProcessor.registerMessageHandler(new UnidaHeartbeatMessageHandler());        
-
+        this.msgProcessor.registerMessageHandler(new UniDAQueryAutonomousBehaviourRulesReplyMessageHandler());
+        
     }
 
+    @Override
     public void start()
     {
+        super.start();
         this.msgProcessor.startProcessing();
         this.msgReceiver.startReception();
     }
@@ -151,14 +160,14 @@ public class DefaultUniDAFacade extends AbstractUniDAFacadeHelper implements IUn
     }
 
     @Override
-    public void queryDeviceState(long opId, DeviceID deviceId, String stateId, IUnidaNetworkFacadeCallback callback) throws CommunicationException 
+    public void queryDeviceState(long opId, DeviceID deviceId, String stateId, IOperationInternalCallback callback) throws CommunicationException 
     {
         addOperationCallback(opId, deviceId, callback);
         this.commChannel.sendMessage(deviceId, new UniDAQueryDeviceStateRequestMessage(this.ontologyCodec, opId, deviceId, stateId));
     }    
 
     @Override
-    public void queryDevice(long opId, DeviceID deviceId, IUnidaNetworkFacadeCallback callback) throws CommunicationException 
+    public void queryDevice(long opId, DeviceID deviceId, IOperationInternalCallback callback) throws CommunicationException 
     {
         addOperationCallback(opId, deviceId, callback);
         this.commChannel.sendMessage(deviceId, new UniDAQueryDeviceRequestMessage(this.ontologyCodec, opId, deviceId));
@@ -166,7 +175,7 @@ public class DefaultUniDAFacade extends AbstractUniDAFacadeHelper implements IUn
     
     @Override
     public void writeDeviceState(long opId, DeviceID deviceId, String stateId, 
-        String stateValueId, String stateValue, IUnidaNetworkFacadeCallback callback) throws CommunicationException
+        String stateValueId, String stateValue, IOperationInternalCallback callback) throws CommunicationException
     {
         addOperationCallback(opId, deviceId, callback);
         this.commChannel.sendMessage(deviceId, 
@@ -175,28 +184,35 @@ public class DefaultUniDAFacade extends AbstractUniDAFacadeHelper implements IUn
 
     @Override
     public void sendCommand(long opId, DeviceID deviceId, String funcId, String cmdId,
-            String[] params, IUnidaNetworkFacadeCallback callback) throws CommunicationException 
+            String[] params, IOperationInternalCallback callback) throws CommunicationException 
     {
         addOperationCallback(opId, deviceId, callback);
         this.commChannel.sendMessage(deviceId, new UniDASendCommandToDeviceMessage(this.ontologyCodec, opId, deviceId, funcId, cmdId, params));
     }
 
     @Override
-    public void suscribeTo(long notificationId, DeviceID deviceId, String stateId, String[] params, INotificationCallback callback) throws CommunicationException
+    public void suscribeTo(long notificationId, DeviceID deviceId, String stateId, String[] params, INotificationInternalCallback callback) throws CommunicationException
     {
         addNotificationCallback(notificationId, deviceId, callback);
         this.commChannel.sendMessage(deviceId, new UniDANotificationSuscriptionRequestMessage(this.ontologyCodec, notificationId, deviceId, stateId));
     }
 
     @Override
-    public void unsuscribeFrom(long notificationId, DeviceID deviceId, String stateId, String[] params, INotificationCallback callback) throws CommunicationException
+    public void unsuscribeFrom(long notificationId, DeviceID deviceId, String stateId, String[] params, INotificationInternalCallback callback) throws CommunicationException
     {
         removeNotificationCallback(notificationId, deviceId);
         this.commChannel.sendMessage(deviceId, new UniDANotificationUnsuscriptionRequestMessage(this.ontologyCodec, notificationId, deviceId, stateId, params));
     }
+    
+    @Override
+    public void queryAutonomousBehaviourRules(long notificationId, UniDAAddress gatewayAddress, IAutonomousBehaviourInternalCallback callback) throws CommunicationException
+    {
+        addAutonomousBehaviourCallback(notificationId, gatewayAddress, callback);
+        this.commChannel.sendMessage(gatewayAddress, new UniDAABQueryRequestMessage(gatewayAddress, ontologyCodec, notificationId));
+    }
 
     @Override
-    public void renewSuscription(long notificationId, DeviceID deviceId, String stateId, String[] params, INotificationCallback callback) throws CommunicationException
+    public void renewSuscription(long notificationId, DeviceID deviceId, String stateId, String[] params, INotificationInternalCallback callback) throws CommunicationException
     {
         removeNotificationCallback(notificationId, deviceId);
         suscribeTo(notificationId, deviceId, stateId, params, callback);
@@ -206,59 +222,8 @@ public class DefaultUniDAFacade extends AbstractUniDAFacadeHelper implements IUn
     public boolean supports(Gateway dev)
     {
         return true;
-    }
-    
-
-    protected class OperationEntry
-    {
-
-        private long ticketId;
-        private String deviceId;
-
-        public OperationEntry(long ticketId, String deviceId)
-        {
-            this.ticketId = ticketId;
-            this.deviceId = deviceId;
-        }
-
-        public String getDeviceId()
-        {
-            return deviceId;
-        }
-
-        public long getTicketId()
-        {
-            return ticketId;
-        }
-
-        @Override
-        public boolean equals(Object obj)
-        {
-            if (obj == null)
-            {
-                return false;
-            }
-            if (getClass() != obj.getClass())
-            {
-                return false;
-            }
-            final OperationEntry other = (OperationEntry) obj;
-            if (this.ticketId != other.ticketId)
-            {
-                return false;
-            }
-            return !((this.deviceId == null) ? (other.deviceId != null) : !this.deviceId.equals(other.deviceId));
-        }
-
-        @Override
-        public int hashCode()
-        {
-            int hash = 3;
-            hash = 83 * hash + (int) (this.ticketId ^ (this.ticketId >>> 32));
-            hash = 83 * hash + (this.deviceId != null ? this.deviceId.hashCode() : 0);
-            return hash;
-        }
-    }
+    }   
+       
 
     private class UniDAQueryDeviceStateReplyMessageHandler implements IUniDAProtocolMessageHandler
     {
@@ -277,7 +242,7 @@ public class DefaultUniDAFacade extends AbstractUniDAFacadeHelper implements IUn
             {
 
                 UniDAQueryDeviceStateReplyMessage reply = (UniDAQueryDeviceStateReplyMessage) msg;
-                IUnidaNetworkFacadeCallback cback = removeOperationCallback(reply.getOpId(), reply.getDeviceID());
+                IOperationInternalCallback cback = removeOperationCallback(reply.getOpId(), reply.getDeviceID());
 
                 if (cback != null)
                 {
@@ -314,7 +279,7 @@ public class DefaultUniDAFacade extends AbstractUniDAFacadeHelper implements IUn
             {
 
                 UniDAQueryDeviceReplyMessage reply = (UniDAQueryDeviceReplyMessage) msg;
-                IUnidaNetworkFacadeCallback cback = removeOperationCallback(reply.getOpId(), reply.getDeviceID());
+                IOperationInternalCallback cback = removeOperationCallback(reply.getOpId(), reply.getDeviceID());
 
                 if (null != cback)
                 {
@@ -367,7 +332,7 @@ public class DefaultUniDAFacade extends AbstractUniDAFacadeHelper implements IUn
             {
 
                 UniDAOperationAckMessage reply = (UniDAOperationAckMessage) msg;
-                IUnidaNetworkFacadeCallback cback = removeOperationCallback(reply.getOperationId(), reply.getDeviceID());
+                IOperationInternalCallback cback = removeOperationCallback(reply.getOperationId(), reply.getDeviceID());
 
                 if (cback != null)
                 {
@@ -404,7 +369,7 @@ public class DefaultUniDAFacade extends AbstractUniDAFacadeHelper implements IUn
             {
 
                 UniDANotificationMessage reply = (UniDANotificationMessage) msg;
-                INotificationCallback cback = getNotificationCallback(reply.getOpId(), reply.getDeviceID());
+                INotificationInternalCallback cback = getNotificationCallback(reply.getOpId(), reply.getDeviceID());
 
                 if (cback != null)
                 {
@@ -474,7 +439,7 @@ public class DefaultUniDAFacade extends AbstractUniDAFacadeHelper implements IUn
         }
     }
 
-    private class DiscoverUniDAGatewayReplyMessageHandler implements IUniDAProtocolMessageHandler
+    private class UniDADiscoverGatewayReplyMessageHandler implements IUniDAProtocolMessageHandler
     {
 
         @Override
@@ -514,4 +479,40 @@ public class DefaultUniDAFacade extends AbstractUniDAFacadeHelper implements IUn
 
         }
     }
+    
+    
+    private class UniDAQueryAutonomousBehaviourRulesReplyMessageHandler implements IUniDAProtocolMessageHandler
+    {
+
+        @Override
+        public boolean supports(UniDAMessage msg)
+        {
+            return MessageType.getTypeOf(msg.getCommandType()) == MessageType.ABQueryReply;
+        }
+
+        @Override
+        public UniDAMessage handle(UniDAMessage msg) throws UnsupportedMessageTypeErrorException
+        {
+            if (msg instanceof UniDAABQueryReplyMessage)
+            {
+             
+                UniDAABQueryReplyMessage reply = (UniDAABQueryReplyMessage) msg;
+                IAutonomousBehaviourInternalCallback cback = removeAutonomousBehaviourCallback(reply.getOpId(), reply.getSource());
+                
+                if (cback != null)
+                {
+                    if (reply.getErrorCode() == ErrorCode.Ok.getTypeValue())
+                    {
+                        cback.notifyGatewayAutonomousBehaviourRules(reply.getOpId(), reply.getSource(), reply.getABRules());
+                    }
+                }
+                
+            }
+            
+            return null;
+            
+        }
+        
+    }
+    
 }

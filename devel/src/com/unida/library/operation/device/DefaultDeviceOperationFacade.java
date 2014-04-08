@@ -26,21 +26,24 @@ package com.unida.library.operation.device;
 
 import com.mytechia.commons.framework.exception.InternalErrorException;
 import com.mytechia.commons.framework.modelaction.exception.InstanceNotFoundException;
-import com.unida.library.device.ontology.ControlCommandMetadata;
-import com.unida.library.device.ontology.DeviceStateMetadata;
-import com.unida.library.core.IUniDANetworkFacade;
 import com.unida.library.UniDAFactory;
+import com.unida.library.core.IUniDANetworkFacade;
 import com.unida.library.device.DeviceGroup;
 import com.unida.library.device.Gateway;
 import com.unida.library.device.IDevice;
+import com.unida.library.device.ontology.ControlCommandMetadata;
 import com.unida.library.device.ontology.ControlFunctionalityMetadata;
+import com.unida.library.device.ontology.DeviceStateMetadata;
 import com.unida.library.device.ontology.DeviceStateValue;
-import com.unida.library.operation.device.group.IGroupOperationManager;
+import com.unida.library.manage.IUniDAManagementFacade;
 import com.unida.library.notification.IDeviceStateNotificationCallback;
 import com.unida.library.notification.INotificationSuscriptionManager;
 import com.unida.library.notification.NotificationTicket;
+import com.unida.library.operation.OperationTicket;
+import com.unida.library.operation.OperationTicketManager;
+import com.unida.library.operation.OperationTypes;
 import com.unida.library.operation.device.exception.NotEnabledDeviceErrorException;
-import com.unida.library.manage.IUniDAManagementFacade;
+import com.unida.library.operation.device.group.IGroupOperationManager;
 import java.util.LinkedList;
 import java.util.Queue;
 
@@ -65,42 +68,42 @@ import java.util.Queue;
 public class DefaultDeviceOperationFacade implements IDeviceOperationFacade
 {
 
-    private INotificationSuscriptionManager suscriptionManager;
-    private UniDAFactory dalFactory;
-    private IGroupOperationManager groupManager;
-    private IUniDAManagementFacade deviceManager;
+    private INotificationSuscriptionManager notificationSuscriptionManager;
+    private UniDAFactory unidaFactory;
+    private IGroupOperationManager groupOperationManager;
+    private IUniDAManagementFacade unidaManager;
     private OperationTicketManager ticketManager;
-    private Queue<DefaultDeviceAccessLayerCallback> dalCallbackQueue;
+    private Queue<DefaultDeviceAccessLayerCallback> deviceAccessLayerCallbackQueue;
 
     public DefaultDeviceOperationFacade(
-            UniDAFactory dalFactory,
+            UniDAFactory unidaFactory,
             IGroupOperationManager groupManager,
             INotificationSuscriptionManager suscriptionManager,
-            IUniDAManagementFacade deviceManager)
+            IUniDAManagementFacade unidaManager)
     {
         this.ticketManager = new OperationTicketManager();
-        this.dalFactory = dalFactory;
-        this.groupManager = groupManager;
-        this.suscriptionManager = suscriptionManager;
-        this.deviceManager = deviceManager;
-        this.dalCallbackQueue = new LinkedList<>();
+        this.unidaFactory = unidaFactory;
+        this.groupOperationManager = groupManager;
+        this.notificationSuscriptionManager = suscriptionManager;
+        this.unidaManager = unidaManager;
+        this.deviceAccessLayerCallbackQueue = new LinkedList<>();
     }
 
-    void addDALCallback(DefaultDeviceAccessLayerCallback callback)
+    void addCallback(DefaultDeviceAccessLayerCallback callback)
     {
-        this.dalCallbackQueue.add(callback);
+        this.deviceAccessLayerCallbackQueue.add(callback);
     }
 
-    void removeDALCallback(DefaultDeviceAccessLayerCallback callback)
+    void removeCallback(DefaultDeviceAccessLayerCallback callback)
     {
-        this.dalCallbackQueue.remove(callback);
+        this.deviceAccessLayerCallbackQueue.remove(callback);
     }
 
     private Gateway getDeviceGateway(IDevice dev) throws NotEnabledDeviceErrorException, InstanceNotFoundException, InternalErrorException
     {
 
-        IDevice realDevice = this.deviceManager.findById(dev.getId().toString());
-        return this.deviceManager.findDeviceGatewayById(realDevice.getId().getGatewayId().toString());
+        IDevice realDevice = this.unidaManager.findById(dev.getId().toString());
+        return this.unidaManager.findDeviceGatewayById(realDevice.getId().getGatewayId().toString());
 
     }
 
@@ -113,15 +116,15 @@ public class DefaultDeviceOperationFacade implements IDeviceOperationFacade
 
         if (dev.isGroup())
         {
-            return this.groupManager.asyncQueryDeviceState(ot, dev, state, callback);
+            return this.groupOperationManager.asyncQueryDeviceState(ot, dev, state, callback);
         } else
         {
             try
             {
                 Gateway devGw = getDeviceGateway(dev);
-                IUniDANetworkFacade dalInstance = this.dalFactory.getDALInstance(devGw);
+                IUniDANetworkFacade dalInstance = this.unidaFactory.getDALInstance(devGw);
                 DefaultDeviceAccessLayerCallback dalCback = new DefaultDeviceAccessLayerCallback(this, ot, dev, state, callback);
-                addDALCallback(dalCback);
+                addCallback(dalCback);
                 dalInstance.queryDeviceState(ot.getId(), dev.getId(), state.getId(), dalCback);
                 return ot;
             } catch (InstanceNotFoundException ex)
@@ -141,15 +144,15 @@ public class DefaultDeviceOperationFacade implements IDeviceOperationFacade
 
         if (dev.isGroup())
         {
-            return this.groupManager.asyncWriteDeviceState(ot, dev, state, stateValue, callback);
+            return this.groupOperationManager.asyncWriteDeviceState(ot, dev, state, stateValue, callback);
         } else
         {
             try
             {
                 Gateway devGw = getDeviceGateway(dev);
-                IUniDANetworkFacade dalInstance = this.dalFactory.getDALInstance(devGw);
+                IUniDANetworkFacade dalInstance = this.unidaFactory.getDALInstance(devGw);
                 DefaultDeviceAccessLayerCallback dalCback = new DefaultDeviceAccessLayerCallback(this, ot, dev, state, callback);
-                addDALCallback(dalCback);
+                addCallback(dalCback);
                 dalInstance.writeDeviceState(ot.getId(), dev.getId(), state.getId(), 
                         stateValue.getValueID(), stateValue.getValueRaw(), dalCback);
                 return ot;
@@ -169,15 +172,15 @@ public class DefaultDeviceOperationFacade implements IDeviceOperationFacade
 
         if (dev.isGroup())
         {
-            return this.groupManager.asyncQueryDeviceStates(ot, dev, callback);
+            return this.groupOperationManager.asyncQueryDeviceStates(ot, dev, callback);
         } else
         {
             try
             {
                 Gateway devGw = getDeviceGateway(dev);
-                IUniDANetworkFacade dalInstance = this.dalFactory.getDALInstance(devGw);
+                IUniDANetworkFacade dalInstance = this.unidaFactory.getDALInstance(devGw);
                 DefaultDeviceAccessLayerCallback dalCback = new DefaultDeviceAccessLayerCallback(this, ot, dev, callback);
-                addDALCallback(dalCback);
+                addCallback(dalCback);
                 dalInstance.queryDevice(ot.getId(), dev.getId(), dalCback);
                 return ot;
             } catch (InstanceNotFoundException ex)
@@ -197,15 +200,15 @@ public class DefaultDeviceOperationFacade implements IDeviceOperationFacade
 
         if (dev.isGroup())
         {
-            return this.groupManager.sendCommand(ot, (DeviceGroup) dev, func, cmd, params, callback);
+            return this.groupOperationManager.sendCommand(ot, (DeviceGroup) dev, func, cmd, params, callback);
         } else
         {
             try
             {
                 Gateway devGw = getDeviceGateway(dev);
-                IUniDANetworkFacade dalInstance = this.dalFactory.getDALInstance(devGw);
+                IUniDANetworkFacade dalInstance = this.unidaFactory.getDALInstance(devGw);
                 DefaultDeviceAccessLayerCallback dalCback = new DefaultDeviceAccessLayerCallback(this, ot, dev, func, cmd, callback);
-                addDALCallback(dalCback);
+                addCallback(dalCback);
                 dalInstance.sendCommand(ot.getId(), dev.getId(), func.getId(), cmd.getId(), params, dalCback);
                 return ot;
             } catch (InstanceNotFoundException ex)
@@ -222,7 +225,7 @@ public class DefaultDeviceOperationFacade implements IDeviceOperationFacade
             IDeviceStateNotificationCallback callback)
             throws InternalErrorException
     {
-        return this.suscriptionManager.suscribeTo(dev, state, params, callback);
+        return this.notificationSuscriptionManager.suscribeTo(dev, state, params, callback);
     }
 
     @Override
@@ -231,17 +234,8 @@ public class DefaultDeviceOperationFacade implements IDeviceOperationFacade
             String[] params, IDeviceStateNotificationCallback callback)
             throws InternalErrorException
     {
-        this.suscriptionManager.unsuscribeFrom(nt, dev, state, params, callback);
+        this.notificationSuscriptionManager.unsuscribeFrom(nt, dev, state, params, callback);
     }
 
-    private class OperationTicketManager
-    {
-
-        private long ticketId = 0;
-
-        public synchronized OperationTicket issueTicket(OperationTypes type)
-        {
-            return new OperationTicket(ticketId++, type);
-        }
-    }
+    
 }

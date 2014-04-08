@@ -24,8 +24,11 @@
 
 package com.unida.library.core;
 
+import com.unida.library.operation.device.IOperationInternalCallback;
 import com.unida.library.device.DeviceID;
-import com.unida.library.notification.INotificationCallback;
+import com.unida.library.notification.INotificationInternalCallback;
+import com.unida.library.operation.gateway.IAutonomousBehaviourInternalCallback;
+import com.unida.protocol.UniDAAddress;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -36,13 +39,13 @@ import java.util.Set;
 
 /**
  * <p><b>
- * </b></br>
+ * </b>
  *
  * </p>
  *
  * <p><b>Creation date:</b> 01-02-2010</p>
  *
- * <p><b>Changelog:</b></br>
+ * <p><b>Changelog:</b>
  * <ul>
  * <li>1 - 01-02-2010<\br> Initial release</li>
  * </ul>
@@ -55,15 +58,16 @@ public abstract class AbstractUniDAFacadeHelper
 {
 
     private static final long OP_EXPIRATION_TIME = 15;
-
-
-    protected Map<OperationEntry, IUnidaNetworkFacadeCallback> opCallbacks;
-    protected Map<OperationEntry, INotificationCallback> ntCallbacks;
-
-
+    
     protected long opExpirationTime = OP_EXPIRATION_TIME;
 
     private OperationExpirationChecker expirationCheckerThread;
+
+    protected final Map<DeviceOperationEntry, IOperationInternalCallback> opCallbacks;
+    
+    protected final Map<DeviceOperationEntry, INotificationInternalCallback> ntCallbacks;
+    
+    protected final Map<GatewayOperationEntry, IAutonomousBehaviourInternalCallback> abCallbacks;  
 
     
     public AbstractUniDAFacadeHelper(long operationExpTime)
@@ -71,10 +75,10 @@ public abstract class AbstractUniDAFacadeHelper
 
         this.opExpirationTime = operationExpTime;
         this.expirationCheckerThread = new OperationExpirationChecker();
-        this.opCallbacks = Collections.synchronizedMap(new HashMap<OperationEntry, IUnidaNetworkFacadeCallback>());
-        this.ntCallbacks = Collections.synchronizedMap(new HashMap<OperationEntry, INotificationCallback>());
-        this.expirationCheckerThread.start();
-
+        this.opCallbacks = Collections.synchronizedMap(new HashMap<DeviceOperationEntry, IOperationInternalCallback>());
+        this.ntCallbacks = Collections.synchronizedMap(new HashMap<DeviceOperationEntry, INotificationInternalCallback>());
+        this.abCallbacks = Collections.synchronizedMap(new HashMap<GatewayOperationEntry, IAutonomousBehaviourInternalCallback>());
+        
     }
 
 
@@ -84,58 +88,88 @@ public abstract class AbstractUniDAFacadeHelper
         this(OP_EXPIRATION_TIME);
 
     }
+    
+    
+    public void start()
+    {
+        this.expirationCheckerThread.start();
+    }
 
 
-    protected synchronized void addOperationCallback(long opTicketId, DeviceID deviceId, IUnidaNetworkFacadeCallback callback)
+    protected void addOperationCallback(long opTicketId, DeviceID deviceId, IOperationInternalCallback callback)
     {
         synchronized(opCallbacks) {
-            this.opCallbacks.put(new OperationEntry(opTicketId, deviceId), callback);
+            this.opCallbacks.put(new DeviceOperationEntry(opTicketId, deviceId), callback);
         }
     }
 
 
-    protected IUnidaNetworkFacadeCallback getOperationCallback(long opTicketId, DeviceID deviceId)
+    protected IOperationInternalCallback getOperationCallback(long opTicketId, DeviceID deviceId)
     {
         synchronized(opCallbacks) {
-            return this.opCallbacks.get(new OperationEntry(opTicketId, deviceId));
+            return this.opCallbacks.get(new DeviceOperationEntry(opTicketId, deviceId));
         }
     }
 
 
-    protected synchronized IUnidaNetworkFacadeCallback removeOperationCallback(long opTicketId, DeviceID deviceId)
+    protected IOperationInternalCallback removeOperationCallback(long opTicketId, DeviceID deviceId)
     {
         synchronized(opCallbacks) {
-            return this.opCallbacks.remove(new OperationEntry(opTicketId, deviceId));
+            return this.opCallbacks.remove(new DeviceOperationEntry(opTicketId, deviceId));
+        }
+    }
+
+    protected void addAutonomousBehaviourCallback(long opTickectId, UniDAAddress gatewayAddress, IAutonomousBehaviourInternalCallback callback)
+    {
+        synchronized(abCallbacks)
+        {
+            this.abCallbacks.put(new GatewayOperationEntry(opTickectId, gatewayAddress), callback);
+        }
+    }
+    
+    protected IAutonomousBehaviourInternalCallback getAutonomousBehaviourCallback(long opTicketId, UniDAAddress gatewayAddress)
+    {
+        synchronized(abCallbacks)
+        {
+            return this.abCallbacks.get(new GatewayOperationEntry(opTicketId, gatewayAddress));
+        }
+    }
+    
+    protected IAutonomousBehaviourInternalCallback removeAutonomousBehaviourCallback(long opTicketId, UniDAAddress gatewayAddress)
+    {
+        synchronized(abCallbacks)
+        {
+            return this.abCallbacks.remove(new GatewayOperationEntry(opTicketId, gatewayAddress));
+        }
+    }
+    
+
+    protected void addNotificationCallback(long opTicketId, DeviceID deviceId, INotificationInternalCallback callback)
+    {
+        synchronized(opCallbacks) {
+            this.ntCallbacks.put(new DeviceOperationEntry(opTicketId, deviceId), callback);
         }
     }
 
 
-    protected void addNotificationCallback(long opTicketId, DeviceID deviceId, INotificationCallback callback)
+    protected INotificationInternalCallback getNotificationCallback(long opTicketId, DeviceID deviceId)
     {
         synchronized(opCallbacks) {
-            this.ntCallbacks.put(new OperationEntry(opTicketId, deviceId), callback);
+            return this.ntCallbacks.get(new DeviceOperationEntry(opTicketId, deviceId));
         }
     }
 
 
-    protected INotificationCallback getNotificationCallback(long opTicketId, DeviceID deviceId)
+    protected INotificationInternalCallback removeNotificationCallback(long opTicketId, DeviceID deviceId)
     {
         synchronized(opCallbacks) {
-            return this.ntCallbacks.get(new OperationEntry(opTicketId, deviceId));
-        }
-    }
-
-
-    protected INotificationCallback removeNotificationCallback(long opTicketId, DeviceID deviceId)
-    {
-        synchronized(opCallbacks) {
-            return this.ntCallbacks.remove(new OperationEntry(opTicketId, deviceId));
+            return this.ntCallbacks.remove(new DeviceOperationEntry(opTicketId, deviceId));
         }
     }
 
 
 
-    protected class OperationEntry
+    protected class DeviceOperationEntry
     {
 
         public long ticketId;
@@ -143,14 +177,14 @@ public abstract class AbstractUniDAFacadeHelper
         public long timestamp;
 
         
-        public OperationEntry(long ticketId, DeviceID deviceId)
+        public DeviceOperationEntry(long ticketId, DeviceID deviceId)
         {
             this(ticketId, deviceId, System.currentTimeMillis());
         }
 
 
 
-        public OperationEntry(long ticketId, DeviceID deviceId, long timestamp)
+        public DeviceOperationEntry(long ticketId, DeviceID deviceId, long timestamp)
         {
             this.ticketId = ticketId;
             this.deviceId = deviceId;
@@ -167,11 +201,8 @@ public abstract class AbstractUniDAFacadeHelper
             if (getClass() != obj.getClass()) {
                 return false;
             }
-            final OperationEntry other = (OperationEntry) obj;
-            if (this.ticketId != other.ticketId) {
-                return false;
-            }
-            return true;
+            final DeviceOperationEntry other = (DeviceOperationEntry) obj;
+            return this.ticketId == other.ticketId;
         }
 
 
@@ -184,6 +215,52 @@ public abstract class AbstractUniDAFacadeHelper
         }
 
     }
+    
+    
+    
+    protected class GatewayOperationEntry
+    {
+        public long ticketId;
+        public UniDAAddress gatewayAddress;
+        public long timestamp;
+        
+        
+        public GatewayOperationEntry(long ticketId, UniDAAddress gatewayAddress, long timestamp)
+        {
+            this.ticketId = ticketId;
+            this.gatewayAddress = gatewayAddress;
+            this.timestamp = timestamp;
+        }
+        
+        public GatewayOperationEntry(long ticketId, UniDAAddress gatewayAddress)
+        {
+            this(ticketId, gatewayAddress, System.currentTimeMillis());
+        }
+
+        @Override
+        public int hashCode()
+        {
+            int hash = 5;
+            hash = 37 * hash + (int) (this.ticketId ^ (this.ticketId >>> 32));
+            return hash;
+        }
+
+        @Override
+        public boolean equals(Object obj)
+        {
+            if (obj == null)
+            {
+                return false;
+            }
+            if (getClass() != obj.getClass())
+            {
+                return false;
+            }
+            final GatewayOperationEntry other = (GatewayOperationEntry) obj;
+            return this.ticketId == other.ticketId;
+        }
+    }
+    
 
 
     /**
@@ -217,25 +294,23 @@ public abstract class AbstractUniDAFacadeHelper
         @Override
         public void run()
         {
-
-
-            long expTime = opExpirationTime;
-            long currentTime = 0;
+            
+            long expTime = opExpirationTime;           
 
             while(true) {
 
-                currentTime = System.currentTimeMillis();
+                long currentTime = System.currentTimeMillis();
 
-                Set<Entry<OperationEntry, IUnidaNetworkFacadeCallback>> cBacks = opCallbacks.entrySet();
+                Set<Entry<DeviceOperationEntry, IOperationInternalCallback>> cBacks = opCallbacks.entrySet();
 
                 synchronized(opCallbacks) {
                 
-                    Iterator<Entry<OperationEntry, IUnidaNetworkFacadeCallback>> ite = cBacks.iterator();
+                    Iterator<Entry<DeviceOperationEntry, IOperationInternalCallback>> ite = cBacks.iterator();
                     
                     while (ite.hasNext()) {
-                        Entry<OperationEntry, IUnidaNetworkFacadeCallback> cb = ite.next();
+                        Entry<DeviceOperationEntry, IOperationInternalCallback> cb = ite.next();
 
-                        OperationEntry op = cb.getKey();
+                        DeviceOperationEntry op = cb.getKey();
 
                         if ( (op.timestamp + expTime) < currentTime) {
                             cb.getValue().notifyExpiration(op.ticketId);

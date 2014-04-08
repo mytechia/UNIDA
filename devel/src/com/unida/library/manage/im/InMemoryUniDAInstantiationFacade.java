@@ -86,9 +86,9 @@ public class InMemoryUniDAInstantiationFacade implements IUniDAInstantiationFaca
     private IUniDAOntologyCodec ontologyCodec;
 
 
-    protected UniDAFactory dalFactory = null;
+    protected UniDAFactory unidaFactory = null;
 
-    protected DefaultUniDAFacade dalProtocolFacade;
+    protected DefaultUniDAFacade unidaProtocolFacade;
 
     protected IUniDACommChannel commChannel;
 
@@ -186,26 +186,26 @@ public class InMemoryUniDAInstantiationFacade implements IUniDAInstantiationFaca
     {
         
         this.commChannel = new UDPUniDACommChannel(new DefaultMessageFactory(ontologyCodec)); //Default port
-        this.dalProtocolFacade = new DefaultUniDAFacade(this.commChannel, this.deviceManageFacade, this.ontologyFacade, this.ontologyCodec);
-        this.dalProtocolFacade.start();
+        this.unidaProtocolFacade = new DefaultUniDAFacade(this.commChannel, this.deviceManageFacade, this.ontologyFacade, this.ontologyCodec);
+        this.unidaProtocolFacade.start();
 
-        this.dalFactory = new UniDAFactory(this.dalProtocolFacade);
+        this.unidaFactory = new UniDAFactory(this.unidaProtocolFacade);
 
         IGroupOperationManager gom = 
-                new DefaultGroupOperationManager(dalFactory, this.deviceManageFacade);
+                new DefaultGroupOperationManager(unidaFactory, this.deviceManageFacade);
 
         this.notificationManager =
-                new DefaultNotificationSuscriptionManager(dalFactory, this.deviceManageFacade);
+                new DefaultNotificationSuscriptionManager(unidaFactory, this.deviceManageFacade);
 
         this.deviceOperationFacade =
-                new DefaultDeviceOperationFacade(dalFactory, gom, this.notificationManager, this.deviceManageFacade);
+                new DefaultDeviceOperationFacade(unidaFactory, gom, this.notificationManager, this.deviceManageFacade);
         
     }
     
     protected void setupGatewayOperationFacade()
     {
         
-        this.gatewayOperationFacade = new DefaultGatewayOperationFacade(commChannel, ontologyCodec);
+        this.gatewayOperationFacade = new DefaultGatewayOperationFacade(commChannel, ontologyCodec, unidaFactory, deviceManageFacade);
         
     }
 

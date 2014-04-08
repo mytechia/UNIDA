@@ -23,6 +23,7 @@
  */
 package com.unida.library.operation.device;
 
+import com.unida.library.operation.OperationTicket;
 import com.mytechia.commons.framework.exception.InternalErrorException;
 import com.unida.library.device.IDevice;
 import com.unida.library.device.ontology.DeviceStateMetadata;

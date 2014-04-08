@@ -29,7 +29,6 @@ import com.unida.library.device.DeviceID;
 import com.unida.library.device.Gateway;
 import com.unida.library.device.exception.UniDAIDFormatException;
 import com.unida.library.manage.im.InMemoryUniDAInstantiationFacade;
-import com.unida.library.notification.NotificationTicket;
 import com.unida.protocol.UniDAAddress;
 import com.unida.protocol.message.autonomousbehaviour.UniDAABRuleVO;
 import com.unida.protocol.message.autonomousbehaviour.action.CommandExecutionAction;
@@ -39,8 +38,6 @@ import com.unida.protocol.message.autonomousbehaviour.trigger.RuleTrigger;
 import com.unida.protocol.message.autonomousbehaviour.trigger.StateChangeTrigger;
 import com.unida.protocol.message.autonomousbehaviour.trigger.statechange.StateConditionNull;
 import com.unida.tools.librarybasicgui.util.DomoParsing;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -107,6 +104,7 @@ public class AutonomousBehaviourDialog extends javax.swing.JDialog
         {
             Gateway gateway = instantiationFacade.getDeviceManageFacade().findDeviceGatewayById(gatewayAddress);
 
+            
         } catch (InternalErrorException | InstanceNotFoundException ex)
         {
             JOptionPane.showMessageDialog(this, ex.toString());
@@ -166,6 +164,8 @@ public class AutonomousBehaviourDialog extends javax.swing.JDialog
         jRadioWriteStateAction = new javax.swing.JRadioButton();
         jRadioCommandAction = new javax.swing.JRadioButton();
         jTextActionDestinationDeviceNumber = new javax.swing.JTextField();
+        jButtonRefreshABRules = new javax.swing.JButton();
+        jLabel7 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Autonomous behaviour management");
@@ -223,7 +223,7 @@ public class AutonomousBehaviourDialog extends javax.swing.JDialog
 
         jLabel1.setText("Autonomous Behaviour Rules:");
 
-        jButtonRemoveABRule.setText("Delete Rule");
+        jButtonRemoveABRule.setText("Delete Selected Rule");
         jButtonRemoveABRule.addActionListener(new java.awt.event.ActionListener()
         {
             public void actionPerformed(java.awt.event.ActionEvent evt)
@@ -511,6 +511,17 @@ public class AutonomousBehaviourDialog extends javax.swing.JDialog
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        jButtonRefreshABRules.setText("Refresh rules");
+        jButtonRefreshABRules.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                jButtonRefreshABRulesActionPerformed(evt);
+            }
+        });
+
+        jLabel7.setText("Device:");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -519,41 +530,48 @@ public class AutonomousBehaviourDialog extends javax.swing.JDialog
             .addComponent(jSeparator1)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jPanelTriggerType, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jPanelTriggerContainer, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(15, 15, 15)
+                                .addComponent(jLabel2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jTextTriggerSourceDeviceNumber, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jPanelTriggerType, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jPanelTriggerContainer, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jPanelActionType, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jPanelActionContainer, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(jPanelActionType, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jPanelActionContainer, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(jLabel5)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jTextActionDestination, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jLabel7)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jTextActionDestinationDeviceNumber, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(34, 34, 34))))
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 341, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 341, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(426, 426, 426)
+                                .addComponent(jButtonAddABRule))
+                            .addGroup(layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(jButtonRefreshABRules)
+                                .addGap(266, 266, 266)
+                                .addComponent(jButtonRemoveABRule)))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
-            .addGroup(layout.createSequentialGroup()
-                .addGap(15, 15, 15)
-                .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jTextTriggerSourceDeviceNumber, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel5)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jTextActionDestination, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jTextActionDestinationDeviceNumber, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(86, 86, 86))
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(426, 426, 426)
-                        .addComponent(jButtonAddABRule))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(425, 425, 425)
-                        .addComponent(jButtonRemoveABRule)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -563,7 +581,9 @@ public class AutonomousBehaviourDialog extends javax.swing.JDialog
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPaneABRules, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButtonRemoveABRule)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButtonRemoveABRule)
+                    .addComponent(jButtonRefreshABRules))
                 .addGap(12, 12, 12)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -572,7 +592,8 @@ public class AutonomousBehaviourDialog extends javax.swing.JDialog
                     .addComponent(jLabel5)
                     .addComponent(jTextTriggerSourceDeviceNumber, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTextActionDestination, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextActionDestinationDeviceNumber, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jTextActionDestinationDeviceNumber, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel7))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jPanelActionType, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -673,7 +694,7 @@ public class AutonomousBehaviourDialog extends javax.swing.JDialog
     private void jRadioPeriodicTriggerActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jRadioPeriodicTriggerActionPerformed
     {//GEN-HEADEREND:event_jRadioPeriodicTriggerActionPerformed
         hideTriggerPanels();
-
+        // TODO
     }//GEN-LAST:event_jRadioPeriodicTriggerActionPerformed
 
 
@@ -687,7 +708,7 @@ public class AutonomousBehaviourDialog extends javax.swing.JDialog
     private void jRadioLinkStateActionActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jRadioLinkStateActionActionPerformed
     {//GEN-HEADEREND:event_jRadioLinkStateActionActionPerformed
         hideActionPanels();
-
+        // TODO
     }//GEN-LAST:event_jRadioLinkStateActionActionPerformed
 
 
@@ -701,14 +722,20 @@ public class AutonomousBehaviourDialog extends javax.swing.JDialog
     private void jRadioWriteStateActionActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jRadioWriteStateActionActionPerformed
     {//GEN-HEADEREND:event_jRadioWriteStateActionActionPerformed
         hideActionPanels();
-
+        // TODO
     }//GEN-LAST:event_jRadioWriteStateActionActionPerformed
+
+    private void jButtonRefreshABRulesActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jButtonRefreshABRulesActionPerformed
+    {//GEN-HEADEREND:event_jButtonRefreshABRulesActionPerformed
+        loadABRules();
+    }//GEN-LAST:event_jButtonRefreshABRulesActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup buttonGroupActionType;
     private javax.swing.ButtonGroup buttonGroupTriggerType;
     private javax.swing.JButton jButtonAddABRule;
+    private javax.swing.JButton jButtonRefreshABRules;
     private javax.swing.JButton jButtonRemoveABRule;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
@@ -718,6 +745,7 @@ public class AutonomousBehaviourDialog extends javax.swing.JDialog
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanelActionContainer;

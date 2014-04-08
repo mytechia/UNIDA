@@ -44,13 +44,13 @@ import java.util.logging.Level;
 /**
  * <p><b>
  * Sends and receives HI3 DAL protocol messages using UDP sockets
- * </b></br>
+ * </b>
  *
  * </p>
  *
  * <p><b>Creation date:</b> 30-01-2010</p>
  *
- * <p><b>Changelog:</b></br>
+ * <p><b>Changelog:</b>
  * <ul>
  * <li>1 - 30-01-2010<\br> Initial release</li>
  * </ul>

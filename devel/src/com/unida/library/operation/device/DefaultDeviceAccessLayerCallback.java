@@ -24,7 +24,9 @@
  */
 package com.unida.library.operation.device;
 
-import com.unida.library.core.IUnidaNetworkFacadeCallback;
+import com.unida.library.operation.OperationFailures;
+import com.unida.library.operation.OperationTicket;
+import com.unida.library.operation.OperationTypes;
 import com.unida.library.device.IDevice;
 import com.unida.library.device.ontology.DeviceState;
 import com.unida.library.device.ontology.ControlCommandMetadata;
@@ -36,16 +38,16 @@ import java.util.ArrayList;
 
 /**
  * <p><b>
- * Implementation of the DALCallback that translates it to a
- * IDeviceOperationCallback in order to export the DAL facade throught the
+ * Implementation of the IOperationInternalCallback that translates it to a
+ * IDeviceOperationCallback in order to export the UniDA facade throught the
  * higher level IDeviceOperationFacade. It uses OperationTicket objects to match
  * operation responses with operation requests.
- * </b></br>
+ * </b>
  * </p>
  *
  * <p><b>Creation date:</b> 18-01-2010</p>
  *
- * <p><b>Changelog:</b></br>
+ * <p><b>Changelog:</b>
  * <ul>
  * <li>1 - 18-01-2010<\br> Initial release</li>
  * </ul>
@@ -54,7 +56,7 @@ import java.util.ArrayList;
  * @author Gervasio Varela
  * @version 1
  */
-public class DefaultDeviceAccessLayerCallback implements IUnidaNetworkFacadeCallback
+public class DefaultDeviceAccessLayerCallback implements IOperationInternalCallback
 {
 
     private OperationTicket ticket;
@@ -138,7 +140,7 @@ public class DefaultDeviceAccessLayerCallback implements IUnidaNetworkFacadeCall
 
     private void finishCallback()
     {
-        this.deviceOpFacade.removeDALCallback(this);
+        this.deviceOpFacade.removeCallback(this);
     }
 
     @Override
@@ -162,14 +164,13 @@ public class DefaultDeviceAccessLayerCallback implements IUnidaNetworkFacadeCall
         {
             DeviceStateMetadata[] stateList = this.device.getDeviceClass().getStates();
             ArrayList<DeviceState> resultStates = new ArrayList<>(stateList.length);
-            for (int i = 0; i < stateList.length; i++)
+            for (DeviceStateMetadata stateList1 : stateList)
             {
                 for (int j = 0; j < stateIds.length; j++)
                 {
-                    if (stateIds[j].equals(stateList[i].getId()) || stateIds[j].contains(stateList[i].getId()))
+                    if (stateIds[j].equals(stateList1.getId()) || stateIds[j].contains(stateList1.getId()))
                     {
-                        resultStates.add(new DeviceState(
-                                stateList[i], new DeviceStateValue(valuesIds[j], values[j])));
+                        resultStates.add(new DeviceState(stateList1, new DeviceStateValue(valuesIds[j], values[j])));
                     }
                 }
             }

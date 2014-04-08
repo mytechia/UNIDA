@@ -23,13 +23,24 @@
 package com.unida.library.operation.gateway;
 
 import com.mytechia.commons.framework.exception.InternalErrorException;
+import com.mytechia.commons.framework.modelaction.exception.InstanceNotFoundException;
 import com.mytechia.commons.framework.simplemessageprotocol.exception.CommunicationException;
+import com.unida.library.UniDAFactory;
+import com.unida.library.core.IUniDANetworkFacade;
+import com.unida.library.device.Gateway;
 import com.unida.library.device.ontology.IUniDAOntologyCodec;
+import com.unida.library.manage.IUniDAManagementFacade;
+import com.unida.library.operation.OperationTicket;
+import com.unida.library.operation.OperationTicketManager;
+import com.unida.library.operation.OperationTypes;
 import com.unida.protocol.IUniDACommChannel;
 import com.unida.protocol.UniDAAddress;
 import com.unida.protocol.message.autonomousbehaviour.UniDAABAddMessage;
 import com.unida.protocol.message.autonomousbehaviour.UniDAABRuleVO;
 import com.unida.protocol.message.discovery.DiscoverUniDAGatewayDevicesRequestMessage;
+import java.util.LinkedList;
+import java.util.Queue;
+
 
 /**
  *
@@ -42,13 +53,26 @@ public class DefaultGatewayOperationFacade implements IGatewayOperationFacade
     
     private IUniDAOntologyCodec ontologyCodec;
     
+    private UniDAFactory unidaFactory;
+    
+    private IUniDAManagementFacade unidaManager;
+    
+    private OperationTicketManager ticketManager;
+    
+    private Queue<DefaultGatewayAccessLayerCallback> gatewayAccessLayerCallbackQueue;
+    
     private int opId = 0;
     
     
-    public DefaultGatewayOperationFacade(IUniDACommChannel commChannel, IUniDAOntologyCodec ontologyCodec)
+    public DefaultGatewayOperationFacade(IUniDACommChannel commChannel, IUniDAOntologyCodec ontologyCodec,
+            UniDAFactory unidaFactory, IUniDAManagementFacade unidaManager)
     {
+        this.ticketManager = new OperationTicketManager();
+        this.gatewayAccessLayerCallbackQueue = new LinkedList<>();
         this.commChannel = commChannel;
         this.ontologyCodec = ontologyCodec;
+        this.unidaFactory = unidaFactory;
+        this.unidaManager = unidaManager;
     }
     
 
@@ -79,6 +103,39 @@ public class DefaultGatewayOperationFacade implements IGatewayOperationFacade
             throw new InternalErrorException(ex);
         }
         
+    }
+    
+    
+    @Override
+    public OperationTicket requestABRules(UniDAAddress gatewayAddress,
+            IAutonomousBehaviourCallback callback) throws InternalErrorException
+    {
+        OperationTicket ot = this.ticketManager.issueTicket(OperationTypes.QUERY_AUTONOMOUS_BEHAVIOUR);
+        
+        try
+        {
+            Gateway gateway = this.unidaManager.findDeviceGatewayById(gatewayAddress.toString());
+            IUniDANetworkFacade unidaNetworkInstance = this.unidaFactory.getDALInstance(gateway);
+            DefaultGatewayAccessLayerCallback internalCallback = new DefaultGatewayAccessLayerCallback(ot, gateway, this, callback);
+            addCallback(internalCallback);
+            unidaNetworkInstance.queryAutonomousBehaviourRules(opId, gatewayAddress, internalCallback);
+            return ot;
+            
+        } catch (InstanceNotFoundException ex)
+        {
+            throw new InternalErrorException(ex);
+        }
+    }
+    
+    
+    void addCallback(DefaultGatewayAccessLayerCallback callback)
+    {
+        this.gatewayAccessLayerCallbackQueue.add(callback);
+    }
+
+    void removeCallback(DefaultGatewayAccessLayerCallback callback)
+    {
+        this.gatewayAccessLayerCallbackQueue.remove(callback);
     }
     
     

@@ -37,7 +37,7 @@ import com.unida.library.device.ontology.ControlFunctionalityMetadata;
 import com.unida.library.device.ontology.DeviceStateValue;
 import com.unida.library.manage.IUniDAManagementFacade;
 import com.unida.library.operation.device.IDeviceOperationCallback;
-import com.unida.library.operation.device.OperationTicket;
+import com.unida.library.operation.OperationTicket;
 import java.util.Collection;
 import java.util.LinkedList;
 

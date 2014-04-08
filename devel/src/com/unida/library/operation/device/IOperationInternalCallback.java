@@ -22,7 +22,7 @@
  * 
  ******************************************************************************/
 
-package com.unida.library.core;
+package com.unida.library.operation.device;
 
 import com.unida.library.device.DeviceID;
 
@@ -31,13 +31,13 @@ import com.unida.library.device.DeviceID;
  * <p><b>
  * This callback must be implemented to receive responses from the specific
  * DAL implementations.
- * </b></br>
+ * </b>
  *
  * </p>
  *
  * <p><b>Creation date:</b> 15-01-2010</p>
  *
- * <p><b>Changelog:</b></br>
+ * <p><b>Changelog:</b>
  * <ul>
  * <li>1 - 15-01-2010<\br> Initial release</li>
  * </ul>
@@ -46,7 +46,7 @@ import com.unida.library.device.DeviceID;
  * @author Gervasio Varela
  * @version 1
  */
-public interface IUnidaNetworkFacadeCallback
+public interface IOperationInternalCallback
 {
 
 
@@ -61,14 +61,7 @@ public interface IUnidaNetworkFacadeCallback
 
     void notifyCommandExecution(long odId, DeviceID deviceId, String functionalityId, String commandId);
 
-
-    /** Notifies that the devices is unable to complete a requested operation
-     * due to some error.
-     *
-     * @param opId the id of the failed operation
-     * @param deviceId the id of the device that has failed
-     * @param failureId an indicator of the type of failure
-     */
+    
     void notifyDeviceFailure(long opId, DeviceID deviceId, String failureId);
     
 

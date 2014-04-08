@@ -22,12 +22,12 @@
 
 package com.unida.library.operation.device.group;
 
-import com.unida.library.core.IUnidaNetworkFacadeCallback;
+import com.unida.library.operation.device.IOperationInternalCallback;
 import com.unida.library.device.DeviceGroup;
 import com.unida.library.device.PhysicalDevice;
 import com.unida.library.operation.device.IDeviceOperationCallback;
-import com.unida.library.operation.device.OperationFailures;
-import com.unida.library.operation.device.OperationTicket;
+import com.unida.library.operation.OperationFailures;
+import com.unida.library.operation.OperationTicket;
 import com.unida.library.device.ontology.ControlCommandMetadata;
 import com.unida.library.device.ontology.DeviceStateMetadata;
 import com.unida.library.device.DeviceID;
@@ -60,7 +60,7 @@ import java.util.Queue;
  * @author Gervasio Varela
  * @version 1
  */
-public class GroupDeviceAccessLayerCallback implements IUnidaNetworkFacadeCallback
+public class GroupDeviceAccessLayerCallback implements IOperationInternalCallback
 {
 
     private OperationTicket ticket;

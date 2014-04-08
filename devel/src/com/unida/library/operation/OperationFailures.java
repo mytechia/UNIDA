@@ -20,19 +20,18 @@
  * 
  ******************************************************************************/
 
-package com.unida.library.operation.device;
+package com.unida.library.operation;
 
 /**
  * <p><b>
- * Enumeration of the different types of operation failures that the DAL device
- * support.
- * </b></br>
+ * Enumeration of the different types of operation failures.
+ * </b>
  *
  * </p>
  *
  * <p><b>Creation date:</b> 18-01-2010</p>
  *
- * <p><b>Changelog:</b></br>
+ * <p><b>Changelog:</b>
  * <ul>
  * <li>1 - 18-01-2010<\br> Initial release</li>
  * </ul>
@@ -48,7 +47,6 @@ public enum OperationFailures
     RESPONSE_EXPIRATION, //an operation response doesn't arrive before the operation wait time expires
     OPERATION_ERROR, //an error has ocurred with the device
     UNEXPECTED_ERROR,
-    UNKNOWN_STATE,
-
+    UNKNOWN_STATE
 
 }

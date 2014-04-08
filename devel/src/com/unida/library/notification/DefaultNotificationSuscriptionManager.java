@@ -1,27 +1,27 @@
-/*******************************************************************************
- *   
- *   Copyright (C) 2009 Mytech Ingenieria Aplicada <http://www.mytechia.com>
- *   Copyright (C) 2009 Gervasio Varela <gervarela@picandocodigo.com>
- * 
- *   This file is part of UNIDA.
+/**
+ * *****************************************************************************
  *
- *   UNIDA is free software: you can redistribute it and/or modify
- *   it under the terms of the GNU Affero General Public License as published by
- *   the Free Software Foundation, either version 3 of the License, or
- *   (at your option) any later version.
+ * Copyright (C) 2009 Mytech Ingenieria Aplicada <http://www.mytechia.com>
+ * Copyright (C) 2009 Gervasio Varela <gervarela@picandocodigo.com>
  *
- *   UNIDA is distributed in the hope that it will be useful,
- *   but WITHOUT ANY WARRANTY; without even the implied warranty of
- *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *   GNU Affero General Public License for more details.
+ * This file is part of UNIDA.
  *
- *   You should have received a copy of the GNU Affero General Public License
- *   along with UNIDA.  If not, see <http://www.gnu.org/licenses/>.
- * 
- ******************************************************************************/
-
+ * UNIDA is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU Affero General Public License as published by the Free
+ * Software Foundation, either version 3 of the License, or (at your option) any
+ * later version.
+ *
+ * UNIDA is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
+ * details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with UNIDA. If not, see <http://www.gnu.org/licenses/>.
+ *
+ *****************************************************************************
+ */
 package com.unida.library.notification;
-
 
 import com.mytechia.commons.framework.exception.InternalErrorException;
 import com.mytechia.commons.framework.modelaction.exception.InstanceNotFoundException;
@@ -45,17 +45,21 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * <p><b>Description:</b></br> </p>
+ * <p>
+ * <b>Description:</b> </p>
  *
- * <p><b>Creation date:</b> 15-1-2009</p>
+ * <p>
+ * <b>Creation date:</b> 15-1-2009</p>
  *
- * <p><b>Changelog:</b></br> <ul> <li>1 - 15-1-2009<\br> Initial release</li>
+ * <p>
+ * <b>Changelog:</b> <ul> <li>1 - 15-1-2009<\br> Initial release</li>
  * </ul> </p>
  *
  * @author Gervasio Varela Fernandez
  * @version 1
  */
-public class DefaultNotificationSuscriptionManager implements INotificationSuscriptionManager, INotificationCallback {
+public class DefaultNotificationSuscriptionManager implements INotificationSuscriptionManager, INotificationInternalCallback
+{
 
     private UniDAFactory dalFactory;
     private IUniDAManagementFacade deviceManager;
@@ -63,7 +67,8 @@ public class DefaultNotificationSuscriptionManager implements INotificationSuscr
     private Map<NotificationTicket, DeviceStateSuscription> suscriptionsByTicket;
     private Map<DeviceID, Set<DeviceStateSuscription>> suscriptionsByDeviceId;
 
-    public DefaultNotificationSuscriptionManager(UniDAFactory dalFactory, IUniDAManagementFacade deviceManager) {
+    public DefaultNotificationSuscriptionManager(UniDAFactory dalFactory, IUniDAManagementFacade deviceManager)
+    {
         this.dalFactory = dalFactory;
         this.deviceManager = deviceManager;
         this.ticketsManager = new NotificationTicketsManager();
@@ -74,25 +79,34 @@ public class DefaultNotificationSuscriptionManager implements INotificationSuscr
     @Override
     public NotificationTicket suscribeTo(IDevice dev, DeviceStateMetadata state,
             String[] params, IDeviceStateNotificationCallback callback)
-            throws InternalErrorException {
+            throws InternalErrorException
+    {
 
         Set<DeviceStateSuscription> deviceSuscriptions = suscriptionsByDeviceId.get(dev.getId());
-        if (deviceSuscriptions != null) {
+        if (deviceSuscriptions != null)
+        {
             //look if the device already has defined a notification about the same state with the same params
-            for (DeviceStateSuscription dss : deviceSuscriptions) {
-                if (dss.getState().getId().equals(state.getId())) {
-                    if (Arrays.deepEquals(dss.getParameters(), params)) { //the notification already exists
+            for (DeviceStateSuscription dss : deviceSuscriptions)
+            {
+                if (dss.getState().getId().equals(state.getId()))
+                {
+                    if (Arrays.deepEquals(dss.getParameters(), params))
+                    { //the notification already exists
                         dss.addCallback(callback); //add the callback to that notification
-                        try {
+                        try
+                        {
                             suscribeTo(dss.getNotificationTicket(), dss, dev, params); //create the notification on the device (or devices if is a group)                            
-                        } catch (InstanceNotFoundException ex) {
+                        } catch (InstanceNotFoundException ex)
+                        {
                             throw new InternalErrorException(ex);
                         }
                         return dss.getNotificationTicket();
                     }
-                    try {
+                    try
+                    {
                         suscribeTo(dss.getNotificationTicket(), dss, dev, params); //create the notification on the device (or devices if is a group)                            
-                    } catch (InstanceNotFoundException ex) {
+                    } catch (InstanceNotFoundException ex)
+                    {
                         throw new InternalErrorException(ex);
                     }
                     return dss.getNotificationTicket();
@@ -103,10 +117,12 @@ public class DefaultNotificationSuscriptionManager implements INotificationSuscr
         //if the notification doesn't exists
         NotificationTicket nt = ticketsManager.issueTicket();
         DeviceStateSuscription dss = new DeviceStateSuscription(nt, dev, state, params);
-        try {
+        try
+        {
             suscribeTo(nt, dss, dev, params); //create the notification on the device (or devices if is a group)
             addSuscription(dss, callback); //associate the callback with it
-        } catch (InstanceNotFoundException ex) {
+        } catch (InstanceNotFoundException ex)
+        {
             throw new InternalErrorException(ex);
         }
 
@@ -114,10 +130,12 @@ public class DefaultNotificationSuscriptionManager implements INotificationSuscr
 
     }
 
-    private synchronized void addSuscription(DeviceStateSuscription dss, IDeviceStateNotificationCallback callback) {
+    private synchronized void addSuscription(DeviceStateSuscription dss, IDeviceStateNotificationCallback callback)
+    {
         dss.addCallback(callback);
         Set<DeviceStateSuscription> deviceSuscriptions = this.suscriptionsByDeviceId.get(dss.getDevice().getId());
-        if (deviceSuscriptions == null) {
+        if (deviceSuscriptions == null)
+        {
             deviceSuscriptions = new HashSet<>();
             this.suscriptionsByDeviceId.put(dss.getDevice().getId(), deviceSuscriptions);
         }
@@ -132,9 +150,11 @@ public class DefaultNotificationSuscriptionManager implements INotificationSuscr
      * @return true if the suscription was completely removed, false if some
      * active callback already exists
      */
-    private synchronized boolean removeSuscription(DeviceStateSuscription dss, IDeviceStateNotificationCallback callback) {
+    private synchronized boolean removeSuscription(DeviceStateSuscription dss, IDeviceStateNotificationCallback callback)
+    {
         dss.removeCallback(callback); //remove the callback from the suscription data
-        if (dss.getCallbacks().isEmpty()) { //if there isn't more callbacks, remove the suscription
+        if (dss.getCallbacks().isEmpty())
+        { //if there isn't more callbacks, remove the suscription
             Set<DeviceStateSuscription> deviceSuscriptions = this.suscriptionsByDeviceId.get(dss.getDevice().getId());
             deviceSuscriptions.remove(dss);
             this.suscriptionsByTicket.remove(dss.getNotificationTicket());
@@ -143,8 +163,8 @@ public class DefaultNotificationSuscriptionManager implements INotificationSuscr
         return false;
     }
 
-    private Gateway getDeviceGateway(IDevice dev) throws NotEnabledDeviceErrorException, InstanceNotFoundException, InternalErrorException {
-
+    private Gateway getDeviceGateway(IDevice dev) throws NotEnabledDeviceErrorException, InstanceNotFoundException, InternalErrorException
+    {
 
         IDevice realDevice = this.deviceManager.findById(dev.getId().toString());
         return this.deviceManager.findDeviceGatewayById(realDevice.getId().getGatewayId().toString());
@@ -152,16 +172,20 @@ public class DefaultNotificationSuscriptionManager implements INotificationSuscr
     }
 
     private void suscribeTo(NotificationTicket nt, DeviceStateSuscription dss, IDevice dev, String[] params)
-            throws InternalErrorException, InstanceNotFoundException {
-        if (dev.isGroup()) {
+            throws InternalErrorException, InstanceNotFoundException
+    {
+        if (dev.isGroup())
+        {
             //if it is a group, the notification is created on every physical device
             //that is member of the group. But, only one suscription is stored
             //in the manager, the suscription with the group device.
-            Collection<IDevice> members = this.deviceManager.findGroupMembers((DeviceGroup) dev); 
-            for (IDevice d : members) { 
+            Collection<IDevice> members = this.deviceManager.findGroupMembers((DeviceGroup) dev);
+            for (IDevice d : members)
+            {
                 suscribeTo(nt, dss, d, params);
             }
-        } else {
+        } else
+        {
             Gateway devGw = getDeviceGateway(dev);
             IUniDANetworkFacade dalInstance = this.dalFactory.getDALInstance(devGw);
             dalInstance.suscribeTo(nt.getId(), dev.getId(), dss.getState().getId(), params, this);
@@ -171,16 +195,21 @@ public class DefaultNotificationSuscriptionManager implements INotificationSuscr
     @Override
     public void unsuscribeFrom(NotificationTicket nt, IDevice dev, DeviceStateMetadata state,
             String[] params, IDeviceStateNotificationCallback callback)
-            throws InternalErrorException {
+            throws InternalErrorException
+    {
 
         DeviceStateSuscription dss = this.suscriptionsByTicket.get(nt);
-        if (dss != null) {
+        if (dss != null)
+        {
 
-            if (removeSuscription(dss, callback)) {
+            if (removeSuscription(dss, callback))
+            {
                 //there isn't more callbacks associated with the suscription -> delete it from the device
-                try {
+                try
+                {
                     unsuscribeFrom(nt, dss, dev, params);
-                } catch (InstanceNotFoundException ex) {
+                } catch (InstanceNotFoundException ex)
+                {
                     throw new InternalErrorException(ex);
                 }
             }
@@ -190,17 +219,21 @@ public class DefaultNotificationSuscriptionManager implements INotificationSuscr
     }
 
     private void unsuscribeFrom(NotificationTicket nt, DeviceStateSuscription dss, IDevice dev, String[] params)
-            throws InternalErrorException, InstanceNotFoundException {
+            throws InternalErrorException, InstanceNotFoundException
+    {
 
-        if (dev.isGroup()) {
+        if (dev.isGroup())
+        {
             //if it is a group, the notification is created on every physical device
             //that is member of the group. But, only one suscription is stored
             //in the manager, the suscription with the group device.
             Collection<IDevice> members = this.deviceManager.findGroupMembers((DeviceGroup) dev);
-            for (IDevice d : members) { //TODO -> if there is an exception --> we must cancel all the previous ones
+            for (IDevice d : members)
+            { //TODO -> if there is an exception --> we must cancel all the previous ones
                 unsuscribeFrom(nt, dss, d, params);
             }
-        } else {
+        } else
+        {
             Gateway devGw = getDeviceGateway(dev);
             IUniDANetworkFacade dalInstance = this.dalFactory.getDALInstance(devGw);
             dalInstance.unsuscribeFrom(nt.getId(), dev.getId(), dss.getState().getId(), params, this);
@@ -208,40 +241,51 @@ public class DefaultNotificationSuscriptionManager implements INotificationSuscr
     }
 
     @Override
-    public Collection<DeviceStateSuscription> getDeviceSuscriptions(IDevice dev) {
+    public Collection<DeviceStateSuscription> getDeviceSuscriptions(IDevice dev)
+    {
         ArrayList<DeviceStateSuscription> result = new ArrayList<>(0);
         Set<DeviceStateSuscription> suscriptions = this.suscriptionsByDeviceId.get(dev.getId());
-        if (suscriptions != null) {
+        if (suscriptions != null)
+        {
             result.addAll(suscriptions);
         }
         return result;
     }
 
     @Override
-    public void renewSuscriptions(IDevice dev) throws InternalErrorException {
+    public void renewSuscriptions(IDevice dev) throws InternalErrorException
+    {
 
         Collection<DeviceStateSuscription> suscriptions = getDeviceSuscriptions(dev);
 
-        if (dev.isGroup()) {
-            try {
+        if (dev.isGroup())
+        {
+            try
+            {
                 //if it is a group, the notification is created on every physical device
                 //that is member of the group. But, only one suscription is stored
                 //in the manager, the suscription with the group device.
-                Collection<IDevice> members = this.deviceManager.findGroupMembers((DeviceGroup) dev); 
-                for (IDevice d : members) { //TODO -> if there is an exception --> we must cancel all the previous ones
+                Collection<IDevice> members = this.deviceManager.findGroupMembers((DeviceGroup) dev);
+                for (IDevice d : members)
+                { //TODO -> if there is an exception --> we must cancel all the previous ones
                     renewSuscriptions(d);
                 }
-            } catch (InstanceNotFoundException ex) {
+            } catch (InstanceNotFoundException ex)
+            {
                 throw new InternalErrorException(ex);
             }
-        } else {
-            try {
+        } else
+        {
+            try
+            {
                 Gateway devGw = getDeviceGateway(dev);
                 IUniDANetworkFacade dalInstance = this.dalFactory.getDALInstance(devGw);
-                for (DeviceStateSuscription s : suscriptions) {
+                for (DeviceStateSuscription s : suscriptions)
+                {
                     dalInstance.renewSuscription(s.getNotificationTicket().getId(), s.getDevice().getId(), s.getState().getId(), s.getParameters(), this);
                 }
-            } catch (InstanceNotFoundException ex) {
+            } catch (InstanceNotFoundException ex)
+            {
                 throw new InternalErrorException(ex);
             }
         }
@@ -249,13 +293,17 @@ public class DefaultNotificationSuscriptionManager implements INotificationSuscr
     }
 
     @Override
-    public synchronized void notifyState(long nTicket, DeviceID id, String stateId, String valueId, String value) {
+    public synchronized void notifyState(long nTicket, DeviceID id, String stateId, String valueId, String value)
+    {
 
         DeviceStateSuscription dss = this.suscriptionsByTicket.get(new NotificationTicket(nTicket));
-        if (dss != null) {
-            if (dss.getDevice().getId().equals(id) && dss.getState().getId().equals(stateId)) {
+        if (dss != null)
+        {
+            if (dss.getDevice().getId().equals(id) && dss.getState().getId().equals(stateId))
+            {
                 DeviceState ds = new DeviceState(dss.getState(), new DeviceStateValue(valueId, value));
-                for (IDeviceStateNotificationCallback cback : dss.getCallbacks()) {
+                for (IDeviceStateNotificationCallback cback : dss.getCallbacks())
+                {
                     cback.notifyState(dss.getNotificationTicket(), dss.getDevice(), ds);
                 }
             }
@@ -263,11 +311,13 @@ public class DefaultNotificationSuscriptionManager implements INotificationSuscr
 
     }
 
-    private class NotificationTicketsManager {
+    private class NotificationTicketsManager
+    {
 
         private long ticketId = 0;
 
-        public synchronized NotificationTicket issueTicket() {
+        public synchronized NotificationTicket issueTicket()
+        {
             return new NotificationTicket(ticketId++);
         }
     }

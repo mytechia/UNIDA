@@ -40,13 +40,13 @@ import java.util.concurrent.CopyOnWriteArraySet;
  * This factory manages a cache of instances, if no one is valid, a valid one
  * will be created and cached.
  *
- * </b></br>
+ * </b>
  *
  * </p>
  *
  * <p><b>Creation date:</b> 15-01-2010</p>
  *
- * <p><b>Changelog:</b></br>
+ * <p><b>Changelog:</b>
  * <ul>
  * <li>1 - 15-01-2010<\br> Initial release</li>
  * </ul>
@@ -76,6 +76,8 @@ public class UniDAFactory
      * with the specified device gateway.
      * 
      * @param gw the gateway for wich a DAL instance is needed
+     * @return 
+     * @throws com.unida.library.exception.UnsupportedDeviceGatewayErrorException
      */
     public IUniDANetworkFacade getDALInstance(Gateway gw) throws UnsupportedDeviceGatewayErrorException
     {

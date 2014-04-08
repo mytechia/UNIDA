@@ -32,8 +32,8 @@ import com.unida.library.device.ontology.ControlFunctionalityMetadata;
 import com.unida.library.device.ontology.DeviceState;
 import com.unida.library.manage.im.InMemoryUniDAInstantiationFacade;
 import com.unida.library.operation.device.IDeviceOperationCallback;
-import com.unida.library.operation.device.OperationFailures;
-import com.unida.library.operation.device.OperationTicket;
+import com.unida.library.operation.OperationFailures;
+import com.unida.library.operation.OperationTicket;
 import java.util.Collection;
 import javax.swing.JOptionPane;
 

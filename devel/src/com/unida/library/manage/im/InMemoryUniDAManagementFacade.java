@@ -25,13 +25,13 @@ import java.util.HashMap;
 /**
  * <p><b>
  * In memory implementation of the UniDA management operations.
- * </b></br>
+ * </b>
  *
  * </p>
  *
  * <p><b>Creation date:</b> 8-feb-2013</p>
  *
- * <p><b>Changelog:</b></br>
+ * <p><b>Changelog:</b>
  * <ul>
  * <li>1 - 8-feb-2013<\br> Initial release</li>
  * </ul>
@@ -272,7 +272,7 @@ public class InMemoryUniDAManagementFacade implements IUniDAManagementFacade
     @Override
     public synchronized Collection<Gateway> findDeviceGatewaysByClassId(GatewayClassMetadata gcm, int startIndex, int length) throws InternalErrorException
     {
-        ArrayList<Gateway> gwList = new ArrayList<Gateway>();
+        ArrayList<Gateway> gwList = new ArrayList<>();
         for(Gateway gw : this.gatewayMap.values()) {
             if (gw.getType().equals(gcm)) {
                 gwList.add(gw);

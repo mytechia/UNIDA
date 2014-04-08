@@ -1,7 +1,7 @@
 /*******************************************************************************
  *   
- *   Copyright (C) 2009 Mytech Ingenieria Aplicada <http://www.mytechia.com>
- *   Copyright (C) 2009 Gervasio Varela <gervarela@picandocodigo.com>
+ *   Copyright (C) 2014
+ *   Copyright 2014 Victor Sonora Pombo
  * 
  *   This file is part of UNIDA.
  *
@@ -19,38 +19,34 @@
  *   along with UNIDA.  If not, see <http://www.gnu.org/licenses/>.
  * 
  ******************************************************************************/
+package com.unida.library.operation.gateway;
 
-package com.unida.library.notification;
-
-import com.unida.library.device.DeviceID;
+import com.unida.protocol.UniDAAddress;
+import com.unida.protocol.message.autonomousbehaviour.UniDAABRuleVO;
+import java.util.List;
 
 
 /**
- * <p><b>Description:</b></br>
+ * <p><b>Description:</b>
  * Callback to internally manage the reception of information about
- * a notification that a given device fires up.
+ * autonomous behaviour operations
  * </p>
  *
- * <p><b>Creation date:</b> 15-1-2009</p>
+ * <p><b>Creation date:</b> 
+ * 08-04-2014 </p>
  *
- * <p><b>Changelog:</b></br>
+ * <p><b>Changelog:</b>
  * <ul>
- * <li>1 - 15-1-2009<\br> Initial release</li>
+ * <li> 1 , 08-04-2014 -> Initial release</li>
  * </ul>
  * </p>
- *
- * @author Gervasio Varela Fernandez
+ * @author Victor Sonora Pombo
  * @version 1
  */
-public interface INotificationCallback
-{
+public interface IAutonomousBehaviourInternalCallback {
     
-	/** 
-	 * @param deviceId The device that fired up the notification
-	 * @param notification The type of notification
-	 * @param state The state of the device when the notification occurred
-	 */
-	void notifyState(long nTicketId, DeviceID deviceId, String stateId, String valueId, String value);
-	
-	
+    
+    public void notifyGatewayAutonomousBehaviourRules(long opId, UniDAAddress gatewayAddress, List<UniDAABRuleVO> rules);
+    
+
 }

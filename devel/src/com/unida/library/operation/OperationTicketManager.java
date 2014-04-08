@@ -20,28 +20,35 @@
  *
  *****************************************************************************
  */
-package com.unida.library.operation.gateway;
-
-import com.mytechia.commons.framework.exception.InternalErrorException;
-import com.unida.library.operation.OperationTicket;
-import com.unida.protocol.UniDAAddress;
-import com.unida.protocol.message.autonomousbehaviour.UniDAABRuleVO;
+package com.unida.library.operation;
 
 /**
  * <p>
  * <b>Description:</b>
- * Interface to the operations that act on UniDA gateways
  * </p>
- * 
+ *
+ * <p>
+ * <b>Creation date:</b>
+ * 08-04-2014 </p>
+ *
+ * <p>
+ * <b>Changelog:</b>
+ * <ul>
+ * <li> 1 , 08-04-2014 -> Initial release</li>
+ * </ul>
+ * </p>
+ *
  * @author Victor Sonora Pombo
+ * @version 1
  */
-public interface IGatewayOperationFacade
+public class OperationTicketManager
 {
-        
-    public void forceAnnounce() throws InternalErrorException;
-        
-    public void addABRule(UniDAAddress gatewayAddress, UniDAABRuleVO rule) throws InternalErrorException;
-    
-    public OperationTicket requestABRules(UniDAAddress gatewayAddress, IAutonomousBehaviourCallback callback) throws InternalErrorException;
-        
+
+    private long ticketId = 0;
+
+    public synchronized OperationTicket issueTicket(OperationTypes type)
+    {
+        return new OperationTicket(ticketId++, type);
+    }
+
 }
