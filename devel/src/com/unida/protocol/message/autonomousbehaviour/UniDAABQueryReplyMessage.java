@@ -75,6 +75,9 @@ public class UniDAABQueryReplyMessage extends UniDAMessage {
             byte[] idData = new byte[EndianConversor.LONG_SIZE_BYTES];
             EndianConversor.longToLittleEndian(opId, idData, 0);
             dataStream.write(idData);
+            
+            EndianConversor.shortToLittleEndian((short) this.getABRules().size(), idData, 0);
+            dataStream.write(idData, 0, EndianConversor.SHORT_SIZE_BYTES);
 
             //ABRules
             for (UniDAABRuleVO rule : this.getABRules()) {
@@ -95,10 +98,18 @@ public class UniDAABQueryReplyMessage extends UniDAMessage {
         //opId
         this.opId = EndianConversor.byteArrayLittleEndianToLong(bytes, offset);
         offset += EndianConversor.LONG_SIZE_BYTES;
-
-        //ABRules
-        for (UniDAABRuleVO rule : this.getABRules()) {
+        
+        //number of AB rules
+        short rulesNumber = EndianConversor.byteArrayLittleEndianToShort(bytes, offset);        
+        offset += EndianConversor.SHORT_SIZE_BYTES;
+        
+        //ABRules contents
+        this.getABRules().clear();
+        for (short i = 0; i < rulesNumber; i++) 
+        {
+            UniDAABRuleVO rule = new UniDAABRuleVO();
             offset += rule.decodePayload(bytes, offset, ontologyCodec);
+            this.getABRules().add(rule);
         }
 
         return offset;

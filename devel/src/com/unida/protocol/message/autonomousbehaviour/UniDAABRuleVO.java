@@ -141,5 +141,10 @@ public class UniDAABRuleVO
     {
         this.action = action;
     }
-
+    
+    public long getRuleId()
+    {
+        return this.ruleID;
+    }
+    
 }

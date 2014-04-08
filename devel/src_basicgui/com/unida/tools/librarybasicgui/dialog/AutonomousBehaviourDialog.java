@@ -29,6 +29,8 @@ import com.unida.library.device.DeviceID;
 import com.unida.library.device.Gateway;
 import com.unida.library.device.exception.UniDAIDFormatException;
 import com.unida.library.manage.im.InMemoryUniDAInstantiationFacade;
+import com.unida.library.operation.OperationTicket;
+import com.unida.library.operation.gateway.IAutonomousBehaviourCallback;
 import com.unida.protocol.UniDAAddress;
 import com.unida.protocol.message.autonomousbehaviour.UniDAABRuleVO;
 import com.unida.protocol.message.autonomousbehaviour.action.CommandExecutionAction;
@@ -37,7 +39,9 @@ import com.unida.protocol.message.autonomousbehaviour.trigger.CronoTrigger;
 import com.unida.protocol.message.autonomousbehaviour.trigger.RuleTrigger;
 import com.unida.protocol.message.autonomousbehaviour.trigger.StateChangeTrigger;
 import com.unida.protocol.message.autonomousbehaviour.trigger.statechange.StateConditionNull;
+import com.unida.tools.librarybasicgui.UNIDALibraryBasicGUI;
 import com.unida.tools.librarybasicgui.util.DomoParsing;
+import java.util.List;
 import javax.swing.JOptionPane;
 
 /**
@@ -102,8 +106,10 @@ public class AutonomousBehaviourDialog extends javax.swing.JDialog
     {
         try
         {
+            
             Gateway gateway = instantiationFacade.getDeviceManageFacade().findDeviceGatewayById(gatewayAddress);
-
+            
+            instantiationFacade.getGatewayOperationFacade().requestABRules(gateway.getId(), new ABCallback());
             
         } catch (InternalErrorException | InstanceNotFoundException ex)
         {
@@ -614,7 +620,7 @@ public class AutonomousBehaviourDialog extends javax.swing.JDialog
     private void jButtonRemoveABRuleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRemoveABRuleActionPerformed
         if (jTableABRules.getSelectedColumnCount() > 0)
         {
-
+            // TODO
         }
     }//GEN-LAST:event_jButtonRemoveABRuleActionPerformed
 
@@ -626,9 +632,9 @@ public class AutonomousBehaviourDialog extends javax.swing.JDialog
         try
         {
             UniDAABRuleVO rule = getRuleFromUserInput();
-            
-            // send message
+                        
             instantiationFacade.getGatewayOperationFacade().addABRule(new UniDAAddress(gatewayAddress), rule);
+            
         } catch (InternalErrorException ex)
         {
             JOptionPane.showMessageDialog(this, ex.toString());
@@ -778,4 +784,29 @@ public class AutonomousBehaviourDialog extends javax.swing.JDialog
     private javax.swing.JTextField jTextStateChangeTriggerStateID;
     private javax.swing.JTextField jTextTriggerSourceDeviceNumber;
     // End of variables declaration//GEN-END:variables
+
+
+    private class ABCallback implements IAutonomousBehaviourCallback
+    {
+
+        @Override
+        public void notifyGatewayAutonomousBehaviourRules(OperationTicket ticket, Gateway gateway, List<UniDAABRuleVO> rules)
+        {
+            
+            UNIDALibraryBasicGUI.cleanJTable(jTableABRules);
+            int ruleRow = 0;        
+            
+            for (UniDAABRuleVO rule : rules)
+            {
+                jTableABRules.getModel().setValueAt(rule.getTrigger().getType().toString(), ruleRow, 0);
+                jTableABRules.getModel().setValueAt(rule.getTrigger().toString(), ruleRow, 1);
+                jTableABRules.getModel().setValueAt(rule.getAction().getType().toString(), ruleRow, 2);
+                jTableABRules.getModel().setValueAt(rule.getAction().toString(), ruleRow, 3);
+                jTableABRules.getModel().setValueAt(rule.getRuleId(), ruleRow, 4);
+                ruleRow++;
+            }
+        }
+        
+    }
+
 }
