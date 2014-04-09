@@ -109,4 +109,12 @@ public class CronoTrigger extends RuleTrigger
     {
         return RuleTriggerEnum.TEMPORAL;
     }
+
+    @Override
+    public String toString()
+    {
+        return super.toString() + " CronoTrigger{" + "weekday=" + weekday + ", hour=" + hour + ", min=" + min + "}.";
+    }
+    
+    
 }

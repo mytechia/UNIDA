@@ -28,6 +28,7 @@ import com.mytechia.commons.util.conversion.EndianConversor;
 import com.unida.library.device.ontology.IUniDAOntologyCodec;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.Arrays;
 
 /**
  *
@@ -89,8 +90,9 @@ public class CommandExecutionAction extends RuleAction
             byte [] lenData = new byte[EndianConversor.SHORT_SIZE_BYTES];
             EndianConversor.shortToLittleEndian((short) this.getParams().length, lenData, 0);
             dataStream.write(lenData);
-            for(int i=0; i<this.getParams().length; i++) {
-                Message.writeStringInStream(dataStream, this.getParams()[i]);
+            for (String param : this.getParams())
+            {
+                Message.writeStringInStream(dataStream, param);
             }
             
             } catch (IOException ioEx) {
@@ -134,5 +136,11 @@ public class CommandExecutionAction extends RuleAction
     {
         return RuleActionEnum.COMMAND_EXECUTION;
     }
+
+    @Override
+    public String toString()
+    {
+        return " CommandExecutionAction{" + "funcId=" + funcId + ", cmdId=" + cmdId + ", params=" + Arrays.toString(params) + "}.";
+    }        
 
 }

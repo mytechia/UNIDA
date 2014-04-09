@@ -101,4 +101,11 @@ public class StateConditionNary extends StateCondition
 
         return initIndex;
     }
+
+    @Override
+    public String toString()
+    {
+        return " StateConditionNary{" + "stateValues=" + stateValues + "}.";
+    }        
+    
 }

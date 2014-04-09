@@ -46,13 +46,13 @@ import java.util.logging.Level;
  *
  * It can be used in conjunction with a thread pool, in order to achieve
  * multi-core processing capabilities.
- * </b></br>
+ * </b>
  *
  * </p>
  *
  * <p><b>Creation date:</b> 30-01-2010</p>
  *
- * <p><b>Changelog:</b></br>
+ * <p><b>Changelog:</b>
  * <ul>
  * <li>1 - 30-01-2010<\br> Initial release</li>
  * </ul>
@@ -77,7 +77,7 @@ public class UniDAProtocolMessageProcessor extends Thread
         super("UniDA-Protocol-Message-Processor");
         this.commChannel = commChannel;
         this.msgQueue = msgQueue;
-        this.handlers = new ArrayList<IUniDAProtocolMessageHandler>();
+        this.handlers = new ArrayList<>();
     }
 
 
@@ -119,6 +119,9 @@ public class UniDAProtocolMessageProcessor extends Thread
 
 
     /** Uses the available message handlers to process the new message received
+     * @param msg
+     * @return 
+     * @throws com.unida.protocol.handling.exception.UnsupportedMessageTypeErrorException
      */
     protected UniDAMessage processMessage(UniDAMessage msg) throws UnsupportedMessageTypeErrorException
     {
@@ -154,13 +157,10 @@ public class UniDAProtocolMessageProcessor extends Thread
 
             }
             catch (UnsupportedMessageTypeErrorException ex) {
-                UniDALoggers.LIBRARY.log(Level.WARNING, "Unsupported message received:"+msg.toString());
+                UniDALoggers.LIBRARY.log(Level.WARNING, "Unsupported message received:{0}", msg.toString());
             }
             catch (CommunicationException ex) {
-                UniDALoggers.LIBRARY.log(Level.SEVERE, "Error sending message: "+ex.getLocalizedMessage());
-                if (UniDALoggers.LIBRARY.isLoggable(Level.FINEST)) {
-                    ex.printStackTrace();
-                }
+                UniDALoggers.LIBRARY.log(Level.SEVERE, "Error sending message: {0}", ex.getLocalizedMessage());
             }
 
         }

@@ -98,6 +98,13 @@ public class StateConditionBinary extends StateCondition
         
         return initIndex;
     }
+
+    @Override
+    public String toString()
+    {
+        return " StateConditionBinary{" + "stateValue1=" + stateValue1 + ", stateValue2=" + stateValue2 + "}.";
+    }
+    
     
     
     

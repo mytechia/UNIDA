@@ -69,5 +69,11 @@ public abstract class StateCondition
     {
         return this.type;
     }
+
+    @Override
+    public String toString()
+    {
+        return "StateCondition.";
+    }
     
 }

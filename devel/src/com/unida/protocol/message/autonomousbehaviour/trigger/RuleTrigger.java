@@ -63,5 +63,14 @@ public abstract class RuleTrigger
     
         
     abstract public RuleTriggerEnum getType();
+
+    
+    @Override
+    public String toString()
+    {
+        return "RuleTrigger.";
+    }
+    
+    
     
 }

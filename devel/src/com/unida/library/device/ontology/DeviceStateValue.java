@@ -26,7 +26,7 @@ package com.unida.library.device.ontology;
 import java.io.Serializable;
 
 /**
- * <p><b>Description:</b></br>
+ * <p><b>Description:</b>
  * Represents a value of a device state.
  *
  * Its ID and values are set according to the ones specified on
@@ -36,7 +36,7 @@ import java.io.Serializable;
  *
  * <p><b>Creation date:</b> 28-dic-2009</p>
  *
- * <p><b>Changelog:</b></br>
+ * <p><b>Changelog:</b>
  * <ul>
  * <li>1 - 28-dic-2009<\br> Initial release</li>
  * </ul>
@@ -99,10 +99,7 @@ public class DeviceStateValue implements Serializable
         if ((this.id == null) ? (other.id != null) : !this.id.equals(other.id)) {
             return false;
         }
-        if ((this.value == null) ? (other.value != null) : !this.value.equals(other.value)) {
-            return false;
-        }
-        return true;
+        return !((this.value == null) ? (other.value != null) : !this.value.equals(other.value));
     }
 
 
@@ -119,7 +116,7 @@ public class DeviceStateValue implements Serializable
     @Override
     public String toString()
     {
-        StringBuffer sb = new StringBuffer(this.id);
+        StringBuilder sb = new StringBuilder(this.id);
         sb.append(" - ");
         sb.append(this.value);
         return sb.toString();

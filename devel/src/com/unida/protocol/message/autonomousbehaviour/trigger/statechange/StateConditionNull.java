@@ -51,4 +51,11 @@ public class StateConditionNull extends StateCondition
         return initIndex;
     }
 
+    @Override
+    public String toString()
+    {
+        return " StateConditionNull.";
+    }
+    
+    
 }

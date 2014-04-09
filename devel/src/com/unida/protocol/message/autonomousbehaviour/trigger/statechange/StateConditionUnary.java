@@ -83,5 +83,11 @@ public class StateConditionUnary extends StateCondition
         
         return initIndex;
     }
+
+    @Override
+    public String toString()
+    {
+        return " StateConditionUnary{" + "stateValue=" + stateValue + "}.";
+    }        
     
 }

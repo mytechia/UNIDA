@@ -29,8 +29,11 @@ import com.mytechia.commons.framework.simplemessageprotocol.exception.MessageFor
 import com.mytechia.commons.util.conversion.EndianConversor;
 import com.unida.library.device.ontology.IUniDAOntologyCodec;
 import com.unida.protocol.message.autonomousbehaviour.action.CommandExecutionAction;
+import com.unida.protocol.message.autonomousbehaviour.action.LinkStateAction;
 import com.unida.protocol.message.autonomousbehaviour.action.RuleAction;
 import com.unida.protocol.message.autonomousbehaviour.action.RuleActionEnum;
+import com.unida.protocol.message.autonomousbehaviour.action.WriteStateAction;
+import com.unida.protocol.message.autonomousbehaviour.trigger.CronoTrigger;
 import com.unida.protocol.message.autonomousbehaviour.trigger.RuleTrigger;
 import com.unida.protocol.message.autonomousbehaviour.trigger.RuleTriggerEnum;
 import com.unida.protocol.message.autonomousbehaviour.trigger.StateChangeTrigger;
@@ -95,10 +98,18 @@ public class UniDAABRuleVO
         RuleTriggerEnum triggerType = RuleTriggerEnum.fromValue(EndianConversor.byteArrayLittleEndianToShort(bytes, initIndex));
         initIndex += EndianConversor.SHORT_SIZE_BYTES;
 
-        // Trigger payload
-        if (triggerType != RuleTriggerEnum.UNKNOWN)
+        // Trigger payload       
+        switch(triggerType)
         {
-            this.trigger = new StateChangeTrigger();
+            case STATE_CHANGE:
+                this.trigger = new StateChangeTrigger();
+                break;
+            case SCENARIO_CHANGE:
+                // TODO
+                break;
+            case TEMPORAL:
+                this.trigger = new CronoTrigger();
+                break;
         }
         if (null != this.trigger)
         {
@@ -110,9 +121,20 @@ public class UniDAABRuleVO
         initIndex += EndianConversor.SHORT_SIZE_BYTES;
 
         // Action payload
-        if (actionType != RuleActionEnum.UNKNOWN)
+        switch(actionType)
         {
-            this.action = new CommandExecutionAction();
+            case COMMAND_EXECUTION:
+                this.action = new CommandExecutionAction();
+                break;
+            case LINK_STATE:
+                this.action = new LinkStateAction();
+                break;
+            case SCENARIO_CHANGE:
+                // TODO
+                break;
+            case WRITE_STATE:
+                this.action = new WriteStateAction();
+                break;
         }
         if (null != this.action)
         {

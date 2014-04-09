@@ -118,4 +118,11 @@ public class WriteStateAction extends RuleAction
         return RuleActionEnum.WRITE_STATE;
     }
 
+    @Override
+    public String toString()
+    {
+        return " WriteStateAction{" + "stateId=" + stateId + ", stateValue=" + stateValue + "}.";
+    }
+    
+    
 }

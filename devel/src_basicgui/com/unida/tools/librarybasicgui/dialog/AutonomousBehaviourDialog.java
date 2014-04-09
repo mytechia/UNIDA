@@ -41,8 +41,13 @@ import com.unida.protocol.message.autonomousbehaviour.trigger.StateChangeTrigger
 import com.unida.protocol.message.autonomousbehaviour.trigger.statechange.StateConditionNull;
 import com.unida.tools.librarybasicgui.UNIDALibraryBasicGUI;
 import com.unida.tools.librarybasicgui.util.DomoParsing;
+import java.awt.Component;
 import java.util.List;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import javax.swing.table.TableCellRenderer;
+import javax.swing.table.TableColumn;
 
 /**
  * Dialog class that handles everything related to the autonomous behaviour
@@ -55,7 +60,6 @@ public class AutonomousBehaviourDialog extends javax.swing.JDialog
 
     private InMemoryUniDAInstantiationFacade instantiationFacade;
     private String gatewayAddress;
-    
 
     /**
      * Creates new form AutonomousBehaviourDialog
@@ -69,27 +73,27 @@ public class AutonomousBehaviourDialog extends javax.swing.JDialog
             InMemoryUniDAInstantiationFacade instantiationFacade, String gatewayAddress)
     {
         super(parent, modal);
-        
+
         initComponents();
-        
+        initComponentsCustom();
+
         this.instantiationFacade = instantiationFacade;
         this.gatewayAddress = gatewayAddress;
-        
+
         this.setTitle(this.getTitle() + ": " + gatewayAddress);
-        
+
         jButtonRemoveABRule.setEnabled(false);
-        
+
         hideTriggerPanels();
         jPanelStateChangeTrigger.setVisible(true);
-        
+
         hideActionPanels();
         jPanelCommandExecutionAction.setVisible(true);
-        
+
         this.jTextCommandActionCommandBaseIRI.setText(DomoParsing.instance().getDefaultOntologyNamespace());
         this.jTextCommandActionFunctionalityBaseIRI.setText(DomoParsing.instance().getDefaultOntologyNamespace());
-        this.jTextStateChangeTriggerStateBaseIRI.setText(DomoParsing.instance().getDefaultOntologyNamespace());        
+        this.jTextStateChangeTriggerStateBaseIRI.setText(DomoParsing.instance().getDefaultOntologyNamespace());
     }
-    
 
     private void hideTriggerPanels()
     {
@@ -106,11 +110,11 @@ public class AutonomousBehaviourDialog extends javax.swing.JDialog
     {
         try
         {
-            
+
             Gateway gateway = instantiationFacade.getDeviceManageFacade().findDeviceGatewayById(gatewayAddress);
-            
+
             instantiationFacade.getGatewayOperationFacade().requestABRules(gateway.getId(), new ABCallback());
-            
+
         } catch (InternalErrorException | InstanceNotFoundException ex)
         {
             JOptionPane.showMessageDialog(this, ex.toString());
@@ -176,6 +180,7 @@ public class AutonomousBehaviourDialog extends javax.swing.JDialog
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Autonomous behaviour management");
 
+        jTableABRules.setFont(new java.awt.Font("Lucida Grande", 0, 10)); // NOI18N
         jTableABRules.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][]
             {
@@ -616,6 +621,16 @@ public class AutonomousBehaviourDialog extends javax.swing.JDialog
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void initComponentsCustom()
+    {
+        for (int i = 0; i < jTableABRules.getColumnCount(); i++)
+        {
+            TableColumn col = jTableABRules.getColumnModel().getColumn(i);
+            col.setCellRenderer(new CustomCellRenderer());
+        }
+
+    }
+
 
     private void jButtonRemoveABRuleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRemoveABRuleActionPerformed
         if (jTableABRules.getSelectedColumnCount() > 0)
@@ -625,21 +640,20 @@ public class AutonomousBehaviourDialog extends javax.swing.JDialog
     }//GEN-LAST:event_jButtonRemoveABRuleActionPerformed
 
 
-
     private void jButtonAddABRuleActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jButtonAddABRuleActionPerformed
     {//GEN-HEADEREND:event_jButtonAddABRuleActionPerformed
-        
+
         try
         {
             UniDAABRuleVO rule = getRuleFromUserInput();
-                        
+
             instantiationFacade.getGatewayOperationFacade().addABRule(new UniDAAddress(gatewayAddress), rule);
-            
+
         } catch (InternalErrorException ex)
         {
             JOptionPane.showMessageDialog(this, ex.toString());
         }
-        
+
     }//GEN-LAST:event_jButtonAddABRuleActionPerformed
 
     private UniDAABRuleVO getRuleFromUserInput() throws UniDAIDFormatException
@@ -658,10 +672,10 @@ public class AutonomousBehaviourDialog extends javax.swing.JDialog
         } else if (jRadioStateChangeTrigger.isSelected())
         {
             DeviceID deviceID = new DeviceID(
-                    new UniDAAddress(gatewayAddress), 
+                    new UniDAAddress(gatewayAddress),
                     Short.valueOf(jTextTriggerSourceDeviceNumber.getText()));
             trigger = new StateChangeTrigger(
-                    deviceID, 
+                    deviceID,
                     jTextStateChangeTriggerStateBaseIRI.getText() + jTextStateChangeTriggerStateID.getText(),
                     new StateConditionNull());
         }
@@ -669,7 +683,7 @@ public class AutonomousBehaviourDialog extends javax.swing.JDialog
         // action
         RuleAction action = null;
         if (jRadioCommandAction.isSelected())
-        {            
+        {
             action = new CommandExecutionAction(
                     this.jTextCommandActionFunctionalityBaseIRI.getText() + this.jTextCommandActionFunctionalityID.getText(),
                     this.jTextCommandActionCommandBaseIRI.getText() + this.jTextCommandActionCommandID.getText(),
@@ -682,10 +696,9 @@ public class AutonomousBehaviourDialog extends javax.swing.JDialog
             // TODO
         }
         action.setActionDestination(new DeviceID(new UniDAAddress(
-                jTextActionDestination.getText()), 
+                jTextActionDestination.getText()),
                 Short.valueOf(jTextActionDestinationDeviceNumber.getText())));
 
-        
         return new UniDAABRuleVO(trigger, action);
     }
 
@@ -785,17 +798,16 @@ public class AutonomousBehaviourDialog extends javax.swing.JDialog
     private javax.swing.JTextField jTextTriggerSourceDeviceNumber;
     // End of variables declaration//GEN-END:variables
 
-
     private class ABCallback implements IAutonomousBehaviourCallback
     {
 
         @Override
         public void notifyGatewayAutonomousBehaviourRules(OperationTicket ticket, Gateway gateway, List<UniDAABRuleVO> rules)
         {
-            
+
             UNIDALibraryBasicGUI.cleanJTable(jTableABRules);
-            int ruleRow = 0;        
-            
+            int ruleRow = 0;
+
             for (UniDAABRuleVO rule : rules)
             {
                 jTableABRules.getModel().setValueAt(rule.getTrigger().getType().toString(), ruleRow, 0);
@@ -806,7 +818,65 @@ public class AutonomousBehaviourDialog extends javax.swing.JDialog
                 ruleRow++;
             }
         }
-        
+
+    }
+
+    private class CustomCellRenderer extends JLabel implements TableCellRenderer
+    {
+
+        // This method is called each time a cell in a column
+        // using this renderer needs to be rendered.
+        @Override
+        public Component getTableCellRendererComponent(JTable table, Object value,
+                boolean isSelected, boolean hasFocus, int rowIndex, int vColIndex)
+        {
+            // 'value' is value contained in the cell located at
+            // (rowIndex, vColIndex)
+
+            if (isSelected)
+            {
+                // cell (and perhaps other cells) are selected
+            }
+
+            if (hasFocus)
+            {
+                // this cell is the anchor and the table has the focus
+            }
+            
+            if (null != value)
+            {
+                // Configure the component with the specified value
+                setText(value.toString());
+                // Set tool tip if desired          
+                setToolTipText(value.toString());
+            }
+
+            this.setFont(new java.awt.Font("Lucida Grande", 0, 11));
+
+            // Since the renderer is a component, return itself
+            return this;
+        }
+
+        // The following methods override the defaults for performance reasons
+        @Override
+        public void validate()
+        {
+        }
+
+        @Override
+        public void revalidate()
+        {
+        }
+
+        @Override
+        protected void firePropertyChange(String propertyName, Object oldValue, Object newValue)
+        {
+        }
+
+        @Override
+        public void firePropertyChange(String propertyName, boolean oldValue, boolean newValue)
+        {
+        }
     }
 
 }

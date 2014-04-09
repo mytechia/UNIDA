@@ -330,8 +330,6 @@ public class UNIDALibraryBasicGUI extends javax.swing.JFrame
         jTableDevicesInfo = new javax.swing.JTable();
         jLabel3 = new javax.swing.JLabel();
         jPanelGatewaysButtons = new javax.swing.JPanel();
-        jButtonForceAnnounce = new javax.swing.JButton();
-        jButtonAB = new javax.swing.JButton();
         jPanelDevicesButtons = new javax.swing.JPanel();
         jButtonCommands = new javax.swing.JButton();
         jButtonOnOffCommands = new javax.swing.JButton();
@@ -339,6 +337,8 @@ public class UNIDALibraryBasicGUI extends javax.swing.JFrame
         jButtonState = new javax.swing.JButton();
         jButtonWriteState = new javax.swing.JButton();
         jButtonSuscribe = new javax.swing.JButton();
+        jButtonAB = new javax.swing.JButton();
+        jButtonForceAnnounce = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setPreferredSize(new java.awt.Dimension(973, 760));
@@ -455,26 +455,6 @@ public class UNIDALibraryBasicGUI extends javax.swing.JFrame
 
         jPanelGatewaysButtons.setLayout(new javax.swing.BoxLayout(jPanelGatewaysButtons, javax.swing.BoxLayout.X_AXIS));
 
-        jButtonForceAnnounce.setText("Force Announce");
-        jButtonForceAnnounce.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
-                jButtonForceAnnounceActionPerformed(evt);
-            }
-        });
-        jPanelGatewaysButtons.add(jButtonForceAnnounce);
-
-        jButtonAB.setText("Manage Autonomous Behaviours");
-        jButtonAB.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
-                jButtonABActionPerformed(evt);
-            }
-        });
-        jPanelGatewaysButtons.add(jButtonAB);
-
         jPanelDevicesButtons.setMaximumSize(new java.awt.Dimension(221, 25));
         jPanelDevicesButtons.setMinimumSize(new java.awt.Dimension(221, 25));
         jPanelDevicesButtons.setPreferredSize(new java.awt.Dimension(221, 25));
@@ -541,6 +521,24 @@ public class UNIDALibraryBasicGUI extends javax.swing.JFrame
         });
         jPanelDevicesButtons.add(jButtonSuscribe);
 
+        jButtonAB.setText("Manage Autonomous Behaviours");
+        jButtonAB.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                jButtonABActionPerformed(evt);
+            }
+        });
+
+        jButtonForceAnnounce.setText("Force Announce");
+        jButtonForceAnnounce.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                jButtonForceAnnounceActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanelGatewaysInfoLayout = new javax.swing.GroupLayout(jPanelGatewaysInfo);
         jPanelGatewaysInfo.setLayout(jPanelGatewaysInfoLayout);
         jPanelGatewaysInfoLayout.setHorizontalGroup(
@@ -558,22 +556,33 @@ public class UNIDALibraryBasicGUI extends javax.swing.JFrame
                             .addComponent(jLabel3)))
                     .addGroup(jPanelGatewaysInfoLayout.createSequentialGroup()
                         .addGap(230, 230, 230)
-                        .addComponent(jPanelGatewaysButtons, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanelGatewaysInfoLayout.createSequentialGroup()
-                        .addGap(49, 49, 49)
-                        .addComponent(jPanelDevicesButtons, javax.swing.GroupLayout.PREFERRED_SIZE, 931, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(175, Short.MAX_VALUE))
+                        .addComponent(jPanelGatewaysButtons, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(110, 110, 110)
+                        .addComponent(jButtonForceAnnounce)
+                        .addComponent(jButtonAB)))
+                .addContainerGap(421, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelGatewaysInfoLayout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jPanelDevicesButtons, javax.swing.GroupLayout.PREFERRED_SIZE, 931, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(84, 84, 84))
         );
         jPanelGatewaysInfoLayout.setVerticalGroup(
             jPanelGatewaysInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelGatewaysInfoLayout.createSequentialGroup()
-                .addContainerGap(14, Short.MAX_VALUE)
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPaneGatewaysInfo, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jPanelGatewaysButtons, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(51, 51, 51)
+                .addContainerGap(36, Short.MAX_VALUE)
+                .addGroup(jPanelGatewaysInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelGatewaysInfoLayout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jScrollPaneGatewaysInfo, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jPanelGatewaysButtons, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(51, 51, 51))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelGatewaysInfoLayout.createSequentialGroup()
+                        .addGroup(jPanelGatewaysInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jButtonForceAnnounce)
+                            .addComponent(jButtonAB))
+                        .addGap(33, 33, 33)))
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPaneDeviceIOsInfo, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)

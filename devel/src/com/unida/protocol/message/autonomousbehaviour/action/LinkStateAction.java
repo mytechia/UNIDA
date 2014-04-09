@@ -79,4 +79,11 @@ public class LinkStateAction extends RuleAction
     {
         return RuleActionEnum.LINK_STATE;
     }
+
+    @Override
+    public String toString()
+    {
+        return " LinkStateAction{" + "stateId=" + stateId + "}.";
+    }
+        
 }

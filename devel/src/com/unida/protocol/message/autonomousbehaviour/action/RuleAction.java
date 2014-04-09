@@ -93,5 +93,14 @@ public abstract class RuleAction
         return initIndex;
     }
 
+    
     abstract public RuleActionEnum getType();
+
+    
+    @Override
+    public String toString()
+    {
+        return "RuleAction{" + "actionDestination=" + actionDestination + "}.";
+    }            
+    
 }
