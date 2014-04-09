@@ -177,11 +177,7 @@ public class UniDAWriteDeviceStateRequestMessage extends UniDADeviceMessage
         {
             return false;
         }
-        if (!Objects.equals(this.value, other.value))
-        {
-            return false;
-        }
-        return true;
+        return Objects.equals(this.value, other.value);
     }
     
     

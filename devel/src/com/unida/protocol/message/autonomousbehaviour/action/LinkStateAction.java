@@ -37,6 +37,16 @@ public class LinkStateAction extends RuleAction
 {
 
     private String stateId;
+    
+    
+    public LinkStateAction() {}
+    
+    
+    public LinkStateAction(String stateId)
+    {
+        this.stateId = stateId;
+    }
+    
 
     public String getStateId()
     {

@@ -40,7 +40,16 @@ public class WriteStateAction extends RuleAction
     private String stateId;
     
     private DeviceStateValue stateValue;
-        
+    
+    
+    public WriteStateAction() {}
+    
+    
+    public WriteStateAction(String stateId, DeviceStateValue stateValue)
+    {
+        this.stateId = stateId;
+        this.stateValue = stateValue;
+    }
 
     
     public String getStateId()
