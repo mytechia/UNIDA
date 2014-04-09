@@ -34,11 +34,13 @@ import com.unida.protocol.message.MessageType;
 import com.unida.protocol.message.UniDAMessage;
 import com.unida.protocol.message.ack.UniDAOperationAckMessage;
 import com.unida.protocol.message.autonomousbehaviour.UniDAABAddMessage;
+import com.unida.protocol.message.autonomousbehaviour.UniDAABQueryReplyMessage;
+import com.unida.protocol.message.autonomousbehaviour.UniDAABQueryRequestMessage;
 import com.unida.protocol.message.autonomousbehaviour.UniDAABRemoveMessage;
 import com.unida.protocol.message.debug.UnidaDebugInfoMessage;
 import com.unida.protocol.message.debug.UnidaDebugInitMessage;
-import com.unida.protocol.message.discovery.DiscoverUniDAGatewayDevicesRequestMessage;
 import com.unida.protocol.message.discovery.DiscoverUniDAGatewayDevicesReplyMessage;
+import com.unida.protocol.message.discovery.DiscoverUniDAGatewayDevicesRequestMessage;
 import com.unida.protocol.message.discovery.UniDAGatewayHeartbeatMessage;
 import com.unida.protocol.message.notification.UniDANotificationMessage;
 import com.unida.protocol.message.notification.UniDANotificationSuscriptionRequestMessage;
@@ -128,6 +130,10 @@ public class DefaultMessageFactory implements IMessageFactory
             return createUnidaAddABRuleMessage(msgType, msgData);
         else if (msgType == MessageType.ABRemoveRule.getTypeValue())
             return createUnidaRemoveABRuleMessage(msgType, msgData);
+        else if (msgType == MessageType.ABQueryRequest.getTypeValue())
+            return createUnidaABRulesQueryRequestMessage(msgType, msgData);
+        else if (msgType == MessageType.ABQueryReply.getTypeValue())
+            return createUnidaABRulesQueryReplyMessage(msgType, msgData);
         else {
              throw new MessageFormatException("Unsupported message type: " + msgType + ".");
         }
@@ -365,6 +371,32 @@ public class DefaultMessageFactory implements IMessageFactory
 
         if (msgType == MessageType.ABRemoveRule.getTypeValue()) {
             return new UniDAABRemoveMessage(msgData, ontologyCodec);
+        }
+        else {
+            return null;
+        }
+
+    }
+    
+    
+    UniDAABQueryReplyMessage createUnidaABRulesQueryReplyMessage(byte msgType, byte[] msgData) throws MessageFormatException
+    {
+
+        if (msgType == MessageType.ABQueryReply.getTypeValue()) {
+            return new UniDAABQueryReplyMessage(msgData, ontologyCodec);
+        }
+        else {
+            return null;
+        }
+
+    }
+    
+    
+    UniDAABQueryRequestMessage createUnidaABRulesQueryRequestMessage(byte msgType, byte[] msgData) throws MessageFormatException
+    {
+
+        if (msgType == MessageType.ABQueryRequest.getTypeValue()) {
+            return new UniDAABQueryRequestMessage(msgData, ontologyCodec);
         }
         else {
             return null;

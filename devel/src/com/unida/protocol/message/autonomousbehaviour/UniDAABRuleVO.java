@@ -93,7 +93,7 @@ public class UniDAABRuleVO
 
         // Trigger type
         RuleTriggerEnum triggerType = RuleTriggerEnum.fromValue(EndianConversor.byteArrayLittleEndianToShort(bytes, initIndex));
-        initIndex += EndianConversor.INT_SIZE_BYTES;
+        initIndex += EndianConversor.SHORT_SIZE_BYTES;
 
         // Trigger payload
         if (triggerType != RuleTriggerEnum.UNKNOWN)
@@ -102,12 +102,12 @@ public class UniDAABRuleVO
         }
         if (null != this.trigger)
         {
-            this.trigger.decodePayload(bytes, initIndex, ontologyCodec);
+            initIndex = this.trigger.decodePayload(bytes, initIndex, ontologyCodec);
         }
 
         // Action Type
         RuleActionEnum actionType = RuleActionEnum.fromValue(EndianConversor.byteArrayLittleEndianToShort(bytes, initIndex));
-        initIndex += EndianConversor.INT_SIZE_BYTES;
+        initIndex += EndianConversor.SHORT_SIZE_BYTES;
 
         // Action payload
         if (actionType != RuleActionEnum.UNKNOWN)

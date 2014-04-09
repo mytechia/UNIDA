@@ -31,6 +31,7 @@ import com.unida.protocol.message.autonomousbehaviour.trigger.statechange.StateC
 import com.unida.protocol.message.autonomousbehaviour.trigger.statechange.StateConditionBinary;
 import com.unida.protocol.message.autonomousbehaviour.trigger.statechange.StateConditionEnum;
 import com.unida.protocol.message.autonomousbehaviour.trigger.statechange.StateConditionNary;
+import com.unida.protocol.message.autonomousbehaviour.trigger.statechange.StateConditionNull;
 import com.unida.protocol.message.autonomousbehaviour.trigger.statechange.StateConditionUnary;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -122,10 +123,13 @@ public class StateChangeTrigger extends RuleTrigger
         initIndex += EndianConversor.INT_SIZE_BYTES;
 
         // type of the state condition
-        StateConditionEnum stateConditionType = StateConditionEnum.fromValue(EndianConversor.byteArrayLittleEndianToInt(bytes, initIndex));
-        initIndex += EndianConversor.INT_SIZE_BYTES;
+        StateConditionEnum stateConditionType = StateConditionEnum.fromValue(EndianConversor.byteArrayLittleEndianToShort(bytes, initIndex));
+        initIndex += EndianConversor.SHORT_SIZE_BYTES;
         switch (stateConditionType)
         {
+            case NO_CONDITION:
+                this.stateCondition = new StateConditionNull();
+                break;
             case EQUALS:
             case DIFFERENT_TO:
             case GREATER_THAN:
