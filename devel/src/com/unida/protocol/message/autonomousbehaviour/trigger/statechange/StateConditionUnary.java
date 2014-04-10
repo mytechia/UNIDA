@@ -41,9 +41,10 @@ public class StateConditionUnary extends StateCondition
     private DeviceStateValue stateValue;
     
 
-    public StateConditionUnary(StateConditionEnum type)
+    public StateConditionUnary(StateConditionEnum type, DeviceStateValue stateValue)
     {
         this.type = type;
+        this.stateValue = stateValue;
     }
     
 

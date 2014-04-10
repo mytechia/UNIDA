@@ -42,9 +42,10 @@ public class StateConditionNary extends StateCondition
 
     private Collection<DeviceStateValue> stateValues;
 
-    public StateConditionNary(StateConditionEnum type)
+    public StateConditionNary(StateConditionEnum type, Collection<DeviceStateValue> stateValues)
     {
         this.type = type;
+        this.stateValues = stateValues;
     }
 
     @Override

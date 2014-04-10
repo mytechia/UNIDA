@@ -41,10 +41,17 @@ import com.unida.protocol.message.autonomousbehaviour.action.WriteStateAction;
 import com.unida.protocol.message.autonomousbehaviour.trigger.CronoTrigger;
 import com.unida.protocol.message.autonomousbehaviour.trigger.RuleTrigger;
 import com.unida.protocol.message.autonomousbehaviour.trigger.StateChangeTrigger;
+import com.unida.protocol.message.autonomousbehaviour.trigger.statechange.StateCondition;
+import com.unida.protocol.message.autonomousbehaviour.trigger.statechange.StateConditionBinary;
+import com.unida.protocol.message.autonomousbehaviour.trigger.statechange.StateConditionEnum;
+import com.unida.protocol.message.autonomousbehaviour.trigger.statechange.StateConditionNary;
 import com.unida.protocol.message.autonomousbehaviour.trigger.statechange.StateConditionNull;
+import com.unida.protocol.message.autonomousbehaviour.trigger.statechange.StateConditionUnary;
 import com.unida.tools.librarybasicgui.UNIDALibraryBasicGUI;
 import com.unida.tools.librarybasicgui.util.DomoParsing;
 import java.awt.Component;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -63,6 +70,8 @@ import javax.swing.table.TableColumn;
  */
 public class AutonomousBehaviourDialog extends javax.swing.JDialog
 {
+    
+    private final static String CONTINUOUS_VALUE = "http://elite.polito.it/ontologies/dogont.owl#ContinuousValue";
 
     private InMemoryUniDAInstantiationFacade instantiationFacade;
     private String gatewayAddress;
@@ -149,6 +158,7 @@ public class AutonomousBehaviourDialog extends javax.swing.JDialog
 
         buttonGroupTriggerType = new javax.swing.ButtonGroup();
         buttonGroupActionType = new javax.swing.ButtonGroup();
+        buttonGroupStateConditionType = new javax.swing.ButtonGroup();
         jScrollPaneABRules = new javax.swing.JScrollPane();
         jTableABRules = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
@@ -164,6 +174,16 @@ public class AutonomousBehaviourDialog extends javax.swing.JDialog
         jLabel6 = new javax.swing.JLabel();
         jTextStateChangeTriggerStateBaseIRI = new javax.swing.JTextField();
         jTextStateChangeTriggerStateID = new javax.swing.JTextField();
+        jPanelStateCondition = new javax.swing.JPanel();
+        jRadioConditionUnary = new javax.swing.JRadioButton();
+        jRadioConditionNone = new javax.swing.JRadioButton();
+        jRadioConditionNary = new javax.swing.JRadioButton();
+        jRadioConditionBinary = new javax.swing.JRadioButton();
+        jComboConditionOperator = new javax.swing.JComboBox();
+        jTextStateChangeTriggerValue1 = new javax.swing.JTextField();
+        jTextStateChangeTriggerValue2 = new javax.swing.JTextField();
+        jLabel16 = new javax.swing.JLabel();
+        jLabel17 = new javax.swing.JLabel();
         jPanelCronoTrigger = new javax.swing.JPanel();
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
@@ -293,32 +313,130 @@ public class AutonomousBehaviourDialog extends javax.swing.JDialog
         jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel6.setText("State ID to query:");
 
+        jPanelStateCondition.setBorder(javax.swing.BorderFactory.createTitledBorder("State condition"));
+
+        buttonGroupStateConditionType.add(jRadioConditionUnary);
+        jRadioConditionUnary.setText("Unary");
+        jRadioConditionUnary.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                jRadioConditionUnaryActionPerformed(evt);
+            }
+        });
+
+        buttonGroupStateConditionType.add(jRadioConditionNone);
+        jRadioConditionNone.setSelected(true);
+        jRadioConditionNone.setText("None");
+        jRadioConditionNone.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                jRadioConditionNoneActionPerformed(evt);
+            }
+        });
+
+        buttonGroupStateConditionType.add(jRadioConditionNary);
+        jRadioConditionNary.setText("NAry");
+        jRadioConditionNary.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                jRadioConditionNaryActionPerformed(evt);
+            }
+        });
+
+        buttonGroupStateConditionType.add(jRadioConditionBinary);
+        jRadioConditionBinary.setText("Binary");
+        jRadioConditionBinary.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                jRadioConditionBinaryActionPerformed(evt);
+            }
+        });
+
+        jComboConditionOperator.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "equal to", "different to", "greater than", "lesser than", "between", "some of" }));
+
+        jLabel16.setText("Value 1:");
+
+        jLabel17.setText("Value 2:");
+
+        javax.swing.GroupLayout jPanelStateConditionLayout = new javax.swing.GroupLayout(jPanelStateCondition);
+        jPanelStateCondition.setLayout(jPanelStateConditionLayout);
+        jPanelStateConditionLayout.setHorizontalGroup(
+            jPanelStateConditionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelStateConditionLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanelStateConditionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanelStateConditionLayout.createSequentialGroup()
+                        .addComponent(jRadioConditionNone)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jRadioConditionUnary)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jRadioConditionBinary)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jRadioConditionNary)
+                        .addGap(18, 18, 18)
+                        .addComponent(jComboConditionOperator, 0, 1, Short.MAX_VALUE))
+                    .addGroup(jPanelStateConditionLayout.createSequentialGroup()
+                        .addGap(6, 6, 6)
+                        .addGroup(jPanelStateConditionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jLabel16, javax.swing.GroupLayout.DEFAULT_SIZE, 59, Short.MAX_VALUE)
+                            .addComponent(jLabel17, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanelStateConditionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jTextStateChangeTriggerValue1)
+                            .addComponent(jTextStateChangeTriggerValue2))))
+                .addContainerGap())
+        );
+        jPanelStateConditionLayout.setVerticalGroup(
+            jPanelStateConditionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelStateConditionLayout.createSequentialGroup()
+                .addContainerGap(21, Short.MAX_VALUE)
+                .addGroup(jPanelStateConditionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jRadioConditionNone)
+                    .addComponent(jRadioConditionUnary)
+                    .addComponent(jRadioConditionNary)
+                    .addComponent(jRadioConditionBinary)
+                    .addComponent(jComboConditionOperator, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanelStateConditionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jTextStateChangeTriggerValue1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel16))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanelStateConditionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jTextStateChangeTriggerValue2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel17))
+                .addGap(21, 21, 21))
+        );
+
         javax.swing.GroupLayout jPanelStateChangeTriggerLayout = new javax.swing.GroupLayout(jPanelStateChangeTrigger);
         jPanelStateChangeTrigger.setLayout(jPanelStateChangeTriggerLayout);
         jPanelStateChangeTriggerLayout.setHorizontalGroup(
             jPanelStateChangeTriggerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelStateChangeTriggerLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanelStateChangeTriggerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelStateChangeTriggerLayout.createSequentialGroup()
-                        .addComponent(jTextStateChangeTriggerStateBaseIRI, javax.swing.GroupLayout.DEFAULT_SIZE, 305, Short.MAX_VALUE)
-                        .addGap(26, 26, 26)
-                        .addComponent(jTextStateChangeTriggerStateID, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanelStateChangeTriggerLayout.createSequentialGroup()
-                        .addGap(114, 114, 114)
-                        .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap())))
+                .addComponent(jTextStateChangeTriggerStateBaseIRI, javax.swing.GroupLayout.DEFAULT_SIZE, 305, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addComponent(jTextStateChangeTriggerStateID, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(8, 8, 8))
+            .addGroup(jPanelStateChangeTriggerLayout.createSequentialGroup()
+                .addGap(23, 23, 23)
+                .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(jPanelStateCondition, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanelStateChangeTriggerLayout.setVerticalGroup(
             jPanelStateChangeTriggerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelStateChangeTriggerLayout.createSequentialGroup()
-                .addGap(18, 18, 18)
                 .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanelStateChangeTriggerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jTextStateChangeTriggerStateID, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTextStateChangeTriggerStateBaseIRI, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(150, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanelStateCondition, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jPanelTriggerContainer.add(jPanelStateChangeTrigger, "card3");
@@ -361,7 +479,7 @@ public class AutonomousBehaviourDialog extends javax.swing.JDialog
                 .addGroup(jPanelCronoTriggerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jTextCronoTriggerMin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel10))
-                .addContainerGap(65, Short.MAX_VALUE))
+                .addContainerGap(80, Short.MAX_VALUE))
         );
 
         jPanelTriggerContainer.add(jPanelCronoTrigger, "card2");
@@ -374,7 +492,7 @@ public class AutonomousBehaviourDialog extends javax.swing.JDialog
         );
         jPanelPeriodicTriggerLayout.setVerticalGroup(
             jPanelPeriodicTriggerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 240, Short.MAX_VALUE)
+            .addGap(0, 255, Short.MAX_VALUE)
         );
 
         jPanelTriggerContainer.add(jPanelPeriodicTrigger, "card4");
@@ -475,7 +593,7 @@ public class AutonomousBehaviourDialog extends javax.swing.JDialog
                 .addGroup(jPanelLinkStatesActionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jTextLinkStateActionStateID, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTextLinkStateActionStateBaseIRI, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(150, Short.MAX_VALUE))
+                .addContainerGap(165, Short.MAX_VALUE))
         );
 
         jPanelActionContainer.add(jPanelLinkStatesAction, "card3");
@@ -534,7 +652,7 @@ public class AutonomousBehaviourDialog extends javax.swing.JDialog
                 .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jTextWriteStateActionStateValueRAW, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(22, Short.MAX_VALUE))
+                .addContainerGap(37, Short.MAX_VALUE))
         );
 
         jPanelActionContainer.add(jPanelWriteStateAction, "card4");
@@ -796,7 +914,10 @@ public class AutonomousBehaviourDialog extends javax.swing.JDialog
         });
 
         UNIDALibraryBasicGUI.cleanJTable(jTableABRules);
-
+        
+        this.jTextStateChangeTriggerValue1.setEnabled(false);
+        this.jTextStateChangeTriggerValue2.setEnabled(false);
+           
     }
 
 
@@ -850,10 +971,46 @@ public class AutonomousBehaviourDialog extends javax.swing.JDialog
             DeviceID deviceID = new DeviceID(
                     new UniDAAddress(gatewayAddress),
                     Short.valueOf(jTextTriggerSourceDeviceNumber.getText()));
+            
+            StateCondition condition = null;
+            if (jRadioConditionNone.isSelected())
+            {
+                condition = new StateConditionNull();
+            } else if (jRadioConditionUnary.isSelected())
+            {
+                condition = new StateConditionUnary(
+                    StateConditionEnum.fromValue(jComboConditionOperator.getSelectedIndex() + 1),
+                    new DeviceStateValue(
+                            CONTINUOUS_VALUE,
+                            this.jTextStateChangeTriggerValue1.getText()));
+            } else if (jRadioConditionBinary.isSelected())
+            {
+                condition = new StateConditionBinary(
+                    StateConditionEnum.fromValue(jComboConditionOperator.getSelectedIndex() + 1),
+                    new DeviceStateValue(
+                            CONTINUOUS_VALUE,
+                            this.jTextStateChangeTriggerValue1.getText()),
+                    new DeviceStateValue(
+                            CONTINUOUS_VALUE,
+                            this.jTextStateChangeTriggerValue2.getText()));
+            } else if (jRadioConditionNary.isSelected())
+            {
+                Collection<DeviceStateValue> stateValues = new ArrayList<>();
+                stateValues.add(new DeviceStateValue(
+                            CONTINUOUS_VALUE,
+                            this.jTextStateChangeTriggerValue1.getText()));
+                stateValues.add(new DeviceStateValue(
+                            CONTINUOUS_VALUE,
+                            this.jTextStateChangeTriggerValue2.getText()));
+                condition = new StateConditionNary(
+                    StateConditionEnum.fromValue(jComboConditionOperator.getSelectedIndex() + 1),
+                    stateValues);
+            }
+            
             trigger = new StateChangeTrigger(
                     deviceID,
                     jTextStateChangeTriggerStateBaseIRI.getText() + jTextStateChangeTriggerStateID.getText(),
-                    new StateConditionNull());
+                    condition);
         }
 
         // action
@@ -930,13 +1087,39 @@ public class AutonomousBehaviourDialog extends javax.swing.JDialog
         loadABRules();
     }//GEN-LAST:event_jButtonRefreshABRulesActionPerformed
 
+    private void jRadioConditionNoneActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jRadioConditionNoneActionPerformed
+    {//GEN-HEADEREND:event_jRadioConditionNoneActionPerformed
+        this.jTextStateChangeTriggerValue1.setEnabled(false);
+        this.jTextStateChangeTriggerValue2.setEnabled(false);
+    }//GEN-LAST:event_jRadioConditionNoneActionPerformed
+
+    private void jRadioConditionUnaryActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jRadioConditionUnaryActionPerformed
+    {//GEN-HEADEREND:event_jRadioConditionUnaryActionPerformed
+        this.jTextStateChangeTriggerValue1.setEnabled(true);
+        this.jTextStateChangeTriggerValue2.setEnabled(false);
+    }//GEN-LAST:event_jRadioConditionUnaryActionPerformed
+
+    private void jRadioConditionBinaryActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jRadioConditionBinaryActionPerformed
+    {//GEN-HEADEREND:event_jRadioConditionBinaryActionPerformed
+        this.jTextStateChangeTriggerValue1.setEnabled(true);
+        this.jTextStateChangeTriggerValue2.setEnabled(true);
+    }//GEN-LAST:event_jRadioConditionBinaryActionPerformed
+
+    private void jRadioConditionNaryActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jRadioConditionNaryActionPerformed
+    {//GEN-HEADEREND:event_jRadioConditionNaryActionPerformed
+        this.jTextStateChangeTriggerValue1.setEnabled(true);
+        this.jTextStateChangeTriggerValue2.setEnabled(true);        
+    }//GEN-LAST:event_jRadioConditionNaryActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup buttonGroupActionType;
+    private javax.swing.ButtonGroup buttonGroupStateConditionType;
     private javax.swing.ButtonGroup buttonGroupTriggerType;
     private javax.swing.JButton jButtonAddABRule;
     private javax.swing.JButton jButtonRefreshABRules;
     private javax.swing.JButton jButtonRemoveABRule;
+    private javax.swing.JComboBox jComboConditionOperator;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -944,6 +1127,8 @@ public class AutonomousBehaviourDialog extends javax.swing.JDialog
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -959,10 +1144,15 @@ public class AutonomousBehaviourDialog extends javax.swing.JDialog
     private javax.swing.JPanel jPanelLinkStatesAction;
     private javax.swing.JPanel jPanelPeriodicTrigger;
     private javax.swing.JPanel jPanelStateChangeTrigger;
+    private javax.swing.JPanel jPanelStateCondition;
     private javax.swing.JPanel jPanelTriggerContainer;
     private javax.swing.JPanel jPanelTriggerType;
     private javax.swing.JPanel jPanelWriteStateAction;
     private javax.swing.JRadioButton jRadioCommandAction;
+    private javax.swing.JRadioButton jRadioConditionBinary;
+    private javax.swing.JRadioButton jRadioConditionNary;
+    private javax.swing.JRadioButton jRadioConditionNone;
+    private javax.swing.JRadioButton jRadioConditionUnary;
     private javax.swing.JRadioButton jRadioCronoTrigger;
     private javax.swing.JRadioButton jRadioLinkStateAction;
     private javax.swing.JRadioButton jRadioPeriodicTrigger;
@@ -985,6 +1175,8 @@ public class AutonomousBehaviourDialog extends javax.swing.JDialog
     private javax.swing.JTextField jTextLinkStateActionStateID;
     private javax.swing.JTextField jTextStateChangeTriggerStateBaseIRI;
     private javax.swing.JTextField jTextStateChangeTriggerStateID;
+    private javax.swing.JTextField jTextStateChangeTriggerValue1;
+    private javax.swing.JTextField jTextStateChangeTriggerValue2;
     private javax.swing.JTextField jTextTriggerSourceDeviceNumber;
     private javax.swing.JTextField jTextWriteStateActionStateIDBaseIRI;
     private javax.swing.JTextField jTextWriteStateActionStateIDID;
