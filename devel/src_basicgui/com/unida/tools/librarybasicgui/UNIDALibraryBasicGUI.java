@@ -559,6 +559,7 @@ public class UNIDALibraryBasicGUI extends javax.swing.JFrame
                         .addComponent(jPanelGatewaysButtons, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(110, 110, 110)
                         .addComponent(jButtonForceAnnounce)
+                        .addGap(0, 0, 0)
                         .addComponent(jButtonAB)))
                 .addContainerGap(421, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelGatewaysInfoLayout.createSequentialGroup()

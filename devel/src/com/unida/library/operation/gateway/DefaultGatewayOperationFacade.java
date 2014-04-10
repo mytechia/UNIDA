@@ -36,6 +36,7 @@ import com.unida.library.operation.OperationTypes;
 import com.unida.protocol.IUniDACommChannel;
 import com.unida.protocol.UniDAAddress;
 import com.unida.protocol.message.autonomousbehaviour.UniDAABAddMessage;
+import com.unida.protocol.message.autonomousbehaviour.UniDAABRemoveMessage;
 import com.unida.protocol.message.autonomousbehaviour.UniDAABRuleVO;
 import com.unida.protocol.message.discovery.DiscoverUniDAGatewayDevicesRequestMessage;
 import java.util.LinkedList;
@@ -107,10 +108,28 @@ public class DefaultGatewayOperationFacade implements IGatewayOperationFacade
     
     
     @Override
+    public void rmABRule(UniDAAddress gatewayAddress, int ruleId) throws InternalErrorException
+    {
+        
+        try
+        {
+            this.commChannel.sendMessage(gatewayAddress, new UniDAABRemoveMessage(gatewayAddress, ontologyCodec, (short) ruleId, getOpId()));
+        } catch (CommunicationException ex)
+        {
+            throw new InternalErrorException(ex);
+        }
+        
+    }
+    
+    
+    @Override
     public OperationTicket requestABRules(UniDAAddress gatewayAddress,
             IAutonomousBehaviourCallback callback) throws InternalErrorException
     {
-        OperationTicket ot = this.ticketManager.issueTicket(OperationTypes.QUERY_AUTONOMOUS_BEHAVIOUR);
+        
+        int opId = getOpId();
+        
+        OperationTicket ot = new OperationTicket(opId, OperationTypes.QUERY_AUTONOMOUS_BEHAVIOUR);
         
         try
         {

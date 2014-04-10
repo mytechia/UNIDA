@@ -47,7 +47,7 @@ import java.io.IOException;
 public class UniDAABRuleVO
 {
 
-    private long ruleID = 0;
+    private int ruleID = 0;
 
     private RuleTrigger trigger = null;
 
@@ -91,7 +91,7 @@ public class UniDAABRuleVO
     {
 
         // Rule ID
-        this.ruleID = EndianConversor.byteArrayLittleEndianToUInt(bytes, initIndex);
+        this.ruleID = (int) EndianConversor.byteArrayLittleEndianToUInt(bytes, initIndex);
         initIndex += EndianConversor.INT_SIZE_BYTES;
 
         // Trigger type
@@ -164,7 +164,7 @@ public class UniDAABRuleVO
         this.action = action;
     }
     
-    public long getRuleId()
+    public int getRuleId()
     {
         return this.ruleID;
     }

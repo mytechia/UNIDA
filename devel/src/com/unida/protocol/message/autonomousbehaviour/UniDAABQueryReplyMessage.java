@@ -116,7 +116,7 @@ public class UniDAABQueryReplyMessage extends UniDAMessage
         for (short i = 0; i < rulesNumber; i++)
         {
             UniDAABRuleVO rule = new UniDAABRuleVO();
-            offset += rule.decodePayload(bytes, offset, ontologyCodec);
+            offset = rule.decodePayload(bytes, offset, ontologyCodec);
             this.getABRules().add(rule);
         }
 

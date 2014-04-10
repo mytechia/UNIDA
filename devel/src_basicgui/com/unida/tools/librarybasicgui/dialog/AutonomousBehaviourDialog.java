@@ -49,6 +49,9 @@ import java.util.List;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
+import javax.swing.ListSelectionModel;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
 
@@ -84,6 +87,8 @@ public class AutonomousBehaviourDialog extends javax.swing.JDialog
         this.gatewayAddress = gatewayAddress;
 
         this.setTitle(this.getTitle() + ": " + gatewayAddress);
+        
+        this.jTextActionDestination.setText(gatewayAddress);
 
         jButtonRemoveABRule.setEnabled(false);
 
@@ -93,20 +98,28 @@ public class AutonomousBehaviourDialog extends javax.swing.JDialog
         hideActionPanels();
         jPanelCommandExecutionAction.setVisible(true);
 
+        this.jTextStateChangeTriggerStateBaseIRI.setText(DomoParsing.instance().getDefaultOntologyNamespace());
+
         this.jTextCommandActionCommandBaseIRI.setText(DomoParsing.instance().getDefaultOntologyNamespace());
         this.jTextCommandActionFunctionalityBaseIRI.setText(DomoParsing.instance().getDefaultOntologyNamespace());
-        this.jTextStateChangeTriggerStateBaseIRI.setText(DomoParsing.instance().getDefaultOntologyNamespace());
+        this.jTextLinkStateActionStateBaseIRI.setText(DomoParsing.instance().getDefaultOntologyNamespace());
+        this.jTextWriteStateActionStateIDBaseIRI.setText(DomoParsing.instance().getDefaultOntologyNamespace());
+        this.jTextWriteStateActionStateValueIDBaseIRI.setText(DomoParsing.instance().getDefaultOntologyNamespace());
+
     }
 
     private void hideTriggerPanels()
     {
         this.jPanelCronoTrigger.setVisible(false);
+        this.jPanelPeriodicTrigger.setVisible(false);
         this.jPanelStateChangeTrigger.setVisible(false);
     }
 
     private void hideActionPanels()
     {
         this.jPanelCommandExecutionAction.setVisible(false);
+        this.jPanelLinkStatesAction.setVisible(false);
+        this.jPanelWriteStateAction.setVisible(false);
     }
 
     private void loadABRules()
@@ -158,6 +171,7 @@ public class AutonomousBehaviourDialog extends javax.swing.JDialog
         jTextCronoTriggerHour = new javax.swing.JTextField();
         jTextCronoTriggerWeekday = new javax.swing.JTextField();
         jTextCronoTriggerMin = new javax.swing.JTextField();
+        jPanelPeriodicTrigger = new javax.swing.JPanel();
         jPanelActionContainer = new javax.swing.JPanel();
         jPanelCommandExecutionAction = new javax.swing.JPanel();
         jTextCommandActionFunctionalityBaseIRI = new javax.swing.JTextField();
@@ -236,6 +250,7 @@ public class AutonomousBehaviourDialog extends javax.swing.JDialog
             }
         });
         jTableABRules.setColumnSelectionAllowed(true);
+        jTableABRules.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jScrollPaneABRules.setViewportView(jTableABRules);
         jTableABRules.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         if (jTableABRules.getColumnModel().getColumnCount() > 0)
@@ -350,6 +365,19 @@ public class AutonomousBehaviourDialog extends javax.swing.JDialog
         );
 
         jPanelTriggerContainer.add(jPanelCronoTrigger, "card2");
+
+        javax.swing.GroupLayout jPanelPeriodicTriggerLayout = new javax.swing.GroupLayout(jPanelPeriodicTrigger);
+        jPanelPeriodicTrigger.setLayout(jPanelPeriodicTriggerLayout);
+        jPanelPeriodicTriggerLayout.setHorizontalGroup(
+            jPanelPeriodicTriggerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 454, Short.MAX_VALUE)
+        );
+        jPanelPeriodicTriggerLayout.setVerticalGroup(
+            jPanelPeriodicTriggerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 240, Short.MAX_VALUE)
+        );
+
+        jPanelTriggerContainer.add(jPanelPeriodicTrigger, "card4");
 
         jPanelActionContainer.setBorder(javax.swing.BorderFactory.createTitledBorder("Action data"));
         jPanelActionContainer.setLayout(new java.awt.CardLayout());
@@ -738,13 +766,52 @@ public class AutonomousBehaviourDialog extends javax.swing.JDialog
             col.setCellRenderer(new CustomCellRenderer());
         }
 
+        jTableABRules.getSelectionModel().addListSelectionListener(new ListSelectionListener()
+        {
+
+            @Override
+            public void valueChanged(ListSelectionEvent e)
+            {
+                if (e.getValueIsAdjusting())
+                {
+                    return;
+                }
+                ListSelectionModel lsm = (ListSelectionModel) e.getSource();
+                if (lsm.isSelectionEmpty())
+                {
+                    System.out.println("No rows are selected.");
+                } else
+                {
+                    int selectedRow = lsm.getMinSelectionIndex();
+                    Object valueAt = jTableABRules.getModel().getValueAt(selectedRow, 4);
+                    if (null != valueAt && valueAt.toString().length() > 0)
+                    {
+                        jButtonRemoveABRule.setEnabled(true);
+                    } else
+                    {
+                        jButtonRemoveABRule.setEnabled(false);
+                    }
+                }
+            }
+        });
+
+        UNIDALibraryBasicGUI.cleanJTable(jTableABRules);
+
     }
 
 
     private void jButtonRemoveABRuleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRemoveABRuleActionPerformed
-        if (jTableABRules.getSelectedColumnCount() > 0)
+        if (jTableABRules.getSelectedRowCount() > 0)
         {
-            // TODO
+            try
+            {
+                Integer ruleID = (Integer) jTableABRules.getModel().getValueAt(jTableABRules.getSelectedRow(), 4);
+
+                instantiationFacade.getGatewayOperationFacade().rmABRule(new UniDAAddress(gatewayAddress), ruleID.intValue());
+            } catch (InternalErrorException ex)
+            {
+                JOptionPane.showMessageDialog(this, ex.toString());
+            }
         }
     }//GEN-LAST:event_jButtonRemoveABRuleActionPerformed
 
@@ -806,8 +873,8 @@ public class AutonomousBehaviourDialog extends javax.swing.JDialog
             action = new WriteStateAction(
                     this.jTextWriteStateActionStateIDBaseIRI.getText() + this.jTextWriteStateActionStateIDID.getText(),
                     new DeviceStateValue(
-                        this.jTextWriteStateActionStateValueIDBaseIRI.getText() + this.jTextWriteStateActionStateValueIDID.getText(),
-                        this.jTextWriteStateActionStateValueRAW.getText()));
+                            this.jTextWriteStateActionStateValueIDBaseIRI.getText() + this.jTextWriteStateActionStateValueIDID.getText(),
+                            this.jTextWriteStateActionStateValueRAW.getText()));
         }
         action.setActionDestination(new DeviceID(new UniDAAddress(
                 jTextActionDestination.getText()),
@@ -827,7 +894,7 @@ public class AutonomousBehaviourDialog extends javax.swing.JDialog
     private void jRadioPeriodicTriggerActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jRadioPeriodicTriggerActionPerformed
     {//GEN-HEADEREND:event_jRadioPeriodicTriggerActionPerformed
         hideTriggerPanels();
-        // TODO
+        this.jPanelPeriodicTrigger.setVisible(true);
     }//GEN-LAST:event_jRadioPeriodicTriggerActionPerformed
 
 
@@ -841,7 +908,7 @@ public class AutonomousBehaviourDialog extends javax.swing.JDialog
     private void jRadioLinkStateActionActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jRadioLinkStateActionActionPerformed
     {//GEN-HEADEREND:event_jRadioLinkStateActionActionPerformed
         hideActionPanels();
-        // TODO
+        this.jPanelLinkStatesAction.setVisible(true);
     }//GEN-LAST:event_jRadioLinkStateActionActionPerformed
 
 
@@ -855,7 +922,7 @@ public class AutonomousBehaviourDialog extends javax.swing.JDialog
     private void jRadioWriteStateActionActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jRadioWriteStateActionActionPerformed
     {//GEN-HEADEREND:event_jRadioWriteStateActionActionPerformed
         hideActionPanels();
-        // TODO
+        this.jPanelWriteStateAction.setVisible(true);
     }//GEN-LAST:event_jRadioWriteStateActionActionPerformed
 
     private void jButtonRefreshABRulesActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jButtonRefreshABRulesActionPerformed
@@ -890,6 +957,7 @@ public class AutonomousBehaviourDialog extends javax.swing.JDialog
     private javax.swing.JPanel jPanelCommandExecutionAction;
     private javax.swing.JPanel jPanelCronoTrigger;
     private javax.swing.JPanel jPanelLinkStatesAction;
+    private javax.swing.JPanel jPanelPeriodicTrigger;
     private javax.swing.JPanel jPanelStateChangeTrigger;
     private javax.swing.JPanel jPanelTriggerContainer;
     private javax.swing.JPanel jPanelTriggerType;
@@ -969,7 +1037,7 @@ public class AutonomousBehaviourDialog extends javax.swing.JDialog
             {
                 // this cell is the anchor and the table has the focus
             }
-            
+
             if (null != value)
             {
                 // Configure the component with the specified value

@@ -130,7 +130,7 @@ public class WriteStateAction extends RuleAction
     @Override
     public String toString()
     {
-        return " WriteStateAction{" + "stateId=" + stateId + ", stateValue=" + stateValue + "}.";
+        return super.toString() + " WriteStateAction{" + "stateId=" + stateId + ", stateValue=" + stateValue + "}.";
     }
     
     

@@ -42,6 +42,8 @@ public interface IGatewayOperationFacade
         
     public void addABRule(UniDAAddress gatewayAddress, UniDAABRuleVO rule) throws InternalErrorException;
     
+    public void rmABRule(UniDAAddress gatewayAddress, int ruleId) throws InternalErrorException;
+    
     public OperationTicket requestABRules(UniDAAddress gatewayAddress, IAutonomousBehaviourCallback callback) throws InternalErrorException;
         
 }
