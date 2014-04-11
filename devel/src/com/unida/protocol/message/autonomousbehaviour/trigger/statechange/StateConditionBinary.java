@@ -42,6 +42,12 @@ public class StateConditionBinary extends StateCondition
     private DeviceStateValue stateValue2;
     
     
+    public StateConditionBinary(StateConditionEnum type)
+    {
+        this.type = type;
+    }
+    
+    
     public StateConditionBinary(StateConditionEnum type, DeviceStateValue stateValue1, DeviceStateValue stateValue2)
     {
         this.type = type;

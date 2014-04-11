@@ -40,6 +40,12 @@ public class StateConditionUnary extends StateCondition
     
     private DeviceStateValue stateValue;
     
+    
+    public StateConditionUnary(StateConditionEnum type)
+    {
+        this.type = type;
+    }
+    
 
     public StateConditionUnary(StateConditionEnum type, DeviceStateValue stateValue)
     {

@@ -41,6 +41,13 @@ public class StateConditionNary extends StateCondition
 {
 
     private Collection<DeviceStateValue> stateValues;
+    
+    
+    public StateConditionNary(StateConditionEnum type)
+    {
+        this.type = type;
+    }
+    
 
     public StateConditionNary(StateConditionEnum type, Collection<DeviceStateValue> stateValues)
     {
@@ -59,7 +66,7 @@ public class StateConditionNary extends StateCondition
 
             // number of stateValues
             EndianConversor.shortToLittleEndian((short)stateValues.size(), idData, 0);
-            dataStream.write(idData, 0, EndianConversor.INT_SIZE_BYTES);
+            dataStream.write(idData, 0, EndianConversor.SHORT_SIZE_BYTES);
 
             for (DeviceStateValue stateValue : stateValues)
             {

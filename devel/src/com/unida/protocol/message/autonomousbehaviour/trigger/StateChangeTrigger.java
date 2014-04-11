@@ -134,6 +134,7 @@ public class StateChangeTrigger extends RuleTrigger
             case DIFFERENT_TO:
             case GREATER_THAN:
             case LESSER_THAN:
+                
                 this.stateCondition = new StateConditionUnary(stateConditionType);
                 break;
             case BETWEEN:
