@@ -90,32 +90,14 @@ public class AutonomousBehaviourDialog extends javax.swing.JDialog
             InMemoryUniDAInstantiationFacade instantiationFacade, String gatewayAddress)
     {
         super(parent, modal);
+        
+        this.instantiationFacade = instantiationFacade;
+        this.gatewayAddress = gatewayAddress;
 
         initComponents();
         initComponentsCustom();
 
-        this.instantiationFacade = instantiationFacade;
-        this.gatewayAddress = gatewayAddress;
-
         this.setTitle(this.getTitle() + ": " + gatewayAddress);
-
-        this.jTextActionDestination.setText(gatewayAddress);
-
-        jButtonRemoveABRule.setEnabled(false);
-
-        hideTriggerPanels();
-        jPanelStateChangeTrigger.setVisible(true);
-
-        hideActionPanels();
-        jPanelCommandExecutionAction.setVisible(true);
-
-        this.jTextStateChangeTriggerStateBaseIRI.setText(DomoParsing.instance().getDefaultOntologyNamespace());
-
-        this.jTextCommandActionCommandBaseIRI.setText(DomoParsing.instance().getDefaultOntologyNamespace());
-        this.jTextCommandActionFunctionalityBaseIRI.setText(DomoParsing.instance().getDefaultOntologyNamespace());
-        this.jTextLinkStateActionStateBaseIRI.setText(DomoParsing.instance().getDefaultOntologyNamespace());
-        this.jTextWriteStateActionStateIDBaseIRI.setText(DomoParsing.instance().getDefaultOntologyNamespace());
-        this.jTextWriteStateActionStateValueIDBaseIRI.setText(DomoParsing.instance().getDefaultOntologyNamespace());
 
     }
 
@@ -182,6 +164,10 @@ public class AutonomousBehaviourDialog extends javax.swing.JDialog
         jLabel16 = new javax.swing.JLabel();
         jLabel17 = new javax.swing.JLabel();
         jLabel18 = new javax.swing.JLabel();
+        jTextWriteStateActionStateValueIDBaseIRI1 = new javax.swing.JTextField();
+        jTextWriteStateActionStateValueIDID1 = new javax.swing.JTextField();
+        jTextWriteStateActionStateValueIDBaseIRI2 = new javax.swing.JTextField();
+        jTextWriteStateActionStateValueIDID2 = new javax.swing.JTextField();
         jPanelCronoTrigger = new javax.swing.JPanel();
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
@@ -328,38 +314,58 @@ public class AutonomousBehaviourDialog extends javax.swing.JDialog
             .addGroup(jPanelStateConditionLayout.createSequentialGroup()
                 .addGroup(jPanelStateConditionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanelStateConditionLayout.createSequentialGroup()
-                        .addGap(49, 49, 49)
-                        .addComponent(jLabel18)
-                        .addGap(32, 32, 32)
-                        .addComponent(jComboConditionOperator, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(jPanelStateConditionLayout.createSequentialGroup()
                         .addGap(12, 12, 12)
-                        .addGroup(jPanelStateConditionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabel16, javax.swing.GroupLayout.DEFAULT_SIZE, 59, Short.MAX_VALUE)
-                            .addComponent(jLabel17, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jTextStateChangeTriggerValue1))
+                    .addGroup(jPanelStateConditionLayout.createSequentialGroup()
+                        .addGap(54, 54, 54)
+                        .addComponent(jLabel18)
+                        .addGap(29, 29, 29)
+                        .addComponent(jComboConditionOperator, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(jPanelStateConditionLayout.createSequentialGroup()
+                        .addContainerGap()
                         .addGroup(jPanelStateConditionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jTextStateChangeTriggerValue1)
-                            .addComponent(jTextStateChangeTriggerValue2))))
+                            .addGroup(jPanelStateConditionLayout.createSequentialGroup()
+                                .addGap(6, 6, 6)
+                                .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(12, 12, 12)
+                                .addComponent(jTextStateChangeTriggerValue2))
+                            .addGroup(jPanelStateConditionLayout.createSequentialGroup()
+                                .addComponent(jTextWriteStateActionStateValueIDBaseIRI1)
+                                .addGap(26, 26, 26)
+                                .addComponent(jTextWriteStateActionStateValueIDID1, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelStateConditionLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jTextWriteStateActionStateValueIDBaseIRI2)
+                        .addGap(26, 26, 26)
+                        .addComponent(jTextWriteStateActionStateValueIDID2, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         jPanelStateConditionLayout.setVerticalGroup(
             jPanelStateConditionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelStateConditionLayout.createSequentialGroup()
-                .addContainerGap(17, Short.MAX_VALUE)
                 .addGroup(jPanelStateConditionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel18)
                     .addComponent(jComboConditionOperator, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(22, 22, 22)
-                .addGroup(jPanelStateConditionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextStateChangeTriggerValue1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel16))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanelStateConditionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextStateChangeTriggerValue2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel17))
-                .addGap(21, 21, 21))
+                    .addComponent(jLabel16)
+                    .addComponent(jTextStateChangeTriggerValue1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanelStateConditionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jTextWriteStateActionStateValueIDID1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextWriteStateActionStateValueIDBaseIRI1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanelStateConditionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel17)
+                    .addComponent(jTextStateChangeTriggerValue2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanelStateConditionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jTextWriteStateActionStateValueIDID2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextWriteStateActionStateValueIDBaseIRI2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(7, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanelStateChangeTriggerLayout = new javax.swing.GroupLayout(jPanelStateChangeTrigger);
@@ -381,11 +387,11 @@ public class AutonomousBehaviourDialog extends javax.swing.JDialog
         jPanelStateChangeTriggerLayout.setVerticalGroup(
             jPanelStateChangeTriggerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelStateChangeTriggerLayout.createSequentialGroup()
-                .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanelStateChangeTriggerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextStateChangeTriggerStateID, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextStateChangeTriggerStateBaseIRI, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jTextStateChangeTriggerStateBaseIRI, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextStateChangeTriggerStateID, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanelStateCondition, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -430,7 +436,7 @@ public class AutonomousBehaviourDialog extends javax.swing.JDialog
                 .addGroup(jPanelCronoTriggerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jTextCronoTriggerMin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel10))
-                .addContainerGap(80, Short.MAX_VALUE))
+                .addContainerGap(99, Short.MAX_VALUE))
         );
 
         jPanelTriggerContainer.add(jPanelCronoTrigger, "card2");
@@ -443,7 +449,7 @@ public class AutonomousBehaviourDialog extends javax.swing.JDialog
         );
         jPanelPeriodicTriggerLayout.setVerticalGroup(
             jPanelPeriodicTriggerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 255, Short.MAX_VALUE)
+            .addGap(0, 274, Short.MAX_VALUE)
         );
 
         jPanelTriggerContainer.add(jPanelPeriodicTrigger, "card4");
@@ -544,7 +550,7 @@ public class AutonomousBehaviourDialog extends javax.swing.JDialog
                 .addGroup(jPanelLinkStatesActionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jTextLinkStateActionStateID, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTextLinkStateActionStateBaseIRI, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(165, Short.MAX_VALUE))
+                .addContainerGap(184, Short.MAX_VALUE))
         );
 
         jPanelActionContainer.add(jPanelLinkStatesAction, "card3");
@@ -603,7 +609,7 @@ public class AutonomousBehaviourDialog extends javax.swing.JDialog
                 .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jTextWriteStateActionStateValueRAW, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(37, Short.MAX_VALUE))
+                .addContainerGap(56, Short.MAX_VALUE))
         );
 
         jPanelActionContainer.add(jPanelWriteStateAction, "card4");
@@ -867,7 +873,11 @@ public class AutonomousBehaviourDialog extends javax.swing.JDialog
         UNIDALibraryBasicGUI.cleanJTable(jTableABRules);
 
         this.jTextStateChangeTriggerValue1.setEnabled(false);
+        this.jTextWriteStateActionStateValueIDBaseIRI1.setEnabled(false);
+        this.jTextWriteStateActionStateValueIDID1.setEnabled(false);
         this.jTextStateChangeTriggerValue2.setEnabled(false);
+        this.jTextWriteStateActionStateValueIDBaseIRI2.setEnabled(false);
+        this.jTextWriteStateActionStateValueIDID2.setEnabled(false);
 
         this.jComboConditionOperator.addItemListener(new ItemListener()
         {
@@ -881,24 +891,56 @@ public class AutonomousBehaviourDialog extends javax.swing.JDialog
                 {
                     case NO_CONDITION:
                         AutonomousBehaviourDialog.this.jTextStateChangeTriggerValue1.setEnabled(false);
+                        AutonomousBehaviourDialog.this.jTextWriteStateActionStateValueIDBaseIRI1.setEnabled(false);
+                        AutonomousBehaviourDialog.this.jTextWriteStateActionStateValueIDID1.setEnabled(false);
                         AutonomousBehaviourDialog.this.jTextStateChangeTriggerValue2.setEnabled(false);
+                        AutonomousBehaviourDialog.this.jTextWriteStateActionStateValueIDBaseIRI2.setEnabled(false);
+                        AutonomousBehaviourDialog.this.jTextWriteStateActionStateValueIDID2.setEnabled(false);
                         break;
                     case EQUALS:
                     case DIFFERENT_TO:
                     case GREATER_THAN:
                     case LESSER_THAN:
                         AutonomousBehaviourDialog.this.jTextStateChangeTriggerValue1.setEnabled(true);
+                        AutonomousBehaviourDialog.this.jTextWriteStateActionStateValueIDBaseIRI1.setEnabled(true);
+                        AutonomousBehaviourDialog.this.jTextWriteStateActionStateValueIDID1.setEnabled(true);
                         AutonomousBehaviourDialog.this.jTextStateChangeTriggerValue2.setEnabled(false);
+                        AutonomousBehaviourDialog.this.jTextWriteStateActionStateValueIDBaseIRI2.setEnabled(false);
+                        AutonomousBehaviourDialog.this.jTextWriteStateActionStateValueIDID2.setEnabled(false);
                         break;
                     case BETWEEN:
                     case SOME_OF:
                         AutonomousBehaviourDialog.this.jTextStateChangeTriggerValue1.setEnabled(true);
+                        AutonomousBehaviourDialog.this.jTextWriteStateActionStateValueIDBaseIRI1.setEnabled(true);
+                        AutonomousBehaviourDialog.this.jTextWriteStateActionStateValueIDID1.setEnabled(true);
                         AutonomousBehaviourDialog.this.jTextStateChangeTriggerValue2.setEnabled(true);
+                        AutonomousBehaviourDialog.this.jTextWriteStateActionStateValueIDBaseIRI2.setEnabled(true);
+                        AutonomousBehaviourDialog.this.jTextWriteStateActionStateValueIDID2.setEnabled(true);
                         break;
                 }
             }
         });
 
+        this.jTextActionDestination.setText(gatewayAddress);
+
+        jButtonRemoveABRule.setEnabled(false);
+
+        hideTriggerPanels();
+        jPanelStateChangeTrigger.setVisible(true);
+
+        hideActionPanels();
+        jPanelCommandExecutionAction.setVisible(true);
+
+        this.jTextStateChangeTriggerStateBaseIRI.setText(DomoParsing.instance().getDefaultOntologyNamespace());
+
+        this.jTextCommandActionCommandBaseIRI.setText(DomoParsing.instance().getDefaultOntologyNamespace());
+        this.jTextCommandActionFunctionalityBaseIRI.setText(DomoParsing.instance().getDefaultOntologyNamespace());
+        this.jTextLinkStateActionStateBaseIRI.setText(DomoParsing.instance().getDefaultOntologyNamespace());
+        this.jTextWriteStateActionStateIDBaseIRI.setText(DomoParsing.instance().getDefaultOntologyNamespace());
+        this.jTextWriteStateActionStateValueIDBaseIRI.setText(DomoParsing.instance().getDefaultOntologyNamespace());
+        this.jTextWriteStateActionStateValueIDBaseIRI1.setText(DomoParsing.instance().getDefaultOntologyNamespace());
+        this.jTextWriteStateActionStateValueIDBaseIRI2.setText(DomoParsing.instance().getDefaultOntologyNamespace());
+        
     }
 
 
@@ -969,26 +1011,31 @@ public class AutonomousBehaviourDialog extends javax.swing.JDialog
                     condition = new StateConditionUnary(
                             conditionType,
                             new DeviceStateValue(
-                                    CONTINUOUS_VALUE,
+                                    this.jTextWriteStateActionStateValueIDBaseIRI1.getText() 
+                                            + this.jTextWriteStateActionStateValueIDID1.getText(),
                                     this.jTextStateChangeTriggerValue1.getText()));
                     break;
                 case BETWEEN:
                     condition = new StateConditionBinary(
                             conditionType,
                             new DeviceStateValue(
-                                    CONTINUOUS_VALUE,
+                                    this.jTextWriteStateActionStateValueIDBaseIRI1.getText() 
+                                            + this.jTextWriteStateActionStateValueIDID1.getText(),
                                     this.jTextStateChangeTriggerValue1.getText()),
                             new DeviceStateValue(
-                                    CONTINUOUS_VALUE,
+                                    this.jTextWriteStateActionStateValueIDBaseIRI2.getText() 
+                                            + this.jTextWriteStateActionStateValueIDID2.getText(),
                                     this.jTextStateChangeTriggerValue2.getText()));
                     break;
                 case SOME_OF:
                     Collection<DeviceStateValue> stateValues = new ArrayList<>();
                     stateValues.add(new DeviceStateValue(
-                            CONTINUOUS_VALUE,
+                            this.jTextWriteStateActionStateValueIDBaseIRI1.getText() 
+                                            + this.jTextWriteStateActionStateValueIDID1.getText(),
                             this.jTextStateChangeTriggerValue1.getText()));
                     stateValues.add(new DeviceStateValue(
-                            CONTINUOUS_VALUE,
+                            this.jTextWriteStateActionStateValueIDBaseIRI2.getText() 
+                                            + this.jTextWriteStateActionStateValueIDID2.getText(),
                             this.jTextStateChangeTriggerValue2.getText()));
                     condition = new StateConditionNary(
                             conditionType,
@@ -1142,7 +1189,11 @@ public class AutonomousBehaviourDialog extends javax.swing.JDialog
     private javax.swing.JTextField jTextWriteStateActionStateIDBaseIRI;
     private javax.swing.JTextField jTextWriteStateActionStateIDID;
     private javax.swing.JTextField jTextWriteStateActionStateValueIDBaseIRI;
+    private javax.swing.JTextField jTextWriteStateActionStateValueIDBaseIRI1;
+    private javax.swing.JTextField jTextWriteStateActionStateValueIDBaseIRI2;
     private javax.swing.JTextField jTextWriteStateActionStateValueIDID;
+    private javax.swing.JTextField jTextWriteStateActionStateValueIDID1;
+    private javax.swing.JTextField jTextWriteStateActionStateValueIDID2;
     private javax.swing.JTextField jTextWriteStateActionStateValueRAW;
     // End of variables declaration//GEN-END:variables
 
