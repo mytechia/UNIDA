@@ -73,7 +73,7 @@ public abstract class StateCondition
     @Override
     public String toString()
     {
-        return "StateCondition.";
+        return "StateCondition:" + this.type.toString() + "-";
     }
     
 }

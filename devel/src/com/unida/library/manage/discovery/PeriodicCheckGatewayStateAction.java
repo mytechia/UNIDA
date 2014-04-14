@@ -36,14 +36,14 @@ import java.util.logging.Logger;
 
 
 /**
- * <p><b>Description:</b></br>
+ * <p><b>Description:</b>
  * Periodically checks if some gateway has been lost because it is not
  * sending anymore its periodic annoucement messages.
  * </p>
  *
  * <p><b>Creation date:</b> 14-04-2010</p>
  *
- * <p><b>Changelog:</b></br>
+ * <p><b>Changelog:</b>
  * <ul>
  * <li>1 - 14-04-2010<\br> Initial release</li>
  * </ul>
@@ -57,7 +57,7 @@ public class PeriodicCheckGatewayStateAction extends PeriodicAction
 
     private final static int STEP = 50;
 
-    private final static int EXPIRATION_TIME = 1800*1000;
+    private final static int EXPIRATION_TIME = 1800 * 1000;
 
 
     private IUniDAManagementFacade deviceManagament;
@@ -93,7 +93,7 @@ public class PeriodicCheckGatewayStateAction extends PeriodicAction
                                mark its state as unkown */
                             try {
                                 this.deviceManagament.markDeviceGatewayAsLost(devGw);
-                                Logger.getAnonymousLogger().log(Level.INFO, "The gateway with id '"+devGw.getId()+"' has been lost.");
+                                Logger.getAnonymousLogger().log(Level.INFO, "The gateway with id ''{0}'' has been lost.", devGw.getId());
                             }
                             catch (InternalErrorException ex) {
                                 Logger.getAnonymousLogger().log(Level.SEVERE, "Unable to edit gateway operational state for gateway '"+devGw.getId()+"'.", ex);

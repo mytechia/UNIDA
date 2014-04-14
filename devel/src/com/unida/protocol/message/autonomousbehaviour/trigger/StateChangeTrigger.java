@@ -192,7 +192,7 @@ public class StateChangeTrigger extends RuleTrigger
     @Override
     public String toString()
     {
-        return super.toString() + " StateChangeTrigger{" + "triggerSource=" + triggerSource + ", stateId=" + stateId + ", stateCondition=" + stateCondition + "}.";
+        return super.toString() + "StateChangeTrigger{" + "triggerSource=" + triggerSource + ", stateId=" + stateId + ", stateCondition=" + stateCondition + "}";
     }
     
 }

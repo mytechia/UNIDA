@@ -113,7 +113,7 @@ public class CronoTrigger extends RuleTrigger
     @Override
     public String toString()
     {
-        return super.toString() + " CronoTrigger{" + "weekday=" + weekday + ", hour=" + hour + ", min=" + min + "}.";
+        return super.toString() + "CronoTrigger{" + "weekday=" + weekday + ", hour=" + hour + ", min=" + min + "}";
     }
     
     

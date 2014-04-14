@@ -94,7 +94,7 @@ public class StateConditionUnary extends StateCondition
     @Override
     public String toString()
     {
-        return " StateConditionUnary{" + "stateValue=" + stateValue + "}.";
+        return super.toString() + "StateConditionUnary{" + "stateValue=" + stateValue + "}";
     }        
     
 }

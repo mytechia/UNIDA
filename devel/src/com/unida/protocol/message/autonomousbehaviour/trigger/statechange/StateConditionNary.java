@@ -113,7 +113,7 @@ public class StateConditionNary extends StateCondition
     @Override
     public String toString()
     {
-        return " StateConditionNary{" + "stateValues=" + stateValues + "}.";
+        return super.toString() + "StateConditionNary{" + "stateValues=" + stateValues + "}";
     }        
     
 }

@@ -117,7 +117,7 @@ public class DeviceStateValue implements Serializable
     public String toString()
     {
         StringBuilder sb = new StringBuilder(this.id);
-        sb.append(" - ");
+        sb.append("-");
         sb.append(this.value);
         return sb.toString();
     }

@@ -93,7 +93,7 @@ public class LinkStateAction extends RuleAction
     @Override
     public String toString()
     {
-        return super.toString() + " LinkStateAction{" + "stateId=" + stateId + "}.";
+        return super.toString() + "LinkStateAction{" + "stateId=" + stateId + "}";
     }
         
 }

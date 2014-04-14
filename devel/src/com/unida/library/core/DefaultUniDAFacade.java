@@ -70,6 +70,7 @@ import com.unida.protocol.reception.IUniDAProtocolMessageProcessingQueue;
 import com.unida.protocol.reception.LinkedListUniDAProtocolMessageProcessingQueue;
 import com.unida.protocol.reception.UniDAProtocolMessageReceiver;
 import java.util.Collection;
+import java.util.Date;
 import java.util.logging.Level;
 
 /**
@@ -416,7 +417,9 @@ public class DefaultUniDAFacade extends AbstractUniDAFacadeHelper implements IUn
                 UniDAGatewayHeartbeatMessage heartbeat = (UniDAGatewayHeartbeatMessage) msg;
                 try
                 {
-                    devManagement.findDeviceGatewayById(heartbeat.getSource().toString());
+                    Gateway gateway = devManagement.findDeviceGatewayById(heartbeat.getSource().toString());
+                    gateway.getOperationalState().setChangeTime(new Date());
+                    devManagement.editDeviceGateway(gateway);
                 } catch (InternalErrorException ex) {
                     return null;
                 }
@@ -424,8 +427,7 @@ public class DefaultUniDAFacade extends AbstractUniDAFacadeHelper implements IUn
                 {
                     
                     DiscoverUniDAGatewayDevicesRequestMessage discoverRequest = new DiscoverUniDAGatewayDevicesRequestMessage(ontologyCodec);
-                    discoverRequest.setDestination(heartbeat.getSource());
-                    
+                    discoverRequest.setDestination(heartbeat.getSource());                    
                     try
                     {
                         commChannel.sendMessage(heartbeat.getSource(), discoverRequest);
