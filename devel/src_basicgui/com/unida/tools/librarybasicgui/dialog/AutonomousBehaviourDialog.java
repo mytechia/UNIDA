@@ -79,7 +79,7 @@ public class AutonomousBehaviourDialog extends javax.swing.JDialog
     private String gatewayAddress;
 
     /**
-     * Creates new form AutonomousBehaviourDialog
+     * Creates new form, initialazing the GUI components
      *
      * @param parent
      * @param modal
@@ -115,6 +115,11 @@ public class AutonomousBehaviourDialog extends javax.swing.JDialog
         this.jPanelWriteStateAction.setVisible(false);
     }
 
+    
+    /*
+    * Asks the instantiationFacade for the data of the detected UniDA gateways
+    * The actual GUI work is done by the callback
+    */
     private void loadABRules()
     {
         try
@@ -944,6 +949,10 @@ public class AutonomousBehaviourDialog extends javax.swing.JDialog
     }
 
 
+    /*
+    * If there is a selected row in the rules table, picks its ID
+    *and launches an UniDA gateway operation to delete that rule
+    */
     private void jButtonRemoveABRuleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRemoveABRuleActionPerformed
         if (jTableABRules.getSelectedRowCount() > 0)
         {
@@ -960,6 +969,10 @@ public class AutonomousBehaviourDialog extends javax.swing.JDialog
     }//GEN-LAST:event_jButtonRemoveABRuleActionPerformed
 
 
+    /*
+    * From the input data introduced by the user, builds an UniDA autonomous behaviour rule
+    *and then it performs and UniDA gateway operation to add that rule to the gateway
+    */
     private void jButtonAddABRuleActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jButtonAddABRuleActionPerformed
     {//GEN-HEADEREND:event_jButtonAddABRuleActionPerformed
 
@@ -1075,12 +1088,21 @@ public class AutonomousBehaviourDialog extends javax.swing.JDialog
 
         return new UniDAABRuleVO(trigger, action);
     }
+    
+    
+    private void setStateChangeInputFields(boolean activate)
+    {
+        this.jTextTriggerSourceDeviceNumber.setEnabled(activate);
+        this.jRadioLinkStateAction.setEnabled(activate);
+        if (!activate && this.jRadioLinkStateAction.isSelected()) this.jRadioWriteStateAction.setSelected(true);
+    }
 
 
     private void jRadioCronoTriggerActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jRadioCronoTriggerActionPerformed
     {//GEN-HEADEREND:event_jRadioCronoTriggerActionPerformed
         hideTriggerPanels();
         this.jPanelCronoTrigger.setVisible(true);
+        setStateChangeInputFields(false);
     }//GEN-LAST:event_jRadioCronoTriggerActionPerformed
 
 
@@ -1088,6 +1110,7 @@ public class AutonomousBehaviourDialog extends javax.swing.JDialog
     {//GEN-HEADEREND:event_jRadioPeriodicTriggerActionPerformed
         hideTriggerPanels();
         this.jPanelPeriodicTrigger.setVisible(true);
+        setStateChangeInputFields(false);
     }//GEN-LAST:event_jRadioPeriodicTriggerActionPerformed
 
 
@@ -1095,6 +1118,7 @@ public class AutonomousBehaviourDialog extends javax.swing.JDialog
     {//GEN-HEADEREND:event_jRadioStateChangeTriggerActionPerformed
         hideTriggerPanels();
         this.jPanelStateChangeTrigger.setVisible(true);
+        setStateChangeInputFields(true);
     }//GEN-LAST:event_jRadioStateChangeTriggerActionPerformed
 
 
@@ -1197,6 +1221,11 @@ public class AutonomousBehaviourDialog extends javax.swing.JDialog
     private javax.swing.JTextField jTextWriteStateActionStateValueRAW;
     // End of variables declaration//GEN-END:variables
 
+    
+    /*
+    * Callback that is invoked when an answer for an UniDA autonomous behaviour rules query
+    *is received
+    */
     private class ABCallback implements IAutonomousBehaviourCallback
     {
 
@@ -1220,6 +1249,11 @@ public class AutonomousBehaviourDialog extends javax.swing.JDialog
 
     }
 
+    
+    /*
+    * A different cellRenderer is needed to be able to handle a different 
+    *tooltip text for each cell
+    */
     private class CustomCellRenderer extends JLabel implements TableCellRenderer
     {
 
