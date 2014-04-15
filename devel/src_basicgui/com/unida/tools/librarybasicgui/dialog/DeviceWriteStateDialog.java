@@ -269,43 +269,45 @@ public class DeviceWriteStateDialog extends javax.swing.JDialog
      */
     private class OpCback implements IDeviceOperationCallback
     {
+        
+        private static final String invalidResponse = "Invalid response for an UniDA Write State Message.";
 
         @Override
         public void notifyQueryDeviceStateResult(OperationTicket ticket, IDevice dev, DeviceState state)
         {
-            throw new UnsupportedOperationException("Not supported yet.");
+            throw new UnsupportedOperationException(invalidResponse);
         }
 
         @Override
         public void notifyQueryDeviceStatesResult(OperationTicket ticket, IDevice dev, Collection<DeviceState> states)
         {
-            throw new UnsupportedOperationException("Not supported yet.");
+            throw new UnsupportedOperationException(invalidResponse);
         }
         
         @Override
         public void notifyWriteDeviceStateResult(OperationTicket ticket, IDevice dev)
         {
-            jTextInfoExecution.setText("Yuju!");
+            jTextInfoExecution.setText("yippee!");
         }
 
         @Override
         public void notifySendCommandQueryStateResult(OperationTicket ticket, IDevice dev, 
             ControlFunctionalityMetadata func, ControlCommandMetadata cmd, Collection<String> params, Collection<DeviceState> states)
         {
-            throw new UnsupportedOperationException("Not supported yet.");
+            throw new UnsupportedOperationException(invalidResponse);
         }
 
         @Override
         public void notifyCommandExecution(OperationTicket ticket, IDevice dev, 
             ControlFunctionalityMetadata func, ControlCommandMetadata cmd)
         {
-            throw new UnsupportedOperationException("Not supported yet.");
+            throw new UnsupportedOperationException(invalidResponse);
         }
 
         @Override
         public void notifyOperationFailure(OperationTicket ticket, IDevice dev, OperationFailures failure, String failureDescription)
         {
-            jTextInfoExecution.setText("¡qué mal!");
+            jTextInfoExecution.setText("oh no!");
         }
     }
 }

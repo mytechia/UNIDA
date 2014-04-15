@@ -299,7 +299,7 @@ public class DeviceStateSuscriptionDialog extends javax.swing.JDialog
      * of one state of one UniDA device, displaying that info
      */
     private class SuscribeCback implements IDeviceStateNotificationCallback
-    {
+    {                
 
         @Override
         public void notifyState(NotificationTicket nt, IDevice dev, DeviceState state)

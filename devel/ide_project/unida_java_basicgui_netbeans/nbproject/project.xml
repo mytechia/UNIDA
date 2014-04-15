@@ -3,7 +3,7 @@
     <type>org.netbeans.modules.java.j2seproject</type>
     <configuration>
         <data xmlns="http://www.netbeans.org/ns/j2se-project/3">
-            <name>unida_java_basicgui</name>
+            <name>unida_java_basicgui_netbeans</name>
             <source-roots>
                 <root id="src.src_basicgui.dir" name="src"/>
             </source-roots>

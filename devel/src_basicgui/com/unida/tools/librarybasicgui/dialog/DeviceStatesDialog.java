@@ -199,17 +199,20 @@ public class DeviceStatesDialog extends javax.swing.JDialog
      */
     private class OpCback implements IDeviceOperationCallback
     {
+        
+        private static final String invalidResponse = "Invalid response for an UniDA Query States Message.";
+        
 
         @Override
         public void notifyQueryDeviceStateResult(OperationTicket ticket, IDevice dev, DeviceState state)
         {
-            throw new UnsupportedOperationException("Not supported yet.");
+            throw new UnsupportedOperationException(invalidResponse);
         }
 
         @Override
         public void notifyQueryDeviceStatesResult(OperationTicket ticket, IDevice dev, Collection<DeviceState> states)
         {
-            jTextInfoExecution.setText("¡yuju!");
+            jTextInfoExecution.setText("yippee!");
             int stateRow = 0;
             for (DeviceState state : states)
             {
@@ -223,27 +226,27 @@ public class DeviceStatesDialog extends javax.swing.JDialog
         @Override
         public void notifyWriteDeviceStateResult(OperationTicket ticket, IDevice dev)
         {
-            throw new UnsupportedOperationException("Not supported yet.");
+            throw new UnsupportedOperationException(invalidResponse);
         }
 
         @Override
         public void notifySendCommandQueryStateResult(OperationTicket ticket, IDevice dev, 
             ControlFunctionalityMetadata func, ControlCommandMetadata cmd, Collection<String> params, Collection<DeviceState> states)
         {
-            throw new UnsupportedOperationException("Not supported yet.");
+            throw new UnsupportedOperationException(invalidResponse);
         }
 
         @Override
         public void notifyCommandExecution(OperationTicket ticket, IDevice dev, 
             ControlFunctionalityMetadata func, ControlCommandMetadata cmd)
         {
-            throw new UnsupportedOperationException("Not supported yet.");
+            throw new UnsupportedOperationException(invalidResponse);
         }
 
         @Override
         public void notifyOperationFailure(OperationTicket ticket, IDevice dev, OperationFailures failure, String failureDescription)
         {
-            jTextInfoExecution.setText("¡qué mal!");
+            jTextInfoExecution.setText("oh no!");
         }
     }
     
