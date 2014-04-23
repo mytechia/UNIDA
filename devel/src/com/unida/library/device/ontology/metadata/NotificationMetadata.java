@@ -21,67 +21,54 @@
  * 
  ******************************************************************************/
 
-package com.unida.library.device.ontology;
+package com.unida.library.device.ontology.metadata;
 
 import java.io.Serializable;
-import java.util.Arrays;
-
 
 /**
  * <p><b>Description:</b></br>
+ * Represents the metadata of a notification as espcified in the
+ * device ontology.
  *
  * </p>
  *
- * <p><b>Creation date:</b> 25-nov-2010</p>
+ * <p><b>Creation date:</b> 29-dic-2009</p>
  *
  * <p><b>Changelog:</b></br>
  * <ul>
- * <li>1 - 25-nov-2010</br> Initial release.</li>
+ * <li>1 - 29-dic-2009<\br> Initial release</li>
  * </ul>
  * </p>
  *
- * @author Gervasio Varela
+ * @author Gervasio Varela Fernandez
  * @version 1
  */
-public class ControlCommand implements Serializable
+public class NotificationMetadata implements Serializable
 {
 
-    private Long id;
 
-    private ControlCommandMetadata metadata;
+    /** Id of the notification specified in the device ontology */
+    private String id;
 
-    private String [] params;
+    /** Number of parameters of the notification as specified in the device ontolgy */
+    private int nParams;
 
-
-    public ControlCommand(Long id, ControlCommandMetadata metadata, String[] params)
+    
+    public NotificationMetadata(String id, int nParams)
     {
-        this.metadata = metadata;
-        this.params = params;
+        this.id = id;
+        this.nParams = nParams;
+    }
+
+    public String getId()
+    {
+        return id;
     }
 
 
-    public ControlCommand(ControlCommandMetadata metadata, String[] params)
+    public int getNParams()
     {
-        this(null, metadata, params);
+        return nParams;
     }
-
-
-    public ControlCommandMetadata getMetadata()
-    {
-        return metadata;
-    }
-
-    public String[] getParams()
-    {
-        return Arrays.copyOf(params, params.length);
-    }
-
-
-    public Long getId()
-    {
-        return this.id;
-    }
-
-
-
+	
 }

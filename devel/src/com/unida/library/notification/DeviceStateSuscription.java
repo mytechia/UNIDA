@@ -23,7 +23,7 @@
 package com.unida.library.notification;
 
 import com.unida.library.device.IDevice;
-import com.unida.library.device.ontology.DeviceStateMetadata;
+import com.unida.library.device.ontology.metadata.DeviceStateMetadata;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;

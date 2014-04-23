@@ -24,7 +24,7 @@
 package com.unida.library.device;
 
 import com.unida.protocol.UniDAAddress;
-import com.unida.library.device.ontology.DeviceStateMetadata;
+import com.unida.library.device.ontology.metadata.DeviceStateMetadata;
 import java.util.Collection;
 
 

@@ -21,16 +21,16 @@
  * 
  ******************************************************************************/
 
-package com.unida.library.device.ontology;
+package com.unida.library.device.ontology.state;
 
+import com.unida.library.device.ontology.metadata.DeviceStateMetadata;
 import java.io.Serializable;
 
 /**
  * <p><b>Description:</b></br>
- * A control command specifies an control action that a device should perform.
+ * Representation of a state of a hardware device.
  *
- * Representation of a control command according to the
- * device ontology description.
+ * If the value of the state is unknown, the value field must be null.
  *
  * </p>
  *
@@ -45,34 +45,57 @@ import java.io.Serializable;
  * @author Gervasio Varela Fernandez
  * @version 1
  */
-public class ControlCommandMetadata implements Serializable
+public class DeviceState implements Serializable
 {
+    
+    /** Id of the device state on the device description ontology */
+    private DeviceStateMetadata metadata;
 
-    /** Id of the command specified in the device ontology */
-    private String id;
+    /** Value of the state according to the device description ontology,
+     null if the state is unknown*/
+    private DeviceStateValue value;
 
-    /** Number of parameters of the command as specified in the device ontolgy */
-    private int nParams;
+
+    public DeviceState(DeviceStateMetadata metadata)
+    {
+        this.metadata = metadata;
+        this.value = null;
+    }
 
     
-    public ControlCommandMetadata(String id, int nParams)
+    public DeviceState(DeviceStateMetadata stateId, DeviceStateValue value)
     {
-        this.id = id;
-        this.nParams = nParams;
+        this.metadata = stateId;
+        this.value = value;
     }
+
 
     public String getId()
     {
-        return id;
+        return this.metadata.getId();
     }
 
 
-    public int getnParams()
+    public DeviceStateMetadata getMetadata()
     {
-        return nParams;
+        return metadata;
     }
 
-    
+
+    public DeviceStateValue getValue()
+    {
+        return value;
+    }
+
+    public void setValue(DeviceStateValue value)
+    {
+        this.value = value;
+    }
+
+
+    /** Two device state objects are considered equals if its ids and values
+     * are equals.
+     */
     @Override
     public boolean equals(Object obj)
     {
@@ -82,21 +105,26 @@ public class ControlCommandMetadata implements Serializable
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final ControlCommandMetadata other = (ControlCommandMetadata) obj;
-        if ((this.id == null) ? (other.id != null) : !this.id.equals(other.id)) {
+        final DeviceState other = (DeviceState) obj;
+        if (this.metadata != other.metadata && (this.metadata == null || !this.metadata.equals(other.metadata))) {
+            return false;
+        }
+        if (this.value != other.value && (this.value == null || !this.value.equals(other.value))) {
             return false;
         }
         return true;
     }
 
 
+    
     @Override
     public int hashCode()
     {
         int hash = 3;
-        hash = 53 * hash + (this.id != null ? this.id.hashCode() : 0);
+        hash = 47 * hash + (this.metadata != null ? this.metadata.hashCode() : 0);
+        hash = 47 * hash + (this.value != null ? this.value.hashCode() : 0);
         return hash;
     }
 
-	
+
 }

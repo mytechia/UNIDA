@@ -25,7 +25,7 @@
 package com.unida.library.device.ontology.dogont.visitor;
 
 
-import com.unida.library.device.ontology.DeviceStateValue;
+import com.unida.library.device.ontology.state.DeviceStateValue;
 import java.util.ArrayList;
 import java.util.Collection;
 import org.semanticweb.owlapi.model.OWLDataHasValue;

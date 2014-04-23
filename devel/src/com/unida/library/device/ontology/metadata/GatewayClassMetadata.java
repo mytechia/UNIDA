@@ -1,4 +1,3 @@
-
 /*******************************************************************************
  *   
  *   Copyright (C) 2010,2013 Mytech Ingenieria Aplicada <http://www.mytechia.com>
@@ -22,53 +21,54 @@
  * 
  ******************************************************************************/
 
-package com.unida.library.device.ontology;
+package com.unida.library.device.ontology.metadata;
 
 import java.io.Serializable;
 
 /**
- * <p><b>Description:</b></br>
- * A notification functionality specifies the notifications that a device
- * can send.
- *
- * Representation of a notification functionality according to the
- * device ontology description.
- *
- * </p>
- *
- * <p><b>Creation date:</b> 28-dic-2009</p>
- *
- * <p><b>Changelog:</b></br>
- * <ul>
- * <li>1 - 28-dic-2009<\br> Initial release</li>
- * </ul>
- * </p>
- *
- * @author Gervasio Varela Fernandez
- * @version 1
+ * 
  */
-public class NotificationFunctionalityMetadata implements Serializable
+public class GatewayClassMetadata implements Serializable
 {
 
-    private String id;
-
-    private NotificationMetadata [] availableNotifications;
+    private String classId;
 
     
-    public NotificationFunctionalityMetadata(String id, NotificationMetadata [] notifications)
+    public GatewayClassMetadata(String classId)
     {
-        this.id = id;
-        this.availableNotifications = notifications;
+        this.classId = classId;
     }
 
-    public String getId()
+    public String getClassId()
     {
-        return id;
+        return classId;
     }
 
-    public NotificationMetadata[] getAvailableNotifications()
+    @Override
+    public boolean equals(Object obj)
     {
-        return availableNotifications;
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final GatewayClassMetadata other = (GatewayClassMetadata) obj;
+        if ((this.classId == null) ? (other.classId != null) : !this.classId.equals(other.classId)) {
+            return false;
+        }
+        return true;
     }
+
+
+    @Override
+    public int hashCode()
+    {
+        int hash = 5;
+        hash = 13 * hash + (this.classId != null ? this.classId.hashCode() : 0);
+        return hash;
+    }
+
+
 
 }

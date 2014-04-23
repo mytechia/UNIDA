@@ -26,7 +26,7 @@ package com.unida.protocol.message.autonomousbehaviour.trigger.statechange;
 import com.mytechia.commons.framework.simplemessageprotocol.Message;
 import com.mytechia.commons.framework.simplemessageprotocol.exception.MessageFormatException;
 import com.mytechia.commons.util.conversion.EndianConversor;
-import com.unida.library.device.ontology.DeviceStateValue;
+import com.unida.library.device.ontology.state.DeviceStateValue;
 import com.unida.library.device.ontology.IUniDAOntologyCodec;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -61,12 +61,9 @@ public class StateConditionUnary extends StateCondition
 
         try
         {
-            byte[] idData = new byte[EndianConversor.LONG_SIZE_BYTES];
-
-            EndianConversor.uintToLittleEndian(ontologyCodec.encodeId(this.stateValue.getValueID()), idData, 0);
-            dataStream.write(idData, 0, EndianConversor.INT_SIZE_BYTES);
-
-            Message.writeStringInStream(dataStream, this.stateValue.getValueRaw());
+            
+            dataStream.write(stateValue.code(ontologyCodec));
+            
         } catch (IOException ioEx)
         {
             //ByteArrayOutputStream doesn't throw exceptions in its write methods
@@ -78,15 +75,10 @@ public class StateConditionUnary extends StateCondition
     @Override
     public int decodePayload(byte[] bytes, int initIndex, IUniDAOntologyCodec ontologyCodec) throws MessageFormatException
     {        
-        //value id
-        String valueId = ontologyCodec.decodeId(EndianConversor.byteArrayLittleEndianToUInt(bytes, initIndex));
-        initIndex += EndianConversor.INT_SIZE_BYTES;
-
-        //value
-        StringBuilder valueBuilder = new StringBuilder(10);
-        initIndex += Message.readStringFromBytes(valueBuilder, bytes, initIndex);
         
-        this.stateValue = new DeviceStateValue(valueId, valueBuilder.toString());
+        this.stateValue = new DeviceStateValue();
+        
+        initIndex = this.stateValue.decode(bytes, initIndex, ontologyCodec);
         
         return initIndex;
     }

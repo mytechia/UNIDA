@@ -32,6 +32,7 @@ import com.unida.protocol.message.ErrorCode;
 import com.unida.protocol.message.MessageType;
 import com.unida.library.device.ontology.IUniDAOntologyCodec;
 import com.unida.library.device.DeviceID;
+import com.unida.library.device.ontology.state.DeviceStateValue;
 import com.unida.protocol.message.UniDAMessage;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -40,13 +41,13 @@ import java.util.Collection;
 
 
 /**
- * <p><b> </b></br>
+ * <p><b> </b>
  *
  * </p>
  *
  * <p><b>Creation date:</b> 27-01-2010</p>
  *
- * <p><b>Changelog:</b></br> <ul> <li>1 - 27-01-2010<\br> Initial release</li>
+ * <p><b>Changelog:</b> <ul> <li>1 - 27-01-2010<\br> Initial release</li>
  * </ul> </p>
  *
  * @author Gervasio Varela
@@ -100,10 +101,7 @@ public class UniDAQueryDeviceReplyMessage extends UniDAQueryDeviceRequestMessage
                 EndianConversor.uintToLittleEndian(getOntologyCodec().encodeId(dsv.getStateId()), idData, 0);
                 dataStream.write(idData, 0, EndianConversor.INT_SIZE_BYTES);
                
-                EndianConversor.uintToLittleEndian(getOntologyCodec().encodeId(dsv.getValueId()), idData, 0);
-                dataStream.write(idData, 0, EndianConversor.INT_SIZE_BYTES);
- 
-                writeString(dataStream, dsv.getValue());
+                dataStream.write(dsv.getStateValue().code(ontologyCodec));
 
             }
 
@@ -120,8 +118,6 @@ public class UniDAQueryDeviceReplyMessage extends UniDAQueryDeviceRequestMessage
 
         int offset = super.decodeDeviceMessagePayload(bytes, initIndex);
 
-        StringBuilder string = new StringBuilder(10);
-
         int numDevs = EndianConversor.byteArrayLittleEndianToShort(bytes, offset); //num devices
         offset += EndianConversor.SHORT_SIZE_BYTES;
 
@@ -132,15 +128,10 @@ public class UniDAQueryDeviceReplyMessage extends UniDAQueryDeviceRequestMessage
             String stateId = getOntologyCodec().decodeId(EndianConversor.byteArrayLittleEndianToUInt(bytes, offset));
             offset += EndianConversor.INT_SIZE_BYTES;
 
-            //value id            
-            String valueId = getOntologyCodec().decodeId(EndianConversor.byteArrayLittleEndianToUInt(bytes, offset));
-            offset += EndianConversor.INT_SIZE_BYTES;
+            DeviceStateValue stateValue = new DeviceStateValue();
+            offset = stateValue.decode(bytes, offset, ontologyCodec);
 
-            //value
-            offset += readString(string, bytes, offset);
-            String value = string.toString();
-
-            this.stateValues.add(new DeviceStateWithValue(stateId, valueId, value));
+            this.stateValues.add(new DeviceStateWithValue(stateId, stateValue));
 
         }
 

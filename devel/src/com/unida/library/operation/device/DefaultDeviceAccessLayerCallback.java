@@ -28,12 +28,12 @@ import com.unida.library.operation.OperationFailures;
 import com.unida.library.operation.OperationTicket;
 import com.unida.library.operation.OperationTypes;
 import com.unida.library.device.IDevice;
-import com.unida.library.device.ontology.DeviceState;
-import com.unida.library.device.ontology.ControlCommandMetadata;
-import com.unida.library.device.ontology.DeviceStateMetadata;
-import com.unida.library.device.ontology.DeviceStateValue;
+import com.unida.library.device.ontology.state.DeviceState;
+import com.unida.library.device.ontology.metadata.ControlCommandMetadata;
+import com.unida.library.device.ontology.metadata.DeviceStateMetadata;
+import com.unida.library.device.ontology.state.DeviceStateValue;
 import com.unida.library.device.DeviceID;
-import com.unida.library.device.ontology.ControlFunctionalityMetadata;
+import com.unida.library.device.ontology.metadata.ControlFunctionalityMetadata;
 import java.util.ArrayList;
 
 /**
@@ -144,11 +144,11 @@ public class DefaultDeviceAccessLayerCallback implements IOperationInternalCallb
     }
 
     @Override
-    public void notifyDeviceState(long opId, DeviceID deviceId, String stateId, String valueId, String value)
+    public void notifyDeviceState(long opId, DeviceID deviceId, String stateId, DeviceStateValue stateValue)
     {
         if (isThisOperation(opId, deviceId) && stateId.equals(state.getId()))
         {
-            DeviceState devState = new DeviceState(this.state, new DeviceStateValue(valueId, value));
+            DeviceState devState = new DeviceState(this.state, stateValue);
             if (this.operationCallback != null)
             {
                 this.operationCallback.notifyQueryDeviceStateResult(this.ticket, this.device, devState);
@@ -158,7 +158,7 @@ public class DefaultDeviceAccessLayerCallback implements IOperationInternalCallb
     }
 
     @Override
-    public void notifyDeviceStates(long opId, DeviceID deviceId, String[] stateIds, String[] valuesIds, String[] values)
+    public void notifyDeviceStates(long opId, DeviceID deviceId, String[] stateIds, DeviceStateValue[] stateValues)
     {
         if (isThisOperation(opId, deviceId))
         {
@@ -170,7 +170,7 @@ public class DefaultDeviceAccessLayerCallback implements IOperationInternalCallb
                 {
                     if (stateIds[j].equals(stateList1.getId()) || stateIds[j].contains(stateList1.getId()))
                     {
-                        resultStates.add(new DeviceState(stateList1, new DeviceStateValue(valuesIds[j], values[j])));
+                        resultStates.add(new DeviceState(stateList1, stateValues[j]));
                     }
                 }
             }

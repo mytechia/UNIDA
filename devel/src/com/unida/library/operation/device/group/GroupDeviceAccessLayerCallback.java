@@ -22,16 +22,17 @@
 
 package com.unida.library.operation.device.group;
 
-import com.unida.library.operation.device.IOperationInternalCallback;
 import com.unida.library.device.DeviceGroup;
+import com.unida.library.device.DeviceID;
 import com.unida.library.device.PhysicalDevice;
-import com.unida.library.operation.device.IDeviceOperationCallback;
+import com.unida.library.device.ontology.metadata.ControlCommandMetadata;
+import com.unida.library.device.ontology.metadata.ControlFunctionalityMetadata;
+import com.unida.library.device.ontology.metadata.DeviceStateMetadata;
+import com.unida.library.device.ontology.state.DeviceStateValue;
 import com.unida.library.operation.OperationFailures;
 import com.unida.library.operation.OperationTicket;
-import com.unida.library.device.ontology.ControlCommandMetadata;
-import com.unida.library.device.ontology.DeviceStateMetadata;
-import com.unida.library.device.DeviceID;
-import com.unida.library.device.ontology.ControlFunctionalityMetadata;
+import com.unida.library.operation.device.IDeviceOperationCallback;
+import com.unida.library.operation.device.IOperationInternalCallback;
 import java.util.ArrayDeque;
 import java.util.Collection;
 import java.util.Queue;
@@ -44,13 +45,13 @@ import java.util.Queue;
  * the higher level IDeviceOperationFacade.
  * It uses OperationTicket objects to match operation responses with
  * operation requests.
- * </b></br>
+ * </b>
  *
  * </p>
  *
  * <p><b>Creation date:</b> 18-01-2010</p>
  *
- * <p><b>Changelog:</b></br>
+ * <p><b>Changelog:</b>
  * <ul>
  * <li>2 - 5-feb-2013<\br> Update to support the new style of device IDs</li>
  * <li>1 - 18-01-2010<\br> Initial release</li>
@@ -155,7 +156,7 @@ public class GroupDeviceAccessLayerCallback implements IOperationInternalCallbac
 
 
     @Override
-    public void notifyDeviceState(long opId, DeviceID deviceId, String stateId, String valueId, String value)
+    public void notifyDeviceState(long opId, DeviceID deviceId, String stateId, DeviceStateValue stateValue)
     {
 //        if (isThisOperation(opId, deviceId) && stateId.equals(state.getId())) {
 //            DeviceState devState = new DeviceState(this.state, new DeviceStateValue(valueId, value));
@@ -165,7 +166,7 @@ public class GroupDeviceAccessLayerCallback implements IOperationInternalCallbac
 
 
     @Override
-    public void notifyDeviceStates(long opId, DeviceID deviceId, String[] stateIds, String[] valuesIds, String[] values)
+    public void notifyDeviceStates(long opId, DeviceID deviceId, String[] stateIds, DeviceStateValue[] stateValues)
     {
 //        if (isThisOperation(opId, deviceId)) {
 //            DeviceState [] stateList = this.device.getStates();

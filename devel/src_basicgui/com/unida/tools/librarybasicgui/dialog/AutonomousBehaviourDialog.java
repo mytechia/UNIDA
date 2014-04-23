@@ -28,7 +28,7 @@ import com.mytechia.commons.framework.modelaction.exception.InstanceNotFoundExce
 import com.unida.library.device.DeviceID;
 import com.unida.library.device.Gateway;
 import com.unida.library.device.exception.UniDAIDFormatException;
-import com.unida.library.device.ontology.DeviceStateValue;
+import com.unida.library.device.ontology.state.DeviceStateValue;
 import com.unida.library.manage.im.InMemoryUniDAInstantiationFacade;
 import com.unida.library.operation.OperationTicket;
 import com.unida.library.operation.gateway.IAutonomousBehaviourCallback;

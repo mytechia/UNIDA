@@ -23,7 +23,7 @@
 package com.unida.library.device.exception;
 
 import com.mytechia.commons.framework.exception.ModelException;
-import com.unida.library.device.ontology.DeviceStateMetadata;
+import com.unida.library.device.ontology.metadata.DeviceStateMetadata;
 import com.unida.library.device.IDeviceIO;
 
 

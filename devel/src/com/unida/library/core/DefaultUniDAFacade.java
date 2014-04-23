@@ -32,6 +32,7 @@ import com.mytechia.commons.framework.simplemessageprotocol.exception.Communicat
 import com.unida.library.device.DeviceID;
 import com.unida.library.device.Gateway;
 import com.unida.library.device.exception.UniDAIDFormatException;
+import com.unida.library.device.ontology.state.DeviceStateValue;
 import com.unida.library.device.ontology.IDeviceAccessLayerOntologyFacade;
 import com.unida.library.device.ontology.IUniDAOntologyCodec;
 import com.unida.library.device.ontology.exception.ClassNotFoundInOntologyException;
@@ -180,7 +181,7 @@ public class DefaultUniDAFacade extends AbstractUniDAFacadeHelper implements IUn
     {
         addOperationCallback(opId, deviceId, callback);
         this.commChannel.sendMessage(deviceId, 
-                new UniDAWriteDeviceStateRequestMessage(this.ontologyCodec, opId, deviceId, stateId, stateValueId, stateValue));
+                new UniDAWriteDeviceStateRequestMessage(this.ontologyCodec, opId, deviceId, stateId, new DeviceStateValue(stateValueId, stateValue)));
     }
 
     @Override
@@ -249,7 +250,7 @@ public class DefaultUniDAFacade extends AbstractUniDAFacadeHelper implements IUn
                 {
                     if (reply.getErrorCode() == ErrorCode.Ok.getTypeValue())
                     {
-                        cback.notifyDeviceState(reply.getOpId(), reply.getDeviceID(), reply.getStateId(), reply.getValueId(), reply.getValue());
+                        cback.notifyDeviceState(reply.getOpId(), reply.getDeviceID(), reply.getStateId(), reply.getValue());
                     } else
                     {
                         cback.notifyDeviceFailure(reply.getOpId(), reply.getDeviceID(), "Error"); //TODO --> add specific error messages
@@ -290,18 +291,16 @@ public class DefaultUniDAFacade extends AbstractUniDAFacadeHelper implements IUn
                         Collection<DeviceStateWithValue> states = reply.getStateValues();
 
                         String[] stateIds = new String[states.size()];
-                        String[] valueIds = new String[states.size()];
-                        String[] values = new String[states.size()];
+                        DeviceStateValue[] deviceStateValues = new DeviceStateValue[states.size()];
                         int i = 0;
                         for (DeviceStateWithValue stv : states)
                         {
                             stateIds[i] = stv.getStateId();
-                            valueIds[i] = stv.getValueId();
-                            values[i] = stv.getValue();
+                            deviceStateValues[i] = stv.getStateValue();
                             i++;
                         }
 
-                        cback.notifyDeviceStates(reply.getOpId(), reply.getDeviceID(), stateIds, valueIds, values);
+                        cback.notifyDeviceStates(reply.getOpId(), reply.getDeviceID(), stateIds, deviceStateValues);
                     } else
                     {
                         cback.notifyDeviceFailure(reply.getOpId(), reply.getDeviceID(), "Error"); //TODO --> add specific error messages
@@ -376,7 +375,7 @@ public class DefaultUniDAFacade extends AbstractUniDAFacadeHelper implements IUn
                 {
                     if ((reply.getErrorCode() == ErrorCode.Ok.getTypeValue()) || (reply.getErrorCode() == ErrorCode.Null.getTypeValue()))
                     {
-                        cback.notifyState(reply.getOpId(), reply.getDeviceID(), reply.getStateId(), reply.getValueId(), reply.getValueRaw());
+                        cback.notifyState(reply.getOpId(), reply.getDeviceID(), reply.getStateId(), reply.getValue());
                     }
                 } else
                 {

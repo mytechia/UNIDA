@@ -25,7 +25,7 @@ package com.unida.protocol.message.autonomousbehaviour.action;
 import com.mytechia.commons.framework.simplemessageprotocol.Message;
 import com.mytechia.commons.framework.simplemessageprotocol.exception.MessageFormatException;
 import com.mytechia.commons.util.conversion.EndianConversor;
-import com.unida.library.device.ontology.DeviceStateValue;
+import com.unida.library.device.ontology.state.DeviceStateValue;
 import com.unida.library.device.ontology.IUniDAOntologyCodec;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -86,10 +86,7 @@ public class WriteStateAction extends RuleAction
             EndianConversor.uintToLittleEndian(ontologyCodec.encodeId(this.getStateId()), idData, 0);
             dataStream.write(idData, 0, EndianConversor.INT_SIZE_BYTES);
             
-            EndianConversor.uintToLittleEndian(ontologyCodec.encodeId(this.getStateChange().getValueID()), idData, 0);
-            dataStream.write(idData, 0, EndianConversor.INT_SIZE_BYTES);
-
-            Message.writeStringInStream(dataStream, this.getStateChange().getValueRaw());
+            dataStream.write(this.getStateChange().code(ontologyCodec));
             
             } catch (IOException ioEx) {
             //ByteArrayOutputStream doesn't throw exceptions in its write methods
@@ -107,16 +104,11 @@ public class WriteStateAction extends RuleAction
         // state ID
         this.setStateId(ontologyCodec.decodeId(EndianConversor.byteArrayLittleEndianToUInt(bytes, initIndex)));
         initIndex += EndianConversor.INT_SIZE_BYTES;
+                        
+        this.setStateChange(new DeviceStateValue());
         
-        // state value ID
-        String valueId = ontologyCodec.decodeId(EndianConversor.byteArrayLittleEndianToUInt(bytes, initIndex));
-        initIndex += EndianConversor.INT_SIZE_BYTES;
-
-        // state raw value
-        StringBuilder valueBuilder = new StringBuilder(10);
-        initIndex += Message.readStringFromBytes(valueBuilder, bytes, initIndex);
-        
-        this.setStateChange(new DeviceStateValue(valueId, valueBuilder.toString()));
+        // state value
+        initIndex = this.getStateChange().decode(bytes, initIndex, ontologyCodec);
         
         return initIndex;
     }

@@ -23,7 +23,7 @@
 package com.unida.library.notification;
 
 import com.unida.library.device.IDevice;
-import com.unida.library.device.ontology.DeviceState;
+import com.unida.library.device.ontology.state.DeviceState;
 
 /**
  * <p><b>Description:</b>

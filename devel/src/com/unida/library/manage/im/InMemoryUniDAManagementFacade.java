@@ -2,9 +2,9 @@ package com.unida.library.manage.im;
 
 import com.mytechia.commons.framework.exception.InternalErrorException;
 import com.mytechia.commons.framework.modelaction.exception.InstanceNotFoundException;
-import com.unida.library.device.ontology.ControlFunctionalityMetadata;
-import com.unida.library.device.ontology.DeviceClassMetadata;
-import com.unida.library.device.ontology.GatewayClassMetadata;
+import com.unida.library.device.ontology.metadata.ControlFunctionalityMetadata;
+import com.unida.library.device.ontology.metadata.DeviceClassMetadata;
+import com.unida.library.device.ontology.metadata.GatewayClassMetadata;
 import com.unida.library.device.DeviceGroup;
 import com.unida.library.device.Gateway;
 import com.unida.library.device.GatewayDevices;

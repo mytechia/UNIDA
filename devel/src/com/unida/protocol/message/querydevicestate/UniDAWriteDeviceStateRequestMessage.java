@@ -24,7 +24,7 @@ package com.unida.protocol.message.querydevicestate;
 import com.mytechia.commons.framework.simplemessageprotocol.exception.MessageFormatException;
 import com.mytechia.commons.util.conversion.EndianConversor;
 import com.unida.library.device.DeviceID;
-import com.unida.library.device.ontology.DeviceStateValue;
+import com.unida.library.device.ontology.state.DeviceStateValue;
 import com.unida.library.device.ontology.IUniDAOntologyCodec;
 import com.unida.protocol.message.ErrorCode;
 import com.unida.protocol.message.MessageType;
@@ -44,32 +44,31 @@ public class UniDAWriteDeviceStateRequestMessage extends UniDADeviceMessage
     
     private long opId;
     private String stateId;
-    private String valueId;
-    private String value;
+    private DeviceStateValue stateValue;
     
         
     public UniDAWriteDeviceStateRequestMessage(IUniDAOntologyCodec ontologyCodec,
-            long opId, DeviceID deviceId, String stateId, String valueId, String value, ErrorCode err)
+            long opId, DeviceID deviceId, String stateId, DeviceStateValue stateValue, ErrorCode err)
     {
         super(ontologyCodec, deviceId);
         setCommandType(MessageType.WriteState.getTypeValue());
         this.opId = opId;
         this.stateId = stateId;
-        this.valueId = valueId;
-        this.value = value;
+        this.stateValue = stateValue;
     }
 
 
     public UniDAWriteDeviceStateRequestMessage(IUniDAOntologyCodec ontologyCodec,
-            long opId, DeviceID deviceId, String stateId, String valueId, String value)
+            long opId, DeviceID deviceId, String stateId, DeviceStateValue stateValue)
     {
-        this(ontologyCodec, opId, deviceId, stateId, valueId, value, ErrorCode.Ok);
+        this(ontologyCodec, opId, deviceId, stateId, stateValue, ErrorCode.Ok);
     }
 
     
     public UniDAWriteDeviceStateRequestMessage(byte[] message, IUniDAOntologyCodec ontologyCodec) throws MessageFormatException
     {
         super(message, ontologyCodec);
+        this.stateValue = new DeviceStateValue();
     }
 
     
@@ -80,7 +79,7 @@ public class UniDAWriteDeviceStateRequestMessage extends UniDADeviceMessage
 
     public DeviceStateValue getStateValue()
     {
-        return new DeviceStateValue(this.valueId, this.value);
+        return stateValue;
     }
                
 
@@ -101,16 +100,9 @@ public class UniDAWriteDeviceStateRequestMessage extends UniDADeviceMessage
         //stateId        
         this.stateId = getOntologyCodec().decodeId(EndianConversor.byteArrayLittleEndianToUInt(bytes, offset));
         offset += EndianConversor.INT_SIZE_BYTES;
-        
-        StringBuilder string = new StringBuilder(10);
-
-        //value id      
-        this.valueId = getOntologyCodec().decodeId(EndianConversor.byteArrayLittleEndianToUInt(bytes, offset));
-        offset += EndianConversor.INT_SIZE_BYTES;
-
+              
         //value
-        offset += readString(string, bytes, offset);
-        this.value = string.toString();
+        offset += stateValue.decode(bytes, offset, ontologyCodec);
 
         return offset;
     }
@@ -129,10 +121,7 @@ public class UniDAWriteDeviceStateRequestMessage extends UniDADeviceMessage
             EndianConversor.uintToLittleEndian(getOntologyCodec().encodeId(this.stateId), idData, 0);
             dataStream.write(idData, 0, EndianConversor.INT_SIZE_BYTES);
                         
-            EndianConversor.uintToLittleEndian(getOntologyCodec().encodeId(this.valueId), idData, 0);          
-            dataStream.write(idData, 0, EndianConversor.INT_SIZE_BYTES);
-            
-            writeString(dataStream, this.value);
+            dataStream.write(stateValue.code(ontologyCodec));
 
         } catch (IOException ioEx) {
             //ByteArrayOutputStream doesn't throw exceptions in its write methods
@@ -140,16 +129,14 @@ public class UniDAWriteDeviceStateRequestMessage extends UniDADeviceMessage
 
         return dataStream.toByteArray();
     }
-        
 
     @Override
     public int hashCode()
     {
         int hash = 7;
-        hash = 29 * hash + (int) (this.opId ^ (this.opId >>> 32));
-        hash = 29 * hash + Objects.hashCode(this.stateId);
-        hash = 29 * hash + Objects.hashCode(this.valueId);
-        hash = 29 * hash + Objects.hashCode(this.value);
+        hash = 41 * hash + (int) (this.opId ^ (this.opId >>> 32));
+        hash = 41 * hash + Objects.hashCode(this.stateId);
+        hash = 41 * hash + Objects.hashCode(this.stateValue);
         return hash;
     }
 
@@ -173,13 +160,8 @@ public class UniDAWriteDeviceStateRequestMessage extends UniDADeviceMessage
         {
             return false;
         }
-        if (!Objects.equals(this.valueId, other.valueId))
-        {
-            return false;
-        }
-        return Objects.equals(this.value, other.value);
+        return Objects.equals(this.stateValue, other.stateValue);
     }
-    
     
     
 }

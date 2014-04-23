@@ -25,7 +25,7 @@ package com.unida.tools.librarybasicgui.util;
 
 
 import com.unida.library.device.IDeviceIO;
-import com.unida.library.device.ontology.DeviceStateMetadata;
+import com.unida.library.device.ontology.metadata.DeviceStateMetadata;
 import java.util.Collection;
 
 /**
@@ -78,7 +78,7 @@ public class DomoParsing
     /***********************************************************************************************************/    
     /************************************* Class utility methods     *******************************************/
     /***********************************************************************************************************/
-    
+        
     public static String connectedIOsToString(Collection<IDeviceIO> deviceIOs) 
     {
         String s = "";

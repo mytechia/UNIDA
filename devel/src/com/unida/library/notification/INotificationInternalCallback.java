@@ -24,6 +24,7 @@
 package com.unida.library.notification;
 
 import com.unida.library.device.DeviceID;
+import com.unida.library.device.ontology.state.DeviceStateValue;
 
 /**
  * <p>
@@ -52,9 +53,8 @@ public interface INotificationInternalCallback
      * @param nTicketId
      * @param deviceId The device that fired up the notification
      * @param stateId The state of the device when the notification occurred
-     * @param valueId
-     * @param value
+     * @param stateValue The current value for that state
      */
-    void notifyState(long nTicketId, DeviceID deviceId, String stateId, String valueId, String value);
+    void notifyState(long nTicketId, DeviceID deviceId, String stateId, DeviceStateValue stateValue);
 
 }
