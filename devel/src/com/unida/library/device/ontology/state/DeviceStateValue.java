@@ -32,6 +32,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.Serializable;
 
+
 /**
  * <p>
  * <b>Description:</b>
@@ -57,11 +58,12 @@ import java.io.Serializable;
  */
 public class DeviceStateValue implements Serializable
 {
-
+    
+    
     protected String id;
 
     protected String value;
-    
+        
 
     public DeviceStateValue(String id, String value)
     {        
@@ -69,10 +71,10 @@ public class DeviceStateValue implements Serializable
         this.value = value;
     }
 
-    public DeviceStateValue()
-    {      
-    }
-
+    public DeviceStateValue() {}
+    
+    
+    
     public String getValueID()
     {
         return id;
@@ -137,8 +139,25 @@ public class DeviceStateValue implements Serializable
         this.value = string.toString();
 
         return offset;
-
     }
+    
+    
+    public boolean ofType(String type)
+    {
+        return type.equalsIgnoreCase(this.getValueID());
+    }
+    
+    public DeviceStateValue getSpecificImpl()
+    {
+        DeviceStateValue prototype = DeviceStateBuilder.instance().getPrototypeFor(id);
+        return null==prototype?this:prototype.newInstance(this.getValueRaw());
+    }
+    
+    public DeviceStateValue newInstance(String value)
+    {
+        return new DeviceStateValue(id, value);
+    }
+    
 
     @Override
     public boolean equals(Object obj)
@@ -176,5 +195,5 @@ public class DeviceStateValue implements Serializable
         sb.append(this.value);
         return sb.toString();
     }
-
+    
 }

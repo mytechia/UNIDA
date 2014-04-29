@@ -130,6 +130,8 @@ public class UniDAQueryDeviceReplyMessage extends UniDAQueryDeviceRequestMessage
 
             DeviceStateValue stateValue = new DeviceStateValue();
             offset = stateValue.decode(bytes, offset, ontologyCodec);
+            
+            stateValue = stateValue.getSpecificImpl();
 
             this.stateValues.add(new DeviceStateWithValue(stateId, stateValue));
 

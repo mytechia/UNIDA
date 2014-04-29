@@ -124,6 +124,8 @@ public class UniDAQueryDeviceStateReplyMessage extends UniDAQueryDeviceStateRequ
 
         // state value
         offset = this.stateValue.decode(bytes, offset, ontologyCodec);
+        
+        this.stateValue = this.stateValue.getSpecificImpl();
 
         return offset;
 

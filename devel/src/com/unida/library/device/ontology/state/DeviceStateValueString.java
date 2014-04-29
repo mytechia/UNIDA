@@ -48,4 +48,10 @@ public class DeviceStateValueString extends DeviceStateValue
         super("http://elite.polito.it/ontologies/dogont.owl#StringStateValue", value);
     }
     
+    @Override
+    public DeviceStateValue newInstance(String value)
+    {
+        return new DeviceStateValueString(value);
+    }
+    
 }

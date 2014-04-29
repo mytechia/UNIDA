@@ -48,4 +48,10 @@ public class DeviceStateValueInteger extends DeviceStateValue
         super("http://elite.polito.it/ontologies/dogont.owl#IntegerStateValue", String.valueOf(value));
     }
 
+    @Override
+    public DeviceStateValue newInstance(String value)
+    {
+        return new DeviceStateValueInteger(Integer.parseInt(value));
+    }
+    
 }

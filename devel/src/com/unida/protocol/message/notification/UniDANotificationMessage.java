@@ -141,6 +141,8 @@ public class UniDANotificationMessage extends UniDADeviceMessage
 
         //state value
         offset = stateValue.decode(bytes, offset, ontologyCodec);
+        
+        this.stateValue = this.stateValue.getSpecificImpl();
 
         return offset;
 

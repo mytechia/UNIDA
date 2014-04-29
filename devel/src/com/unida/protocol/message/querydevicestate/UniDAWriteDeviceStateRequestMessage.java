@@ -103,6 +103,8 @@ public class UniDAWriteDeviceStateRequestMessage extends UniDADeviceMessage
               
         //value
         offset += stateValue.decode(bytes, offset, ontologyCodec);
+        
+        this.stateValue = this.stateValue.getSpecificImpl();
 
         return offset;
     }

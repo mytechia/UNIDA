@@ -320,5 +320,13 @@
     </owl:Class>
     
     
+    
+    <!-- http://elite.polito.it/ontologies/dogont.owl#RGBLightStateValue -->
+
+    <owl:Class rdf:about="http://elite.polito.it/ontologies/dogont.owl#RGBLightStateValue">
+        <rdfs:subClassOf rdf:resource="http://elite.polito.it/ontologies/dogont.owl#StateValue"/>
+    </owl:Class>
+    
+    
 </rdf:RDF>
 

@@ -80,6 +80,8 @@ public class StateConditionUnary extends StateCondition
         
         initIndex = this.stateValue.decode(bytes, initIndex, ontologyCodec);
         
+        this.stateValue = this.stateValue.getSpecificImpl();
+        
         return initIndex;
     }
 

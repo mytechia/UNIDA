@@ -80,9 +80,11 @@ public class StateConditionBinary extends StateCondition
         
         this.stateValue1 = new DeviceStateValue();
         initIndex = this.stateValue1.decode(bytes, initIndex, ontologyCodec);
+        this.stateValue1 = this.stateValue1.getSpecificImpl();
         
-        this.stateValue1 = new DeviceStateValue();
+        this.stateValue2 = new DeviceStateValue();
         initIndex = this.stateValue2.decode(bytes, initIndex, ontologyCodec);
+        this.stateValue2 = this.stateValue2.getSpecificImpl();
         
         return initIndex;
     }

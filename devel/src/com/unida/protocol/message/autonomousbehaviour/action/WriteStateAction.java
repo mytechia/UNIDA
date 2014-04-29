@@ -109,6 +109,7 @@ public class WriteStateAction extends RuleAction
         
         // state value
         initIndex = this.getStateChange().decode(bytes, initIndex, ontologyCodec);
+        this.stateValue = this.stateValue.getSpecificImpl();
         
         return initIndex;
     }

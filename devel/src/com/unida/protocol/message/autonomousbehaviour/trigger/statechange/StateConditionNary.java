@@ -91,7 +91,11 @@ public class StateConditionNary extends StateCondition
         for (int i = 0; i < numberOfValues; i++)
         {
             DeviceStateValue stateValue = new DeviceStateValue();
+            
             initIndex = stateValue.decode(bytes, initIndex, ontologyCodec);
+            
+            stateValue = stateValue.getSpecificImpl();
+            
             this.stateValues.add(stateValue);
         }
 
