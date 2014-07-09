@@ -76,7 +76,6 @@ public class UniDANotificationMessage extends UniDADeviceMessage
     public UniDANotificationMessage(byte[] message, IUniDAOntologyCodec ontologyCodec) throws MessageFormatException
     {
         super(message, ontologyCodec);
-        this.stateValue = new DeviceStateValue();
     }
 
 
@@ -140,10 +139,10 @@ public class UniDANotificationMessage extends UniDADeviceMessage
         offset += EndianConversor.INT_SIZE_BYTES;
 
         //state value
+        this.stateValue = new DeviceStateValue();
         offset = stateValue.decode(bytes, offset, ontologyCodec);
-        
         this.stateValue = this.stateValue.getSpecificImpl();
-
+        
         return offset;
 
     }
