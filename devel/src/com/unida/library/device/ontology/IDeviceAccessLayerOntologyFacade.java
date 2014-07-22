@@ -23,6 +23,12 @@
 
 package com.unida.library.device.ontology;
 
+import com.unida.library.device.ontology.metadata.DeviceClassMetadata;
+import com.unida.library.device.ontology.metadata.NotificationFunctionalityMetadata;
+import com.unida.library.device.ontology.metadata.GatewayClassMetadata;
+import com.unida.library.device.ontology.metadata.DeviceStateMetadata;
+import com.unida.library.device.ontology.metadata.ControlFunctionalityMetadata;
+import com.unida.library.device.ontology.metadata.ControlCommandMetadata;
 import com.unida.library.device.ontology.exception.ClassNotFoundInOntologyException;
 import com.unida.library.device.ontology.exception.OntologyLoadingErrorException;
 import java.util.Collection;

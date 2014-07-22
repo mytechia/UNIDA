@@ -1,12 +1,12 @@
 <?xml version="1.0"?>
 
-    <!-- 
-    ///////////////////////////////////////////////////////////////////////////////////////
-    //
-    // Copyright (C) 2009-2013 Mytech Ingenieria Aplicada <http://www.mytechia.com>
-    //
-    ///////////////////////////////////////////////////////////////////////////////////////
-     -->
+<!-- 
+///////////////////////////////////////////////////////////////////////////////////////
+//
+// Copyright (C) 2009-2013 Mytech Ingenieria Aplicada <http://www.mytechia.com>
+//
+///////////////////////////////////////////////////////////////////////////////////////
+-->
 
 
 <!DOCTYPE rdf:RDF [
@@ -25,18 +25,18 @@
 
 
 <rdf:RDF xmlns="http://elite.polito.it/ontologies/dogont.owl#"
-     xml:base="http://elite.polito.it/ontologies/dogont.owl"
-     xmlns:protege="http://protege.stanford.edu/plugins/owl/protege#"
-     xmlns:xsp="http://www.owl-ontologies.com/2005/08/07/xsp.owl#"
-     xmlns:dogont2="http://elite.polito.it/ontologies/dogont.owl#1"
-     xmlns:dogont="http://elite.polito.it/ontologies/dogont.owl#3"
-     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
-     xmlns:swrl="http://www.w3.org/2003/11/swrl#"
-     xmlns:owl2xml="http://www.w3.org/2006/12/owl2-xml#"
-     xmlns:owl="http://www.w3.org/2002/07/owl#"
-     xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
-     xmlns:swrlb="http://www.w3.org/2003/11/swrlb#"
-     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+         xml:base="http://elite.polito.it/ontologies/dogont.owl"
+         xmlns:protege="http://protege.stanford.edu/plugins/owl/protege#"
+         xmlns:xsp="http://www.owl-ontologies.com/2005/08/07/xsp.owl#"
+         xmlns:dogont2="http://elite.polito.it/ontologies/dogont.owl#1"
+         xmlns:dogont="http://elite.polito.it/ontologies/dogont.owl#3"
+         xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+         xmlns:swrl="http://www.w3.org/2003/11/swrl#"
+         xmlns:owl2xml="http://www.w3.org/2006/12/owl2-xml#"
+         xmlns:owl="http://www.w3.org/2002/07/owl#"
+         xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+         xmlns:swrlb="http://www.w3.org/2003/11/swrlb#"
+         xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
     <owl:Ontology rdf:about="http://mytechia.com/unida/ontologies/unidado.owl">
         <rdfs:comment>UNIDA-DO - UNIDA Device Ontology</rdfs:comment>
         <owl:versionInfo xml:lang="en">0.1</owl:versionInfo>
@@ -46,12 +46,12 @@
     
     
     <!-- 
-    ///////////////////////////////////////////////////////////////////////////////////////
-    //
-    // Object Properties
-    //
-    ///////////////////////////////////////////////////////////////////////////////////////
-     -->
+   ///////////////////////////////////////////////////////////////////////////////////////
+   //
+   // Object Properties
+   //
+   ///////////////////////////////////////////////////////////////////////////////////////
+    -->
      
      
     
@@ -67,12 +67,12 @@
 
 
     <!-- 
-    ///////////////////////////////////////////////////////////////////////////////////////
-    //
-    // Classes
-    //
-    ///////////////////////////////////////////////////////////////////////////////////////
-     -->
+   ///////////////////////////////////////////////////////////////////////////////////////
+   //
+   // Classes
+   //
+   ///////////////////////////////////////////////////////////////////////////////////////
+    -->
 
     
 
@@ -294,5 +294,39 @@
         <rdfs:subClassOf rdf:resource="http://elite.polito.it/ontologies/dogont.owl#UNIDAComponent"/>
         <rdfs:comment xml:lang="en">A gateway that is natively compatible with the UNIDA UDP communication protocol.</rdfs:comment>
     </owl:Class>
+    
+    
+    
+    <!-- http://elite.polito.it/ontologies/dogont.owl#StringStateValue -->
+
+    <owl:Class rdf:about="http://elite.polito.it/ontologies/dogont.owl#StringStateValue">
+        <rdfs:subClassOf rdf:resource="http://elite.polito.it/ontologies/dogont.owl#StateValue"/>
+    </owl:Class>
+
+
+
+    <!-- http://elite.polito.it/ontologies/dogont.owl#IntegerStateValue -->
+
+    <owl:Class rdf:about="http://elite.polito.it/ontologies/dogont.owl#IntegerStateValue">
+        <rdfs:subClassOf rdf:resource="http://elite.polito.it/ontologies/dogont.owl#StateValue"/>
+    </owl:Class>
+
+
+
+    <!-- http://elite.polito.it/ontologies/dogont.owl#FloatStateValue -->
+
+    <owl:Class rdf:about="http://elite.polito.it/ontologies/dogont.owl#FloatStateValue">
+        <rdfs:subClassOf rdf:resource="http://elite.polito.it/ontologies/dogont.owl#StateValue"/>
+    </owl:Class>
+    
+    
+    
+    <!-- http://elite.polito.it/ontologies/dogont.owl#RGBLightStateValue -->
+
+    <owl:Class rdf:about="http://elite.polito.it/ontologies/dogont.owl#RGBLightStateValue">
+        <rdfs:subClassOf rdf:resource="http://elite.polito.it/ontologies/dogont.owl#StateValue"/>
+    </owl:Class>
+    
+    
 </rdf:RDF>
 

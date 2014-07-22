@@ -26,7 +26,7 @@ package com.unida.protocol.message.autonomousbehaviour.trigger.statechange;
 import com.mytechia.commons.framework.simplemessageprotocol.Message;
 import com.mytechia.commons.framework.simplemessageprotocol.exception.MessageFormatException;
 import com.mytechia.commons.util.conversion.EndianConversor;
-import com.unida.library.device.ontology.DeviceStateValue;
+import com.unida.library.device.ontology.state.DeviceStateValue;
 import com.unida.library.device.ontology.IUniDAOntologyCodec;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -70,12 +70,8 @@ public class StateConditionNary extends StateCondition
 
             for (DeviceStateValue stateValue : stateValues)
             {
-                EndianConversor.uintToLittleEndian(ontologyCodec.encodeId(stateValue.getValueID()), idData, 0);
-                dataStream.write(idData, 0, EndianConversor.INT_SIZE_BYTES);
-
-                Message.writeStringInStream(dataStream, stateValue.getValueRaw());
+                dataStream.write(stateValue.code(ontologyCodec));
             }
-
 
         } catch (IOException ioEx)
         {
@@ -92,19 +88,15 @@ public class StateConditionNary extends StateCondition
         initIndex += EndianConversor.SHORT_SIZE_BYTES;
 
         this.stateValues = new ArrayList<>();
-        String valueId;
-        StringBuilder valueBuilder;        
         for (int i = 0; i < numberOfValues; i++)
         {
-            //value id
-            valueId = ontologyCodec.decodeId(EndianConversor.byteArrayLittleEndianToUInt(bytes, initIndex));
-            initIndex += EndianConversor.INT_SIZE_BYTES;
-
-            //value
-            valueBuilder = new StringBuilder(10);
-            initIndex += Message.readStringFromBytes(valueBuilder, bytes, initIndex);
-
-            this.stateValues.add(new DeviceStateValue(valueId, valueBuilder.toString()));
+            DeviceStateValue stateValue = new DeviceStateValue();
+            
+            initIndex = stateValue.decode(bytes, initIndex, ontologyCodec);
+            
+            stateValue = stateValue.getSpecificImpl();
+            
+            this.stateValues.add(stateValue);
         }
 
         return initIndex;

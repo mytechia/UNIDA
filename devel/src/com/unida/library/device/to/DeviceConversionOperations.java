@@ -24,9 +24,9 @@
  */
 package com.unida.library.device.to;
 
-import com.unida.library.device.ontology.DeviceClassMetadata;
-import com.unida.library.device.ontology.DeviceStateMetadata;
-import com.unida.library.device.ontology.GatewayClassMetadata;
+import com.unida.library.device.ontology.metadata.DeviceClassMetadata;
+import com.unida.library.device.ontology.metadata.DeviceStateMetadata;
+import com.unida.library.device.ontology.metadata.GatewayClassMetadata;
 import com.unida.library.device.ontology.IDeviceAccessLayerOntologyFacade;
 import com.unida.library.device.ontology.exception.ClassNotFoundInOntologyException;
 import com.unida.library.device.Device;

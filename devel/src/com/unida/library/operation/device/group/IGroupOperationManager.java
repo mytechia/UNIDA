@@ -24,12 +24,12 @@ package com.unida.library.operation.device.group;
 
 
 import com.mytechia.commons.framework.exception.InternalErrorException;
-import com.unida.library.device.ontology.ControlCommandMetadata;
-import com.unida.library.device.ontology.DeviceStateMetadata;
+import com.unida.library.device.ontology.metadata.ControlCommandMetadata;
+import com.unida.library.device.ontology.metadata.DeviceStateMetadata;
 import com.unida.library.device.DeviceGroup;
 import com.unida.library.device.IDevice;
-import com.unida.library.device.ontology.ControlFunctionalityMetadata;
-import com.unida.library.device.ontology.DeviceStateValue;
+import com.unida.library.device.ontology.metadata.ControlFunctionalityMetadata;
+import com.unida.library.device.ontology.state.DeviceStateValue;
 import com.unida.library.operation.device.IDeviceOperationCallback;
 import com.unida.library.operation.OperationTicket;
 

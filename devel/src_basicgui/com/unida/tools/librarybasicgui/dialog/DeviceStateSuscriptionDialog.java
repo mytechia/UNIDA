@@ -23,16 +23,16 @@
  */
 package com.unida.tools.librarybasicgui.dialog;
 
-import com.unida.tools.librarybasicgui.util.DomoParsing;
 import com.mytechia.commons.framework.exception.InternalErrorException;
 import com.mytechia.commons.framework.modelaction.exception.InstanceNotFoundException;
 import com.unida.library.device.IDevice;
-import com.unida.library.device.ontology.DeviceState;
-import com.unida.library.device.ontology.DeviceStateMetadata;
-import com.unida.library.device.ontology.DeviceStateValue;
+import com.unida.library.device.ontology.metadata.DeviceStateMetadata;
+import com.unida.library.device.ontology.state.DeviceState;
+import com.unida.library.device.ontology.state.DeviceStateValue;
 import com.unida.library.manage.im.InMemoryUniDAInstantiationFacade;
 import com.unida.library.notification.IDeviceStateNotificationCallback;
 import com.unida.library.notification.NotificationTicket;
+import com.unida.tools.librarybasicgui.util.DomoParsing;
 import javax.swing.JOptionPane;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
@@ -299,7 +299,7 @@ public class DeviceStateSuscriptionDialog extends javax.swing.JDialog
      * of one state of one UniDA device, displaying that info
      */
     private class SuscribeCback implements IDeviceStateNotificationCallback
-    {
+    {                
 
         @Override
         public void notifyState(NotificationTicket nt, IDevice dev, DeviceState state)

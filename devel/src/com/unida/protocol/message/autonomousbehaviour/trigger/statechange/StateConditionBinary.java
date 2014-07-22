@@ -25,7 +25,7 @@ package com.unida.protocol.message.autonomousbehaviour.trigger.statechange;
 import com.mytechia.commons.framework.simplemessageprotocol.Message;
 import com.mytechia.commons.framework.simplemessageprotocol.exception.MessageFormatException;
 import com.mytechia.commons.util.conversion.EndianConversor;
-import com.unida.library.device.ontology.DeviceStateValue;
+import com.unida.library.device.ontology.state.DeviceStateValue;
 import com.unida.library.device.ontology.IUniDAOntologyCodec;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -62,17 +62,10 @@ public class StateConditionBinary extends StateCondition
 
         try
         {
-            byte[] idData = new byte[EndianConversor.LONG_SIZE_BYTES];
-
-            EndianConversor.uintToLittleEndian(ontologyCodec.encodeId(this.stateValue1.getValueID()), idData, 0);
-            dataStream.write(idData, 0, EndianConversor.INT_SIZE_BYTES);
-
-            Message.writeStringInStream(dataStream, this.stateValue1.getValueRaw());
             
-            EndianConversor.uintToLittleEndian(ontologyCodec.encodeId(this.stateValue2.getValueID()), idData, 0);
-            dataStream.write(idData, 0, EndianConversor.INT_SIZE_BYTES);
-
-            Message.writeStringInStream(dataStream, this.stateValue2.getValueRaw());
+            dataStream.write(stateValue1.code(ontologyCodec));
+            dataStream.write(stateValue2.code(ontologyCodec));
+            
         } catch (IOException ioEx)
         {
             //ByteArrayOutputStream doesn't throw exceptions in its write methods
@@ -83,26 +76,15 @@ public class StateConditionBinary extends StateCondition
 
     @Override
     public int decodePayload(byte[] bytes, int initIndex, IUniDAOntologyCodec ontologyCodec) throws MessageFormatException
-    {
-        //value id
-        String valueId = ontologyCodec.decodeId(EndianConversor.byteArrayLittleEndianToUInt(bytes, initIndex));
-        initIndex += EndianConversor.INT_SIZE_BYTES;
-
-        //value
-        StringBuilder valueBuilder = new StringBuilder(10);
-        initIndex += Message.readStringFromBytes(valueBuilder, bytes, initIndex);
+    {        
         
-        this.stateValue1 = new DeviceStateValue(valueId, valueBuilder.toString());
+        this.stateValue1 = new DeviceStateValue();
+        initIndex = this.stateValue1.decode(bytes, initIndex, ontologyCodec);
+        this.stateValue1 = this.stateValue1.getSpecificImpl();
         
-        //value id
-        valueId = ontologyCodec.decodeId(EndianConversor.byteArrayLittleEndianToUInt(bytes, initIndex));
-        initIndex += EndianConversor.INT_SIZE_BYTES;
-
-        //value
-        valueBuilder = new StringBuilder(10);
-        initIndex += Message.readStringFromBytes(valueBuilder, bytes, initIndex);
-        
-        this.stateValue2 = new DeviceStateValue(valueId, valueBuilder.toString());
+        this.stateValue2 = new DeviceStateValue();
+        initIndex = this.stateValue2.decode(bytes, initIndex, ontologyCodec);
+        this.stateValue2 = this.stateValue2.getSpecificImpl();
         
         return initIndex;
     }

@@ -27,25 +27,26 @@ package com.unida.protocol.message.querydevicestate;
 
 
 import com.mytechia.commons.framework.simplemessageprotocol.exception.MessageFormatException;
-import com.mytechia.commons.util.conversion.EndianConversor;
 import com.unida.library.device.ontology.IUniDAOntologyCodec;
 import com.unida.library.device.DeviceID;
+import com.unida.library.device.ontology.state.DeviceStateValue;
 import com.unida.protocol.message.ErrorCode;
 import com.unida.protocol.message.MessageType;
 import com.unida.protocol.message.UniDAMessage;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.Objects;
 
 
 /**
  * <p><b>
- * </b></br>
+ * </b>
  *
  * </p>
  *
  * <p><b>Creation date:</b> 27-01-2010</p>
  *
- * <p><b>Changelog:</b></br>
+ * <p><b>Changelog:</b>
  * <ul>
  * <li>1 - 27-01-2010<\br> Initial release</li>
  * </ul>
@@ -57,44 +58,37 @@ import java.io.IOException;
 public class UniDAQueryDeviceStateReplyMessage extends UniDAQueryDeviceStateRequestMessage
 {
 
-    private String valueId;
-    private String value;
+    private DeviceStateValue stateValue;
 
 
     public UniDAQueryDeviceStateReplyMessage(UniDAMessage request, IUniDAOntologyCodec ontologyCodec,
-            long opId, DeviceID deviceId, String stateId, String valueId, String value, ErrorCode err)
+            long opId, DeviceID deviceId, String stateId, DeviceStateValue stateValue, ErrorCode err)
     {
         super(ontologyCodec, opId, deviceId, stateId);
         this.setDestination(request.getSource());
         setErrorCode(err.getTypeValue());
         setCommandType(MessageType.QueryDeviceStateReply.getTypeValue());
-        this.valueId = valueId;
-        this.value = value;
+        this.stateValue = stateValue;
     }
 
 
     public UniDAQueryDeviceStateReplyMessage(UniDAMessage request, IUniDAOntologyCodec ontologyCodec,
-            long opId, DeviceID deviceId, String stateId, String valueId, String value)
+            long opId, DeviceID deviceId, String stateId, DeviceStateValue stateValue)
     {
-        this(request, ontologyCodec, opId, deviceId, stateId, valueId, value, ErrorCode.Ok);
+        this(request, ontologyCodec, opId, deviceId, stateId, stateValue, ErrorCode.Ok);
     }
 
     
     public UniDAQueryDeviceStateReplyMessage(byte[] message, IUniDAOntologyCodec ontologyCodec) throws MessageFormatException
     {
         super(message, ontologyCodec);
+        this.stateValue = new DeviceStateValue();
     }
     
 
-    public String getValue()
+    public DeviceStateValue getValue()
     {
-        return value;
-    }
-
-
-    public String getValueId()
-    {
-        return valueId;
+        return stateValue;
     }
 
     
@@ -106,14 +100,11 @@ public class UniDAQueryDeviceStateReplyMessage extends UniDAQueryDeviceStateRequ
 
         try {
 
-            //create the data payload of the father class
+            // create the data payload of the father class
             dataStream.write(super.codeDeviceMessagePayload());
 
-            byte [] idData = new byte[EndianConversor.INT_SIZE_BYTES];
-            EndianConversor.uintToLittleEndian(getOntologyCodec().encodeId(this.valueId), idData, 0);          
-            dataStream.write(idData, 0, EndianConversor.INT_SIZE_BYTES);
-            
-            writeString(dataStream, this.value);
+            // state value
+            dataStream.write(stateValue.code(ontologyCodec));
 
         }
         catch(IOException ioEx) {
@@ -131,15 +122,10 @@ public class UniDAQueryDeviceStateReplyMessage extends UniDAQueryDeviceStateRequ
 
         int offset = super.decodeDeviceMessagePayload(bytes, initIndex);
 
-        StringBuilder string = new StringBuilder(10);
-
-        //value id
-        this.valueId = getOntologyCodec().decodeId(EndianConversor.byteArrayLittleEndianToUInt(bytes, offset));
-        offset += EndianConversor.INT_SIZE_BYTES;
-
-        //value
-        offset += readString(string, bytes, offset);
-        this.value = string.toString();
+        // state value
+        offset = this.stateValue.decode(bytes, offset, ontologyCodec);
+        
+        this.stateValue = this.stateValue.getSpecificImpl();
 
         return offset;
 
@@ -149,5 +135,30 @@ public class UniDAQueryDeviceStateReplyMessage extends UniDAQueryDeviceStateRequ
     protected MessageRType getMessageType() {
         return MessageRType.REPLY;
     }
+
+    
+    @Override
+    public int hashCode()
+    {
+        int hash = 5;
+        hash = 79 * hash + Objects.hashCode(this.stateValue);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj)
+    {
+        if (obj == null)
+        {
+            return false;
+        }
+        if (getClass() != obj.getClass())
+        {
+            return false;
+        }
+        final UniDAQueryDeviceStateReplyMessage other = (UniDAQueryDeviceStateReplyMessage) obj;
+        return Objects.equals(this.stateValue, other.stateValue);
+    }
+            
 
 }

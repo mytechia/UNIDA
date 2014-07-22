@@ -21,15 +21,16 @@
  * 
  ******************************************************************************/
 
-package com.unida.library.device.ontology;
+package com.unida.library.device.ontology.metadata;
 
+import com.unida.library.device.ontology.state.DeviceStateValue;
 import java.io.Serializable;
+import java.util.Arrays;
+
 
 /**
  * <p><b>Description:</b></br>
- * Representation of a state of a hardware device.
- *
- * If the value of the state is unknown, the value field must be null.
+ * Identifier of a device state type on the device description ontology.
  *
  * </p>
  *
@@ -44,57 +45,64 @@ import java.io.Serializable;
  * @author Gervasio Varela Fernandez
  * @version 1
  */
-public class DeviceState implements Serializable
+public class DeviceStateMetadata implements Serializable
 {
+
+
+    private String id;
+
+    /** Valid values for this type of state according to the device
+     * description ontology. */
+    private DeviceStateValue [] possibleValues;
     
-    /** Id of the device state on the device description ontology */
-    private DeviceStateMetadata metadata;
-
-    /** Value of the state according to the device description ontology,
-     null if the state is unknown*/
-    private DeviceStateValue value;
+    private boolean isWritable;
 
 
-    public DeviceState(DeviceStateMetadata metadata)
+    public DeviceStateMetadata(String id, DeviceStateValue[] possibleValues)
     {
-        this.metadata = metadata;
-        this.value = null;
+        this.id = id;
+        this.possibleValues = possibleValues;
+        this.isWritable = false;
     }
-
-    
-    public DeviceState(DeviceStateMetadata stateId, DeviceStateValue value)
-    {
-        this.metadata = stateId;
-        this.value = value;
-    }
-
 
     public String getId()
     {
-        return this.metadata.getId();
+        return id;
     }
-
-
-    public DeviceStateMetadata getMetadata()
+    
+    public String getShortId()
     {
-        return metadata;
+        String[] split = getId().split("#");
+        if (split.length >= 2) {
+            return split[1];
+        }
+        return id;
     }
 
-
-    public DeviceStateValue getValue()
+    public boolean isIsWritable()
     {
-        return value;
+        return isWritable;
     }
 
-    public void setValue(DeviceStateValue value)
+    public void setIsWritable(boolean isWritable)
     {
-        this.value = value;
+        this.isWritable = isWritable;
     }
+    
+    
 
-
-    /** Two device state objects are considered equals if its ids and values
-     * are equals.
+    /** Returns the valid values for this type of state according to the device
+     * description ontology.
+     *
+     * @return the valid values for this type of state according to the device
+     * description ontology.
      */
+    public DeviceStateValue[] getPossibleValues()
+    {
+        return possibleValues;
+    }
+
+    
     @Override
     public boolean equals(Object obj)
     {
@@ -104,26 +112,28 @@ public class DeviceState implements Serializable
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final DeviceState other = (DeviceState) obj;
-        if (this.metadata != other.metadata && (this.metadata == null || !this.metadata.equals(other.metadata))) {
-            return false;
-        }
-        if (this.value != other.value && (this.value == null || !this.value.equals(other.value))) {
+        final DeviceStateMetadata other = (DeviceStateMetadata) obj;
+        if ((this.id == null) ? (other.id != null) : !this.id.equals(other.id)) {
             return false;
         }
         return true;
     }
 
 
-    
     @Override
     public int hashCode()
     {
-        int hash = 3;
-        hash = 47 * hash + (this.metadata != null ? this.metadata.hashCode() : 0);
-        hash = 47 * hash + (this.value != null ? this.value.hashCode() : 0);
+        int hash = 7;
+        hash = 71 * hash + (this.id != null ? this.id.hashCode() : 0);
+        hash = 71 * hash + Arrays.deepHashCode(this.possibleValues);
         return hash;
     }
 
+    @Override
+    public String toString() {
+        return "DeviceStateMetadata{" + "id=" + id + ", possibleValues=" + possibleValues + '}';
+    }
 
+    
+    
 }

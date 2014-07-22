@@ -1,3 +1,4 @@
+
 /*******************************************************************************
  *   
  *   Copyright (C) 2010,2013 Mytech Ingenieria Aplicada <http://www.mytechia.com>
@@ -21,16 +22,16 @@
  * 
  ******************************************************************************/
 
-package com.unida.library.device.ontology;
+package com.unida.library.device.ontology.metadata;
 
 import java.io.Serializable;
 
 /**
  * <p><b>Description:</b></br>
- * A control functionality specifies the commands that can be used to
- * control the behaviour of a device.
- * 
- * Representation of a control functionality according to the
+ * A notification functionality specifies the notifications that a device
+ * can send.
+ *
+ * Representation of a notification functionality according to the
  * device ontology description.
  *
  * </p>
@@ -46,33 +47,28 @@ import java.io.Serializable;
  * @author Gervasio Varela Fernandez
  * @version 1
  */
-public class ControlFunctionalityMetadata implements Serializable
+public class NotificationFunctionalityMetadata implements Serializable
 {
 
-    
-    /** Id of the functionality as specified in the device ontology */
     private String id;
 
-    /** Commands associated to this type of functionality */
-    private ControlCommandMetadata [] availableCommands;
+    private NotificationMetadata [] availableNotifications;
 
-
-    public ControlFunctionalityMetadata(String id, ControlCommandMetadata[] availableCommands)
+    
+    public NotificationFunctionalityMetadata(String id, NotificationMetadata [] notifications)
     {
         this.id = id;
-        this.availableCommands = availableCommands;
+        this.availableNotifications = notifications;
     }
-
-    public ControlCommandMetadata[] getAvailableCommands()
-    {
-        return availableCommands;
-    }
-
 
     public String getId()
     {
         return id;
     }
 
-    
+    public NotificationMetadata[] getAvailableNotifications()
+    {
+        return availableNotifications;
+    }
+
 }

@@ -30,6 +30,7 @@ import com.mytechia.commons.framework.simplemessageprotocol.exception.MessageFor
 import com.mytechia.commons.util.conversion.EndianConversor;
 import com.unida.library.device.ontology.IUniDAOntologyCodec;
 import com.unida.library.device.DeviceID;
+import com.unida.library.device.ontology.state.DeviceStateValue;
 import com.unida.protocol.message.MessageType;
 import com.unida.protocol.message.UniDADeviceMessage;
 import java.io.ByteArrayOutputStream;
@@ -38,13 +39,13 @@ import java.io.IOException;
 
 /**
  * <p><b>
- * </b></br>
+ * </b>
  *
  * </p>
  *
  * <p><b>Creation date:</b> 27-01-2010</p>
  *
- * <p><b>Changelog:</b></br>
+ * <p><b>Changelog:</b>
  * <ul>
  * <li>1 - 27-01-2010<\br> Initial release</li>
  * </ul>
@@ -58,19 +59,17 @@ public class UniDANotificationMessage extends UniDADeviceMessage
 
     private long opId;
     private String stateId;
-    private String valueId;
-    private String valueRaw;
+    private DeviceStateValue stateValue;
 
 
     public UniDANotificationMessage(IUniDAOntologyCodec ontologyCodec,
-            long opId, DeviceID deviceId, String stateId, String valueId, String valueRaw)
+            long opId, DeviceID deviceId, String stateId, DeviceStateValue stateValue)
     {
         super(ontologyCodec, deviceId);
         setCommandType(MessageType.Notification.getTypeValue());
         this.opId = opId;
         this.stateId = stateId;
-        this.valueId = valueId;
-        this.valueRaw = valueRaw;
+        this.stateValue = stateValue;
     }
 
 
@@ -80,15 +79,9 @@ public class UniDANotificationMessage extends UniDADeviceMessage
     }
 
 
-    public String getValueRaw()
+    public DeviceStateValue getValue()
     {
-        return valueRaw;
-    }
-
-
-    public String getValueId()
-    {
-        return valueId;
+        return stateValue;
     }
 
 
@@ -119,10 +112,7 @@ public class UniDANotificationMessage extends UniDADeviceMessage
             EndianConversor.uintToLittleEndian(getOntologyCodec().encodeId(this.stateId), idData, 0);          
             dataStream.write(idData, 0, EndianConversor.INT_SIZE_BYTES);
             
-            EndianConversor.uintToLittleEndian(getOntologyCodec().encodeId(this.valueId), idData, 0);          
-            dataStream.write(idData, 0, EndianConversor.INT_SIZE_BYTES);
-
-            writeString(dataStream, this.valueRaw);
+            dataStream.write(stateValue.code(ontologyCodec));
 
         }
         catch(IOException ioEx) {
@@ -148,14 +138,11 @@ public class UniDANotificationMessage extends UniDADeviceMessage
         this.stateId = getOntologyCodec().decodeId(EndianConversor.byteArrayLittleEndianToUInt(bytes, offset));
         offset += EndianConversor.INT_SIZE_BYTES;
 
-        //value id        
-        this.valueId = getOntologyCodec().decodeId(EndianConversor.byteArrayLittleEndianToUInt(bytes, offset));
-        offset += EndianConversor.INT_SIZE_BYTES;
-
-        //value
-        offset += readString(string, bytes, offset);
-        this.valueRaw = string.toString();
-
+        //state value
+        this.stateValue = new DeviceStateValue();
+        offset = stateValue.decode(bytes, offset, ontologyCodec);
+        this.stateValue = this.stateValue.getSpecificImpl();
+        
         return offset;
 
     }
@@ -174,10 +161,7 @@ public class UniDANotificationMessage extends UniDADeviceMessage
         if (this.opId != other.opId) {
             return false;
         }
-        if ((this.stateId == null) ? (other.stateId != null) : !this.stateId.equals(other.stateId)) {
-            return false;
-        }
-        return true;
+        return !((this.stateId == null) ? (other.stateId != null) : !this.stateId.equals(other.stateId));
     }
 
 
@@ -197,7 +181,7 @@ public class UniDANotificationMessage extends UniDADeviceMessage
 
     @Override
     public String toString() {
-        return super.toString() + "; UniDANotificationMessage{" + "opId=" + opId + ", stateId=" + stateId + ", valueId=" + valueId + ", value=" + valueRaw + '}';
+        return super.toString() + "; UniDANotificationMessage{" + "opId=" + opId + ", stateId=" + stateId + ", value=" + stateValue.toString() + '}';
     }
        
     

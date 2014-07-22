@@ -21,22 +21,22 @@
  * 
  ******************************************************************************/
 
-package com.unida.library.device.ontology;
+package com.unida.library.device.ontology.metadata;
 
 import java.io.Serializable;
 
 /**
- * <p><b>Description:</b>
- * Represents a value of a device state.
+ * <p><b>Description:</b></br>
+ * A control command specifies an control action that a device should perform.
  *
- * Its ID and values are set according to the ones specified on
- * the device description ontology.
+ * Representation of a control command according to the
+ * device ontology description.
  *
  * </p>
  *
  * <p><b>Creation date:</b> 28-dic-2009</p>
  *
- * <p><b>Changelog:</b>
+ * <p><b>Changelog:</b></br>
  * <ul>
  * <li>1 - 28-dic-2009<\br> Initial release</li>
  * </ul>
@@ -45,47 +45,34 @@ import java.io.Serializable;
  * @author Gervasio Varela Fernandez
  * @version 1
  */
-public class DeviceStateValue implements Serializable
+public class ControlCommandMetadata implements Serializable
 {
 
+    /** Id of the command specified in the device ontology */
     private String id;
 
-    private String value;
+    /** Number of parameters of the command as specified in the device ontolgy */
+    private int nParams;
 
     
-    public DeviceStateValue(String id, String value)
+    public ControlCommandMetadata(String id, int nParams)
     {
         this.id = id;
-        this.value = value;
+        this.nParams = nParams;
     }
 
-    public String getValueID()
+    public String getId()
     {
         return id;
     }
-    
-    public String getValueIdShort()
+
+
+    public int getnParams()
     {
-        String[] split = getValueID().split("#");
-        if (split.length >= 2) {
-            return split[1];
-        }
-        return id;
+        return nParams;
     }
 
-
-    public String getValueRaw()
-    {
-        return value;
-    }
     
-    
-    public void setValueRaw(String value)
-    {
-        this.value = value;
-    }
-
-
     @Override
     public boolean equals(Object obj)
     {
@@ -95,11 +82,11 @@ public class DeviceStateValue implements Serializable
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final DeviceStateValue other = (DeviceStateValue) obj;
+        final ControlCommandMetadata other = (ControlCommandMetadata) obj;
         if ((this.id == null) ? (other.id != null) : !this.id.equals(other.id)) {
             return false;
         }
-        return !((this.value == null) ? (other.value != null) : !this.value.equals(other.value));
+        return true;
     }
 
 
@@ -107,19 +94,8 @@ public class DeviceStateValue implements Serializable
     public int hashCode()
     {
         int hash = 3;
-        hash = 97 * hash + (this.id != null ? this.id.hashCode() : 0);
-        hash = 97 * hash + (this.value != null ? this.value.hashCode() : 0);
+        hash = 53 * hash + (this.id != null ? this.id.hashCode() : 0);
         return hash;
-    }
-
-
-    @Override
-    public String toString()
-    {
-        StringBuilder sb = new StringBuilder(this.id);
-        sb.append("-");
-        sb.append(this.value);
-        return sb.toString();
     }
 
 	

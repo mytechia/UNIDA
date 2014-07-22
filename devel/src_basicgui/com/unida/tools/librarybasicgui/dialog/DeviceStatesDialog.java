@@ -26,13 +26,13 @@ package com.unida.tools.librarybasicgui.dialog;
 import com.mytechia.commons.framework.exception.InternalErrorException;
 import com.mytechia.commons.framework.modelaction.exception.InstanceNotFoundException;
 import com.unida.library.device.IDevice;
-import com.unida.library.device.ontology.ControlCommandMetadata;
-import com.unida.library.device.ontology.ControlFunctionalityMetadata;
-import com.unida.library.device.ontology.DeviceState;
+import com.unida.library.device.ontology.metadata.ControlCommandMetadata;
+import com.unida.library.device.ontology.metadata.ControlFunctionalityMetadata;
+import com.unida.library.device.ontology.state.DeviceState;
 import com.unida.library.manage.im.InMemoryUniDAInstantiationFacade;
-import com.unida.library.operation.device.IDeviceOperationCallback;
 import com.unida.library.operation.OperationFailures;
 import com.unida.library.operation.OperationTicket;
+import com.unida.library.operation.device.IDeviceOperationCallback;
 import com.unida.tools.librarybasicgui.UNIDALibraryBasicGUI;
 import java.util.Collection;
 import javax.swing.JOptionPane;
@@ -199,17 +199,20 @@ public class DeviceStatesDialog extends javax.swing.JDialog
      */
     private class OpCback implements IDeviceOperationCallback
     {
+        
+        private static final String invalidResponse = "Invalid response for an UniDA Query States Message.";
+        
 
         @Override
         public void notifyQueryDeviceStateResult(OperationTicket ticket, IDevice dev, DeviceState state)
         {
-            throw new UnsupportedOperationException("Not supported yet.");
+            throw new UnsupportedOperationException(invalidResponse);
         }
 
         @Override
         public void notifyQueryDeviceStatesResult(OperationTicket ticket, IDevice dev, Collection<DeviceState> states)
         {
-            jTextInfoExecution.setText("¡yuju!");
+            jTextInfoExecution.setText("yippee!");
             int stateRow = 0;
             for (DeviceState state : states)
             {
@@ -223,27 +226,27 @@ public class DeviceStatesDialog extends javax.swing.JDialog
         @Override
         public void notifyWriteDeviceStateResult(OperationTicket ticket, IDevice dev)
         {
-            throw new UnsupportedOperationException("Not supported yet.");
+            throw new UnsupportedOperationException(invalidResponse);
         }
 
         @Override
         public void notifySendCommandQueryStateResult(OperationTicket ticket, IDevice dev, 
             ControlFunctionalityMetadata func, ControlCommandMetadata cmd, Collection<String> params, Collection<DeviceState> states)
         {
-            throw new UnsupportedOperationException("Not supported yet.");
+            throw new UnsupportedOperationException(invalidResponse);
         }
 
         @Override
         public void notifyCommandExecution(OperationTicket ticket, IDevice dev, 
             ControlFunctionalityMetadata func, ControlCommandMetadata cmd)
         {
-            throw new UnsupportedOperationException("Not supported yet.");
+            throw new UnsupportedOperationException(invalidResponse);
         }
 
         @Override
         public void notifyOperationFailure(OperationTicket ticket, IDevice dev, OperationFailures failure, String failureDescription)
         {
-            jTextInfoExecution.setText("¡qué mal!");
+            jTextInfoExecution.setText("oh no!");
         }
     }
     

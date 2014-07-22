@@ -21,8 +21,11 @@
  * 
  ******************************************************************************/
 
-package com.unida.library.device.ontology;
+package com.unida.library.device.ontology.metadata;
 
+import com.unida.library.device.ontology.metadata.NotificationFunctionalityMetadata;
+import com.unida.library.device.ontology.metadata.DeviceStateMetadata;
+import com.unida.library.device.ontology.metadata.ControlFunctionalityMetadata;
 import java.io.Serializable;
 import java.util.Arrays;
 

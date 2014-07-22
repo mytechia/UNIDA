@@ -21,54 +21,58 @@
  * 
  ******************************************************************************/
 
-package com.unida.library.device.ontology;
+package com.unida.library.device.ontology.metadata;
 
 import java.io.Serializable;
 
 /**
  * <p><b>Description:</b></br>
- * Represents the metadata of a notification as espcified in the
- * device ontology.
+ * A control functionality specifies the commands that can be used to
+ * control the behaviour of a device.
+ * 
+ * Representation of a control functionality according to the
+ * device ontology description.
  *
  * </p>
  *
- * <p><b>Creation date:</b> 29-dic-2009</p>
+ * <p><b>Creation date:</b> 28-dic-2009</p>
  *
  * <p><b>Changelog:</b></br>
  * <ul>
- * <li>1 - 29-dic-2009<\br> Initial release</li>
+ * <li>1 - 28-dic-2009<\br> Initial release</li>
  * </ul>
  * </p>
  *
  * @author Gervasio Varela Fernandez
  * @version 1
  */
-public class NotificationMetadata implements Serializable
+public class ControlFunctionalityMetadata implements Serializable
 {
 
-
-    /** Id of the notification specified in the device ontology */
+    
+    /** Id of the functionality as specified in the device ontology */
     private String id;
 
-    /** Number of parameters of the notification as specified in the device ontolgy */
-    private int nParams;
+    /** Commands associated to this type of functionality */
+    private ControlCommandMetadata [] availableCommands;
 
-    
-    public NotificationMetadata(String id, int nParams)
+
+    public ControlFunctionalityMetadata(String id, ControlCommandMetadata[] availableCommands)
     {
         this.id = id;
-        this.nParams = nParams;
+        this.availableCommands = availableCommands;
     }
+
+    public ControlCommandMetadata[] getAvailableCommands()
+    {
+        return availableCommands;
+    }
+
 
     public String getId()
     {
         return id;
     }
 
-
-    public int getNParams()
-    {
-        return nParams;
-    }
-	
+    
 }

@@ -24,7 +24,7 @@
 package com.unida.library.device;
 
 import com.unida.protocol.UniDAAddress;
-import com.unida.library.device.ontology.GatewayClassMetadata;
+import com.unida.library.device.ontology.metadata.GatewayClassMetadata;
 import com.unida.library.device.state.OperationalState;
 import com.unida.library.location.Location;
 import java.io.Serializable;

@@ -24,14 +24,14 @@
 
 package com.unida.library.device.ontology;
 
-import com.unida.library.device.ontology.DeviceStateMetadata;
-import com.unida.library.device.ontology.DeviceStateValue;
-import com.unida.library.device.ontology.NotificationMetadata;
-import com.unida.library.device.ontology.ControlFunctionalityMetadata;
-import com.unida.library.device.ontology.GatewayClassMetadata;
-import com.unida.library.device.ontology.DeviceClassMetadata;
-import com.unida.library.device.ontology.NotificationFunctionalityMetadata;
-import com.unida.library.device.ontology.ControlCommandMetadata;
+import com.unida.library.device.ontology.metadata.DeviceStateMetadata;
+import com.unida.library.device.ontology.state.DeviceStateValue;
+import com.unida.library.device.ontology.metadata.NotificationMetadata;
+import com.unida.library.device.ontology.metadata.ControlFunctionalityMetadata;
+import com.unida.library.device.ontology.metadata.GatewayClassMetadata;
+import com.unida.library.device.ontology.metadata.DeviceClassMetadata;
+import com.unida.library.device.ontology.metadata.NotificationFunctionalityMetadata;
+import com.unida.library.device.ontology.metadata.ControlCommandMetadata;
 import com.unida.library.device.ontology.dogont.DogOntFacade;
 import com.unida.library.device.ontology.exception.ClassNotFoundInOntologyException;
 import com.unida.library.device.ontology.exception.OntologyLoadingErrorException;

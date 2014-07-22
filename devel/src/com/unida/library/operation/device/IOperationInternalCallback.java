@@ -25,6 +25,7 @@
 package com.unida.library.operation.device;
 
 import com.unida.library.device.DeviceID;
+import com.unida.library.device.ontology.state.DeviceStateValue;
 
 
 /**
@@ -50,13 +51,13 @@ public interface IOperationInternalCallback
 {
 
 
-    void notifyDeviceState(long opId, DeviceID deviceId, String stateId, String valueId, String value);
+    void notifyDeviceState(long opId, DeviceID deviceId, String stateId, DeviceStateValue stateValue);
     
     
     void notifyWriteDeviceState(long opId, DeviceID deviceId);
 
 
-    void notifyDeviceStates(long opId, DeviceID deviceId, String [] stateIds, String [] valuesIds, String [] values);
+    void notifyDeviceStates(long opId, DeviceID deviceId, String [] stateIds, DeviceStateValue [] stateValues);
 
 
     void notifyCommandExecution(long odId, DeviceID deviceId, String functionalityId, String commandId);

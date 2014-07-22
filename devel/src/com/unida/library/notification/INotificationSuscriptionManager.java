@@ -24,7 +24,7 @@
 package com.unida.library.notification;
 
 import com.mytechia.commons.framework.exception.InternalErrorException;
-import com.unida.library.device.ontology.DeviceStateMetadata;
+import com.unida.library.device.ontology.metadata.DeviceStateMetadata;
 import com.unida.library.device.IDevice;
 import java.util.Collection;
 

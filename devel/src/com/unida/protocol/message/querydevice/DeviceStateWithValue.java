@@ -25,15 +25,18 @@
 
 package com.unida.protocol.message.querydevice;
 
+import com.unida.library.device.ontology.state.DeviceStateValue;
+import java.util.Objects;
+
 /**
  * <p><b>
- * </b></br>
+ * </b>
  *
  * </p>
  *
  * <p><b>Creation date:</b> 28-01-2010</p>
  *
- * <p><b>Changelog:</b></br>
+ * <p><b>Changelog:</b>
  * <ul>
  * <li>1 - 28-01-2010<\br> Initial release</li>
  * </ul>
@@ -46,15 +49,14 @@ public class DeviceStateWithValue
 {
 
     private String stateId;
-    private String valueId;
-    private String value;
+    
+    private DeviceStateValue stateValue;    
 
 
-    public DeviceStateWithValue(String stateId, String valueId, String value)
+    public DeviceStateWithValue(String stateId, DeviceStateValue stateValue)
     {
         this.stateId = stateId;
-        this.valueId = valueId;
-        this.value = value;
+        this.stateValue = stateValue;
     }
 
     public String getStateId()
@@ -63,16 +65,11 @@ public class DeviceStateWithValue
     }
 
 
-    public String getValue()
+    public DeviceStateValue getStateValue()
     {
-        return value;
+        return stateValue;
     }
-
-
-    public String getValueId()
-    {
-        return valueId;
-    }
+    
 
     protected void setStateId(String stateId)
     {
@@ -80,16 +77,39 @@ public class DeviceStateWithValue
     }
 
 
-    protected void setValue(String value)
+    protected void setValue(DeviceStateValue value)
     {
-        this.value = value;
+        this.stateValue = value;
     }
 
-
-    protected void setValueId(String valueId)
+    
+    @Override
+    public int hashCode()
     {
-        this.valueId = valueId;
+        int hash = 3;
+        hash = 23 * hash + Objects.hashCode(this.stateId);
+        hash = 23 * hash + Objects.hashCode(this.stateValue);
+        return hash;
     }
 
+    
+    @Override
+    public boolean equals(Object obj)
+    {
+        if (obj == null)
+        {
+            return false;
+        }
+        if (getClass() != obj.getClass())
+        {
+            return false;
+        }
+        final DeviceStateWithValue other = (DeviceStateWithValue) obj;
+        if (!Objects.equals(this.stateId, other.stateId))
+        {
+            return false;
+        }
+        return Objects.equals(this.stateValue, other.stateValue);
+    }
 
 }

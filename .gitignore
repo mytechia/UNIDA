@@ -14,3 +14,9 @@
 /devel/ide_project/unida_proxy/nbproject/private/
 /devel/ide_project/unida_proxy/dist/
 /devel/ide_project/unida_proxy/build/
+/devel/ide_project/unida_java_netbeans/dist/
+/devel/ide_project/unida_java_netbeans/build/
+/devel/ide_project/unida_java_basicgui_netbeans/nbproject/private/
+/devel/ide_project/unida_java_basicgui_netbeans/dist/
+/devel/ide_project/unida_java_basicgui_netbeans/build/
+.DS_Store

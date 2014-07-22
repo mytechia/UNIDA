@@ -25,9 +25,9 @@ package com.unida.library.notification;
 
 import com.mytechia.commons.framework.exception.InternalErrorException;
 import com.mytechia.commons.framework.modelaction.exception.InstanceNotFoundException;
-import com.unida.library.device.ontology.DeviceState;
-import com.unida.library.device.ontology.DeviceStateMetadata;
-import com.unida.library.device.ontology.DeviceStateValue;
+import com.unida.library.device.ontology.state.DeviceState;
+import com.unida.library.device.ontology.metadata.DeviceStateMetadata;
+import com.unida.library.device.ontology.state.DeviceStateValue;
 import com.unida.library.core.IUniDANetworkFacade;
 import com.unida.library.UniDAFactory;
 import com.unida.library.device.DeviceGroup;
@@ -293,7 +293,7 @@ public class DefaultNotificationSuscriptionManager implements INotificationSuscr
     }
 
     @Override
-    public synchronized void notifyState(long nTicket, DeviceID id, String stateId, String valueId, String value)
+    public synchronized void notifyState(long nTicket, DeviceID id, String stateId, DeviceStateValue stateValue)
     {
 
         DeviceStateSuscription dss = this.suscriptionsByTicket.get(new NotificationTicket(nTicket));
@@ -301,7 +301,7 @@ public class DefaultNotificationSuscriptionManager implements INotificationSuscr
         {
             if (dss.getDevice().getId().equals(id) && dss.getState().getId().equals(stateId))
             {
-                DeviceState ds = new DeviceState(dss.getState(), new DeviceStateValue(valueId, value));
+                DeviceState ds = new DeviceState(dss.getState(), stateValue);
                 for (IDeviceStateNotificationCallback cback : dss.getCallbacks())
                 {
                     cback.notifyState(dss.getNotificationTicket(), dss.getDevice(), ds);

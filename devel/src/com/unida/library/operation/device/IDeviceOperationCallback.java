@@ -25,9 +25,9 @@ package com.unida.library.operation.device;
 import com.unida.library.operation.OperationFailures;
 import com.unida.library.operation.OperationTicket;
 import com.unida.library.device.IDevice;
-import com.unida.library.device.ontology.DeviceState;
-import com.unida.library.device.ontology.ControlCommandMetadata;
-import com.unida.library.device.ontology.ControlFunctionalityMetadata;
+import com.unida.library.device.ontology.state.DeviceState;
+import com.unida.library.device.ontology.metadata.ControlCommandMetadata;
+import com.unida.library.device.ontology.metadata.ControlFunctionalityMetadata;
 import java.util.Collection;
 
 /**

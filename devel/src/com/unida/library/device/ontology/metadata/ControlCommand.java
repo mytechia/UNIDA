@@ -21,52 +21,65 @@
  * 
  ******************************************************************************/
 
-package com.unida.library.device.ontology;
+package com.unida.library.device.ontology.metadata;
 
 import java.io.Serializable;
+import java.util.Arrays;
+
 
 /**
- * 
+ * <p><b>Description:</b></br>
+ *
+ * </p>
+ *
+ * <p><b>Creation date:</b> 25-nov-2010</p>
+ *
+ * <p><b>Changelog:</b></br>
+ * <ul>
+ * <li>1 - 25-nov-2010</br> Initial release.</li>
+ * </ul>
+ * </p>
+ *
+ * @author Gervasio Varela
+ * @version 1
  */
-public class GatewayClassMetadata implements Serializable
+public class ControlCommand implements Serializable
 {
 
-    private String classId;
+    private Long id;
 
-    
-    public GatewayClassMetadata(String classId)
-    {
-        this.classId = classId;
-    }
+    private ControlCommandMetadata metadata;
 
-    public String getClassId()
-    {
-        return classId;
-    }
+    private String [] params;
 
-    @Override
-    public boolean equals(Object obj)
+
+    public ControlCommand(Long id, ControlCommandMetadata metadata, String[] params)
     {
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final GatewayClassMetadata other = (GatewayClassMetadata) obj;
-        if ((this.classId == null) ? (other.classId != null) : !this.classId.equals(other.classId)) {
-            return false;
-        }
-        return true;
+        this.metadata = metadata;
+        this.params = params;
     }
 
 
-    @Override
-    public int hashCode()
+    public ControlCommand(ControlCommandMetadata metadata, String[] params)
     {
-        int hash = 5;
-        hash = 13 * hash + (this.classId != null ? this.classId.hashCode() : 0);
-        return hash;
+        this(null, metadata, params);
+    }
+
+
+    public ControlCommandMetadata getMetadata()
+    {
+        return metadata;
+    }
+
+    public String[] getParams()
+    {
+        return Arrays.copyOf(params, params.length);
+    }
+
+
+    public Long getId()
+    {
+        return this.id;
     }
 
 

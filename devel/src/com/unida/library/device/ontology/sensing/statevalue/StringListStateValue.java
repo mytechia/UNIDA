@@ -24,7 +24,7 @@
 package com.unida.library.device.ontology.sensing.statevalue;
 
 
-import com.unida.library.device.ontology.DeviceStateValue;
+import com.unida.library.device.ontology.state.DeviceStateValue;
 import java.util.ArrayList;
 import java.util.Collection;
 
