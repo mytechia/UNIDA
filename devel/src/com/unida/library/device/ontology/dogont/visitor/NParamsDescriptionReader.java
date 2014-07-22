@@ -36,16 +36,16 @@ import org.semanticweb.owlapi.util.OWLObjectVisitorAdapter;
 
 
 /**
- * <p><b>Description:</b></br>
+ * <p><b>Description:</b>
  * Checks if an OWLObject is a restriction about the number of parameters
  * of a command (or other concept) and retrieves the value of the restriction.
  * </p>
  *
  * <p><b>Creation date:</b> 29-dic-2009</p>
  *
- * <p><b>Changelog:</b></br>
+ * <p><b>Changelog:</b>
  * <ul>
- * <li>1 - 29-dic-2009<\br> Initial release</li>
+ * <li>1 - 29-dic-2009 Initial release</li>
  * </ul>
  * </p>
  *

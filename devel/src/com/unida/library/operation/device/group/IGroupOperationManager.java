@@ -36,15 +36,15 @@ import com.unida.library.operation.OperationTicket;
 /**
  * <p><b>
  * Manages the execution of commands and queries over groups of devices.
- * </b></br>
+ * </b>
  *
  * </p>
  *
  * <p><b>Creation date:</b> 18-01-2010</p>
  *
- * <p><b>Changelog:</b></br>
+ * <p><b>Changelog:</b>
  * <ul>
- * <li>1 - 18-01-2010<\br> Initial release</li>
+ * <li>1 - 18-01-2010 Initial release</li>
  * </ul>
  * </p>
  *

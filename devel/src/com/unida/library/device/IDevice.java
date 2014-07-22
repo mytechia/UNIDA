@@ -38,16 +38,16 @@ import java.io.Serializable;
  * Ab object of this type is used as a unique identifier of an actual device,
  * also containing the descripting information about the device (model, manufacturer, etc).
  *
- * </b></br>
+ * </b>
  *
  * </p>
  *
  * <p><b>Creation date:</b> 25-02-2010</p>
  *
- * <p><b>Changelog:</b></br>
+ * <p><b>Changelog:</b>
  * <ul>
- * <li>2 - 5-feb-2013<\br> The device IOs are known only at the physical device level</li>
- * <li>1 - 25-02-2010<\br> Initial release</li>
+ * <li>2 - 5-feb-2013 The device IOs are known only at the physical device level</li>
+ * <li>1 - 25-02-2010 Initial release</li>
  * </ul>
  * </p>
  *

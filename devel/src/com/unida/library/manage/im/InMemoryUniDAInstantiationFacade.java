@@ -59,7 +59,7 @@ import java.util.ArrayList;
  *
  * <p><b>Changelog:</b>
  * <ul>
- * <li>1 - 27-01-2013<\br> Initial release.</li>
+ * <li>1 - 27-01-2013 Initial release.</li>
  * </ul>
  * </p>
  *

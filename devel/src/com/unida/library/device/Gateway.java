@@ -32,7 +32,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 /**
- * <p><b>Description:</b></br> A gateway acts as a bridge between the real
+ * <p><b>Description:</b> A gateway acts as a bridge between the real
  * physical devices and the abstract UniDA network.
  *
  * It can be a physical device that is connected to a classic domotic network
@@ -46,7 +46,7 @@ import java.util.Collection;
  *
  * <p><b>Creation date:</b> 28-dic-2009</p>
  *
- * <p><b>Changelog:</b></br> <ul> <li>1 - 28-dic-2009<\br> Initial release</li>
+ * <p><b>Changelog:</b> <ul> <li>1 - 28-dic-2009 Initial release</li>
  * </ul> </p>
  *
  * @author Gervasio Varela Fernandez

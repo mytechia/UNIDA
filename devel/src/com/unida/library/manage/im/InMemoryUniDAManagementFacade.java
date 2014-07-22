@@ -33,7 +33,7 @@ import java.util.HashMap;
  *
  * <p><b>Changelog:</b>
  * <ul>
- * <li>1 - 8-feb-2013<\br> Initial release</li>
+ * <li>1 - 8-feb-2013 Initial release</li>
  * </ul>
  * </p>
  *

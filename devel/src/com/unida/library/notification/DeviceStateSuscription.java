@@ -30,7 +30,7 @@ import java.util.Collection;
 import java.util.LinkedList;
 
 /**
- * <p><b>Description:</b></br>
+ * <p><b>Description:</b>
  * Holds the information required to process state notifications coming
  * from the devices.
  *
@@ -38,9 +38,9 @@ import java.util.LinkedList;
  *
  * <p><b>Creation date:</b> 28-dic-2009</p>
  *
- * <p><b>Changelog:</b></br>
+ * <p><b>Changelog:</b>
  * <ul>
- * <li>1 - 28-dic-2009<\br> Initial release</li>
+ * <li>1 - 28-dic-2009 Initial release</li>
  * </ul>
  * </p>
  *

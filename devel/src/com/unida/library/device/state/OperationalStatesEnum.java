@@ -25,15 +25,15 @@ package com.unida.library.device.state;
 import java.io.Serializable;
 
 /**
- * <p><b>Description:</b></br>
+ * <p><b>Description:</b>
  * The enumeration of possible states of operation of a device.
  * </p>
  *
  * <p><b>Creation date:</b> 28-dic-2009</p>
  *
- * <p><b>Changelog:</b></br>
+ * <p><b>Changelog:</b>
  * <ul>
- * <li>1 - 28-dic-2009<\br> Initial release</li>
+ * <li>1 - 28-dic-2009 Initial release</li>
  * </ul>
  * </p>
  *

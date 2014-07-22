@@ -48,7 +48,7 @@ import com.unida.library.notification.NotificationTicket;
  * <p>
  * <b>Changelog:</b>
  * <ul>
- * <li>1 - 28-dic-2009<\br> Initial release</li>
+ * <li>1 - 28-dic-2009 Initial release</li>
  * </ul>
  * </p>
  *

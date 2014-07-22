@@ -39,7 +39,7 @@ import com.unida.library.device.ontology.state.DeviceStateValue;
  * <p>
  * <b>Changelog:</b>
  * <ul>
- * <li>1 - 15-1-2009<\br> Initial release</li>
+ * <li>1 - 15-1-2009 Initial release</li>
  * </ul>
  * </p>
  *

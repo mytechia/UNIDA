@@ -36,15 +36,15 @@ import com.unida.protocol.message.UniDAMessage;
  * It contains the logic to create every type of message that is used
  * by the HI3 DAL communications protocol.
  * 
- * </b></br>
+ * </b>
  *
  * </p>
  *
  * <p><b>Creation date:</b> 26-01-2010</p>
  *
- * <p><b>Changelog:</b></br>
+ * <p><b>Changelog:</b>
  * <ul>
- * <li>1 - 26-01-2010<\br> Initial release</li>
+ * <li>1 - 26-01-2010 Initial release</li>
  * </ul>
  * </p>
  *

@@ -45,8 +45,8 @@ import java.io.IOException;
  * <p>
  * <b>Changelog:</b>
  * <ul>
- * <li>2 - 7-feb-2013<\br> Added source and destination fields</li>
- * <li>1 - 29-01-2010<\br> Initial release</li>
+ * <li>2 - 7-feb-2013 Added source and destination fields</li>
+ * <li>1 - 29-01-2010 Initial release</li>
  * </ul>
  * </p>
  *

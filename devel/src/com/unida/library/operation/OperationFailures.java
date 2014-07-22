@@ -33,7 +33,7 @@ package com.unida.library.operation;
  *
  * <p><b>Changelog:</b>
  * <ul>
- * <li>1 - 18-01-2010<\br> Initial release</li>
+ * <li>1 - 18-01-2010 Initial release</li>
  * </ul>
  * </p>
  *

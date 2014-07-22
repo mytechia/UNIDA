@@ -38,7 +38,7 @@ import java.util.Objects;
  *
  * <p><b>Changelog:</b>
  * <ul>
- * <li>1 - 28-01-2010<\br> Initial release</li>
+ * <li>1 - 28-01-2010 Initial release</li>
  * </ul>
  * </p>
  *

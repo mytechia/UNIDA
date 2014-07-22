@@ -33,15 +33,15 @@ import com.mytechia.commons.framework.exception.InternalErrorException;
  * Specified that a device gateway is not currently supported by the DAL
  * because there isn't any availabe IDevicesAccessLayerFacade implementation
  * compatible with it.
- * </b></br>
+ * </b>
  *
  * </p>
  *
  * <p><b>Creation date:</b> 18-01-2010</p>
  *
- * <p><b>Changelog:</b></br>
+ * <p><b>Changelog:</b>
  * <ul>
- * <li>1 - 18-01-2010<\br> Initial release</li>
+ * <li>1 - 18-01-2010 Initial release</li>
  * </ul>
  * </p>
  *

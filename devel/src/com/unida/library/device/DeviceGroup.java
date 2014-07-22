@@ -29,7 +29,7 @@ import com.unida.library.location.Location;
 
 
 /**
- * <p><b>Description:</b></br>
+ * <p><b>Description:</b>
  * Abstracts a group of devices as one device.
  *
  * Operation can be applied to multiple devices by grouping them in a group
@@ -39,9 +39,9 @@ import com.unida.library.location.Location;
  *
  * <p><b>Creation date:</b> 28-dic-2009</p>
  *
- * <p><b>Changelog:</b></br>
+ * <p><b>Changelog:</b>
  * <ul>
- * <li>1 - 28-dic-2009<\br> Initial release</li>
+ * <li>1 - 28-dic-2009 Initial release</li>
  * </ul>
  * </p>
  *

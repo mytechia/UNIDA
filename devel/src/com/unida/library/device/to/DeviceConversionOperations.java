@@ -56,9 +56,9 @@ import java.util.HashMap;
  * <b>Creation date:</b> 11-ene-2010</p>
  *
  * <p>
- * <b>Changelog:</b></br>
+ * <b>Changelog:</b>
  * <ul>
- * <li>1 - 11-ene-2010<\br> Initial release</li>
+ * <li>1 - 11-ene-2010 Initial release</li>
  * </ul>
  * </p>
  *

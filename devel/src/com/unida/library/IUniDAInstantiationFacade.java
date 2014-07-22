@@ -32,16 +32,16 @@ import com.unida.library.operation.gateway.IGatewayOperationFacade;
 
 
 /**
- * <p><b>Description:</b></br>
+ * <p><b>Description:</b>
  * Facade that manages the initialization of the DAL layer and provides access
  * to its external facades.
  * </p>
  *
  * <p><b>Creation date:</b> 27-01-2010</p>
  *
- * <p><b>Changelog:</b></br>
+ * <p><b>Changelog:</b>
  * <ul>
- * <li>1 - 27-01-2010<\br> Initial release.</li>
+ * <li>1 - 27-01-2010 Initial release.</li>
  * </ul>
  * </p>
  *

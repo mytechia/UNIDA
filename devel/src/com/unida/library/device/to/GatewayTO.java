@@ -30,15 +30,15 @@ import java.util.Date;
 
 /**
  * <p><b>
- * </b></br>
+ * </b>
  *
  * </p>
  *
  * <p><b>Creation date:</b> 08-ene-2010</p>
  *
- * <p><b>Changelog:</b></br>
+ * <p><b>Changelog:</b>
  * <ul>
- * <li>1 - 08-ene-2010<\br> Initial release</li>
+ * <li>1 - 08-ene-2010 Initial release</li>
  * </ul>
  * </p>
  *

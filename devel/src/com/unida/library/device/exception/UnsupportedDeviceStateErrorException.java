@@ -28,15 +28,15 @@ import com.unida.library.device.IDeviceIO;
 
 
 /**
- * <p><b>Description:</b></br>
+ * <p><b>Description:</b>
  * A device can be connected to the specified device IO using the specified state
  * </p>
  *
  * <p><b>Creation date:</b> 7-feb-2013</p>
  *
- * <p><b>Changelog:</b></br>
+ * <p><b>Changelog:</b>
  * <ul>
- * <li>1 - 7-feb-2013<\br> Initial release</li>
+ * <li>1 - 7-feb-2013 Initial release</li>
  * </ul>
  * </p>
  *

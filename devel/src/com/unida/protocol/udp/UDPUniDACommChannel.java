@@ -52,7 +52,7 @@ import java.util.logging.Level;
  *
  * <p><b>Changelog:</b>
  * <ul>
- * <li>1 - 30-01-2010<\br> Initial release</li>
+ * <li>1 - 30-01-2010 Initial release</li>
  * </ul>
  * </p>
  *
@@ -154,7 +154,7 @@ public class UDPUniDACommChannel implements IUniDACommChannel
     @Override
     public UniDAAddress getAddress()
     {
-        return new UniDAAddress(this.commChannel.getIPAddress().getHostAddress(), UNIDA_LEAF_NUMBER);
+        return new UniDAAddress(this.commChannel.getIPAddress(), UNIDA_LEAF_NUMBER);
     }
 	
 	

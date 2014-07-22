@@ -34,16 +34,16 @@ import java.net.UnknownHostException;
 import java.util.Arrays;
 
 /**
- * <p><b>Description:</b></br>
+ * <p><b>Description:</b>
  * Univocally identifies a UniDA gateway in the network
  *
  * </p>
  *
  * <p><b>Creation date:</b> 5-feb-2013</p>
  *
- * <p><b>Changelog:</b></br>
+ * <p><b>Changelog:</b>
  * <ul>
- * <li>1 - 5-feb-2013<\br> Initial release</li>
+ * <li>1 - 5-feb-2013 Initial release</li>
  * </ul>
  * </p>
  *

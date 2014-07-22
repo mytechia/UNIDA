@@ -33,13 +33,13 @@ import com.unida.protocol.handling.exception.UnsupportedMessageTypeErrorExceptio
  * <p><b>
  * Concrete implementations of this interfaces containts the logic to
  * process different types of HI3 DAL protocol messages.
- * </b></br>
+ * </b>
  *
  * </p>
  *
  * <p><b>Creation date:</b> 30-01-2010</p>
  *
- * <p><b>Changelog:</b></br>
+ * <p><b>Changelog:</b>
  * <ul>
  * <li>2 - 29-09-2010: Removed the method getSupportedMessageType, added the method supports</li>
  * <li>1 - 30-01-2010: Initial release</li>

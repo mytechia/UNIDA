@@ -34,12 +34,12 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
 /**
- * <p>UniDADeviceMessage<b> </b></br> A UniDA msg with a device ID field. It
+ * <p>UniDADeviceMessage<b> </b> A UniDA msg with a device ID field. It
  * should be used for message that have a device as destination. </p>
  *
  * <p><b>Creation date:</b> 28-09-2010</p>
  *
- * <p><b>Changelog:</b></br> <ul> <li>1 - 28-09-2010<\br> Initial release</li>
+ * <p><b>Changelog:</b> <ul> <li>1 - 28-09-2010 Initial release</li>
  * </ul> </p>
  *
  * @author Gervasio Varela

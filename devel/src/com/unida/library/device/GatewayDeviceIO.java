@@ -30,7 +30,7 @@ import java.util.Collection;
 
 
 /**
- * <p><b>Description:</b></br>
+ * <p><b>Description:</b>
  * Represents a physical connection available in a gateway to connect 
  * physical devices to the UniDA network.
  * 
@@ -40,9 +40,9 @@ import java.util.Collection;
  *
  * <p><b>Creation date:</b> 7-feb-2013</p>
  *
- * <p><b>Changelog:</b></br>
+ * <p><b>Changelog:</b>
  * <ul>
- * <li>1 - 7-feb-2013<\br> Initial release</li>
+ * <li>1 - 7-feb-2013 Initial release</li>
  * </ul>
  * </p>
  *

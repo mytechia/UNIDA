@@ -30,7 +30,7 @@ import com.unida.library.location.Location;
 import java.io.Serializable;
 
 /**
- * <p><b>Description:</b></br>
+ * <p><b>Description:</b>
  * Virtual representation of a device in the UniDA library.
  *
  * A device can have multiple types of states.
@@ -41,10 +41,10 @@ import java.io.Serializable;
  *
  * <p><b>Creation date:</b> 28-dic-2009</p>
  *
- * <p><b>Changelog:</b></br>
+ * <p><b>Changelog:</b>
  * <ul>
- * <li>2 - 5-feb-2013<\br> From now on a device is connected to a gateway through multiple device IOs</li>
- * <li>1 - 28-dic-2009<\br> Initial release</li>
+ * <li>2 - 5-feb-2013 From now on a device is connected to a gateway through multiple device IOs</li>
+ * <li>1 - 28-dic-2009 Initial release</li>
  * </ul>
  * </p>
  *

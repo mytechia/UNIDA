@@ -58,7 +58,7 @@ import java.util.Queue;
  *
  * <p><b>Changelog:</b>
  * <ul>
- * <li>1 - 15-01-2010<\br> Initial release</li>
+ * <li>1 - 15-01-2010 Initial release</li>
  * </ul>
  * </p>
  *

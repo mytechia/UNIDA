@@ -50,8 +50,8 @@ import java.net.UnknownHostException;
  * <p>
  * <b>Changelog:</b>
  * <ul>
- * <li>2 - 5-feb-2013<\br> Update to support the new style of device IDs</li>
- * <li>1 - 11-ene-2010<\br> Initial release</li>
+ * <li>2 - 5-feb-2013 Update to support the new style of device IDs</li>
+ * <li>1 - 11-ene-2010 Initial release</li>
  * </ul>
  * </p>
  *

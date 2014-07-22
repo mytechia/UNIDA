@@ -26,7 +26,7 @@ package com.unida.library.device.ontology.metadata;
 import java.io.Serializable;
 
 /**
- * <p><b>Description:</b></br>
+ * <p><b>Description:</b>
  * A control command specifies an control action that a device should perform.
  *
  * Representation of a control command according to the
@@ -36,9 +36,9 @@ import java.io.Serializable;
  *
  * <p><b>Creation date:</b> 28-dic-2009</p>
  *
- * <p><b>Changelog:</b></br>
+ * <p><b>Changelog:</b>
  * <ul>
- * <li>1 - 28-dic-2009<\br> Initial release</li>
+ * <li>1 - 28-dic-2009 Initial release</li>
  * </ul>
  * </p>
  *

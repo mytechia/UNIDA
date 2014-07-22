@@ -47,7 +47,7 @@ import java.util.Set;
  *
  * <p><b>Changelog:</b>
  * <ul>
- * <li>1 - 01-02-2010<\br> Initial release</li>
+ * <li>1 - 01-02-2010 Initial release</li>
  * </ul>
  * </p>
  *
@@ -267,15 +267,15 @@ public abstract class AbstractUniDAFacadeHelper
      * <p><b>
      * Periodically checks if a device request (command, query, etc.)
      * has expired because it hasn't been answered in time.
-     * </b></br>
+     * </b>
      *
      * </p>
      *
      * <p><b>Creation date:</b> 15-02-2010</p>
      *
-     * <p><b>Changelog:</b></br>
+     * <p><b>Changelog:</b>
      * <ul>
-     * <li>1 - 15-02-2010<\br> Initial release</li>
+     * <li>1 - 15-02-2010 Initial release</li>
      * </ul>
      * </p>
      *

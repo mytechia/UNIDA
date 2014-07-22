@@ -51,8 +51,8 @@ import java.util.Objects;
  * <p>
  * <b>Changelog:</b>
  * <ul>
- * <li>1 - 27-01-2010<\br> Initial release</li>
- * <li>2 - 02-04-2014<\br> Refactor to use StateChangeTrigger </li>
+ * <li>1 - 27-01-2010 Initial release</li>
+ * <li>2 - 02-04-2014 Refactor to use StateChangeTrigger </li>
  * </ul>
  * </p>
  *

@@ -32,15 +32,15 @@ import com.mytechia.commons.util.id.Identifier;
  * It serves to request information about the notification and it will be used as
  * an identifier when the DAL notifies the reception of data related to that
  * notification.
- * </b></br>
+ * </b>
  *
  * </p>
  *
  * <p><b>Creation date:</b> 18-01-2010</p>
  *
- * <p><b>Changelog:</b></br>
+ * <p><b>Changelog:</b>
  * <ul>
- * <li>1 - 18-01-2010<\br> Initial release</li>
+ * <li>1 - 18-01-2010 Initial release</li>
  * </ul>
  * </p>
  *

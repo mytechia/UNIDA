@@ -45,14 +45,14 @@ import java.util.Date;
 import java.util.Objects;
 
 /**
- * <p><b>Description:</b></br>
+ * <p><b>Description:</b>
  * This type of message are also the reply messages to a UniDAGatewayDiscoveryRequest
  * 
  * </p>
  *
  * <p><b>Creation date:</b> 27-01-2010</p>
  *
- * <p><b>Changelog:</b></br> <ul> <li>1 - 27-01-2010<\br> Initial release</li>
+ * <p><b>Changelog:</b> <ul> <li>1 - 27-01-2010 Initial release</li>
  * </ul> </p>
  *
  * @author Gervasio Varela

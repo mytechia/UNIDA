@@ -34,7 +34,7 @@ import org.semanticweb.owlapi.util.OWLObjectVisitorAdapter;
 
 
 /**
- * <p><b>Description:</b></br>
+ * <p><b>Description:</b>
  * Generates DeviceStateValue objects from anonymous superclass axioms
  * that specify 'realStateValue' restrictions.
  *
@@ -42,9 +42,9 @@ import org.semanticweb.owlapi.util.OWLObjectVisitorAdapter;
  *
  * <p><b>Creation date:</b> 29-dic-2009</p>
  *
- * <p><b>Changelog:</b></br>
+ * <p><b>Changelog:</b>
  * <ul>
- * <li>1 - 29-dic-2009<\br> Initial release</li>
+ * <li>1 - 29-dic-2009 Initial release</li>
  * </ul>
  * </p>
  *

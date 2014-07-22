@@ -58,7 +58,7 @@ import org.semanticweb.owlapi.model.OWLSubClassOfAxiom;
 import org.semanticweb.owlapi.util.OWLOntologyMerger;
 
 /**
- * <p><b>Description:</b></br>
+ * <p><b>Description:</b>
  * Implementation of the IDeviceAccessLayerOntologyFacade by using the DogOnt
  * ontology (http://elite.polito.it/dogont-tools-80).
  *
@@ -66,9 +66,9 @@ import org.semanticweb.owlapi.util.OWLOntologyMerger;
  *
  * <p><b>Creation date:</b> 28-dic-2009</p>
  *
- * <p><b>Changelog:</b></br>
+ * <p><b>Changelog:</b>
  * <ul>
- * <li>1 - 28-dic-2009<\br> Initial release</li>
+ * <li>1 - 28-dic-2009 Initial release</li>
  * </ul>
  * </p>
  *

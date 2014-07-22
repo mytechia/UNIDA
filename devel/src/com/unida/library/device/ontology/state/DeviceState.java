@@ -27,7 +27,7 @@ import com.unida.library.device.ontology.metadata.DeviceStateMetadata;
 import java.io.Serializable;
 
 /**
- * <p><b>Description:</b></br>
+ * <p><b>Description:</b>
  * Representation of a state of a hardware device.
  *
  * If the value of the state is unknown, the value field must be null.
@@ -36,9 +36,9 @@ import java.io.Serializable;
  *
  * <p><b>Creation date:</b> 28-dic-2009</p>
  *
- * <p><b>Changelog:</b></br>
+ * <p><b>Changelog:</b>
  * <ul>
- * <li>1 - 28-dic-2009<\br> Initial release</li>
+ * <li>1 - 28-dic-2009 Initial release</li>
  * </ul>
  * </p>
  *

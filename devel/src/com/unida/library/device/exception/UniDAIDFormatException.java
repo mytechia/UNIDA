@@ -28,16 +28,16 @@ import com.mytechia.commons.framework.simplemessageprotocol.exception.MessageFor
 
 
 /**
- * <p><b>Description:</b></br>
+ * <p><b>Description:</b>
  * 
  *
  * </p>
  *
  * <p><b>Creation date:</b> 5-feb-2013</p>
  *
- * <p><b>Changelog:</b></br>
+ * <p><b>Changelog:</b>
  * <ul>
- * <li>1 - 5-feb-2013<\br> Initial release</li>
+ * <li>1 - 5-feb-2013 Initial release</li>
  * </ul>
  * </p>
  *

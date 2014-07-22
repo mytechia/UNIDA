@@ -45,7 +45,7 @@ import java.util.logging.Logger;
  *
  * <p><b>Changelog:</b>
  * <ul>
- * <li>1 - 14-04-2010<\br> Initial release</li>
+ * <li>1 - 14-04-2010 Initial release</li>
  * </ul>
  * </p>
  *

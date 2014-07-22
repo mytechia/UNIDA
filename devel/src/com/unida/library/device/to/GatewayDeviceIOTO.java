@@ -34,9 +34,9 @@ import java.util.Collection;
  *
  * <p><b>Creation date:</b> 07-feb-2013</p>
  *
- * <p><b>Changelog:</b></br>
+ * <p><b>Changelog:</b>
  * <ul>
- * <li>1 - 07-feb-2013<\br> Initial release</li>
+ * <li>1 - 07-feb-2013 Initial release</li>
  * </ul>
  * </p>
  *

@@ -41,7 +41,7 @@ import org.semanticweb.owlapi.model.OWLSubClassOfAxiom;
 import org.semanticweb.owlapi.util.OWLObjectVisitorAdapter;
 
 /**
- * <p><b>Description:</b></br>
+ * <p><b>Description:</b>
  * It process value restricion expresions (allValuesFrom, someValues) by
  * collection all the values that a property can have. Navigates a hierarchy of
  * clases and properties looking for the especified restrictions (in form of
@@ -51,9 +51,9 @@ import org.semanticweb.owlapi.util.OWLObjectVisitorAdapter;
  *
  * <p><b>Creation date:</b> 29-dic-2009</p>
  *
- * <p><b>Changelog:</b></br>
+ * <p><b>Changelog:</b>
  * <ul>
- * <li>1 - 29-dic-2009<\br> Initial release</li>
+ * <li>1 - 29-dic-2009 Initial release</li>
  * </ul>
  * </p>
  *
