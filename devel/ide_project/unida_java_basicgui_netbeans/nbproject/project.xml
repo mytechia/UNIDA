@@ -13,9 +13,6 @@
         </data>
         <references xmlns="http://www.netbeans.org/ns/ant-project-references/1">
             <reference>
-<<<<<<< HEAD:devel/ide_project/unida_java_basicgui/nbproject/project.xml
-                <foreign-project>unida_java</foreign-project>
-=======
                 <foreign-project>mytechia_commons_netbeans</foreign-project>
                 <artifact-type>jar</artifact-type>
                 <script>build.xml</script>
@@ -25,7 +22,6 @@
             </reference>
             <reference>
                 <foreign-project>unida_java_netbeans</foreign-project>
->>>>>>> unstable:devel/ide_project/unida_java_basicgui_netbeans/nbproject/project.xml
                 <artifact-type>jar</artifact-type>
                 <script>build.xml</script>
                 <target>jar</target>
