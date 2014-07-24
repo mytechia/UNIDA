@@ -57,7 +57,7 @@ import java.util.Set;
 public abstract class AbstractUniDAFacadeHelper
 {
 
-    private static final long OP_EXPIRATION_TIME = 15;
+    private static final long OP_EXPIRATION_TIME = 2 * 1000;
     
     protected long opExpirationTime = OP_EXPIRATION_TIME;
 
