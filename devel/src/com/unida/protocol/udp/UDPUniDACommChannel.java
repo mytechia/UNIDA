@@ -154,7 +154,7 @@ public class UDPUniDACommChannel implements IUniDACommChannel
     @Override
     public UniDAAddress getAddress()
     {
-        return new UniDAAddress(this.commChannel.getIPAddress(), UNIDA_LEAF_NUMBER);
+        return new UniDAAddress(this.commChannel.getIPAddress().toString(), UNIDA_LEAF_NUMBER);
     }
 	
 	

@@ -56,6 +56,9 @@ public class OntologyLoadingErrorException extends InternalErrorException
     }
 
 
-
+    public OntologyLoadingErrorException(Exception exception, String message)
+    {
+        super(exception, message);
+    }
 
 }

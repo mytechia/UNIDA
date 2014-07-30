@@ -254,6 +254,19 @@
         </rdfs:subClassOf>
     </owl:Class>
     
+    
+    <!-- http://elite.polito.it/ontologies/dogont.owl#RandomNumberGenerator -->
+
+    <owl:Class rdf:about="http://elite.polito.it/ontologies/dogont.owl#RandomNumberGenerator">
+        <rdfs:subClassOf rdf:resource="http://elite.polito.it/ontologies/dogont.owl#UNIDAComponent"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://elite.polito.it/ontologies/dogont.owl#hasState"/>
+                <owl:someValuesFrom rdf:resource="http://elite.polito.it/ontologies/dogont.owl#State"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+    </owl:Class>
+    
 
     <!-- http://elite.polito.it/ontologies/dogont.owl#UNIDAComponent -->
 
