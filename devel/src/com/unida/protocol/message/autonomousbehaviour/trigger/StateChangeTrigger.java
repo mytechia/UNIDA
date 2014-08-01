@@ -124,7 +124,7 @@ public class StateChangeTrigger extends RuleTrigger
 
         // type of the state condition
         StateConditionEnum stateConditionType = StateConditionEnum.fromValue(EndianConversor.byteArrayLittleEndianToShort(bytes, initIndex));
-        initIndex += EndianConversor.INT_SIZE_BYTES;
+        initIndex += EndianConversor.SHORT_SIZE_BYTES;
         switch (stateConditionType)
         {
             case NO_CONDITION:
