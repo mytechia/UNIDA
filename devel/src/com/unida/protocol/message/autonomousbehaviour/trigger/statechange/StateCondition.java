@@ -46,7 +46,7 @@ public abstract class StateCondition
         byte[] idData = new byte[EndianConversor.INT_SIZE_BYTES];
         
         EndianConversor.intToLittleEndian(this.getType().getValue(), idData, 0);
-        dataStream.write(idData, 0, EndianConversor.INT_SIZE_BYTES);
+        dataStream.write(idData, 0, EndianConversor.SHORT_SIZE_BYTES);
         try
         {
             dataStream.write(codeStateCondition(ontologyCodec));
