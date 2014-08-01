@@ -57,6 +57,12 @@ public class UniDAABAddMessage extends UniDAMessage
         super(message, ontologyCodec);
     }
     
+    
+    public UniDAABRuleVO getABRule()
+    {
+        return this.rule;
+    }
+    
 
     @Override
     protected int decodeMessagePayload(byte[] bytes, int initIndex) throws MessageFormatException
@@ -68,7 +74,8 @@ public class UniDAABAddMessage extends UniDAMessage
         offset += EndianConversor.LONG_SIZE_BYTES;
 
         // rule
-        offset += rule.decodePayload(bytes, offset, ontologyCodec);
+        this.rule = new UniDAABRuleVO();
+        offset += this.rule.decodePayload(bytes, offset, ontologyCodec);
 
         return offset;
     }

@@ -29,6 +29,7 @@ import com.mytechia.commons.framework.simplemessageprotocol.exception.MessageFor
 import com.mytechia.commons.util.conversion.EndianConversor;
 import com.unida.library.device.ontology.IUniDAOntologyCodec;
 import com.unida.protocol.UniDAAddress;
+import com.unida.protocol.message.ErrorCode;
 import com.unida.protocol.message.MessageType;
 import com.unida.protocol.message.UniDAMessage;
 import java.io.ByteArrayOutputStream;
@@ -46,12 +47,13 @@ public class UniDAABQueryReplyMessage extends UniDAMessage
     private long opId;
     private List<UniDAABRuleVO> rules;
 
-    public UniDAABQueryReplyMessage(UniDAAddress destination, IUniDAOntologyCodec ontologyCodec, long opId)
+    public UniDAABQueryReplyMessage(UniDAAddress destination, IUniDAOntologyCodec ontologyCodec, long opId, List<UniDAABRuleVO> rules)
     {
         super(destination, ontologyCodec);
         setCommandType(MessageType.ABQueryReply.getTypeValue());
+        setErrorCode(ErrorCode.Ok.getTypeValue());
         this.opId = opId;
-        this.rules = new ArrayList<>();
+        this.rules = rules;
     }
 
     public UniDAABQueryReplyMessage(byte[] message, IUniDAOntologyCodec ontologyCodec) throws MessageFormatException

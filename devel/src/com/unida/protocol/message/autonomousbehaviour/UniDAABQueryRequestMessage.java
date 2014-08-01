@@ -54,6 +54,11 @@ public class UniDAABQueryRequestMessage extends UniDAMessage
     {
         super(message, ontologyCodec);
     }
+    
+    public long getOpId()
+    {
+        return this.opId;
+    }
 
     @Override
     protected byte[] codeMessagePayload()

@@ -22,9 +22,8 @@
 
 package com.unida.protocol.message.autonomousbehaviour.trigger.statechange;
 
-import com.mytechia.commons.framework.simplemessageprotocol.Message;
+
 import com.mytechia.commons.framework.simplemessageprotocol.exception.MessageFormatException;
-import com.mytechia.commons.util.conversion.EndianConversor;
 import com.unida.library.device.ontology.state.DeviceStateValue;
 import com.unida.library.device.ontology.IUniDAOntologyCodec;
 import java.io.ByteArrayOutputStream;
@@ -54,6 +53,19 @@ public class StateConditionBinary extends StateCondition
         this.stateValue1 = stateValue1;
         this.stateValue2 = stateValue2;
     }
+    
+    
+    public DeviceStateValue getStateValue1()
+    {
+        return this.stateValue1;
+    }
+    
+    
+    public DeviceStateValue getStateValue2()
+    {
+        return this.stateValue2;
+    }
+    
 
     @Override
     byte[] codeStateCondition(IUniDAOntologyCodec ontologyCodec) throws MessageFormatException
@@ -74,6 +86,7 @@ public class StateConditionBinary extends StateCondition
         return dataStream.toByteArray();
     }
 
+    
     @Override
     public int decodePayload(byte[] bytes, int initIndex, IUniDAOntologyCodec ontologyCodec) throws MessageFormatException
     {        
@@ -89,6 +102,7 @@ public class StateConditionBinary extends StateCondition
         return initIndex;
     }
 
+    
     @Override
     public String toString()
     {

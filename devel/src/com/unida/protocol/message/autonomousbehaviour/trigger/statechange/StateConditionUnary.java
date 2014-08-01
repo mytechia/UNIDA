@@ -23,9 +23,8 @@
  */
 package com.unida.protocol.message.autonomousbehaviour.trigger.statechange;
 
-import com.mytechia.commons.framework.simplemessageprotocol.Message;
+
 import com.mytechia.commons.framework.simplemessageprotocol.exception.MessageFormatException;
-import com.mytechia.commons.util.conversion.EndianConversor;
 import com.unida.library.device.ontology.state.DeviceStateValue;
 import com.unida.library.device.ontology.IUniDAOntologyCodec;
 import java.io.ByteArrayOutputStream;
@@ -51,6 +50,12 @@ public class StateConditionUnary extends StateCondition
     {
         this.type = type;
         this.stateValue = stateValue;
+    }
+    
+    
+    public DeviceStateValue getStateValue()
+    {
+        return this.stateValue;
     }
     
 

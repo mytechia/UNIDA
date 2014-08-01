@@ -78,6 +78,7 @@ public class UniDAABRuleVO
             dataStream.write(trigger.codePayload(ontologyCodec));
 
             // Action
+            
             dataStream.write(action.codePayload(ontologyCodec));
         } catch (IOException ex)
         {
@@ -167,6 +168,11 @@ public class UniDAABRuleVO
     public int getRuleId()
     {
         return this.ruleID;
+    }
+    
+    public void setRuleId(int ruleId)
+    {
+        this.ruleID = ruleId;
     }
     
 }
