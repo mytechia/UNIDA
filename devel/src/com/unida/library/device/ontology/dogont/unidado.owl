@@ -256,15 +256,32 @@
     
     
     <!-- http://elite.polito.it/ontologies/dogont.owl#RandomNumberGenerator -->
-
+    
     <owl:Class rdf:about="http://elite.polito.it/ontologies/dogont.owl#RandomNumberGenerator">
         <rdfs:subClassOf rdf:resource="http://elite.polito.it/ontologies/dogont.owl#UNIDAComponent"/>
         <rdfs:subClassOf>
             <owl:Restriction>
                 <owl:onProperty rdf:resource="http://elite.polito.it/ontologies/dogont.owl#hasState"/>
-                <owl:someValuesFrom rdf:resource="http://elite.polito.it/ontologies/dogont.owl#State"/>
+                <owl:someValuesFrom rdf:resource="http://elite.polito.it/ontologies/dogont.owl#NumericValueState"/>
             </owl:Restriction>
         </rdfs:subClassOf>
+    </owl:Class>
+    
+    
+   
+   <!-- http://elite.polito.it/ontologies/dogont.owl#NumericValueState -->
+
+    <owl:Class rdf:about="http://elite.polito.it/ontologies/dogont.owl#NumericValueState">
+        <rdfs:label rdf:datatype="&xsd;string">NumericValueState</rdfs:label>
+        <rdfs:subClassOf rdf:resource="http://elite.polito.it/ontologies/dogont.owl#ContinuousState"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://elite.polito.it/ontologies/dogont.owl#hasStateValue"/>
+                <owl:someValuesFrom rdf:resource="http://elite.polito.it/ontologies/dogont.owl#IntegerStateValue"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <owl:disjointWith rdf:resource="http://elite.polito.it/ontologies/dogont.owl#TunerState"/>
+        <rdfs:comment rdf:datatype="&xsd;string">Models a generic numeric value</rdfs:comment>
     </owl:Class>
     
 

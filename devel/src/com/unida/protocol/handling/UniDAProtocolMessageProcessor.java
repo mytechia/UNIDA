@@ -157,10 +157,16 @@ public class UniDAProtocolMessageProcessor extends Thread
 
             }
             catch (UnsupportedMessageTypeErrorException ex) {
-                UniDALoggers.LIBRARY.log(Level.WARNING, "Unsupported message received:{0}", msg.toString());
+                UniDALoggers.LIBRARY.log(
+                        Level.WARNING, 
+                        "Unsupported message received: " + msg.toString(), 
+                        ex.getLocalizedMessage());
             }
             catch (CommunicationException ex) {
-                UniDALoggers.LIBRARY.log(Level.SEVERE, "Error sending message: {0}", ex.getLocalizedMessage());
+                UniDALoggers.LIBRARY.log(
+                        Level.SEVERE, 
+                        "Error processing message: " + msg.toString() + ". " + ex.getLocalizedMessage(), 
+                        ex.getLocalizedMessage());
             }
 
         }
