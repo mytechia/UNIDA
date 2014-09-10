@@ -809,7 +809,7 @@
                   <EmptySpace min="-2" pref="72" max="-2" attributes="0"/>
                   <Component id="jRadioCronoTrigger" min="-2" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="29" max="-2" attributes="0"/>
-                  <Component id="jRadioPeriodicTrigger" min="-2" max="-2" attributes="0"/>
+                  <Component id="jRadioDateTrigger" min="-2" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="34" max="-2" attributes="0"/>
                   <Component id="jRadioStateChangeTrigger" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="32767" attributes="0"/>
@@ -822,7 +822,7 @@
                   <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="jRadioCronoTrigger" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="jRadioPeriodicTrigger" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="jRadioDateTrigger" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="jRadioStateChangeTrigger" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace pref="26" max="32767" attributes="0"/>
@@ -845,7 +845,7 @@
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jRadioCronoTriggerActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JRadioButton" name="jRadioPeriodicTrigger">
+        <Component class="javax.swing.JRadioButton" name="jRadioDateTrigger">
           <Properties>
             <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
               <ComponentRef name="buttonGroupTriggerType"/>
@@ -853,10 +853,10 @@
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Lucida Grande" size="12" style="0"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="Periodic"/>
+            <Property name="text" type="java.lang.String" value="Date"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jRadioPeriodicTriggerActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jRadioDateTriggerActionPerformed"/>
           </Events>
         </Component>
         <Component class="javax.swing.JRadioButton" name="jRadioStateChangeTrigger">

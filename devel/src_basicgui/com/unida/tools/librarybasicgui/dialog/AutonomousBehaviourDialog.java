@@ -206,7 +206,7 @@ public class AutonomousBehaviourDialog extends javax.swing.JDialog
         jTextWriteStateActionStateValueRAW = new javax.swing.JTextField();
         jPanelTriggerType = new javax.swing.JPanel();
         jRadioCronoTrigger = new javax.swing.JRadioButton();
-        jRadioPeriodicTrigger = new javax.swing.JRadioButton();
+        jRadioDateTrigger = new javax.swing.JRadioButton();
         jRadioStateChangeTrigger = new javax.swing.JRadioButton();
         jPanelActionType = new javax.swing.JPanel();
         jRadioLinkStateAction = new javax.swing.JRadioButton();
@@ -542,8 +542,7 @@ public class AutonomousBehaviourDialog extends javax.swing.JDialog
                         .addComponent(jTextLinkStateActionStateID, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanelLinkStatesActionLayout.createSequentialGroup()
                         .addGap(114, 114, 114)
-                        .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
+                        .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         jPanelLinkStatesActionLayout.setVerticalGroup(
@@ -632,14 +631,14 @@ public class AutonomousBehaviourDialog extends javax.swing.JDialog
             }
         });
 
-        buttonGroupTriggerType.add(jRadioPeriodicTrigger);
-        jRadioPeriodicTrigger.setFont(new java.awt.Font("Lucida Grande", 0, 12)); // NOI18N
-        jRadioPeriodicTrigger.setText("Periodic");
-        jRadioPeriodicTrigger.addActionListener(new java.awt.event.ActionListener()
+        buttonGroupTriggerType.add(jRadioDateTrigger);
+        jRadioDateTrigger.setFont(new java.awt.Font("Lucida Grande", 0, 12)); // NOI18N
+        jRadioDateTrigger.setText("Date");
+        jRadioDateTrigger.addActionListener(new java.awt.event.ActionListener()
         {
             public void actionPerformed(java.awt.event.ActionEvent evt)
             {
-                jRadioPeriodicTriggerActionPerformed(evt);
+                jRadioDateTriggerActionPerformed(evt);
             }
         });
 
@@ -663,7 +662,7 @@ public class AutonomousBehaviourDialog extends javax.swing.JDialog
                 .addGap(72, 72, 72)
                 .addComponent(jRadioCronoTrigger)
                 .addGap(29, 29, 29)
-                .addComponent(jRadioPeriodicTrigger)
+                .addComponent(jRadioDateTrigger)
                 .addGap(34, 34, 34)
                 .addComponent(jRadioStateChangeTrigger)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -674,7 +673,7 @@ public class AutonomousBehaviourDialog extends javax.swing.JDialog
                 .addGap(25, 25, 25)
                 .addGroup(jPanelTriggerTypeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jRadioCronoTrigger)
-                    .addComponent(jRadioPeriodicTrigger)
+                    .addComponent(jRadioDateTrigger)
                     .addComponent(jRadioStateChangeTrigger))
                 .addContainerGap(26, Short.MAX_VALUE))
         );
@@ -982,14 +981,14 @@ public class AutonomousBehaviourDialog extends javax.swing.JDialog
 
             instantiationFacade.getGatewayOperationFacade().addABRule(new UniDAAddress(gatewayAddress), rule);
 
-        } catch (InternalErrorException ex)
+        } catch (Exception ex)
         {
             JOptionPane.showMessageDialog(this, ex.toString());
         }
 
     }//GEN-LAST:event_jButtonAddABRuleActionPerformed
 
-    private UniDAABRuleVO getRuleFromUserInput() throws UniDAIDFormatException
+    private UniDAABRuleVO getRuleFromUserInput() throws UniDAIDFormatException, Exception
     {
         // trigger
         RuleTrigger trigger = null;
@@ -999,9 +998,9 @@ public class AutonomousBehaviourDialog extends javax.swing.JDialog
                     Short.valueOf(jTextCronoTriggerWeekday.getText()),
                     Short.valueOf(jTextCronoTriggerHour.getText()),
                     Short.valueOf(jTextCronoTriggerMin.getText()));
-        } else if (jRadioPeriodicTrigger.isSelected())
+        } else if (jRadioDateTrigger.isSelected())
         {
-            // TODO
+            throw new Exception("Single Date-Trigger not implemented yet.");
         } else if (jRadioStateChangeTrigger.isSelected())
         {
             DeviceID deviceID = new DeviceID(
@@ -1106,12 +1105,12 @@ public class AutonomousBehaviourDialog extends javax.swing.JDialog
     }//GEN-LAST:event_jRadioCronoTriggerActionPerformed
 
 
-    private void jRadioPeriodicTriggerActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jRadioPeriodicTriggerActionPerformed
-    {//GEN-HEADEREND:event_jRadioPeriodicTriggerActionPerformed
+    private void jRadioDateTriggerActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jRadioDateTriggerActionPerformed
+    {//GEN-HEADEREND:event_jRadioDateTriggerActionPerformed
         hideTriggerPanels();
         this.jPanelPeriodicTrigger.setVisible(true);
         setStateChangeInputFields(false);
-    }//GEN-LAST:event_jRadioPeriodicTriggerActionPerformed
+    }//GEN-LAST:event_jRadioDateTriggerActionPerformed
 
 
     private void jRadioStateChangeTriggerActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jRadioStateChangeTriggerActionPerformed
@@ -1186,8 +1185,8 @@ public class AutonomousBehaviourDialog extends javax.swing.JDialog
     private javax.swing.JPanel jPanelWriteStateAction;
     private javax.swing.JRadioButton jRadioCommandAction;
     private javax.swing.JRadioButton jRadioCronoTrigger;
+    private javax.swing.JRadioButton jRadioDateTrigger;
     private javax.swing.JRadioButton jRadioLinkStateAction;
-    private javax.swing.JRadioButton jRadioPeriodicTrigger;
     private javax.swing.JRadioButton jRadioStateChangeTrigger;
     private javax.swing.JRadioButton jRadioWriteStateAction;
     private javax.swing.JScrollPane jScrollPaneABRules;
