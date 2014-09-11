@@ -38,15 +38,12 @@
               <EmptySpace max="32767" attributes="0"/>
           </Group>
           <Group type="102" attributes="0">
+              <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" attributes="0">
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="jLabel1" min="-2" pref="341" max="-2" attributes="0"/>
-                          </Group>
+                          <Component id="jLabel1" min="-2" pref="341" max="-2" attributes="0"/>
                           <Group type="102" alignment="0" attributes="0">
-                              <EmptySpace max="-2" attributes="0"/>
                               <Component id="jButtonRefreshABRules" min="-2" max="-2" attributes="0"/>
                               <EmptySpace min="-2" pref="266" max="-2" attributes="0"/>
                               <Component id="jButtonRemoveABRule" min="-2" max="-2" attributes="0"/>
@@ -54,21 +51,16 @@
                       </Group>
                       <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                   </Group>
-                  <Group type="102" attributes="0">
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jPanelABRule" alignment="0" max="32767" attributes="0"/>
-                          <Group type="102" alignment="0" attributes="0">
-                              <Group type="103" groupAlignment="1" attributes="0">
-                                  <Component id="jPanelTriggerType" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="jPanelTriggerContainer" alignment="0" pref="0" max="32767" attributes="0"/>
-                              </Group>
-                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                  <Component id="jPanelActionType" max="32767" attributes="0"/>
-                                  <Component id="jPanelActionContainer" min="-2" max="-2" attributes="0"/>
-                              </Group>
-                          </Group>
+                  <Component id="jPanelABRule" alignment="0" max="32767" attributes="0"/>
+                  <Group type="102" alignment="0" attributes="0">
+                      <Group type="103" groupAlignment="1" attributes="0">
+                          <Component id="jPanelTriggerType" alignment="0" max="32767" attributes="0"/>
+                          <Component id="jPanelTriggerContainer" alignment="0" pref="0" max="32767" attributes="0"/>
+                      </Group>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                          <Component id="jPanelActionType" max="32767" attributes="0"/>
+                          <Component id="jPanelActionContainer" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
               </Group>
@@ -123,17 +115,18 @@
               <Font name="Lucida Grande" size="10" style="0"/>
             </Property>
             <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-              <Table columnCount="5" rowCount="9">
+              <Table columnCount="6" rowCount="9">
                 <Column editable="false" title="Trigger Type" type="java.lang.Object"/>
-                <Column editable="false" title="Trigger" type="java.lang.Object"/>
+                <Column editable="false" title="Trigger" type="java.lang.String"/>
                 <Column editable="false" title="Action Type" type="java.lang.Object"/>
                 <Column editable="false" title="Action" type="java.lang.Object"/>
                 <Column editable="false" title="Index" type="java.lang.Integer"/>
+                <Column editable="false" title="Scenario" type="java.lang.String"/>
               </Table>
             </Property>
             <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
               <TableColumnModel selectionModel="1">
-                <Column maxWidth="150" minWidth="-1" prefWidth="150" resizable="true">
+                <Column maxWidth="100" minWidth="-1" prefWidth="100" resizable="true">
                   <Title/>
                   <Editor/>
                   <Renderer/>
@@ -143,7 +136,7 @@
                   <Editor/>
                   <Renderer/>
                 </Column>
-                <Column maxWidth="150" minWidth="-1" prefWidth="150" resizable="true">
+                <Column maxWidth="100" minWidth="-1" prefWidth="100" resizable="true">
                   <Title/>
                   <Editor/>
                   <Renderer/>
@@ -154,6 +147,11 @@
                   <Renderer/>
                 </Column>
                 <Column maxWidth="50" minWidth="-1" prefWidth="50" resizable="true">
+                  <Title/>
+                  <Editor/>
+                  <Renderer/>
+                </Column>
+                <Column maxWidth="150" minWidth="-1" prefWidth="150" resizable="true">
                   <Title/>
                   <Editor/>
                   <Renderer/>
@@ -994,6 +992,9 @@
             </Property>
             <Property name="text" type="java.lang.String" value="Change scenario"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jRadioChangeScenarioActionActionPerformed"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>
@@ -1014,9 +1015,6 @@
         </Property>
         <Property name="name" type="java.lang.String" value="Rule" noResource="true"/>
       </Properties>
-      <AccessibilityProperties>
-        <Property name="AccessibleContext.accessibleName" type="java.lang.String" value="Rule"/>
-      </AccessibilityProperties>
 
       <Layout>
         <DimensionLayout dim="0">

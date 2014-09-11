@@ -25,9 +25,11 @@
  */
 package com.unida.protocol.message.autonomousbehaviour;
 
+import com.mytechia.commons.framework.simplemessageprotocol.Message;
 import com.mytechia.commons.framework.simplemessageprotocol.exception.MessageFormatException;
 import com.mytechia.commons.util.conversion.EndianConversor;
 import com.unida.library.device.ontology.IUniDAOntologyCodec;
+import com.unida.protocol.message.autonomousbehaviour.action.ChangeScenarioAction;
 import com.unida.protocol.message.autonomousbehaviour.action.CommandExecutionAction;
 import com.unida.protocol.message.autonomousbehaviour.action.LinkStateAction;
 import com.unida.protocol.message.autonomousbehaviour.action.RuleAction;
@@ -36,6 +38,7 @@ import com.unida.protocol.message.autonomousbehaviour.action.WriteStateAction;
 import com.unida.protocol.message.autonomousbehaviour.trigger.CronoTrigger;
 import com.unida.protocol.message.autonomousbehaviour.trigger.RuleTrigger;
 import com.unida.protocol.message.autonomousbehaviour.trigger.RuleTriggerEnum;
+import com.unida.protocol.message.autonomousbehaviour.trigger.ScenarioChangeTrigger;
 import com.unida.protocol.message.autonomousbehaviour.trigger.StateChangeTrigger;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -48,6 +51,8 @@ public class UniDAABRuleVO
 {
 
     private int ruleID = 0;
+    
+    private UniDAABScenarioVO scenario = null;
 
     private RuleTrigger trigger = null;
 
@@ -59,6 +64,7 @@ public class UniDAABRuleVO
     
     public UniDAABRuleVO(RuleTrigger trigger, RuleAction action)
     {
+        this();
         this.trigger = trigger;
         this.action = action;
     }
@@ -78,8 +84,11 @@ public class UniDAABRuleVO
             dataStream.write(trigger.codePayload(ontologyCodec));
 
             // Action
-            
             dataStream.write(action.codePayload(ontologyCodec));
+            
+            // Scenario
+            Message.writeStringInStream(dataStream, this.getScenarioID());
+            
         } catch (IOException ex)
         {
 
@@ -106,7 +115,7 @@ public class UniDAABRuleVO
                 this.trigger = new StateChangeTrigger();
                 break;
             case SCENARIO_CHANGE:
-                // TODO
+                this.trigger = new ScenarioChangeTrigger();
                 break;
             case TEMPORAL:
                 this.trigger = new CronoTrigger();
@@ -131,7 +140,7 @@ public class UniDAABRuleVO
                 this.action = new LinkStateAction();
                 break;
             case SCENARIO_CHANGE:
-                // TODO
+                this.action = new ChangeScenarioAction();
                 break;
             case WRITE_STATE:
                 this.action = new WriteStateAction();
@@ -141,6 +150,11 @@ public class UniDAABRuleVO
         {
             initIndex = this.action.decodePayload(bytes, initIndex, ontologyCodec);
         }
+        
+        // Scenario
+        StringBuilder string = new StringBuilder(20);
+        initIndex += Message.readStringFromBytes(string, bytes, initIndex);
+        this.scenario = new UniDAABScenarioVO(string.toString());
 
         return initIndex;
     }
@@ -173,6 +187,16 @@ public class UniDAABRuleVO
     public void setRuleId(int ruleId)
     {
         this.ruleID = ruleId;
+    }
+    
+    public UniDAABScenarioVO getScenario()
+    {
+        return this.scenario;
+    }
+    
+    public String getScenarioID()
+    {
+        return (null != this.scenario)?this.scenario.getId():UniDAABScenarioVO.NULL;
     }
     
 }
