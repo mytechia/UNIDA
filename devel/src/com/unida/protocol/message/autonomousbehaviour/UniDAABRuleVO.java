@@ -69,6 +69,12 @@ public class UniDAABRuleVO
         this.action = action;
     }
     
+    public UniDAABRuleVO(RuleTrigger trigger, RuleAction action, UniDAABScenarioVO scenario)
+    {
+        this(trigger, action);
+        this.scenario = scenario;
+    }
+    
 
     public byte[] codeRulePayload(IUniDAOntologyCodec ontologyCodec) throws MessageFormatException
     {

@@ -34,6 +34,7 @@ import com.unida.library.operation.OperationTicket;
 import com.unida.library.operation.gateway.IAutonomousBehaviourCallback;
 import com.unida.protocol.UniDAAddress;
 import com.unida.protocol.message.autonomousbehaviour.UniDAABRuleVO;
+import com.unida.protocol.message.autonomousbehaviour.UniDAABScenarioVO;
 import com.unida.protocol.message.autonomousbehaviour.action.ChangeScenarioAction;
 import com.unida.protocol.message.autonomousbehaviour.action.CommandExecutionAction;
 import com.unida.protocol.message.autonomousbehaviour.action.LinkStateAction;
@@ -1175,8 +1176,8 @@ public class AutonomousBehaviourDialog extends javax.swing.JDialog
         action.setActionDestination(new DeviceID(new UniDAAddress(
                 jTextActionDestination.getText()),
                 Short.valueOf(jTextActionDestinationDeviceNumber.getText())));
-
-        return new UniDAABRuleVO(trigger, action);
+                
+        return new UniDAABRuleVO(trigger, action, new UniDAABScenarioVO(this.jTextScenarioName.getText()));
     }
     
     
