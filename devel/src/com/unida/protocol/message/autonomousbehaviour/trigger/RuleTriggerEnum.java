@@ -57,7 +57,7 @@ public enum RuleTriggerEnum
         else if (givenValue == TEMPORAL.ordinal()) {
             return TEMPORAL;
         }
-        else if (givenValue == TEMPORAL.ordinal()) {
+        else if (givenValue == SCENARIO_CHANGE.ordinal()) {
             return SCENARIO_CHANGE;
         }
         return UNKNOWN;
