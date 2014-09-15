@@ -36,6 +36,7 @@ import com.unida.library.operation.OperationTypes;
 import com.unida.protocol.IUniDACommChannel;
 import com.unida.protocol.UniDAAddress;
 import com.unida.protocol.message.autonomousbehaviour.UniDAABAddMessage;
+import com.unida.protocol.message.autonomousbehaviour.UniDAABChangeScenarioMessage;
 import com.unida.protocol.message.autonomousbehaviour.UniDAABRemoveMessage;
 import com.unida.protocol.message.autonomousbehaviour.UniDAABRuleVO;
 import com.unida.protocol.message.discovery.DiscoverUniDAGatewayDevicesRequestMessage;
@@ -93,6 +94,20 @@ public class DefaultGatewayOperationFacade implements IGatewayOperationFacade
     
     
     @Override
+    public void changeABScenario(String scenarioId) throws InternalErrorException
+    {
+        
+        try
+        {
+            this.commChannel.broadcastMessage(new UniDAABChangeScenarioMessage(this.ontologyCodec, scenarioId));
+        } catch (CommunicationException ex)
+        {
+            throw new InternalErrorException(ex);
+        }
+        
+    }
+    
+    @Override
     public void addABRule(UniDAAddress gatewayAddress, UniDAABRuleVO rule) throws InternalErrorException
     {
         
@@ -127,9 +142,9 @@ public class DefaultGatewayOperationFacade implements IGatewayOperationFacade
             IAutonomousBehaviourCallback callback) throws InternalErrorException
     {
         
-        int opId = getOpId();
+        int nextOpId = getOpId();
         
-        OperationTicket ot = new OperationTicket(opId, OperationTypes.QUERY_AUTONOMOUS_BEHAVIOUR);
+        OperationTicket ot = new OperationTicket(nextOpId, OperationTypes.QUERY_AUTONOMOUS_BEHAVIOUR);
         
         try
         {
@@ -137,7 +152,7 @@ public class DefaultGatewayOperationFacade implements IGatewayOperationFacade
             IUniDANetworkFacade unidaNetworkInstance = this.unidaFactory.getDALInstance(gateway);
             DefaultGatewayAccessLayerCallback internalCallback = new DefaultGatewayAccessLayerCallback(ot, gateway, this, callback);
             addCallback(internalCallback);
-            unidaNetworkInstance.queryAutonomousBehaviourRules(opId, gatewayAddress, internalCallback);
+            unidaNetworkInstance.queryAutonomousBehaviourRules(nextOpId, gatewayAddress, internalCallback);
             return ot;
             
         } catch (InstanceNotFoundException ex)

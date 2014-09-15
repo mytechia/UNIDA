@@ -39,6 +39,8 @@ public interface IGatewayOperationFacade
 {
         
     public void forceAnnounce() throws InternalErrorException;
+    
+    public void changeABScenario(String scenarioId) throws InternalErrorException;
         
     public void addABRule(UniDAAddress gatewayAddress, UniDAABRuleVO rule) throws InternalErrorException;
     

@@ -58,6 +58,7 @@ public enum MessageType {
     ABRemoveRule                    ((byte) 18),
     ABQueryRequest                  ((byte) 19),
     ABQueryReply                    ((byte) 20),
+    ABChangeScenario                ((byte) 21),
     DebugInit                       ((byte) 101),
     DebugData                       ((byte) 106);
     
