@@ -22,7 +22,6 @@
 
 package com.unida.protocol.message.autonomousbehaviour;
 
-import com.mytechia.commons.framework.simplemessageprotocol.Message;
 import com.mytechia.commons.framework.simplemessageprotocol.exception.MessageFormatException;
 import com.unida.library.device.ontology.IUniDAOntologyCodec;
 import com.unida.protocol.UniDAAddress;
@@ -30,75 +29,52 @@ import com.unida.protocol.message.ErrorCode;
 import com.unida.protocol.message.MessageType;
 import com.unida.protocol.message.UniDAMessage;
 import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 
 /**
  *
  * <p><b>Creation date:</b> 
- * 12-09-2014 </p>
+ * 16-09-2014 </p>
  *
  * <p><b>Changelog:</b>
  * <ul>
- * <li> 1 , 12-09-2014 -> Initial release</li>
+ * <li> 1 , 16-09-2014 -> Initial release</li>
  * </ul>
  * </p>
  * @author Victor Sonora Pombo
  * @version 1
  */
-public class UniDAABChangeScenarioMessage extends UniDAMessage
+public class UniDAABQueryScenariosRequestMessage extends UniDAMessage
 {
-    
-    private String scenarioID;
-    
-    
-    public UniDAABChangeScenarioMessage(IUniDAOntologyCodec ontologyCodec, String scenarioID)
+
+    public UniDAABQueryScenariosRequestMessage(IUniDAOntologyCodec ontologyCodec)
     {
         super(ontologyCodec);
-        this.scenarioID = scenarioID;
-        setCommandType(MessageType.ABChangeScenario.getTypeValue());
+        setCommandType(MessageType.ABQueryScenariosRequest.getTypeValue());
         setErrorCode(ErrorCode.Null.getTypeValue());
         setData(new byte[0]);
         this.destination = UniDAAddress.BROADCAST_ADDRESS;
     }
 
     
-    public UniDAABChangeScenarioMessage(byte[] message, IUniDAOntologyCodec ontologyCodec) throws MessageFormatException
+    public UniDAABQueryScenariosRequestMessage(byte[] message, IUniDAOntologyCodec ontologyCodec) throws MessageFormatException
     {
         super(message, ontologyCodec);
     }
-
-    public String getScenarioID()
-    {
-        return scenarioID;
-    }
     
-    @Override
-    protected byte[] codeMessagePayload()
-    {
-        ByteArrayOutputStream dataStream = new ByteArrayOutputStream();
-
-        try
-        {
-            // Scenario
-            writeString(dataStream, getScenarioID());
-        } catch (IOException ioEx)
-        {
-            //ByteArrayOutputStream doesn't throw exceptions in its write methods
-        }
-
-        return dataStream.toByteArray();
-    }
 
     @Override
     protected int decodeMessagePayload(byte[] bytes, int initIndex) throws MessageFormatException
     {
-        
-        // Scenario
-        StringBuilder string = new StringBuilder(20);
-        initIndex += Message.readStringFromBytes(string, bytes, initIndex);
-        this.scenarioID = string.toString();
-
         return initIndex;
     }
 
+    
+    @Override
+    protected byte[] codeMessagePayload() throws MessageFormatException
+    {
+        ByteArrayOutputStream dataStream = new ByteArrayOutputStream();
+
+        return dataStream.toByteArray();
+    }
+    
 }

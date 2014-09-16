@@ -1354,6 +1354,12 @@ public class AutonomousBehaviourDialog extends javax.swing.JDialog
             }
         }
 
+        @Override
+        public void notifyAutonomousBehaviourScenarios(OperationTicket ticket, List<String> scenarioIDs)
+        {
+            throw new UnsupportedOperationException("Not supported here.");
+        }
+
     }
 
     

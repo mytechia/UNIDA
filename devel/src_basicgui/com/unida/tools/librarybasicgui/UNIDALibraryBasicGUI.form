@@ -60,7 +60,9 @@
                           <Component id="jButtonForceAnnounce" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="jButtonChangeScenario" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="361" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="jButtonQueryScenarios" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="258" max="-2" attributes="0"/>
                       </Group>
                   </Group>
               </Group>
@@ -89,6 +91,7 @@
                               <Component id="jButtonAB" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="jButtonChangeScenario" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="jButtonForceAnnounce" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="jButtonQueryScenarios" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace min="-2" pref="33" max="-2" attributes="0"/>
                       </Group>
@@ -332,6 +335,14 @@
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonChangeScenarioActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JButton" name="jButtonQueryScenarios">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Query Scenarios"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonQueryScenariosActionPerformed"/>
           </Events>
         </Component>
       </SubComponents>

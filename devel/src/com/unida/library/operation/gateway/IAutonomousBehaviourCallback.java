@@ -47,4 +47,6 @@ public interface IAutonomousBehaviourCallback
     public void notifyGatewayAutonomousBehaviourRules(OperationTicket ticket, Gateway gateway,
             List<UniDAABRuleVO> rules);
     
+    public void notifyAutonomousBehaviourScenarios(OperationTicket ticket, List<String> scenarioIDs);
+    
 }

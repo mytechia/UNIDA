@@ -37,6 +37,7 @@ import com.unida.protocol.IUniDACommChannel;
 import com.unida.protocol.UniDAAddress;
 import com.unida.protocol.message.autonomousbehaviour.UniDAABAddMessage;
 import com.unida.protocol.message.autonomousbehaviour.UniDAABChangeScenarioMessage;
+import com.unida.protocol.message.autonomousbehaviour.UniDAABQueryScenariosRequestMessage;
 import com.unida.protocol.message.autonomousbehaviour.UniDAABRemoveMessage;
 import com.unida.protocol.message.autonomousbehaviour.UniDAABRuleVO;
 import com.unida.protocol.message.discovery.DiscoverUniDAGatewayDevicesRequestMessage;
@@ -106,6 +107,22 @@ public class DefaultGatewayOperationFacade implements IGatewayOperationFacade
         }
         
     }
+    
+    
+    @Override
+    public void requestABScenarios() throws InternalErrorException
+    {
+        
+        try
+        {
+            this.commChannel.broadcastMessage(new UniDAABQueryScenariosRequestMessage(this.ontologyCodec));
+        } catch (CommunicationException ex)
+        {
+            throw new InternalErrorException(ex);
+        }
+        
+    }
+    
     
     @Override
     public void addABRule(UniDAAddress gatewayAddress, UniDAABRuleVO rule) throws InternalErrorException

@@ -36,6 +36,8 @@ import com.unida.protocol.message.autonomousbehaviour.UniDAABAddMessage;
 import com.unida.protocol.message.autonomousbehaviour.UniDAABChangeScenarioMessage;
 import com.unida.protocol.message.autonomousbehaviour.UniDAABQueryReplyMessage;
 import com.unida.protocol.message.autonomousbehaviour.UniDAABQueryRequestMessage;
+import com.unida.protocol.message.autonomousbehaviour.UniDAABQueryScenariosReplyMessage;
+import com.unida.protocol.message.autonomousbehaviour.UniDAABQueryScenariosRequestMessage;
 import com.unida.protocol.message.autonomousbehaviour.UniDAABRemoveMessage;
 import com.unida.protocol.message.debug.UnidaDebugInfoMessage;
 import com.unida.protocol.message.debug.UnidaDebugInitMessage;
@@ -157,7 +159,13 @@ public class DefaultMessageFactory implements IMessageFactory
             return createUnidaABRulesQueryReplyMessage(msgType, msgData);
         } else if (msgType == MessageType.ABChangeScenario.getTypeValue())
         {
-            return createUnidaABChangeScenarioRequestMessage(msgType, msgData);
+            return createUnidaABQueryScenariosRequest(msgType, msgData);
+        } else if (msgType == MessageType.ABQueryScenariosRequest.getTypeValue())
+        {
+            return createUnidaABQueryScenariosRequest(msgType, msgData);
+        } else if (msgType == MessageType.ABQueryScenariosReply.getTypeValue())
+        {
+            return createUnidaABQueryScenariosReply(msgType, msgData);
         } else
         {
             throw new MessageFormatException("Unsupported message type: " + msgType + ".");
@@ -432,6 +440,32 @@ public class DefaultMessageFactory implements IMessageFactory
         if (msgType == MessageType.ABChangeScenario.getTypeValue())
         {
             return new UniDAABChangeScenarioMessage(msgData, ontologyCodec);
+        } else
+        {
+            return null;
+        }
+
+    }
+    
+    UniDAABQueryScenariosRequestMessage createUnidaABQueryScenariosRequest(byte msgType, byte[] msgData) throws MessageFormatException
+    {
+
+        if (msgType == MessageType.ABQueryScenariosRequest.getTypeValue())
+        {
+            return new UniDAABQueryScenariosRequestMessage(msgData, ontologyCodec);
+        } else
+        {
+            return null;
+        }
+
+    }
+    
+    UniDAABQueryScenariosReplyMessage createUnidaABQueryScenariosReply(byte msgType, byte[] msgData) throws MessageFormatException
+    {
+
+        if (msgType == MessageType.ABQueryScenariosReply.getTypeValue())
+        {
+            return new UniDAABQueryScenariosReplyMessage(msgData, ontologyCodec);
         } else
         {
             return null;

@@ -40,6 +40,7 @@ import com.unida.library.device.PhysicalDevice;
 import com.unida.library.manage.im.InMemoryUniDAInstantiationFacade;
 import com.unida.tools.librarybasicgui.dialog.AutonomousBehaviourChangeScenarioDialog;
 import com.unida.tools.librarybasicgui.dialog.AutonomousBehaviourDialog;
+import com.unida.tools.librarybasicgui.dialog.AutonomousBehaviourQueryScenariosDialog;
 import com.unida.tools.librarybasicgui.dialog.DeviceWriteStateDialog;
 import java.util.Collection;
 import javax.swing.JOptionPane;
@@ -341,6 +342,7 @@ public class UNIDALibraryBasicGUI extends javax.swing.JFrame
         jButtonAB = new javax.swing.JButton();
         jButtonForceAnnounce = new javax.swing.JButton();
         jButtonChangeScenario = new javax.swing.JButton();
+        jButtonQueryScenarios = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setPreferredSize(new java.awt.Dimension(973, 760));
@@ -550,6 +552,15 @@ public class UNIDALibraryBasicGUI extends javax.swing.JFrame
             }
         });
 
+        jButtonQueryScenarios.setText("Query Scenarios");
+        jButtonQueryScenarios.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                jButtonQueryScenariosActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanelGatewaysInfoLayout = new javax.swing.GroupLayout(jPanelGatewaysInfo);
         jPanelGatewaysInfo.setLayout(jPanelGatewaysInfoLayout);
         jPanelGatewaysInfoLayout.setHorizontalGroup(
@@ -574,7 +585,9 @@ public class UNIDALibraryBasicGUI extends javax.swing.JFrame
                         .addComponent(jButtonForceAnnounce)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButtonChangeScenario)
-                        .addGap(361, 361, 361))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButtonQueryScenarios)
+                        .addGap(258, 258, 258))))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelGatewaysInfoLayout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(jPanelDevicesButtons, javax.swing.GroupLayout.PREFERRED_SIZE, 931, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -596,7 +609,8 @@ public class UNIDALibraryBasicGUI extends javax.swing.JFrame
                         .addGroup(jPanelGatewaysInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jButtonAB)
                             .addComponent(jButtonChangeScenario)
-                            .addComponent(jButtonForceAnnounce))
+                            .addComponent(jButtonForceAnnounce)
+                            .addComponent(jButtonQueryScenarios))
                         .addGap(33, 33, 33)))
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -702,6 +716,12 @@ public class UNIDALibraryBasicGUI extends javax.swing.JFrame
         changeScenarioDialog.setVisible(true);
     }//GEN-LAST:event_jButtonChangeScenarioActionPerformed
 
+    private void jButtonQueryScenariosActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jButtonQueryScenariosActionPerformed
+    {//GEN-HEADEREND:event_jButtonQueryScenariosActionPerformed
+        AutonomousBehaviourQueryScenariosDialog queryScenariosDialog = new AutonomousBehaviourQueryScenariosDialog(this, false, instantiationFacade);
+        queryScenariosDialog.setVisible(true);
+    }//GEN-LAST:event_jButtonQueryScenariosActionPerformed
+
     /**
      * ********************************************************************************************************
      */
@@ -776,6 +796,7 @@ public class UNIDALibraryBasicGUI extends javax.swing.JFrame
     private javax.swing.JButton jButtonCommands;
     private javax.swing.JButton jButtonForceAnnounce;
     private javax.swing.JButton jButtonOnOffCommands;
+    private javax.swing.JButton jButtonQueryScenarios;
     private javax.swing.JButton jButtonState;
     private javax.swing.JButton jButtonStates;
     private javax.swing.JButton jButtonSuscribe;
