@@ -82,6 +82,9 @@ public interface IUniDANetworkFacade
     
     void queryAutonomousBehaviourRules(long notificationId, UniDAAddress gatewayAddress, IAutonomousBehaviourInternalCallback callback)
             throws CommunicationException;
+    
+    void queryAutonomousBehaviourScenarios(long notificationId, UniDAAddress gatewayAddress, IAutonomousBehaviourInternalCallback callback)
+            throws CommunicationException;
 
     /**
      * FOR INTERNAL USE ONLY Resends a suscription request to the device. It can

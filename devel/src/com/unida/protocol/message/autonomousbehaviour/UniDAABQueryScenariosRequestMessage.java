@@ -23,12 +23,14 @@
 package com.unida.protocol.message.autonomousbehaviour;
 
 import com.mytechia.commons.framework.simplemessageprotocol.exception.MessageFormatException;
+import com.mytechia.commons.util.conversion.EndianConversor;
 import com.unida.library.device.ontology.IUniDAOntologyCodec;
 import com.unida.protocol.UniDAAddress;
 import com.unida.protocol.message.ErrorCode;
 import com.unida.protocol.message.MessageType;
 import com.unida.protocol.message.UniDAMessage;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 
 /**
  *
@@ -45,14 +47,17 @@ import java.io.ByteArrayOutputStream;
  */
 public class UniDAABQueryScenariosRequestMessage extends UniDAMessage
 {
+    
+    private long opId;
 
-    public UniDAABQueryScenariosRequestMessage(IUniDAOntologyCodec ontologyCodec)
+    public UniDAABQueryScenariosRequestMessage(UniDAAddress gatewayAddress, IUniDAOntologyCodec ontologyCodec, long opId)
     {
         super(ontologyCodec);
+        this.opId = opId;
         setCommandType(MessageType.ABQueryScenariosRequest.getTypeValue());
         setErrorCode(ErrorCode.Null.getTypeValue());
         setData(new byte[0]);
-        this.destination = UniDAAddress.BROADCAST_ADDRESS;
+        this.destination = gatewayAddress;
     }
 
     
@@ -65,6 +70,10 @@ public class UniDAABQueryScenariosRequestMessage extends UniDAMessage
     @Override
     protected int decodeMessagePayload(byte[] bytes, int initIndex) throws MessageFormatException
     {
+        // op ID
+        this.opId = EndianConversor.byteArrayLittleEndianToLong(bytes, initIndex);
+        initIndex += EndianConversor.LONG_SIZE_BYTES;
+        
         return initIndex;
     }
 
@@ -73,6 +82,17 @@ public class UniDAABQueryScenariosRequestMessage extends UniDAMessage
     protected byte[] codeMessagePayload() throws MessageFormatException
     {
         ByteArrayOutputStream dataStream = new ByteArrayOutputStream();
+        
+        try
+        {
+            // op ID
+            byte[] idData = new byte[EndianConversor.LONG_SIZE_BYTES];
+            EndianConversor.longToLittleEndian(opId, idData, 0);
+            dataStream.write(idData);
+        } catch (IOException ioEx)
+        {
+            //ByteArrayOutputStream doesn't throw exceptions in its write methods
+        }
 
         return dataStream.toByteArray();
     }

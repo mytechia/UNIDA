@@ -37,13 +37,12 @@ import com.unida.protocol.IUniDACommChannel;
 import com.unida.protocol.UniDAAddress;
 import com.unida.protocol.message.autonomousbehaviour.UniDAABAddMessage;
 import com.unida.protocol.message.autonomousbehaviour.UniDAABChangeScenarioMessage;
-import com.unida.protocol.message.autonomousbehaviour.UniDAABQueryScenariosRequestMessage;
 import com.unida.protocol.message.autonomousbehaviour.UniDAABRemoveMessage;
 import com.unida.protocol.message.autonomousbehaviour.UniDAABRuleVO;
 import com.unida.protocol.message.discovery.DiscoverUniDAGatewayDevicesRequestMessage;
+import java.util.Collection;
 import java.util.LinkedList;
 import java.util.Queue;
-
 
 /**
  *
@@ -51,22 +50,21 @@ import java.util.Queue;
  */
 public class DefaultGatewayOperationFacade implements IGatewayOperationFacade
 {
-    
+
     private IUniDACommChannel commChannel;
-    
+
     private IUniDAOntologyCodec ontologyCodec;
-    
+
     private UniDAFactory unidaFactory;
-    
+
     private IUniDAManagementFacade unidaManager;
-    
+
     private OperationTicketManager ticketManager;
-    
+
     private Queue<DefaultGatewayAccessLayerCallback> gatewayAccessLayerCallbackQueue;
-    
+
     private int opId = 0;
-    
-    
+
     public DefaultGatewayOperationFacade(IUniDACommChannel commChannel, IUniDAOntologyCodec ontologyCodec,
             UniDAFactory unidaFactory, IUniDAManagementFacade unidaManager)
     {
@@ -77,7 +75,6 @@ public class DefaultGatewayOperationFacade implements IGatewayOperationFacade
         this.unidaFactory = unidaFactory;
         this.unidaManager = unidaManager;
     }
-    
 
     @Override
     public void forceAnnounce() throws InternalErrorException
@@ -92,12 +89,11 @@ public class DefaultGatewayOperationFacade implements IGatewayOperationFacade
         }
 
     }
-    
-    
+
     @Override
     public void changeABScenario(String scenarioId) throws InternalErrorException
     {
-        
+
         try
         {
             this.commChannel.broadcastMessage(new UniDAABChangeScenarioMessage(this.ontologyCodec, scenarioId));
@@ -105,29 +101,39 @@ public class DefaultGatewayOperationFacade implements IGatewayOperationFacade
         {
             throw new InternalErrorException(ex);
         }
-        
+
     }
-    
-    
+
     @Override
-    public void requestABScenarios() throws InternalErrorException
+    public void requestABScenarios(IAutonomousBehaviourCallback callback) throws InternalErrorException
     {
-        
+
         try
         {
-            this.commChannel.broadcastMessage(new UniDAABQueryScenariosRequestMessage(this.ontologyCodec));
+            Collection<Gateway> gateways = this.unidaManager.findAllDeviceGateways(0, Integer.MAX_VALUE);
+            for (Gateway gateway : gateways)
+            {
+                
+                int nextOpId = getOpId();
+                OperationTicket ot = new OperationTicket(nextOpId, OperationTypes.QUERY_SCENARIOS);
+
+                IUniDANetworkFacade unidaNetworkInstance = this.unidaFactory.getDALInstance(gateway);
+                DefaultGatewayAccessLayerCallback internalCallback = new DefaultGatewayAccessLayerCallback(ot, gateway, this, callback);
+                addCallback(internalCallback);
+                unidaNetworkInstance.queryAutonomousBehaviourScenarios(nextOpId, gateway.getId(), internalCallback);
+
+            }
         } catch (CommunicationException ex)
         {
             throw new InternalErrorException(ex);
         }
-        
+
     }
-    
-    
+
     @Override
     public void addABRule(UniDAAddress gatewayAddress, UniDAABRuleVO rule) throws InternalErrorException
     {
-        
+
         try
         {
             this.commChannel.sendMessage(gatewayAddress, new UniDAABAddMessage(gatewayAddress, ontologyCodec, getOpId(), rule));
@@ -135,14 +141,13 @@ public class DefaultGatewayOperationFacade implements IGatewayOperationFacade
         {
             throw new InternalErrorException(ex);
         }
-        
+
     }
-    
-    
+
     @Override
     public void rmABRule(UniDAAddress gatewayAddress, int ruleId) throws InternalErrorException
     {
-        
+
         try
         {
             this.commChannel.sendMessage(gatewayAddress, new UniDAABRemoveMessage(gatewayAddress, ontologyCodec, (short) ruleId, getOpId()));
@@ -150,19 +155,18 @@ public class DefaultGatewayOperationFacade implements IGatewayOperationFacade
         {
             throw new InternalErrorException(ex);
         }
-        
+
     }
-    
-    
+
     @Override
     public OperationTicket requestABRules(UniDAAddress gatewayAddress,
             IAutonomousBehaviourCallback callback) throws InternalErrorException
     {
-        
+
         int nextOpId = getOpId();
-        
+
         OperationTicket ot = new OperationTicket(nextOpId, OperationTypes.QUERY_AUTONOMOUS_BEHAVIOUR);
-        
+
         try
         {
             Gateway gateway = this.unidaManager.findDeviceGatewayById(gatewayAddress.toString());
@@ -171,14 +175,13 @@ public class DefaultGatewayOperationFacade implements IGatewayOperationFacade
             addCallback(internalCallback);
             unidaNetworkInstance.queryAutonomousBehaviourRules(nextOpId, gatewayAddress, internalCallback);
             return ot;
-            
+
         } catch (InstanceNotFoundException ex)
         {
             throw new InternalErrorException(ex);
         }
     }
-    
-    
+
     void addCallback(DefaultGatewayAccessLayerCallback callback)
     {
         this.gatewayAccessLayerCallbackQueue.add(callback);
@@ -188,8 +191,7 @@ public class DefaultGatewayOperationFacade implements IGatewayOperationFacade
     {
         this.gatewayAccessLayerCallbackQueue.remove(callback);
     }
-    
-    
+
     private synchronized int getOpId()
     {
         return opId++;

@@ -54,6 +54,8 @@ import com.unida.protocol.message.UniDAMessage;
 import com.unida.protocol.message.ack.UniDAOperationAckMessage;
 import com.unida.protocol.message.autonomousbehaviour.UniDAABQueryReplyMessage;
 import com.unida.protocol.message.autonomousbehaviour.UniDAABQueryRequestMessage;
+import com.unida.protocol.message.autonomousbehaviour.UniDAABQueryScenariosReplyMessage;
+import com.unida.protocol.message.autonomousbehaviour.UniDAABQueryScenariosRequestMessage;
 import com.unida.protocol.message.discovery.DiscoverUniDAGatewayDevicesReplyMessage;
 import com.unida.protocol.message.discovery.DiscoverUniDAGatewayDevicesRequestMessage;
 import com.unida.protocol.message.discovery.UniDAGatewayHeartbeatMessage;
@@ -129,6 +131,7 @@ public class DefaultUniDAFacade extends AbstractUniDAFacadeHelper implements IUn
         this.msgProcessor.registerMessageHandler(new UniDAQueryDeviceStateReplyMessageHandler());
         this.msgProcessor.registerMessageHandler(new UnidaHeartbeatMessageHandler());        
         this.msgProcessor.registerMessageHandler(new UniDAQueryAutonomousBehaviourRulesReplyMessageHandler());
+        this.msgProcessor.registerMessageHandler(new UniDAQueryAutonomousBehaviourQueryScenariosReplyMessageHandler());
         
     }
 
@@ -225,6 +228,13 @@ public class DefaultUniDAFacade extends AbstractUniDAFacadeHelper implements IUn
     {
         return true;
     }   
+
+    @Override
+    public void queryAutonomousBehaviourScenarios(long notificationId, UniDAAddress gatewayAddress, IAutonomousBehaviourInternalCallback callback) throws CommunicationException
+    {
+        addAutonomousBehaviourCallback(notificationId, gatewayAddress, callback);
+        this.commChannel.sendMessage(gatewayAddress, new UniDAABQueryScenariosRequestMessage(gatewayAddress, ontologyCodec, notificationId));
+    }
        
 
     private class UniDAQueryDeviceStateReplyMessageHandler implements IUniDAProtocolMessageHandler
@@ -505,6 +515,40 @@ public class DefaultUniDAFacade extends AbstractUniDAFacadeHelper implements IUn
                     if (reply.getErrorCode() == ErrorCode.Ok.getTypeValue())
                     {
                         cback.notifyGatewayAutonomousBehaviourRules(reply.getOpId(), reply.getSource(), reply.getABRules());
+                    }
+                }
+                
+            }
+            
+            return null;
+            
+        }
+        
+    }
+    
+    private class UniDAQueryAutonomousBehaviourQueryScenariosReplyMessageHandler implements IUniDAProtocolMessageHandler
+    {
+
+        @Override
+        public boolean supports(UniDAMessage msg)
+        {
+            return MessageType.getTypeOf(msg.getCommandType()) == MessageType.ABQueryScenariosReply;
+        }
+
+        @Override
+        public UniDAMessage handle(UniDAMessage msg) throws UnsupportedMessageTypeErrorException
+        {
+            if (msg instanceof UniDAABQueryScenariosReplyMessage)
+            {
+             
+                UniDAABQueryScenariosReplyMessage reply = (UniDAABQueryScenariosReplyMessage) msg;
+                IAutonomousBehaviourInternalCallback cback = removeAutonomousBehaviourCallback(reply.getOpId(), reply.getSource());
+                
+                if (cback != null)
+                {
+                    if (reply.getErrorCode() == ErrorCode.Ok.getTypeValue())
+                    {
+                        cback.notifyGatewayAutonomousBehaviourScenarios(reply.getOpId(), reply.getSource(), reply.getScenarioIDs());
                     }
                 }
                 

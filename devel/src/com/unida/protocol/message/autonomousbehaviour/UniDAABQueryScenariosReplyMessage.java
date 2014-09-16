@@ -26,6 +26,7 @@ import com.mytechia.commons.framework.simplemessageprotocol.Message;
 import com.mytechia.commons.framework.simplemessageprotocol.exception.MessageFormatException;
 import com.mytechia.commons.util.conversion.EndianConversor;
 import com.unida.library.device.ontology.IUniDAOntologyCodec;
+import com.unida.protocol.UniDAAddress;
 import com.unida.protocol.message.ErrorCode;
 import com.unida.protocol.message.MessageType;
 import com.unida.protocol.message.UniDAMessage;
@@ -51,15 +52,18 @@ public class UniDAABQueryScenariosReplyMessage extends UniDAMessage
 {
 
     private List<String> scenarioIDs;
+    private long opId;
     
     
-    public UniDAABQueryScenariosReplyMessage(IUniDAOntologyCodec ontologyCodec, List<String> scenarioIDs)
+    public UniDAABQueryScenariosReplyMessage(UniDAAddress gatewayAddress, IUniDAOntologyCodec ontologyCodec, List<String> scenarioIDs, long opId)
     {
         super(ontologyCodec);
         this.scenarioIDs = scenarioIDs;
+        this.opId = opId;
         setCommandType(MessageType.ABQueryScenariosReply.getTypeValue());
         setErrorCode(ErrorCode.Null.getTypeValue());
         setData(new byte[0]);
+        this.setDestination(destination);
     }
 
     
@@ -73,11 +77,21 @@ public class UniDAABQueryScenariosReplyMessage extends UniDAMessage
     {
         return this.scenarioIDs;
     }
+    
+    
+    public long getOpId()
+    {
+        return this.opId;
+    }
 
     
     @Override
     protected int decodeMessagePayload(byte[] bytes, int initIndex) throws MessageFormatException
     {
+        
+        // op ID
+        this.opId = EndianConversor.byteArrayLittleEndianToLong(bytes, initIndex);
+        initIndex += EndianConversor.LONG_SIZE_BYTES;
         
         // Scenarios count
         short scenariosNumber = EndianConversor.byteArrayLittleEndianToShort(bytes, initIndex);
@@ -104,7 +118,9 @@ public class UniDAABQueryScenariosReplyMessage extends UniDAMessage
         {
             // Scenarios count
             //opId
-            byte[] idData = new byte[EndianConversor.SHORT_SIZE_BYTES];
+            byte[] idData = new byte[EndianConversor.LONG_SIZE_BYTES];
+            EndianConversor.longToLittleEndian(opId, idData, 0);
+            dataStream.write(idData);
 
             EndianConversor.shortToLittleEndian((short) this.getScenarioIDs().size(), idData, 0);
             dataStream.write(idData, 0, EndianConversor.SHORT_SIZE_BYTES);

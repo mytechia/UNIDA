@@ -48,5 +48,7 @@ public interface IAutonomousBehaviourInternalCallback {
     
     public void notifyGatewayAutonomousBehaviourRules(long opId, UniDAAddress gatewayAddress, List<UniDAABRuleVO> rules);
     
+    public void notifyGatewayAutonomousBehaviourScenarios(long opId, UniDAAddress gatewayAddress, List<String> scenarioIDs);
+    
 
 }

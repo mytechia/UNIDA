@@ -27,7 +27,13 @@
 package com.unida.tools.librarybasicgui.dialog;
 
 import com.mytechia.commons.framework.exception.InternalErrorException;
+import com.unida.library.device.Gateway;
 import com.unida.library.manage.im.InMemoryUniDAInstantiationFacade;
+import com.unida.library.operation.OperationTicket;
+import com.unida.library.operation.gateway.IAutonomousBehaviourCallback;
+import com.unida.protocol.message.autonomousbehaviour.UniDAABRuleVO;
+import java.util.List;
+import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 
 
@@ -39,6 +45,7 @@ public class AutonomousBehaviourQueryScenariosDialog extends javax.swing.JDialog
 {
 
     private InMemoryUniDAInstantiationFacade instantiationFacade;
+    DefaultListModel listModel;
     
     
     /**
@@ -52,6 +59,8 @@ public class AutonomousBehaviourQueryScenariosDialog extends javax.swing.JDialog
         super(parent, modal);
         this.instantiationFacade = instantiationFacade;
         initComponents();
+        this.listModel = new DefaultListModel();
+        jListABScenarios.setModel(listModel);
     }
 
     /**
@@ -112,7 +121,8 @@ public class AutonomousBehaviourQueryScenariosDialog extends javax.swing.JDialog
     {//GEN-HEADEREND:event_jButtonQueryABScenariosActionPerformed
         try
         {
-            this.instantiationFacade.getGatewayOperationFacade().requestABScenarios();
+            this.listModel.clear();
+            this.instantiationFacade.getGatewayOperationFacade().requestABScenarios(new ABCallback());
         } catch (InternalErrorException ex)
         {
             JOptionPane.showMessageDialog(this, ex.toString());
@@ -126,4 +136,33 @@ public class AutonomousBehaviourQueryScenariosDialog extends javax.swing.JDialog
     private javax.swing.JList jListABScenarios;
     private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
+
+/*
+    * Callback that is invoked when an answer for an UniDA autonomous behaviour scenarios query
+    *is received
+    */
+    private class ABCallback implements IAutonomousBehaviourCallback
+    {
+
+        @Override
+        public void notifyGatewayAutonomousBehaviourRules(OperationTicket ticket, Gateway gateway, List<UniDAABRuleVO> rules)
+        {
+            throw new UnsupportedOperationException("Not supported here.");
+        }
+
+        @Override
+        public void notifyAutonomousBehaviourScenarios(OperationTicket ticket, List<String> scenarioIDs)
+        {
+            
+            for (String scenarioID: scenarioIDs)
+            {
+                listModel.addElement(scenarioID);
+            }
+            
+        }
+        
+    }
+
 }
+
+

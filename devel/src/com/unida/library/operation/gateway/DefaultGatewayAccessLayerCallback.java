@@ -103,6 +103,20 @@ public class DefaultGatewayAccessLayerCallback implements IAutonomousBehaviourIn
     }
     
     
+    @Override
+    public void notifyGatewayAutonomousBehaviourScenarios(long opId, UniDAAddress gatewayAddress, List<String> scenarioIDs)
+    {
+        if (isThisOperation(opId, gatewayAddress))
+        {
+            if (this.operationCallback != null)
+            {
+                this.operationCallback.notifyAutonomousBehaviourScenarios(this.ticket, scenarioIDs);
+            }
+            finishCallback();
+        }
+    }
+    
+    
     private void finishCallback()
     {
         this.gatewayOpFacade.removeCallback(this);

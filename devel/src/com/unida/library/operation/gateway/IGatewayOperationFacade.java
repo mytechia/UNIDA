@@ -48,6 +48,6 @@ public interface IGatewayOperationFacade
     
     public OperationTicket requestABRules(UniDAAddress gatewayAddress, IAutonomousBehaviourCallback callback) throws InternalErrorException;
     
-    public void requestABScenarios() throws InternalErrorException;
+    public void requestABScenarios(IAutonomousBehaviourCallback callback) throws InternalErrorException;
         
 }
