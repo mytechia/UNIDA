@@ -33,68 +33,83 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
 /**
- *
  * <p><b>Creation date:</b> 
- * 16-09-2014 </p>
+ * 17-09-2014 </p>
  *
  * <p><b>Changelog:</b>
  * <ul>
- * <li> 1 , 16-09-2014 -> Initial release</li>
+ * <li> 1 , 17-09-2014 -> Initial release</li>
  * </ul>
  * </p>
  * @author Victor Sonora Pombo
  * @version 1
  */
-public class UniDAABQueryScenariosRequestMessage extends UniDAMessage
+public class UniDAABACKMessage extends UniDAMessage
 {
-    
-    private long opId;
 
-    public UniDAABQueryScenariosRequestMessage(UniDAAddress gatewayAddress, IUniDAOntologyCodec ontologyCodec, long opId)
+    private ErrorCode errorCode;
+    private Long opId;
+    
+    
+    public UniDAABACKMessage(byte[] message, IUniDAOntologyCodec ontologyCodec) throws MessageFormatException
+    {
+        super(message, ontologyCodec);
+        this.setCommandType(MessageType.ABACK.getTypeValue());
+        this.errorCode = ErrorCode.getTypeOf(getErrorCode());
+    }
+    
+    public UniDAABACKMessage(
+            IUniDAOntologyCodec ontologyCodec, 
+            UniDAAddress gatewayAddress, 
+            long opId, 
+            ErrorCode errorCode)
     {
         super(ontologyCodec);
         this.opId = opId;
-        setCommandType(MessageType.ABQueryScenariosRequest.getTypeValue());
-        setErrorCode(ErrorCode.Null.getTypeValue());
-        setData(new byte[0]);
+        setCommandType(MessageType.ABACK.getTypeValue());
+        this.errorCode = errorCode;
+        this.setErrorCode(this.errorCode.getTypeValue());
         this.setDestination(gatewayAddress);
     }
-
     
-    public UniDAABQueryScenariosRequestMessage(byte[] message, IUniDAOntologyCodec ontologyCodec) throws MessageFormatException
+    public Long getOperationId()
     {
-        super(message, ontologyCodec);
+        return this.opId;
     }
     
-
     @Override
-    protected int decodeMessagePayload(byte[] bytes, int initIndex) throws MessageFormatException
+    public byte[] codeMessagePayload()
     {
-        // op ID
-        this.opId = EndianConversor.byteArrayLittleEndianToLong(bytes, initIndex);
-        initIndex += EndianConversor.LONG_SIZE_BYTES;
-        
-        return initIndex;
-    }
 
-    
-    @Override
-    protected byte[] codeMessagePayload() throws MessageFormatException
-    {
         ByteArrayOutputStream dataStream = new ByteArrayOutputStream();
-        
-        try
-        {
-            // op ID
-            byte[] idData = new byte[EndianConversor.LONG_SIZE_BYTES];
-            EndianConversor.longToLittleEndian(opId, idData, 0);
-            dataStream.write(idData);
-        } catch (IOException ioEx)
-        {
+
+        try {          
+            
+            byte [] idData = new byte[EndianConversor.LONG_SIZE_BYTES];
+            EndianConversor.longToLittleEndian(this.opId, idData, 0);
+            dataStream.write(idData);                        
+
+        }
+        catch(IOException ioEx) {
             //ByteArrayOutputStream doesn't throw exceptions in its write methods
         }
 
         return dataStream.toByteArray();
+
+    }
+
+
+    @Override
+    protected int decodeMessagePayload(byte[] bytes, int initIndex) throws MessageFormatException
+    {
+
+        int offset = initIndex;
+
+        this.opId = EndianConversor.byteArrayLittleEndianToLong(bytes, offset);
+        offset += EndianConversor.LONG_SIZE_BYTES;
+
+        return offset;
+
     }
     
 }

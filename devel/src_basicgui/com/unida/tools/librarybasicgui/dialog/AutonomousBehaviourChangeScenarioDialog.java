@@ -26,7 +26,13 @@
 package com.unida.tools.librarybasicgui.dialog;
 
 import com.mytechia.commons.framework.exception.InternalErrorException;
+import com.unida.library.device.Gateway;
 import com.unida.library.manage.im.InMemoryUniDAInstantiationFacade;
+import com.unida.library.operation.OperationFailures;
+import com.unida.library.operation.OperationTicket;
+import com.unida.library.operation.gateway.IAutonomousBehaviourCallback;
+import com.unida.protocol.message.autonomousbehaviour.UniDAABRuleVO;
+import java.util.List;
 import javax.swing.JOptionPane;
 
 /**
@@ -66,6 +72,9 @@ public class AutonomousBehaviourChangeScenarioDialog extends javax.swing.JDialog
         jLabel1 = new javax.swing.JLabel();
         jTextScenarioID = new javax.swing.JTextField();
         jButtonChangeScenario = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
+        jTextInfoExecution = new javax.swing.JTextField();
+        jSeparator1 = new javax.swing.JSeparator();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -80,20 +89,39 @@ public class AutonomousBehaviourChangeScenarioDialog extends javax.swing.JDialog
             }
         });
 
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel2.setText("Returned Ack:");
+
+        jTextInfoExecution.setEditable(false);
+        jTextInfoExecution.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        jTextInfoExecution.setMinimumSize(new java.awt.Dimension(10, 39));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(30, 30, 30)
-                .addComponent(jLabel1)
-                .addGap(18, 18, 18)
-                .addComponent(jTextScenarioID, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(35, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(30, 30, 30)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(26, 26, 26)
+                                .addComponent(jTextInfoExecution, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel1)
+                                .addGap(18, 18, 18)
+                                .addComponent(jTextScenarioID, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 23, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jSeparator1)))
+                .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addGap(115, 115, 115)
                 .addComponent(jButtonChangeScenario)
-                .addGap(125, 125, 125))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -102,9 +130,15 @@ public class AutonomousBehaviourChangeScenarioDialog extends javax.swing.JDialog
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTextScenarioID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 55, Short.MAX_VALUE)
+                .addGap(30, 30, 30)
                 .addComponent(jButtonChangeScenario)
-                .addGap(15, 15, 15))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextInfoExecution, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(8, Short.MAX_VALUE))
         );
 
         pack();
@@ -114,7 +148,7 @@ public class AutonomousBehaviourChangeScenarioDialog extends javax.swing.JDialog
     {//GEN-HEADEREND:event_jButtonChangeScenarioActionPerformed
         try
         {
-            this.instantiationFacade.getGatewayOperationFacade().changeABScenario(this.jTextScenarioID.getText());
+            this.instantiationFacade.getGatewayOperationFacade().changeABScenario(this.jTextScenarioID.getText(), new ABCallback());
         } catch (InternalErrorException ex)
         {
             JOptionPane.showMessageDialog(this, ex.toString());
@@ -125,6 +159,45 @@ public class AutonomousBehaviourChangeScenarioDialog extends javax.swing.JDialog
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonChangeScenario;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JTextField jTextInfoExecution;
     private javax.swing.JTextField jTextScenarioID;
     // End of variables declaration//GEN-END:variables
+
+    private class ABCallback implements IAutonomousBehaviourCallback
+    {
+
+        @Override
+        public void notifyGatewayAutonomousBehaviourRules(OperationTicket ticket, Gateway gateway, List<UniDAABRuleVO> rules)
+        {
+            throw new UnsupportedOperationException("Not supported here.");
+        }
+
+        @Override
+        public void notifyAutonomousBehaviourScenarios(OperationTicket ticket, List<String> scenarioIDs)
+        {
+           throw new UnsupportedOperationException("Not supported here.");
+        }
+
+        @Override
+        public void notifyAutonomousBehaviourACK(OperationTicket ticket)
+        {
+            throw new UnsupportedOperationException("Not supported yet.");
+        }
+
+        @Override
+        public void notifyExecution(OperationTicket ticket)
+        {
+            jTextInfoExecution.setText("yippee!");
+        }
+
+        @Override
+        public void notifyFailure(OperationTicket ticket, OperationFailures failure)
+        {
+            jTextInfoExecution.setText("oh no!");
+        }
+        
+    }
+
 }

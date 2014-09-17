@@ -80,6 +80,9 @@ public interface IUniDANetworkFacade
     void unsuscribeFrom(long notificationId, DeviceID deviceId, String stateId, String[] params, INotificationInternalCallback callback)
             throws CommunicationException;
     
+    void changeScenario(long notificationId, UniDAAddress gatewayAddress, String scenarioId, IAutonomousBehaviourInternalCallback callback)
+            throws CommunicationException;
+    
     void queryAutonomousBehaviourRules(long notificationId, UniDAAddress gatewayAddress, IAutonomousBehaviourInternalCallback callback)
             throws CommunicationException;
     

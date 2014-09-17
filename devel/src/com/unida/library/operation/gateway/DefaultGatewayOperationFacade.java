@@ -36,7 +36,6 @@ import com.unida.library.operation.OperationTypes;
 import com.unida.protocol.IUniDACommChannel;
 import com.unida.protocol.UniDAAddress;
 import com.unida.protocol.message.autonomousbehaviour.UniDAABAddMessage;
-import com.unida.protocol.message.autonomousbehaviour.UniDAABChangeScenarioMessage;
 import com.unida.protocol.message.autonomousbehaviour.UniDAABRemoveMessage;
 import com.unida.protocol.message.autonomousbehaviour.UniDAABRuleVO;
 import com.unida.protocol.message.discovery.DiscoverUniDAGatewayDevicesRequestMessage;
@@ -91,17 +90,27 @@ public class DefaultGatewayOperationFacade implements IGatewayOperationFacade
     }
 
     @Override
-    public void changeABScenario(String scenarioId) throws InternalErrorException
+    public void changeABScenario(String scenarioId, IAutonomousBehaviourCallback callback) throws InternalErrorException
     {
 
         try
         {
-            this.commChannel.broadcastMessage(new UniDAABChangeScenarioMessage(this.ontologyCodec, scenarioId));
+            Collection<Gateway> gateways = this.unidaManager.findAllDeviceGateways(0, Integer.MAX_VALUE);
+            for (Gateway gateway : gateways)
+            {
+                int nextOpId = getOpId();
+                OperationTicket ot = new OperationTicket(nextOpId, OperationTypes.CHANGE_SCENARIO);
+                
+                IUniDANetworkFacade unidaNetworkInstance = this.unidaFactory.getDALInstance(gateway);
+                DefaultGatewayAccessLayerCallback internalCallback = new DefaultGatewayAccessLayerCallback(ot, gateway, this, callback);
+                addCallback(internalCallback);
+                unidaNetworkInstance.changeScenario(nextOpId, gateway.getId(), scenarioId, internalCallback);
+            }
+
         } catch (CommunicationException ex)
         {
             throw new InternalErrorException(ex);
-        }
-
+        }                
     }
 
     @Override

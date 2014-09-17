@@ -32,6 +32,7 @@ import com.unida.protocol.message.ErrorCode;
 import com.unida.protocol.message.MessageType;
 import com.unida.protocol.message.UniDAMessage;
 import com.unida.protocol.message.ack.UniDAOperationAckMessage;
+import com.unida.protocol.message.autonomousbehaviour.UniDAABACKMessage;
 import com.unida.protocol.message.autonomousbehaviour.UniDAABAddMessage;
 import com.unida.protocol.message.autonomousbehaviour.UniDAABChangeScenarioMessage;
 import com.unida.protocol.message.autonomousbehaviour.UniDAABQueryReplyMessage;
@@ -166,6 +167,9 @@ public class DefaultMessageFactory implements IMessageFactory
         } else if (msgType == MessageType.ABQueryScenariosReply.getTypeValue())
         {
             return createUnidaABQueryScenariosReply(msgType, msgData);
+        } else if (msgType == MessageType.ABACK.getTypeValue())
+        {
+            return createUnidaABACKMessage(msgType, msgData);
         } else
         {
             throw new MessageFormatException("Unsupported message type: " + msgType + ".");
@@ -466,6 +470,19 @@ public class DefaultMessageFactory implements IMessageFactory
         if (msgType == MessageType.ABQueryScenariosReply.getTypeValue())
         {
             return new UniDAABQueryScenariosReplyMessage(msgData, ontologyCodec);
+        } else
+        {
+            return null;
+        }
+
+    }
+   
+    UniDAABACKMessage createUnidaABACKMessage(byte msgType, byte[] msgData) throws MessageFormatException
+    {
+
+        if (msgType == MessageType.ABACK.getTypeValue())
+        {
+            return new UniDAABACKMessage(msgData, ontologyCodec);
         } else
         {
             return null;
