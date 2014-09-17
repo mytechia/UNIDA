@@ -29,6 +29,7 @@ package com.unida.tools.librarybasicgui.dialog;
 import com.mytechia.commons.framework.exception.InternalErrorException;
 import com.unida.library.device.Gateway;
 import com.unida.library.manage.im.InMemoryUniDAInstantiationFacade;
+import com.unida.library.operation.OperationFailures;
 import com.unida.library.operation.OperationTicket;
 import com.unida.library.operation.gateway.IAutonomousBehaviourCallback;
 import com.unida.protocol.message.autonomousbehaviour.UniDAABRuleVO;
@@ -159,6 +160,24 @@ public class AutonomousBehaviourQueryScenariosDialog extends javax.swing.JDialog
                 listModel.addElement(scenarioID);
             }
             
+        }
+
+        @Override
+        public void notifyAutonomousBehaviourACK(OperationTicket ticket)
+        {
+            throw new UnsupportedOperationException("Not supported yet.");
+        }
+
+        @Override
+        public void notifyExecution(OperationTicket ticket)
+        {
+            throw new UnsupportedOperationException("Not supported yet.");
+        }
+
+        @Override
+        public void notifyFailure(OperationTicket ticket, OperationFailures failure)
+        {
+            throw new UnsupportedOperationException("Not supported yet.");
         }
         
     }

@@ -35,6 +35,7 @@ import com.unida.protocol.message.UniDADeviceMessage;
 import com.unida.protocol.message.UniDAMessage;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.Objects;
 
 
 /**
@@ -145,10 +146,7 @@ public class UniDAOperationAckMessage extends UniDADeviceMessage
         if (this.errorCode != other.errorCode && (this.errorCode == null || !this.errorCode.equals(other.errorCode))) {
             return false;
         }
-        if (this.opId != other.opId && (this.opId == null || !this.opId.equals(other.opId))) {
-            return false;
-        }
-        return true;
+        return !(!Objects.equals(this.opId, other.opId) && (this.opId == null || !this.opId.equals(other.opId)));
     }
 
 

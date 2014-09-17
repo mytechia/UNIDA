@@ -52,6 +52,8 @@ import com.unida.protocol.message.ErrorCode;
 import com.unida.protocol.message.MessageType;
 import com.unida.protocol.message.UniDAMessage;
 import com.unida.protocol.message.ack.UniDAOperationAckMessage;
+import com.unida.protocol.message.autonomousbehaviour.UniDAABACKMessage;
+import com.unida.protocol.message.autonomousbehaviour.UniDAABChangeScenarioMessage;
 import com.unida.protocol.message.autonomousbehaviour.UniDAABQueryReplyMessage;
 import com.unida.protocol.message.autonomousbehaviour.UniDAABQueryRequestMessage;
 import com.unida.protocol.message.autonomousbehaviour.UniDAABQueryScenariosReplyMessage;
@@ -132,6 +134,7 @@ public class DefaultUniDAFacade extends AbstractUniDAFacadeHelper implements IUn
         this.msgProcessor.registerMessageHandler(new UnidaHeartbeatMessageHandler());        
         this.msgProcessor.registerMessageHandler(new UniDAQueryAutonomousBehaviourRulesReplyMessageHandler());
         this.msgProcessor.registerMessageHandler(new UniDAQueryAutonomousBehaviourQueryScenariosReplyMessageHandler());
+        this.msgProcessor.registerMessageHandler(new UniDAAutonomousBehaviourAckMessageHandler());
         
     }
 
@@ -234,6 +237,13 @@ public class DefaultUniDAFacade extends AbstractUniDAFacadeHelper implements IUn
     {
         addAutonomousBehaviourCallback(notificationId, gatewayAddress, callback);
         this.commChannel.sendMessage(gatewayAddress, new UniDAABQueryScenariosRequestMessage(gatewayAddress, ontologyCodec, notificationId));
+    }
+
+    @Override
+    public void changeScenario(long notificationId, UniDAAddress gatewayAddress, String scenarioId, IAutonomousBehaviourInternalCallback callback) throws CommunicationException
+    {
+        addAutonomousBehaviourCallback(notificationId, gatewayAddress, callback);
+        this.commChannel.sendMessage(gatewayAddress, new UniDAABChangeScenarioMessage(ontologyCodec, gatewayAddress, notificationId, scenarioId));
     }
        
 
@@ -482,6 +492,44 @@ public class DefaultUniDAFacade extends AbstractUniDAFacadeHelper implements IUn
                 {
                 } catch (ClassNotFoundInOntologyException | InternalErrorException ex)
                 {
+                }
+
+            }
+
+            return null;
+
+        }
+    }
+    
+    
+    private class UniDAAutonomousBehaviourAckMessageHandler implements IUniDAProtocolMessageHandler
+    {
+
+        @Override
+        public boolean supports(UniDAMessage msg)
+        {
+            return MessageType.getTypeOf(msg.getCommandType()) == MessageType.ABACK;
+        }
+
+        @Override
+        public synchronized UniDAMessage handle(UniDAMessage msg)
+        {
+
+            if (msg instanceof UniDAABACKMessage)
+            {
+
+                UniDAABACKMessage reply = (UniDAABACKMessage) msg;
+                IAutonomousBehaviourInternalCallback cback = removeAutonomousBehaviourCallback(reply.getOperationId(), reply.getSource());
+
+                if (cback != null)
+                {
+                    if (reply.getErrorCode() == ErrorCode.Ok.getTypeValue())
+                    {
+                        cback.notifyABExecution(reply.getOperationId(), reply.getSource());
+                    } else
+                    {
+                        cback.notifyABFailure(reply.getOperationId(), reply.getSource()); //TODO --> add specific error messages
+                    }
                 }
 
             }

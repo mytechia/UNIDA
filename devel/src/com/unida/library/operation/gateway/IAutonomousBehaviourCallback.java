@@ -22,6 +22,7 @@
 package com.unida.library.operation.gateway;
 
 import com.unida.library.device.Gateway;
+import com.unida.library.operation.OperationFailures;
 import com.unida.library.operation.OperationTicket;
 import com.unida.protocol.message.autonomousbehaviour.UniDAABRuleVO;
 import java.util.List;
@@ -44,9 +45,23 @@ import java.util.List;
 public interface IAutonomousBehaviourCallback 
 {
 
-    public void notifyGatewayAutonomousBehaviourRules(OperationTicket ticket, Gateway gateway,
+    public void notifyGatewayAutonomousBehaviourRules(
+            OperationTicket ticket, 
+            Gateway gateway,
             List<UniDAABRuleVO> rules);
     
-    public void notifyAutonomousBehaviourScenarios(OperationTicket ticket, List<String> scenarioIDs);
+    public void notifyAutonomousBehaviourScenarios(
+            OperationTicket ticket, 
+            List<String> scenarioIDs);
+    
+    public void notifyAutonomousBehaviourACK(
+            OperationTicket ticket);
+    
+    void notifyExecution(
+            OperationTicket ticket);
+    
+    void notifyFailure(
+            OperationTicket ticket,
+            OperationFailures failure);
     
 }

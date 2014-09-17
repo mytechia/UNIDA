@@ -24,6 +24,7 @@ package com.unida.protocol.message.autonomousbehaviour;
 
 import com.mytechia.commons.framework.simplemessageprotocol.Message;
 import com.mytechia.commons.framework.simplemessageprotocol.exception.MessageFormatException;
+import com.mytechia.commons.util.conversion.EndianConversor;
 import com.unida.library.device.ontology.IUniDAOntologyCodec;
 import com.unida.protocol.UniDAAddress;
 import com.unida.protocol.message.ErrorCode;
@@ -48,25 +49,35 @@ import java.io.IOException;
 public class UniDAABChangeScenarioMessage extends UniDAMessage
 {
     
+    private long opId;
     private String scenarioID;
     
     
-    public UniDAABChangeScenarioMessage(IUniDAOntologyCodec ontologyCodec, String scenarioID)
+    public UniDAABChangeScenarioMessage(
+            IUniDAOntologyCodec ontologyCodec, 
+            UniDAAddress gatewayAddress, 
+            long opId, 
+            String scenarioID)
     {
         super(ontologyCodec);
+        this.opId = opId;
         this.scenarioID = scenarioID;
         setCommandType(MessageType.ABChangeScenario.getTypeValue());
         setErrorCode(ErrorCode.Null.getTypeValue());
         setData(new byte[0]);
-        this.destination = UniDAAddress.BROADCAST_ADDRESS;
+        this.setDestination(gatewayAddress);
     }
-
     
     public UniDAABChangeScenarioMessage(byte[] message, IUniDAOntologyCodec ontologyCodec) throws MessageFormatException
     {
         super(message, ontologyCodec);
     }
 
+    public long getOpId()
+    {
+        return this.opId;
+    }
+    
     public String getScenarioID()
     {
         return scenarioID;
@@ -79,6 +90,11 @@ public class UniDAABChangeScenarioMessage extends UniDAMessage
 
         try
         {
+            //opId
+            byte[] idData = new byte[EndianConversor.LONG_SIZE_BYTES];
+            EndianConversor.longToLittleEndian(opId, idData, 0);
+            dataStream.write(idData);
+            
             // Scenario
             writeString(dataStream, getScenarioID());
         } catch (IOException ioEx)
@@ -92,6 +108,9 @@ public class UniDAABChangeScenarioMessage extends UniDAMessage
     @Override
     protected int decodeMessagePayload(byte[] bytes, int initIndex) throws MessageFormatException
     {
+        // op ID
+        this.opId = EndianConversor.byteArrayLittleEndianToLong(bytes, initIndex);
+        initIndex += EndianConversor.LONG_SIZE_BYTES;
         
         // Scenario
         StringBuilder string = new StringBuilder(20);

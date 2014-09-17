@@ -50,6 +50,7 @@ public enum OperationTypes
     SEND_COMMAND_QUERY_STATE, //send a command to a device and receive its state after the command execution
     SUSCRIBE_TO, //suscribe to a device notification    
     QUERY_AUTONOMOUS_BEHAVIOUR, //a query of the autonomous behaviour rules handled by a gateway
-    QUERY_SCENARIOS // a query of the autonomous behaviour scenarios used by rules in a gateway
+    QUERY_SCENARIOS, //a query of the autonomous behaviour scenarios used by rules in a gateway
+    CHANGE_SCENARIO //a command to change the current autonomous behaviour scenario of a gateway
     
 }

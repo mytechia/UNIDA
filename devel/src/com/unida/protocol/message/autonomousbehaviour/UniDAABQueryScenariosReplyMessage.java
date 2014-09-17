@@ -116,12 +116,12 @@ public class UniDAABQueryScenariosReplyMessage extends UniDAMessage
 
         try
         {
-            // Scenarios count
             //opId
             byte[] idData = new byte[EndianConversor.LONG_SIZE_BYTES];
             EndianConversor.longToLittleEndian(opId, idData, 0);
             dataStream.write(idData);
 
+            // Scenarios count
             EndianConversor.shortToLittleEndian((short) this.getScenarioIDs().size(), idData, 0);
             dataStream.write(idData, 0, EndianConversor.SHORT_SIZE_BYTES);
             

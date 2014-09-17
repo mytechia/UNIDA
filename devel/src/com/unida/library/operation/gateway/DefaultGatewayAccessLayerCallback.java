@@ -23,6 +23,7 @@ package com.unida.library.operation.gateway;
 
 
 import com.unida.library.device.Gateway;
+import com.unida.library.operation.OperationFailures;
 import com.unida.library.operation.OperationTicket;
 import com.unida.protocol.UniDAAddress;
 import com.unida.protocol.message.autonomousbehaviour.UniDAABRuleVO;
@@ -125,6 +126,48 @@ public class DefaultGatewayAccessLayerCallback implements IAutonomousBehaviourIn
     private boolean isThisOperation(long opId, UniDAAddress gatewayAddress)
     {
         return (ticket.getId() == opId) && gatewayAddress.equals(this.gateway.getId());
+    }
+
+    @Override
+    public void notifyABExecution(long opId, UniDAAddress gatewayAddress)
+    {
+        if (isThisOperation(opId, gatewayAddress))
+        {
+            if (this.operationCallback != null)
+            {
+                this.operationCallback.notifyExecution(this.ticket);
+            }
+            finishCallback();
+        }
+    }
+
+    @Override
+    public void notifyABFailure(long opId, UniDAAddress gatewayAddress)
+    {
+        if (isThisOperation(opId, gatewayAddress))
+        {
+            if (this.operationCallback != null)
+            {
+                this.operationCallback.notifyFailure(this.ticket, OperationFailures.OPERATION_ERROR);
+            }
+            finishCallback();
+        }
+    }
+
+    @Override
+    public void notifyExpiration(long opId)
+    {
+        if (ticket.getId() == opId)
+        {
+            finishCallback();
+
+            if (this.operationCallback != null)
+            {
+                this.operationCallback.notifyFailure(
+                        this.ticket,
+                        OperationFailures.RESPONSE_EXPIRATION);
+            }
+        }
     }
     
 
