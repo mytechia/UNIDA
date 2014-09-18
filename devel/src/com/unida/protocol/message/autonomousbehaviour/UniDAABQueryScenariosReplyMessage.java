@@ -61,9 +61,8 @@ public class UniDAABQueryScenariosReplyMessage extends UniDAMessage
         this.scenarioIDs = scenarioIDs;
         this.opId = opId;
         setCommandType(MessageType.ABQueryScenariosReply.getTypeValue());
-        setErrorCode(ErrorCode.Null.getTypeValue());
-        setData(new byte[0]);
-        this.setDestination(destination);
+        this.setErrorCode(ErrorCode.Ok.getTypeValue());
+        this.setDestination(gatewayAddress);
     }
 
     

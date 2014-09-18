@@ -66,6 +66,12 @@ public class UniDAABQueryScenariosRequestMessage extends UniDAMessage
         super(message, ontologyCodec);
     }
     
+    
+    public long getOpId()
+    {
+        return this.opId;
+    }
+    
 
     @Override
     protected int decodeMessagePayload(byte[] bytes, int initIndex) throws MessageFormatException
