@@ -55,8 +55,7 @@ public class UniDAABQueryScenariosRequestMessage extends UniDAMessage
         super(ontologyCodec);
         this.opId = opId;
         setCommandType(MessageType.ABQueryScenariosRequest.getTypeValue());
-        setErrorCode(ErrorCode.Null.getTypeValue());
-        setData(new byte[0]);
+        setErrorCode(ErrorCode.Ok.getTypeValue());
         this.setDestination(gatewayAddress);
     }
 
