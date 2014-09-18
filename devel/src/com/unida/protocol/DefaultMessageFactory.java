@@ -160,7 +160,7 @@ public class DefaultMessageFactory implements IMessageFactory
             return createUnidaABRulesQueryReplyMessage(msgType, msgData);
         } else if (msgType == MessageType.ABChangeScenario.getTypeValue())
         {
-            return createUnidaABQueryScenariosRequest(msgType, msgData);
+            return createUnidaABChangeScenarioRequestMessage(msgType, msgData);
         } else if (msgType == MessageType.ABQueryScenariosRequest.getTypeValue())
         {
             return createUnidaABQueryScenariosRequest(msgType, msgData);
