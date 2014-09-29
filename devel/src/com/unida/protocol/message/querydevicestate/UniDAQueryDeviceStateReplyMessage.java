@@ -82,7 +82,6 @@ public class UniDAQueryDeviceStateReplyMessage extends UniDAQueryDeviceStateRequ
     public UniDAQueryDeviceStateReplyMessage(byte[] message, IUniDAOntologyCodec ontologyCodec) throws MessageFormatException
     {
         super(message, ontologyCodec);
-        this.stateValue = new DeviceStateValue();
     }
     
 
@@ -122,6 +121,8 @@ public class UniDAQueryDeviceStateReplyMessage extends UniDAQueryDeviceStateRequ
 
         int offset = super.decodeDeviceMessagePayload(bytes, initIndex);
 
+        this.stateValue = new DeviceStateValue();
+        
         // state value
         offset = this.stateValue.decode(bytes, offset, ontologyCodec);
         

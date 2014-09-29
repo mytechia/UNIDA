@@ -50,8 +50,8 @@ import java.io.IOException;
  */
 public class UniDAQueryDeviceStateRequestMessage extends UniDADeviceMessage {
 
-    private long opId;
-    private String stateId;
+    protected long opId;
+    protected String stateId;
 
     public UniDAQueryDeviceStateRequestMessage(IUniDAOntologyCodec ontologyCodec,
             long opId, DeviceID deviceId, String stateId) {
