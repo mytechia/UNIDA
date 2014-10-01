@@ -50,18 +50,21 @@ public class UniDAABChangeScenarioMessage extends UniDAMessage
 {
     
     private long opId;
+    private boolean activate;
     private String scenarioID;
     
     
     public UniDAABChangeScenarioMessage(
             IUniDAOntologyCodec ontologyCodec, 
             UniDAAddress gatewayAddress, 
-            long opId, 
+            long opId,
+            boolean activate,
             String scenarioID)
     {
         super(ontologyCodec);
         this.opId = opId;
         this.scenarioID = scenarioID;
+        this.activate = activate;
         setCommandType(MessageType.ABChangeScenario.getTypeValue());
         setErrorCode(ErrorCode.Null.getTypeValue());
         setData(new byte[0]);
@@ -83,6 +86,21 @@ public class UniDAABChangeScenarioMessage extends UniDAMessage
         return scenarioID;
     }
     
+    public boolean isActivate()
+    {
+        return this.activate;
+    }
+    
+    private int getActivate()
+    {
+        return isActivate()?1:0;
+    }
+    
+    private void setActivate(int activate)
+    {
+        this.activate = (1 == activate);
+    }
+    
     @Override
     protected byte[] codeMessagePayload()
     {
@@ -90,10 +108,13 @@ public class UniDAABChangeScenarioMessage extends UniDAMessage
 
         try
         {
-            //opId
+            // opId
             byte[] idData = new byte[EndianConversor.LONG_SIZE_BYTES];
             EndianConversor.longToLittleEndian(opId, idData, 0);
             dataStream.write(idData);
+            
+            // activate/deactivate
+            dataStream.write(this.getActivate());
             
             // Scenario
             writeString(dataStream, getScenarioID());
@@ -111,6 +132,9 @@ public class UniDAABChangeScenarioMessage extends UniDAMessage
         // op ID
         this.opId = EndianConversor.byteArrayLittleEndianToLong(bytes, initIndex);
         initIndex += EndianConversor.LONG_SIZE_BYTES;
+        
+        // activate/deactivate
+        this.setActivate(bytes[initIndex++]);
         
         // Scenario
         StringBuilder string = new StringBuilder(20);

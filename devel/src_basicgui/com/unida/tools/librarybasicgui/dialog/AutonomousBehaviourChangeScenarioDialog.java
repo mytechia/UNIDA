@@ -69,18 +69,21 @@ public class AutonomousBehaviourChangeScenarioDialog extends javax.swing.JDialog
     private void initComponents()
     {
 
+        jRadioButtonGroup = new javax.swing.ButtonGroup();
         jLabel1 = new javax.swing.JLabel();
         jTextScenarioID = new javax.swing.JTextField();
         jButtonChangeScenario = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         jTextInfoExecution = new javax.swing.JTextField();
         jSeparator1 = new javax.swing.JSeparator();
+        jRadioButonActivate = new javax.swing.JRadioButton();
+        jRadioButtonDeactivate = new javax.swing.JRadioButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel1.setText("Scenario identifier:");
 
-        jButtonChangeScenario.setText("Change Scenario");
+        jButtonChangeScenario.setText("Send message");
         jButtonChangeScenario.addActionListener(new java.awt.event.ActionListener()
         {
             public void actionPerformed(java.awt.event.ActionEvent evt)
@@ -96,12 +99,22 @@ public class AutonomousBehaviourChangeScenarioDialog extends javax.swing.JDialog
         jTextInfoExecution.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         jTextInfoExecution.setMinimumSize(new java.awt.Dimension(10, 39));
 
+        jRadioButtonGroup.add(jRadioButonActivate);
+        jRadioButonActivate.setSelected(true);
+        jRadioButonActivate.setText("Activate");
+
+        jRadioButtonGroup.add(jRadioButtonDeactivate);
+        jRadioButtonDeactivate.setText("Deactivate");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jSeparator1, javax.swing.GroupLayout.DEFAULT_SIZE, 388, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(30, 30, 30)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -110,27 +123,35 @@ public class AutonomousBehaviourChangeScenarioDialog extends javax.swing.JDialog
                                 .addGap(26, 26, 26)
                                 .addComponent(jTextInfoExecution, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel1)
-                                .addGap(18, 18, 18)
-                                .addComponent(jTextScenarioID, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 23, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jSeparator1)))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jRadioButonActivate)
+                                    .addComponent(jLabel1))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(18, 18, 18)
+                                        .addComponent(jTextScenarioID, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(jRadioButtonDeactivate)
+                                        .addGap(69, 69, 69)))))))
                 .addContainerGap())
             .addGroup(layout.createSequentialGroup()
-                .addGap(115, 115, 115)
+                .addGap(122, 122, 122)
                 .addComponent(jButtonChangeScenario)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(54, 54, 54)
+                .addGap(22, 22, 22)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jRadioButonActivate)
+                    .addComponent(jRadioButtonDeactivate))
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTextScenarioID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(30, 30, 30)
+                .addGap(23, 23, 23)
                 .addComponent(jButtonChangeScenario)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -138,7 +159,7 @@ public class AutonomousBehaviourChangeScenarioDialog extends javax.swing.JDialog
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTextInfoExecution, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(8, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -148,7 +169,10 @@ public class AutonomousBehaviourChangeScenarioDialog extends javax.swing.JDialog
     {//GEN-HEADEREND:event_jButtonChangeScenarioActionPerformed
         try
         {
-            this.instantiationFacade.getGatewayOperationFacade().changeABScenario(this.jTextScenarioID.getText(), new ABCallback());
+            this.instantiationFacade.getGatewayOperationFacade().changeABScenario(
+                    this.jRadioButonActivate.isSelected(),
+                    this.jTextScenarioID.getText(),
+                    new ABCallback());
         } catch (InternalErrorException ex)
         {
             JOptionPane.showMessageDialog(this, ex.toString());
@@ -160,6 +184,9 @@ public class AutonomousBehaviourChangeScenarioDialog extends javax.swing.JDialog
     private javax.swing.JButton jButtonChangeScenario;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JRadioButton jRadioButonActivate;
+    private javax.swing.JRadioButton jRadioButtonDeactivate;
+    private javax.swing.ButtonGroup jRadioButtonGroup;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTextField jTextInfoExecution;
     private javax.swing.JTextField jTextScenarioID;

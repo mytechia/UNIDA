@@ -64,8 +64,11 @@ public class DefaultGatewayOperationFacade implements IGatewayOperationFacade
 
     private int opId = 0;
 
-    public DefaultGatewayOperationFacade(IUniDACommChannel commChannel, IUniDAOntologyCodec ontologyCodec,
-            UniDAFactory unidaFactory, IUniDAManagementFacade unidaManager)
+    public DefaultGatewayOperationFacade(
+            IUniDACommChannel commChannel,
+            IUniDAOntologyCodec ontologyCodec,
+            UniDAFactory unidaFactory,
+            IUniDAManagementFacade unidaManager)
     {
         this.ticketManager = new OperationTicketManager();
         this.gatewayAccessLayerCallbackQueue = new LinkedList<>();
@@ -90,7 +93,7 @@ public class DefaultGatewayOperationFacade implements IGatewayOperationFacade
     }
 
     @Override
-    public void changeABScenario(String scenarioId, IAutonomousBehaviourCallback callback) throws InternalErrorException
+    public void changeABScenario(boolean activate, String scenarioId, IAutonomousBehaviourCallback callback) throws InternalErrorException
     {
 
         try
@@ -104,7 +107,7 @@ public class DefaultGatewayOperationFacade implements IGatewayOperationFacade
                 IUniDANetworkFacade unidaNetworkInstance = this.unidaFactory.getDALInstance(gateway);
                 DefaultGatewayAccessLayerCallback internalCallback = new DefaultGatewayAccessLayerCallback(ot, gateway, this, callback);
                 addCallback(internalCallback);
-                unidaNetworkInstance.changeScenario(nextOpId, gateway.getId(), scenarioId, internalCallback);
+                unidaNetworkInstance.changeScenario(nextOpId, gateway.getId(), activate, scenarioId, internalCallback);
             }
 
         } catch (CommunicationException ex)

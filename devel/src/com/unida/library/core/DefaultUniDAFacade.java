@@ -240,10 +240,15 @@ public class DefaultUniDAFacade extends AbstractUniDAFacadeHelper implements IUn
     }
 
     @Override
-    public void changeScenario(long notificationId, UniDAAddress gatewayAddress, String scenarioId, IAutonomousBehaviourInternalCallback callback) throws CommunicationException
+    public void changeScenario(
+            long notificationId,
+            UniDAAddress gatewayAddress,
+            boolean activate,
+            String scenarioId,
+            IAutonomousBehaviourInternalCallback callback) throws CommunicationException
     {
         addAutonomousBehaviourCallback(notificationId, gatewayAddress, callback);
-        this.commChannel.sendMessage(gatewayAddress, new UniDAABChangeScenarioMessage(ontologyCodec, gatewayAddress, notificationId, scenarioId));
+        this.commChannel.sendMessage(gatewayAddress, new UniDAABChangeScenarioMessage(ontologyCodec, gatewayAddress, notificationId, activate, scenarioId));
     }
        
 
