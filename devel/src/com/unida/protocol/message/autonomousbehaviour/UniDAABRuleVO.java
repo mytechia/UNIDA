@@ -41,31 +41,45 @@ import com.unida.protocol.message.autonomousbehaviour.trigger.ScenarioChangeTrig
 import com.unida.protocol.message.autonomousbehaviour.trigger.StateChangeTrigger;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collection;
 
 /**
  *
  * @author victor_local
  */
-public class UniDAABRuleVO
+public final class UniDAABRuleVO
 {
 
     private int ruleID = 0;
 
-    private RuleTrigger trigger = null;
+    private Collection<RuleTrigger> triggers = null;
 
     private RuleAction action = null;
 
-    
-    public UniDAABRuleVO() {}
-    
-    
+    public UniDAABRuleVO()
+    {
+        this.triggers = new ArrayList<>();
+    }
+
     public UniDAABRuleVO(RuleTrigger trigger, RuleAction action)
     {
         this();
-        this.trigger = trigger;
+        this.addTrigger(trigger);
         this.action = action;
     }
     
+    public UniDAABRuleVO(Collection<RuleTrigger> triggers, RuleAction action)
+    {
+        this();
+        this.triggers = triggers;
+        this.action = action;
+    }
+
+    public void addTrigger(RuleTrigger trigger)
+    {
+        this.triggers.add(trigger);
+    }
 
     public byte[] codeRulePayload(IUniDAOntologyCodec ontologyCodec) throws MessageFormatException
     {
@@ -77,12 +91,19 @@ public class UniDAABRuleVO
             EndianConversor.uintToLittleEndian(ruleID, idData, 0);
             dataStream.write(idData);
 
-            // Trigger
-            dataStream.write(trigger.codePayload(ontologyCodec));
+            // Triggers number
+            EndianConversor.shortToLittleEndian((short)triggers.size(), idData, 0);
+            dataStream.write(idData, 0, EndianConversor.SHORT_SIZE_BYTES);
+
+            // Triggers
+            for (RuleTrigger trigger : this.triggers)
+            {
+                dataStream.write(trigger.codePayload(ontologyCodec));
+            }
 
             // Action
             dataStream.write(action.codePayload(ontologyCodec));
-            
+
         } catch (IOException ex)
         {
 
@@ -98,26 +119,37 @@ public class UniDAABRuleVO
         this.ruleID = (int) EndianConversor.byteArrayLittleEndianToUInt(bytes, initIndex);
         initIndex += EndianConversor.INT_SIZE_BYTES;
 
-        // Trigger type
-        RuleTriggerEnum triggerType = RuleTriggerEnum.fromValue(EndianConversor.byteArrayLittleEndianToShort(bytes, initIndex));
+        // Triggers number
+        int triggersNumber = (int) EndianConversor.byteArrayLittleEndianToShort(bytes, initIndex);
         initIndex += EndianConversor.SHORT_SIZE_BYTES;
 
-        // Trigger payload       
-        switch(triggerType)
+        // for each trigger...
+        for (int i = 0; i < triggersNumber; i++)
         {
-            case STATE_CHANGE:
-                this.trigger = new StateChangeTrigger();
-                break;
-            case SCENARIO_CHANGE:
-                this.trigger = new ScenarioChangeTrigger();
-                break;
-            case TEMPORAL:
-                this.trigger = new CronoTrigger();
-                break;
-        }
-        if (null != this.trigger)
-        {
-            initIndex = this.trigger.decodePayload(bytes, initIndex, ontologyCodec);
+            RuleTrigger trigger = null;
+            
+            // Trigger type
+            RuleTriggerEnum triggerType = RuleTriggerEnum.fromValue(EndianConversor.byteArrayLittleEndianToShort(bytes, initIndex));
+            initIndex += EndianConversor.SHORT_SIZE_BYTES;
+
+            // Trigger payload       
+            switch (triggerType)
+            {
+                case STATE_CHANGE:
+                    trigger = new StateChangeTrigger();
+                    break;
+                case SCENARIO_CHANGE:
+                    trigger = new ScenarioChangeTrigger();
+                    break;
+                case TEMPORAL:
+                    trigger = new CronoTrigger();
+                    break;
+            }
+            if (null != trigger)
+            {
+                initIndex = trigger.decodePayload(bytes, initIndex, ontologyCodec);
+                this.addTrigger(trigger);
+            }
         }
 
         // Action Type
@@ -125,7 +157,7 @@ public class UniDAABRuleVO
         initIndex += EndianConversor.SHORT_SIZE_BYTES;
 
         // Action payload
-        switch(actionType)
+        switch (actionType)
         {
             case COMMAND_EXECUTION:
                 this.action = new CommandExecutionAction();
@@ -147,15 +179,10 @@ public class UniDAABRuleVO
 
         return initIndex;
     }
-
-    public RuleTrigger getTrigger()
+    
+    public Collection<RuleTrigger> getTriggers()
     {
-        return trigger;
-    }
-
-    public void setTrigger(RuleTrigger trigger)
-    {
-        this.trigger = trigger;
+        return this.triggers;
     }
 
     public RuleAction getAction()
@@ -167,15 +194,15 @@ public class UniDAABRuleVO
     {
         this.action = action;
     }
-    
+
     public int getRuleId()
     {
         return this.ruleID;
     }
-    
+
     public void setRuleId(int ruleId)
     {
         this.ruleID = ruleId;
     }
-    
+
 }
