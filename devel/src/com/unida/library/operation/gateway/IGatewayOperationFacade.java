@@ -42,7 +42,7 @@ public interface IGatewayOperationFacade
     
     public void changeABScenario(boolean activate, String scenarioId, IAutonomousBehaviourCallback callback) throws InternalErrorException;
         
-    public void addABRule(UniDAAddress gatewayAddress, UniDAABRuleVO rule) throws InternalErrorException;
+    public void addABRule(UniDAABRuleVO rule) throws InternalErrorException;
     
     public void rmABRule(UniDAAddress gatewayAddress, int ruleId) throws InternalErrorException;
     

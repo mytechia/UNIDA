@@ -1116,7 +1116,7 @@ public class AutonomousBehaviourDialog extends javax.swing.JDialog
         {
             UniDAABRuleVO rule = getRuleFromUserInput();
 
-            instantiationFacade.getGatewayOperationFacade().addABRule(new UniDAAddress(gatewayAddress), rule);
+            instantiationFacade.getGatewayOperationFacade().addABRule(rule);
             
             this.triggers.clear();
             

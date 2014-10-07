@@ -38,6 +38,8 @@ import com.unida.protocol.UniDAAddress;
 import com.unida.protocol.message.autonomousbehaviour.UniDAABAddMessage;
 import com.unida.protocol.message.autonomousbehaviour.UniDAABRemoveMessage;
 import com.unida.protocol.message.autonomousbehaviour.UniDAABRuleVO;
+import com.unida.protocol.message.autonomousbehaviour.action.RuleActionEnum;
+import com.unida.protocol.message.autonomousbehaviour.trigger.StateChangeTrigger;
 import com.unida.protocol.message.discovery.DiscoverUniDAGatewayDevicesRequestMessage;
 import java.util.Collection;
 import java.util.LinkedList;
@@ -142,13 +144,32 @@ public class DefaultGatewayOperationFacade implements IGatewayOperationFacade
 
     }
 
+    /**
+     *  To add a rule an UniDAABAddMessage is sent to the gateway where
+     * the "destination device" is hold.
+     *  There is an exception to this, however: for rules with scenario_change
+     * action, the UniDAABAddMessage is sent to the "source gateway".
+     * @param rule The rule to add
+     * @throws InternalErrorException 
+     */
     @Override
-    public void addABRule(UniDAAddress gatewayAddress, UniDAABRuleVO rule) throws InternalErrorException
+    public void addABRule(UniDAABRuleVO rule) throws InternalErrorException
     {
 
         try
         {
-            this.commChannel.sendMessage(gatewayAddress, new UniDAABAddMessage(gatewayAddress, ontologyCodec, getOpId(), rule));
+            if (rule.getAction().getType().equals(RuleActionEnum.SCENARIO_CHANGE))
+            {
+                StateChangeTrigger trigger = rule.getStateChangeTrigger();
+                this.commChannel.sendMessage(
+                        trigger.getTriggerSource().getGatewayId(),
+                        new UniDAABAddMessage(trigger.getTriggerSource().getGatewayId(), ontologyCodec, getOpId(), rule));
+            } else
+            {
+                this.commChannel.sendMessage(
+                        rule.getAction().getActionDestination().getGatewayId(),
+                        new UniDAABAddMessage(rule.getAction().getActionDestination().getGatewayId(), ontologyCodec, getOpId(), rule));
+            }
         } catch (CommunicationException ex)
         {
             throw new InternalErrorException(ex);

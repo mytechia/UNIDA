@@ -80,6 +80,18 @@ public final class UniDAABRuleVO
     {
         this.triggers.add(trigger);
     }
+    
+    public StateChangeTrigger getStateChangeTrigger()
+    {
+        for (RuleTrigger trigger : this.triggers)
+        {
+            if (trigger.getType().equals(RuleTriggerEnum.STATE_CHANGE) && trigger instanceof StateChangeTrigger)
+            {
+                return (StateChangeTrigger)trigger;
+            }
+        }
+        return null;
+    }
 
     public byte[] codeRulePayload(IUniDAOntologyCodec ontologyCodec) throws MessageFormatException
     {
