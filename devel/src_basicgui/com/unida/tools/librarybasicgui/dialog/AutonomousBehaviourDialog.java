@@ -999,7 +999,7 @@ public class AutonomousBehaviourDialog extends javax.swing.JDialog
                 } else
                 {
                     int selectedRow = lsm.getMinSelectionIndex();
-                    Object valueAt = jTableABRules.getModel().getValueAt(selectedRow, 4);
+                    Object valueAt = jTableABRules.getModel().getValueAt(selectedRow, 0);
                     if (null != valueAt && valueAt.toString().length() > 0)
                     {
                         jButtonRemoveABRule.setEnabled(true);
@@ -1450,7 +1450,7 @@ public class AutonomousBehaviourDialog extends javax.swing.JDialog
         @Override
         public void notifyFailure(OperationTicket ticket, OperationFailures failure)
         {
-            throw new UnsupportedOperationException("Not supported yet.");
+            JOptionPane.showMessageDialog(AutonomousBehaviourDialog.this, "Oh no!");
         }
 
     }

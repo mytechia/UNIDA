@@ -131,7 +131,7 @@ public class UniDANotificationSuscriptionRequestMessage extends UniDADeviceMessa
 
         // Trigger type
         RuleTriggerEnum triggerType = RuleTriggerEnum.fromValue(EndianConversor.byteArrayLittleEndianToShort(bytes, initIndex));
-        initIndex += EndianConversor.INT_SIZE_BYTES;
+        initIndex += EndianConversor.SHORT_SIZE_BYTES;
 
         // Trigger payload
         if (triggerType != RuleTriggerEnum.UNKNOWN)

@@ -57,8 +57,11 @@ public class DeviceStateSuscriptionDialog extends javax.swing.JDialog
      *  Constructor: an object of this class must be initilized for a given UniDA
      * device
      */
-    public DeviceStateSuscriptionDialog(java.awt.Frame parent, boolean modal,
-            InMemoryUniDAInstantiationFacade instantiationFacade, String deviceId)
+    public DeviceStateSuscriptionDialog(
+            java.awt.Frame parent,
+            boolean modal,
+            InMemoryUniDAInstantiationFacade instantiationFacade,
+            String deviceId)
     {
 
         super(parent, modal);

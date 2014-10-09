@@ -58,7 +58,9 @@ public enum ErrorCode {
     
 
     public static ErrorCode getTypeOf(byte typeValue) {
-        if (typeValue == Ok.typeValue)
+        if (typeValue == Null.typeValue)
+            return Null;
+        else if (typeValue == Ok.typeValue)
             return Ok;
         else if (typeValue == Error.typeValue)
             return Error;
