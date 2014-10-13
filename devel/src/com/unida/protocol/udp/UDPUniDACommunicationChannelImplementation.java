@@ -69,6 +69,11 @@ public class UDPUniDACommunicationChannelImplementation extends UDPCommunication
     {
         this(UNIDA_PROTOCOL_UDP_PORT);
     }
+    
+    public UDPUniDACommunicationChannelImplementation(String ip) throws UnknownHostException, SocketException
+    {
+        super(ip, UNIDA_PROTOCOL_UDP_PORT);
+    }
 	
 	
 }
