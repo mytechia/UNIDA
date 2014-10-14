@@ -126,5 +126,12 @@ public class DeviceState implements Serializable
         return hash;
     }
 
+    @Override
+    public String toString()
+    {
+        return "DeviceState{" + "metadata=" + metadata + ", value=" + value + '}';
+    }
 
+    
+    
 }
