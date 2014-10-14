@@ -68,7 +68,6 @@ public class UniDAWriteDeviceStateRequestMessage extends UniDADeviceMessage
     public UniDAWriteDeviceStateRequestMessage(byte[] message, IUniDAOntologyCodec ontologyCodec) throws MessageFormatException
     {
         super(message, ontologyCodec);
-        this.stateValue = new DeviceStateValue();
     }
 
     
@@ -102,6 +101,7 @@ public class UniDAWriteDeviceStateRequestMessage extends UniDADeviceMessage
         offset += EndianConversor.INT_SIZE_BYTES;
               
         //value
+        this.stateValue = new DeviceStateValue();
         offset += stateValue.decode(bytes, offset, ontologyCodec);
         
         this.stateValue = this.stateValue.getSpecificImpl();
