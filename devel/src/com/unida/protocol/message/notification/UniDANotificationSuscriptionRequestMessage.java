@@ -122,12 +122,10 @@ public class UniDANotificationSuscriptionRequestMessage extends UniDADeviceMessa
 
     @Override
     protected int decodeDeviceMessagePayload(byte[] bytes, int initIndex) throws MessageFormatException
-    {
+    {     
 
-        int offset = initIndex;        
-
-        this.notificationId = EndianConversor.byteArrayLittleEndianToLong(bytes, offset);
-        offset += EndianConversor.LONG_SIZE_BYTES;
+        this.notificationId = EndianConversor.byteArrayLittleEndianToLong(bytes, initIndex);
+        initIndex += EndianConversor.LONG_SIZE_BYTES;
 
         // Trigger type
         RuleTriggerEnum triggerType = RuleTriggerEnum.fromValue(EndianConversor.byteArrayLittleEndianToShort(bytes, initIndex));
@@ -143,7 +141,7 @@ public class UniDANotificationSuscriptionRequestMessage extends UniDADeviceMessa
             this.stateChangeTrigger.decodePayload(bytes, initIndex, ontologyCodec);
         }
 
-        return offset;
+        return initIndex;
     }
 
     
