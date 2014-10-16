@@ -31,6 +31,7 @@ import com.mytechia.commons.util.conversion.EndianConversor;
 import com.unida.library.device.ontology.IUniDAOntologyCodec;
 import com.unida.library.device.DeviceID;
 import com.unida.library.device.ontology.state.DeviceStateValue;
+import com.unida.protocol.UniDAAddress;
 import com.unida.protocol.message.MessageType;
 import com.unida.protocol.message.UniDADeviceMessage;
 import java.io.ByteArrayOutputStream;
@@ -62,11 +63,17 @@ public class UniDANotificationMessage extends UniDADeviceMessage
     private DeviceStateValue stateValue;
 
 
-    public UniDANotificationMessage(IUniDAOntologyCodec ontologyCodec,
-            long opId, DeviceID deviceId, String stateId, DeviceStateValue stateValue)
+    public UniDANotificationMessage(
+            IUniDAOntologyCodec ontologyCodec,
+            long opId,
+            DeviceID deviceId,
+            UniDAAddress destination,
+            String stateId,
+            DeviceStateValue stateValue)
     {
         super(ontologyCodec, deviceId);
         setCommandType(MessageType.Notification.getTypeValue());
+        this.setDestination(destination);
         this.opId = opId;
         this.stateId = stateId;
         this.stateValue = stateValue;
