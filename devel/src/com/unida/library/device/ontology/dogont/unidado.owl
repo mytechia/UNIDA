@@ -285,7 +285,7 @@
     </owl:Class>
     
     
-    <!-- http://elite.polito.it/ontologies/dogont.owl#UNIDAComponent -->
+    <!-- http://elite.polito.it/ontologies/dogont.owl#KonnexGateway -->
 
     <owl:Class rdf:about="http://elite.polito.it/ontologies/DOGHouseModel.owl#KonnexGateway">
         <rdfs:subClassOf rdf:resource="http://elite.polito.it/ontologies/dogont.owl#DomoticNetworkComponent"/>
