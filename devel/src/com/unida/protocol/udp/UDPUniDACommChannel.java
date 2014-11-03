@@ -107,7 +107,7 @@ public class UDPUniDACommChannel implements IUniDACommChannel
 
             this.commChannel.send(createUDPAddress(dev.getGatewayId()), msg.codeMessage());
 
-            UniDALoggers.LIBRARY.log(Level.FINE, "sent message: {0}", msg.toString());
+            UniDALoggers.LIBRARY.log(Level.INFO, "sent message: {0}", msg.toString());
 
         } catch (UnknownHostException ex)
         {
@@ -125,7 +125,7 @@ public class UDPUniDACommChannel implements IUniDACommChannel
 
             this.commChannel.send(createUDPAddress(gw), msg.codeMessage());
 
-            UniDALoggers.LIBRARY.log(Level.FINE, "sent message: {0}", msg.toString());
+            UniDALoggers.LIBRARY.log(Level.INFO, "sent message: {0}", msg.toString());
 
         } catch (UnknownHostException ex)
         {
@@ -143,7 +143,7 @@ public class UDPUniDACommChannel implements IUniDACommChannel
     public void broadcastMessage(UniDAMessage msg) throws CommunicationException
     {
         this.commChannel.broadcast(msg.codeMessage());
-        UniDALoggers.LIBRARY.log(Level.FINE, "Broadcast message: {0}", msg.toString());
+        UniDALoggers.LIBRARY.log(Level.INFO, "Broadcast message: {0}", msg.toString());
     }
 
     @Override
@@ -153,7 +153,7 @@ public class UDPUniDACommChannel implements IUniDACommChannel
 
         UniDAMessage msg = this.msgFactory.createUnidaMessage(rr.getData());
 
-        UniDALoggers.LIBRARY.log(Level.FINE, "Message recived: {0}", msg.toString());
+        UniDALoggers.LIBRARY.log(Level.INFO, "Message recived: {0}", msg.toString());
 
         return msg;
 
