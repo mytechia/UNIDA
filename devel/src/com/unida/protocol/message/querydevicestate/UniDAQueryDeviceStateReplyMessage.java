@@ -160,6 +160,11 @@ public class UniDAQueryDeviceStateReplyMessage extends UniDAQueryDeviceStateRequ
         final UniDAQueryDeviceStateReplyMessage other = (UniDAQueryDeviceStateReplyMessage) obj;
         return Objects.equals(this.stateValue, other.stateValue);
     }
-            
 
+    @Override
+    public String toString()
+    {
+        return super.toString() + "<-UniDAQueryDeviceStateReplyMessage{" + "stateValue=" + stateValue + '}';
+    }
+            
 }

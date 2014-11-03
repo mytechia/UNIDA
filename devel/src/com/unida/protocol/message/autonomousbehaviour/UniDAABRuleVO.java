@@ -217,4 +217,10 @@ public final class UniDAABRuleVO
         this.ruleID = ruleId;
     }
 
+    @Override
+    public String toString()
+    {
+        return "UniDAABRuleVO{" + "ruleID=" + ruleID + ", scenario=" + scenario + ", trigger=" + trigger + ", action=" + action + '}';
+    }      
+    
 }

@@ -33,6 +33,7 @@ import com.unida.protocol.message.UniDAMessage;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -136,5 +137,11 @@ public class UniDAABQueryScenariosReplyMessage extends UniDAMessage
 
         return dataStream.toByteArray();
     }
-    
+
+    @Override
+    public String toString()
+    {
+        return super.toString() + "<-UniDAABQueryScenariosReplyMessage{" + "scenarioIDs=" + Arrays.toString(scenarioIDs.toArray()) + ", opId=" + opId + '}';
+    }
+        
 }

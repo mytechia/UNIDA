@@ -74,4 +74,10 @@ public enum StateConditionEnum
         return EQUALS;
     }
 
+    @Override
+    public String toString()
+    {
+        return "StateConditionEnum{" + "value=" + value + '}';
+    }
+    
 }

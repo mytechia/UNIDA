@@ -68,9 +68,7 @@ public abstract class RuleTrigger
     @Override
     public String toString()
     {
-        return "RuleTrigger.";
+        return "RuleTrigger{}";
     }
-    
-    
     
 }

@@ -84,5 +84,10 @@ public class DiscoverUniDAGatewayDevicesRequestMessage extends UniDAMessage
         return new byte[0];
     }
 
+    @Override
+    public String toString()
+    {
+        return super.toString() + "<-DiscoverUniDAGatewayDevicesRequestMessage{" + '}';
+    }
 
 }

@@ -106,9 +106,6 @@ public class UniDAProtocolMessageReceiver extends Thread
             }
             catch (CommunicationException ex) {
                 UniDALoggers.LIBRARY.log(Level.SEVERE, "Communication error");
-                if (UniDALoggers.LIBRARY.isLoggable(Level.FINEST)) {
-                    ex.printStackTrace();
-                }
             }
 
         }

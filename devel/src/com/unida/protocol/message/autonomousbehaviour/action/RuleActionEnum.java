@@ -62,5 +62,11 @@ public enum RuleActionEnum
         }
         return UNKNOWN;
     }
-    
+
+    @Override
+    public String toString()
+    {
+        return "RuleActionEnum{" + "actionType=" + actionType + '}';
+    }
+        
 }

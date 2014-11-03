@@ -35,6 +35,7 @@ import com.unida.protocol.message.UniDAMessage;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -124,4 +125,11 @@ public class UniDAABQueryReplyMessage extends UniDAMessage
 
         return offset;
     }
+
+    @Override
+    public String toString()
+    {
+        return super.toString() + "<-UniDAABQueryReplyMessage{" + "opId=" + opId + ", rules=" + Arrays.toString(rules.toArray()) + '}';
+    }
+        
 }

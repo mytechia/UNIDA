@@ -55,7 +55,7 @@ public class GatewayDeviceIOTO
     public GatewayDeviceIOTO(short id, Collection<String> compatibleStates)
     {
         this.id = id;
-        this.compatibleStates = new ArrayList<String>(compatibleStates);
+        this.compatibleStates = new ArrayList<>(compatibleStates);
     }
 
 
@@ -70,5 +70,10 @@ public class GatewayDeviceIOTO
         return compatibleStates;
     }
 
+    @Override
+    public String toString()
+    {
+        return "GatewayDeviceIOTO{" + "id=" + id + ", compatibleStates=" + compatibleStates + '}';
+    }
 
 }

@@ -112,4 +112,10 @@ public class DeviceStateWithValue
         return Objects.equals(this.stateValue, other.stateValue);
     }
 
+    @Override
+    public String toString()
+    {
+        return "DeviceStateWithValue{" + "stateId=" + stateId + ", stateValue=" + stateValue + '}';
+    }        
+
 }

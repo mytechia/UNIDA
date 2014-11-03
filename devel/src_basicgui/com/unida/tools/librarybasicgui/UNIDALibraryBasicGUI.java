@@ -91,7 +91,6 @@ public class UNIDALibraryBasicGUI extends javax.swing.JFrame
      */
     private void launchUniDA()
     {
-        System.setProperty("java.util.logging.ConsoleHandler.level", "FINER");
         instantiationFacade = new InMemoryUniDAInstantiationFacade();
         try
         {

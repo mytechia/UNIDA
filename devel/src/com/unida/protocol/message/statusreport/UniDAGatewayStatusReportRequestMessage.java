@@ -81,5 +81,10 @@ public class UniDAGatewayStatusReportRequestMessage extends UniDAMessage
         return new byte[0];
     }
 
-
+    @Override
+    public String toString()
+    {
+        return super.toString() + "<-UniDAGatewayStatusReportRequestMessage{" + '}';
+    }
+   
 }

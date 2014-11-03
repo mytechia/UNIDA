@@ -128,10 +128,7 @@ public class UniDAQueryDeviceStateRequestMessage extends UniDADeviceMessage {
         if ((this.getDeviceID() == null) ? (other.getDeviceID() != null) : !this.getDeviceID().equals(other.getDeviceID())) {
             return false;
         }
-        if ((this.stateId == null) ? (other.stateId != null) : !this.stateId.equals(other.stateId)) {
-            return false;
-        }
-        return true;
+        return !((this.stateId == null) ? (other.stateId != null) : !this.stateId.equals(other.stateId));
     }
 
     @Override
@@ -147,4 +144,11 @@ public class UniDAQueryDeviceStateRequestMessage extends UniDADeviceMessage {
     protected MessageRType getMessageType() {
         return MessageRType.REQUEST;
     }
+
+    @Override
+    public String toString()
+    {
+        return super.toString() + "<-UniDAQueryDeviceStateRequestMessage{" + "opId=" + opId + ", stateId=" + stateId + '}';
+    }
+        
 }

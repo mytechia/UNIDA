@@ -85,13 +85,13 @@ public class DeviceError
         if (this.deviceId != other.deviceId) {
             return false;
         }
-        if (this.error != other.error) {
-            return false;
-        }
-        return true;
+        return this.error == other.error;
     }
-    
-    
-    
+
+    @Override
+    public String toString()
+    {
+        return "DeviceError{" + "deviceId=" + deviceId + ", error=" + error + '}';
+    }            
 
 }

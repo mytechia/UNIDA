@@ -40,6 +40,7 @@ import com.unida.protocol.message.UniDAMessage;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
 import java.util.Objects;
@@ -348,4 +349,11 @@ public class DiscoverUniDAGatewayDevicesReplyMessage extends UniDAMessage {
         hash = 59 * hash + Objects.hashCode(this.devices);
         return hash;
     }
+
+    @Override
+    public String toString()
+    {
+        return super.toString() + "<-DiscoverUniDAGatewayDevicesReplyMessage{" + "gw=" + gw + ", devices=" + Arrays.toString(devices.toArray()) + '}';
+    }
+        
 }

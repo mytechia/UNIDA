@@ -101,5 +101,11 @@ public class UniDAABQueryScenariosRequestMessage extends UniDAMessage
 
         return dataStream.toByteArray();
     }
-    
+
+    @Override
+    public String toString()
+    {
+        return super.toString() + "<-UniDAABQueryScenariosRequestMessage{" + "opId=" + opId + '}';
+    }
+            
 }

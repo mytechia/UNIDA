@@ -164,6 +164,11 @@ public class UniDAWriteDeviceStateRequestMessage extends UniDADeviceMessage
         }
         return Objects.equals(this.stateValue, other.stateValue);
     }
-    
-    
+
+    @Override
+    public String toString()
+    {
+        return super.toString() + "<-UniDAWriteDeviceStateRequestMessage{" + "opId=" + opId + ", stateId=" + stateId + ", stateValue=" + stateValue + '}';
+    }
+        
 }

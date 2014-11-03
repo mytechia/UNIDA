@@ -117,7 +117,7 @@ public class ChangeScenarioAction extends RuleAction
     @Override
     public String toString()
     {
-        return super.toString() + "ChangeScenarioAction{" + "scenario ID=" + scenarioID + "}";
+        return super.toString() + "<-ChangeScenarioAction{" + "scenario ID=" + scenarioID + "}";
     }  
 
 }

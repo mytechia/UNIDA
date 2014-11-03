@@ -30,6 +30,8 @@ import java.util.Date;
 
 import com.unida.library.device.state.OperationalStatesEnum;
 import com.unida.library.location.Location;
+import java.util.Arrays;
+import java.util.Objects;
 
 
 /**
@@ -325,7 +327,7 @@ public class DeviceTO
             return false;
         }
         final DeviceTO other = (DeviceTO) obj;
-        if (this.codId != other.codId && (this.codId == null || !this.codId.equals(other.codId))) {
+        if (!Objects.equals(this.codId, other.codId) && (this.codId == null || !this.codId.equals(other.codId))) {
             return false;
         }
         if ((this.id == null) ? (other.id != null) : !this.id.equals(other.id)) {
@@ -375,6 +377,16 @@ public class DeviceTO
         hash = 53 * hash + (this.manufacturer != null ? this.manufacturer.hashCode() : 0);
         return hash;
     }
-    
 
+    @Override
+    public String toString()
+    {
+        return "DeviceTO{" + "codId=" + codId + ", id=" + id + ", location=" + location 
+                + ", enabled=" + enabled + ", group=" + group + ", configured=" + configured 
+                + ", description=" + description + ", automatic=" + automatic + ", deviceClass=" 
+                + deviceClass + ", model=" + model + ", manufacturer=" + manufacturer + ", gatewayId=" 
+                + gatewayId + ", operationalState=" + operationalState + ", operationalStateLastChange=" 
+                + operationalStateLastChange + ", connectedIOs=" + Arrays.toString(connectedIOs.toArray()) + '}';
+    }
+    
 }

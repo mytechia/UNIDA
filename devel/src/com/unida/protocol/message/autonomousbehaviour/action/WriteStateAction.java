@@ -22,7 +22,6 @@
 
 package com.unida.protocol.message.autonomousbehaviour.action;
 
-import com.mytechia.commons.framework.simplemessageprotocol.Message;
 import com.mytechia.commons.framework.simplemessageprotocol.exception.MessageFormatException;
 import com.mytechia.commons.util.conversion.EndianConversor;
 import com.unida.library.device.ontology.state.DeviceStateValue;
@@ -123,7 +122,7 @@ public class WriteStateAction extends RuleAction
     @Override
     public String toString()
     {
-        return super.toString() + "WriteStateAction{" + "stateId=" + stateId + ", stateValue=" + stateValue + "}";
+        return super.toString() + "<-WriteStateAction{" + "stateId=" + stateId + ", stateValue=" + stateValue + "}";
     }
     
     

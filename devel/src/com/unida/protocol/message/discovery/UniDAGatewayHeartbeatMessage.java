@@ -99,6 +99,11 @@ public class UniDAGatewayHeartbeatMessage extends UniDAMessage
     protected int decodeMessagePayload(byte[] bytes, int initIndex) {
         return 0;
     }
-    
 
+    @Override
+    public String toString()
+    {
+        return super.toString() + "<-UniDAGatewayHeartbeatMessage{" + '}';
+    }
+    
 }

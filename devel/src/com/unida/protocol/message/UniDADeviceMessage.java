@@ -122,10 +122,7 @@ public abstract class UniDADeviceMessage extends UniDAMessage {
             return false;
         }
         final UniDADeviceMessage other = (UniDADeviceMessage) obj;
-        if ((this.deviceId == null) ? (other.deviceId != null) : !this.deviceId.equals(other.deviceId)) {
-            return false;
-        }
-        return true;
+        return !((this.deviceId == null) ? (other.deviceId != null) : !this.deviceId.equals(other.deviceId));
     }
 
     @Override
@@ -134,4 +131,11 @@ public abstract class UniDADeviceMessage extends UniDAMessage {
         hash = 37 * hash + (this.deviceId != null ? this.deviceId.hashCode() : 0);
         return hash;
     }
+
+    @Override
+    public String toString()
+    {
+        return super.toString() + "<-UniDADeviceMessage{" + "deviceId=" + deviceId + '}';
+    }
+        
 }

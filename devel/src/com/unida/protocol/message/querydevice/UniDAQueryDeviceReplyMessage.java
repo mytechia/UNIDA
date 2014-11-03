@@ -37,6 +37,7 @@ import com.unida.protocol.message.UniDAMessage;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 
 
@@ -167,4 +168,12 @@ public class UniDAQueryDeviceReplyMessage extends UniDAQueryDeviceRequestMessage
     protected MessageRType getMessageType() {
         return MessageRType.REPLY;
     }
+
+    @Override
+    public String toString()
+    {
+        return super.toString() + "<-UniDAQueryDeviceReplyMessage{" + "stateValues=" + Arrays.toString(stateValues.toArray()) + '}';
+    }
+    
+    
 }

@@ -38,6 +38,7 @@ import com.unida.protocol.message.discovery.DiscoverUniDAGatewayDevicesReplyMess
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 
 /**
@@ -64,7 +65,7 @@ public class UniDAGatewayStatusReportReplyMessage extends DiscoverUniDAGatewayDe
         setCommandType(MessageType.GatewayStatusReportReply.getTypeValue());
         setErrorCode(gwErrorCode.getTypeValue());
         this.gwErrorCode = gwErrorCode;
-        this.devicesErrorCodes = new ArrayList<DeviceError>(devicesErrorCodes);
+        this.devicesErrorCodes = new ArrayList<>(devicesErrorCodes);
     }
 
     public UniDAGatewayStatusReportReplyMessage(IUniDAOntologyCodec ontologyCodec,
@@ -140,7 +141,7 @@ public class UniDAGatewayStatusReportReplyMessage extends DiscoverUniDAGatewayDe
             short numDevs = EndianConversor.byteArrayLittleEndianToShort(bytes, offset);
             offset += EndianConversor.SHORT_SIZE_BYTES;
             
-            this.devicesErrorCodes = new ArrayList<DeviceError>(numDevs);
+            this.devicesErrorCodes = new ArrayList<>(numDevs);
             for(int i=0; i<numDevs; i++) {
                 
                 short devId = EndianConversor.byteArrayLittleEndianToShort(bytes, offset);
@@ -173,10 +174,7 @@ public class UniDAGatewayStatusReportReplyMessage extends DiscoverUniDAGatewayDe
         if (this.gwErrorCode != other.gwErrorCode) {
             return false;
         }
-        if (this.devicesErrorCodes != other.devicesErrorCodes && (this.devicesErrorCodes == null || !this.devicesErrorCodes.equals(other.devicesErrorCodes))) {
-            return false;
-        }
-        return true;
+        return !(this.devicesErrorCodes != other.devicesErrorCodes && (this.devicesErrorCodes == null || !this.devicesErrorCodes.equals(other.devicesErrorCodes)));
     }
 
 
@@ -188,4 +186,11 @@ public class UniDAGatewayStatusReportReplyMessage extends DiscoverUniDAGatewayDe
         hash = 83 * hash + (this.devicesErrorCodes != null ? this.devicesErrorCodes.hashCode() : 0);
         return hash;
     }
+
+    @Override
+    public String toString()
+    {
+        return super.toString() + "<-UniDAGatewayStatusReportReplyMessage{" + "gwErrorCode=" + gwErrorCode + ", devicesErrorCodes=" + Arrays.toString(devicesErrorCodes.toArray()) + '}';
+    }
+        
 }

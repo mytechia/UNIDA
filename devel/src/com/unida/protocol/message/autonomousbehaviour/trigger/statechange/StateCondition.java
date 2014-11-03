@@ -45,7 +45,7 @@ public abstract class StateCondition
         
         byte[] idData = new byte[EndianConversor.INT_SIZE_BYTES];
         
-        EndianConversor.intToLittleEndian(this.getType().getValue(), idData, 0);
+        EndianConversor.shortToLittleEndian((short)this.getType().getValue(), idData, 0);
         dataStream.write(idData, 0, EndianConversor.SHORT_SIZE_BYTES);
         try
         {
@@ -73,7 +73,7 @@ public abstract class StateCondition
     @Override
     public String toString()
     {
-        return "StateCondition:" + this.type.toString() + "-";
+        return "StateCondition{" + "type=" + this.type.toString()+ "}";
     }
     
 }

@@ -166,7 +166,7 @@ public class UniDAOperationAckMessage extends UniDADeviceMessage
 
     @Override
     public String toString() {
-        return super.toString() + "; UniDAOperationAckMessage{" + "errorCode=" + errorCode + ", opId=" + opId + '}';
+        return super.toString() + "<-UniDAOperationAckMessage{" + "errorCode=" + errorCode + ", opId=" + opId + '}';
     }
     
     
