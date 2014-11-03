@@ -117,8 +117,9 @@ public class UniDANotificationUnsuscriptionRequestMessage extends UniDADeviceMes
             EndianConversor.shortToLittleEndian((short) this.params.length, lenData, 0);
             dataStream.write(lenData);
 
-            for(int i=0; i<this.params.length; i++) {
-                writeString(dataStream, params[i]);
+            for (String param : this.params)
+            {
+                writeString(dataStream, param);
             }
 
         }
@@ -200,5 +201,12 @@ public class UniDANotificationUnsuscriptionRequestMessage extends UniDADeviceMes
     protected MessageRType getMessageType() {
         return MessageRType.REQUEST;
     }
+
+    @Override
+    public String toString()
+    {
+        return super.toString() + "<-UniDANotificationUnsuscriptionRequestMessage{" + "notificationId=" + notificationId + ", stateId=" + stateId + ", params=" + Arrays.toString(params) + '}';
+    }
+    
     
 }

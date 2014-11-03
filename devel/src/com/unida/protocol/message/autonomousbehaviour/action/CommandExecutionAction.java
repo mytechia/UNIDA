@@ -140,7 +140,7 @@ public class CommandExecutionAction extends RuleAction
     @Override
     public String toString()
     {
-        return super.toString() + "CommandExecutionAction{" + "funcId=" + funcId + ", cmdId=" + cmdId + ", params=" + Arrays.toString(params) + "}";
+        return super.toString() + "<-CommandExecutionAction{" + "funcId=" + funcId + ", cmdId=" + cmdId + ", params=" + Arrays.toString(params) + "}";
     }        
 
 }

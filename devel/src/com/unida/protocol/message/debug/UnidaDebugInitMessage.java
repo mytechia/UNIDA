@@ -28,8 +28,6 @@ import com.unida.protocol.message.ErrorCode;
 import com.unida.protocol.message.MessageType;
 import com.unida.protocol.message.UniDAMessage;
 import java.io.ByteArrayOutputStream;
-import java.util.ArrayList;
-import java.util.Collection;
 
 /**
  *
@@ -64,4 +62,10 @@ public class UnidaDebugInitMessage extends UniDAMessage
         return new ByteArrayOutputStream().toByteArray();
     }
 
+    @Override
+    public String toString()
+    {
+        return "UnidaDebugInitMessage{" + '}';
+    }
+    
 }

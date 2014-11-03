@@ -204,5 +204,11 @@ public class UniDAABRuleVO
     {
         return (null != this.scenario)?this.scenario.getId():UniDAABScenarioVO.NULL;
     }
+
+    @Override
+    public String toString()
+    {
+        return "UniDAABRuleVO{" + "ruleID=" + ruleID + ", scenario=" + scenario + ", trigger=" + trigger + ", action=" + action + '}';
+    }      
     
 }

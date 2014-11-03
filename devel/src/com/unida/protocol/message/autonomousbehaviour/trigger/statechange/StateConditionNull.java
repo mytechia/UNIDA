@@ -54,7 +54,7 @@ public class StateConditionNull extends StateCondition
     @Override
     public String toString()
     {
-        return super.toString() + "StateConditionNull";
+        return super.toString() + "<-StateConditionNull";
     }
     
     

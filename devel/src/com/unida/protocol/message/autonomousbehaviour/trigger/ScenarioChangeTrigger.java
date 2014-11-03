@@ -118,7 +118,7 @@ public class ScenarioChangeTrigger extends RuleTrigger
     @Override
     public String toString()
     {
-        return super.toString() + "ScenarioChangeTrigger{" + "scenario ID=" + scenarioID + "}";
+        return super.toString() + "<-ScenarioChangeTrigger{" + "scenario ID=" + scenarioID + "}";
     }
 
 }

@@ -62,4 +62,11 @@ public enum RuleTriggerEnum
         }
         return UNKNOWN;
     }
+
+    @Override
+    public String toString()
+    {
+        return "RuleTriggerEnum{" + "triggerType=" + triggerType + '}';
+    }
+        
 }

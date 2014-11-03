@@ -183,6 +183,5 @@ public class UniDANotificationMessage extends UniDADeviceMessage
     public String toString() {
         return super.toString() + "; UniDANotificationMessage{" + "opId=" + opId + ", stateId=" + stateId + ", value=" + stateValue.toString() + '}';
     }
-       
-    
+           
 }

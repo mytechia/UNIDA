@@ -172,11 +172,7 @@ public class UniDANotificationSuscriptionRequestMessage extends UniDADeviceMessa
         {
             return false;
         }
-        if (!Objects.equals(this.stateChangeTrigger, other.stateChangeTrigger))
-        {
-            return false;
-        }
-        return true;
+        return Objects.equals(this.stateChangeTrigger, other.stateChangeTrigger);
     }
 
     @Override
@@ -184,4 +180,12 @@ public class UniDANotificationSuscriptionRequestMessage extends UniDADeviceMessa
     {
         return MessageRType.REQUEST;
     }
+
+    @Override
+    public String toString()
+    {
+        return super.toString() + "<-UniDANotificationSuscriptionRequestMessage{" + "notificationId=" + notificationId + ", stateChangeTrigger=" + stateChangeTrigger + '}';
+    }
+    
+    
 }

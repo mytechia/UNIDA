@@ -101,4 +101,11 @@ public class UniDAABRemoveMessage extends UniDAMessage
 
         return offset;
     }
+
+    @Override
+    public String toString()
+    {
+        return super.toString() + "<-UniDAABRemoveMessage{" + "opId=" + opId + ", unidaABruleID=" + unidaABruleID + '}';
+    }
+    
 }

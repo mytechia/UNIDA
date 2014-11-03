@@ -118,9 +118,9 @@ public class UniDASendCommandToDeviceMessage extends UniDADeviceMessage
             EndianConversor.shortToLittleEndian((short) this.params.length, lenData, 0);
             dataStream.write(lenData);
 
-            for (int i = 0; i < this.params.length; i++)
+            for (String param : this.params)
             {
-                writeString(dataStream, params[i]);
+                writeString(dataStream, param);
             }
         } catch (IOException ioEx)
         {
@@ -190,11 +190,7 @@ public class UniDASendCommandToDeviceMessage extends UniDADeviceMessage
         {
             return false;
         }
-        if (!Arrays.deepEquals(this.params, other.params))
-        {
-            return false;
-        }
-        return true;
+        return Arrays.deepEquals(this.params, other.params);
     }
 
     @Override
@@ -218,16 +214,16 @@ public class UniDASendCommandToDeviceMessage extends UniDADeviceMessage
     @Override
     public String toString()
     {
-        return super.toString() + "; UniDASendCommandToDeviceMessage{" + "opId=" + opId
+        return super.toString() + "<-UniDASendCommandToDeviceMessage{" + "opId=" + opId
                 + ", cmdId=" + cmdId + ", params=" + paramsToString() + '}';
     }
 
     private String paramsToString()
     {
         String pparams = "";
-        for (int i = 0; i < this.getParams().length; i++)
+        for (String param : this.getParams())
         {
-            pparams += this.getParams()[i] + " - ";
+            pparams += param + " - ";
         }
         if (pparams.length() > 4)
         {

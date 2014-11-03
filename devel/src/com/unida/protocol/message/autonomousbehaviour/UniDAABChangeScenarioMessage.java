@@ -120,4 +120,10 @@ public class UniDAABChangeScenarioMessage extends UniDAMessage
         return initIndex;
     }
 
+    @Override
+    public String toString()
+    {
+        return super.toString() + "<-UniDAABChangeScenarioMessage{" + "opId=" + opId + ", scenarioID=" + scenarioID + '}';
+    }
+    
 }

@@ -130,10 +130,7 @@ public class UniDAQueryDeviceRequestMessage extends UniDADeviceMessage
             return false;
         }
         final UniDAQueryDeviceRequestMessage other = (UniDAQueryDeviceRequestMessage) obj;
-        if (this.opId != other.opId) {
-            return false;
-        }
-        return true;
+        return this.opId == other.opId;
     }
 
 
@@ -151,5 +148,11 @@ public class UniDAQueryDeviceRequestMessage extends UniDADeviceMessage
     protected MessageRType getMessageType() {
         return MessageRType.REQUEST;
     }
+
+    @Override
+    public String toString()
+    {
+        return super.toString() + "<-UniDAQueryDeviceRequestMessage{" + "opId=" + opId + '}';
+    }        
 
 }

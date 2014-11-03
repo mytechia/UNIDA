@@ -102,4 +102,11 @@ public class UniDAABAddMessage extends UniDAMessage
 
         return dataStream.toByteArray();
     }
+
+    @Override
+    public String toString()
+    {
+        return super.toString() + "<-UniDAABAddMessage{" + "opId=" + opId + ", rule=" + rule + '}';
+    }
+        
 }

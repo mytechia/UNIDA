@@ -111,5 +111,11 @@ public class UniDAABACKMessage extends UniDAMessage
         return offset;
 
     }
+
+    @Override
+    public String toString()
+    {
+        return super.toString() + "<-UniDAABACKMessage{" + "errorCode=" + errorCode + ", opId=" + opId + '}';
+    }        
     
 }

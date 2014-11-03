@@ -32,6 +32,7 @@ import com.unida.protocol.message.MessageType;
 import com.unida.protocol.message.UniDAMessage;
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 
 /**
@@ -114,4 +115,12 @@ public class UnidaDebugInfoMessage extends UniDAMessage
         return dataStream.toByteArray();
 
     }
+
+    @Override
+    public String toString()
+    {
+        return "UnidaDebugInfoMessage{" + "logInfos=" + Arrays.toString(logInfos.toArray()) + '}';
+    }
+    
+    
 }

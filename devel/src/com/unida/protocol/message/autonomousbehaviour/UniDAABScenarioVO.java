@@ -85,4 +85,10 @@ public class UniDAABScenarioVO
         this.description = description;
     }
 
+    @Override
+    public String toString()
+    {
+        return "UniDAABScenarioVO{" + "scenarioID=" + scenarioID + ", description=" + description + '}';
+    }
+
 }

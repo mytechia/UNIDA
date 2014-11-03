@@ -106,7 +106,7 @@ public class StateConditionBinary extends StateCondition
     @Override
     public String toString()
     {
-        return super.toString() + "StateConditionBinary{" + "stateValue1=" + stateValue1 + ", stateValue2=" + stateValue2 + "}";
+        return super.toString() + "<-StateConditionBinary{" + "stateValue1=" + stateValue1 + ", stateValue2=" + stateValue2 + "}";
     }
     
     

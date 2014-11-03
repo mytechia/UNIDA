@@ -89,4 +89,10 @@ public class UniDAABQueryRequestMessage extends UniDAMessage
         return offset;
     }
 
+    @Override
+    public String toString()
+    {
+        return super.toString() + "<-UniDAABQueryRequestMessage{" + "opId=" + opId + '}';
+    }
+
 }

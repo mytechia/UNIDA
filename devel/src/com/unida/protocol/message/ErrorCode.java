@@ -66,6 +66,11 @@ public enum ErrorCode {
             return null;
     }
 
+    @Override
+    public String toString()
+    {
+        return "ErrorCode{" + "typeValue=" + typeValue + '}';
+    }
     
 }
 
