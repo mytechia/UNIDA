@@ -284,7 +284,7 @@ public class ManageAutonomousBehaviourRulesDialog extends javax.swing.JDialog
         {
             try
             {
-                Integer ruleID = (Integer) jTableABRules.getModel().getValueAt(jTableABRules.getSelectedRow(), 4);
+                Integer ruleID = (Integer) jTableABRules.getModel().getValueAt(jTableABRules.getSelectedRow(), 3);
 
                 instantiationFacade.getGatewayOperationFacade().rmABRule(new UniDAAddress(gatewayAddress), ruleID);
             } catch (InternalErrorException ex)
