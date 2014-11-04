@@ -42,6 +42,7 @@ import com.unida.protocol.message.autonomousbehaviour.trigger.StateChangeTrigger
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 
 /**
@@ -220,7 +221,7 @@ public final class UniDAABRuleVO
     @Override
     public String toString()
     {
-        return "UniDAABRuleVO{" + "ruleID=" + ruleID + ", scenario=" + scenario + ", trigger=" + trigger + ", action=" + action + '}';
+        return "UniDAABRuleVO{" + "ruleID=" + ruleID + ", triggers=" + Arrays.toString(triggers.toArray()) + ", action=" + action + '}';
     }      
     
 }

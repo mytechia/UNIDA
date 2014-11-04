@@ -23,16 +23,10 @@
  */
 package com.unida.tools.librarybasicgui.dialog;
 
-import com.mytechia.commons.framework.exception.InternalErrorException;
-import com.mytechia.commons.framework.modelaction.exception.InstanceNotFoundException;
 import com.unida.library.device.DeviceID;
-import com.unida.library.device.Gateway;
 import com.unida.library.device.exception.UniDAIDFormatException;
 import com.unida.library.device.ontology.state.DeviceStateValue;
 import com.unida.library.manage.im.InMemoryUniDAInstantiationFacade;
-import com.unida.library.operation.OperationFailures;
-import com.unida.library.operation.OperationTicket;
-import com.unida.library.operation.gateway.IAutonomousBehaviourCallback;
 import com.unida.protocol.UniDAAddress;
 import com.unida.protocol.message.autonomousbehaviour.UniDAABRuleVO;
 import com.unida.protocol.message.autonomousbehaviour.action.ChangeScenarioAction;
@@ -50,23 +44,13 @@ import com.unida.protocol.message.autonomousbehaviour.trigger.statechange.StateC
 import com.unida.protocol.message.autonomousbehaviour.trigger.statechange.StateConditionNary;
 import com.unida.protocol.message.autonomousbehaviour.trigger.statechange.StateConditionNull;
 import com.unida.protocol.message.autonomousbehaviour.trigger.statechange.StateConditionUnary;
-import com.unida.tools.librarybasicgui.UNIDALibraryBasicGUI;
 import com.unida.tools.librarybasicgui.util.DomoParsing;
-import java.awt.Component;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 import javax.swing.DefaultListModel;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JTable;
-import javax.swing.ListSelectionModel;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
-import javax.swing.table.TableCellRenderer;
-import javax.swing.table.TableColumn;
 
 /**
  * Dialog class that handles everything related to the autonomous behaviour
@@ -74,11 +58,10 @@ import javax.swing.table.TableColumn;
  *
  * @author victor
  */
-public class AutonomousBehaviourDialog extends javax.swing.JDialog
+public class AddAutonomousBehaviourRuleDialog extends javax.swing.JDialog
 {
 
     private InMemoryUniDAInstantiationFacade instantiationFacade;
-    private String gatewayAddress;
     private Collection<RuleTrigger> triggers;
     private DefaultListModel listModel;
 
@@ -90,13 +73,12 @@ public class AutonomousBehaviourDialog extends javax.swing.JDialog
      * @param instantiationFacade
      * @param gatewayAddress
      */
-    public AutonomousBehaviourDialog(java.awt.Frame parent, boolean modal,
-            InMemoryUniDAInstantiationFacade instantiationFacade, String gatewayAddress)
+    public AddAutonomousBehaviourRuleDialog(java.awt.Frame parent, boolean modal,
+            InMemoryUniDAInstantiationFacade instantiationFacade)
     {
         super(parent, modal);
         
         this.instantiationFacade = instantiationFacade;
-        this.gatewayAddress = gatewayAddress;
         this.triggers = new ArrayList<>();        
         
         initComponents();
@@ -105,7 +87,7 @@ public class AutonomousBehaviourDialog extends javax.swing.JDialog
         this.listModel = new DefaultListModel();
         this.jListTriggers.setModel(this.listModel);
 
-        this.setTitle(this.getTitle() + ": " + gatewayAddress);
+        this.setTitle(this.getTitle());
 
     }
 
@@ -123,26 +105,7 @@ public class AutonomousBehaviourDialog extends javax.swing.JDialog
         this.jPanelWriteStateAction.setVisible(false);
         this.jPanelChangeScenarioAction.setVisible(false);
     }
-
     
-    /*
-    * Asks the instantiationFacade for the data of the detected UniDA gateways
-    * The actual GUI work is done by the callback
-    */
-    private void loadABRules()
-    {
-        try
-        {
-
-            Gateway gateway = instantiationFacade.getDeviceManageFacade().findDeviceGatewayById(gatewayAddress);
-
-            instantiationFacade.getGatewayOperationFacade().requestABRules(gateway.getId(), new ABCallback());
-
-        } catch (InternalErrorException | InstanceNotFoundException ex)
-        {
-            JOptionPane.showMessageDialog(this, ex.toString());
-        }
-    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -156,11 +119,6 @@ public class AutonomousBehaviourDialog extends javax.swing.JDialog
 
         buttonGroupTriggerType = new javax.swing.ButtonGroup();
         buttonGroupActionType = new javax.swing.ButtonGroup();
-        jScrollPaneABRules = new javax.swing.JScrollPane();
-        jTableABRules = new javax.swing.JTable();
-        jLabel1 = new javax.swing.JLabel();
-        jButtonRemoveABRule = new javax.swing.JButton();
-        jSeparator1 = new javax.swing.JSeparator();
         jButtonAddABRule = new javax.swing.JButton();
         jPanelTriggerContainer = new javax.swing.JPanel();
         jPanelStateChangeTrigger = new javax.swing.JPanel();
@@ -180,6 +138,8 @@ public class AutonomousBehaviourDialog extends javax.swing.JDialog
         jTextWriteStateActionStateValueIDID2 = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         jTextTriggerSourceDeviceNumber = new javax.swing.JTextField();
+        jLabel19 = new javax.swing.JLabel();
+        jTextTriggerAddress = new javax.swing.JTextField();
         jPanelCronoTrigger = new javax.swing.JPanel();
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
@@ -225,7 +185,6 @@ public class AutonomousBehaviourDialog extends javax.swing.JDialog
         jRadioWriteStateAction = new javax.swing.JRadioButton();
         jRadioCommandAction = new javax.swing.JRadioButton();
         jRadioChangeScenarioAction = new javax.swing.JRadioButton();
-        jButtonRefreshABRules = new javax.swing.JButton();
         jPanelABRule = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jListTriggers = new javax.swing.JList();
@@ -239,70 +198,6 @@ public class AutonomousBehaviourDialog extends javax.swing.JDialog
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Autonomous behaviour management");
-
-        jTableABRules.setFont(new java.awt.Font("Lucida Grande", 0, 10)); // NOI18N
-        jTableABRules.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][]
-            {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String []
-            {
-                "Trigger", "Action Type", "Action", "Index"
-            }
-        )
-        {
-            Class[] types = new Class []
-            {
-                java.lang.String.class, java.lang.Object.class, java.lang.Object.class, java.lang.Integer.class
-            };
-            boolean[] canEdit = new boolean []
-            {
-                false, false, false, false
-            };
-
-            public Class getColumnClass(int columnIndex)
-            {
-                return types [columnIndex];
-            }
-
-            public boolean isCellEditable(int rowIndex, int columnIndex)
-            {
-                return canEdit [columnIndex];
-            }
-        });
-        jTableABRules.setColumnSelectionAllowed(true);
-        jTableABRules.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-        jScrollPaneABRules.setViewportView(jTableABRules);
-        jTableABRules.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-        if (jTableABRules.getColumnModel().getColumnCount() > 0)
-        {
-            jTableABRules.getColumnModel().getColumn(1).setPreferredWidth(100);
-            jTableABRules.getColumnModel().getColumn(1).setMaxWidth(100);
-            jTableABRules.getColumnModel().getColumn(2).setPreferredWidth(350);
-            jTableABRules.getColumnModel().getColumn(2).setMaxWidth(350);
-            jTableABRules.getColumnModel().getColumn(3).setPreferredWidth(50);
-            jTableABRules.getColumnModel().getColumn(3).setMaxWidth(50);
-        }
-
-        jLabel1.setText("Autonomous Behaviour Rules:");
-
-        jButtonRemoveABRule.setText("Delete Selected Rule");
-        jButtonRemoveABRule.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
-                jButtonRemoveABRuleActionPerformed(evt);
-            }
-        });
 
         jButtonAddABRule.setText("Add Rule");
         jButtonAddABRule.addActionListener(new java.awt.event.ActionListener()
@@ -390,7 +285,9 @@ public class AutonomousBehaviourDialog extends javax.swing.JDialog
                 .addContainerGap(29, Short.MAX_VALUE))
         );
 
-        jLabel2.setText("Trigger UniDA device number:");
+        jLabel2.setText("Trigger UniDA device:");
+
+        jLabel19.setText("Trigger UniDA address:");
 
         javax.swing.GroupLayout jPanelStateChangeTriggerLayout = new javax.swing.GroupLayout(jPanelStateChangeTrigger);
         jPanelStateChangeTrigger.setLayout(jPanelStateChangeTriggerLayout);
@@ -402,17 +299,21 @@ public class AutonomousBehaviourDialog extends javax.swing.JDialog
                         .addContainerGap()
                         .addGroup(jPanelStateChangeTriggerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelStateChangeTriggerLayout.createSequentialGroup()
-                                .addComponent(jTextStateChangeTriggerStateBaseIRI, javax.swing.GroupLayout.DEFAULT_SIZE, 330, Short.MAX_VALUE)
+                                .addComponent(jTextStateChangeTriggerStateBaseIRI)
                                 .addGap(18, 18, 18)
                                 .addComponent(jTextStateChangeTriggerStateID, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanelStateChangeTriggerLayout.createSequentialGroup()
                                 .addGap(8, 8, 8)
-                                .addGroup(jPanelStateChangeTriggerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jLabel2)
-                                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jTextTriggerSourceDeviceNumber, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, Short.MAX_VALUE))))
+                                .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addGroup(jPanelStateChangeTriggerLayout.createSequentialGroup()
+                                .addComponent(jLabel19)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jTextTriggerAddress, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jTextTriggerSourceDeviceNumber, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addComponent(jPanelStateCondition, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -422,7 +323,9 @@ public class AutonomousBehaviourDialog extends javax.swing.JDialog
                 .addGap(15, 15, 15)
                 .addGroup(jPanelStateChangeTriggerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(jTextTriggerSourceDeviceNumber, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jTextTriggerSourceDeviceNumber, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel19)
+                    .addComponent(jTextTriggerAddress, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -452,7 +355,7 @@ public class AutonomousBehaviourDialog extends javax.swing.JDialog
                     .addComponent(jLabel9)
                     .addComponent(jLabel10)
                     .addComponent(jLabel8))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 176, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 190, Short.MAX_VALUE)
                 .addGroup(jPanelCronoTriggerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jTextCronoTriggerMin, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTextCronoTriggerHour, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -490,7 +393,7 @@ public class AutonomousBehaviourDialog extends javax.swing.JDialog
                 .addComponent(jLabel20)
                 .addGap(47, 47, 47)
                 .addComponent(jTextScenarioChangeTriggerScenarioID, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(65, Short.MAX_VALUE))
+                .addContainerGap(79, Short.MAX_VALUE))
         );
         jPanelScenarioChangeLayout.setVerticalGroup(
             jPanelScenarioChangeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -822,15 +725,6 @@ public class AutonomousBehaviourDialog extends javax.swing.JDialog
                 .addContainerGap(28, Short.MAX_VALUE))
         );
 
-        jButtonRefreshABRules.setText("Refresh rules");
-        jButtonRefreshABRules.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
-                jButtonRefreshABRulesActionPerformed(evt);
-            }
-        });
-
         jPanelABRule.setBorder(javax.swing.BorderFactory.createTitledBorder("Triggers"));
         jPanelABRule.setName("Rule"); // NOI18N
 
@@ -894,42 +788,28 @@ public class AutonomousBehaviourDialog extends javax.swing.JDialog
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPaneABRules)
-            .addComponent(jSeparator1)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanelABRule, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 341, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jButtonRefreshABRules)
-                                        .addGap(266, 266, 266)
-                                        .addComponent(jButtonRemoveABRule)))
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addComponent(jPanelABRule, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGap(146, 146, 146)
+                                .addComponent(jButtonAddTrigger)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(146, 146, 146)
-                                        .addComponent(jButtonAddTrigger)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jPanelTriggerType, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                                .addGap(0, 0, Short.MAX_VALUE)
-                                                .addComponent(jPanelTriggerContainer, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jPanelActionType, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jPanelActionContainer, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jPanelActionDestination, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jSeparator2)))
+                                    .addComponent(jPanelTriggerType, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                        .addGap(0, 0, Short.MAX_VALUE)
+                                        .addComponent(jPanelTriggerContainer, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jPanelActionType, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jPanelActionContainer, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jPanelActionDestination, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addComponent(jSeparator2))
                 .addContainerGap())
             .addGroup(layout.createSequentialGroup()
                 .addGap(445, 445, 445)
@@ -939,17 +819,7 @@ public class AutonomousBehaviourDialog extends javax.swing.JDialog
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(28, Short.MAX_VALUE)
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPaneABRules, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButtonRemoveABRule)
-                    .addComponent(jButtonRefreshABRules))
-                .addGap(12, 12, 12)
-                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addContainerGap()
                 .addComponent(jPanelABRule, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -968,7 +838,8 @@ public class AutonomousBehaviourDialog extends javax.swing.JDialog
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButtonAddABRule))
+                .addComponent(jButtonAddABRule)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -976,43 +847,7 @@ public class AutonomousBehaviourDialog extends javax.swing.JDialog
 
     private void initComponentsCustom()
     {
-        for (int i = 0; i < jTableABRules.getColumnCount(); i++)
-        {
-            TableColumn col = jTableABRules.getColumnModel().getColumn(i);
-            col.setCellRenderer(new CustomCellRenderer());
-        }
-
-        jTableABRules.getSelectionModel().addListSelectionListener(new ListSelectionListener()
-        {
-
-            @Override
-            public void valueChanged(ListSelectionEvent e)
-            {
-                if (e.getValueIsAdjusting())
-                {
-                    return;
-                }
-                ListSelectionModel lsm = (ListSelectionModel) e.getSource();
-                if (lsm.isSelectionEmpty())
-                {
-                    System.out.println("No rows are selected.");
-                } else
-                {
-                    int selectedRow = lsm.getMinSelectionIndex();
-                    Object valueAt = jTableABRules.getModel().getValueAt(selectedRow, 0);
-                    if (null != valueAt && valueAt.toString().length() > 0)
-                    {
-                        jButtonRemoveABRule.setEnabled(true);
-                    } else
-                    {
-                        jButtonRemoveABRule.setEnabled(false);
-                    }
-                }
-            }
-        });
-
-        UNIDALibraryBasicGUI.cleanJTable(jTableABRules);
-
+        
         this.jTextStateChangeTriggerValue1.setEnabled(false);
         this.jTextWriteStateActionStateValueIDBaseIRI1.setEnabled(false);
         this.jTextWriteStateActionStateValueIDID1.setEnabled(false);
@@ -1031,40 +866,36 @@ public class AutonomousBehaviourDialog extends javax.swing.JDialog
                 switch (conditionType)
                 {
                     case NO_CONDITION:
-                        AutonomousBehaviourDialog.this.jTextStateChangeTriggerValue1.setEnabled(false);
-                        AutonomousBehaviourDialog.this.jTextWriteStateActionStateValueIDBaseIRI1.setEnabled(false);
-                        AutonomousBehaviourDialog.this.jTextWriteStateActionStateValueIDID1.setEnabled(false);
-                        AutonomousBehaviourDialog.this.jTextStateChangeTriggerValue2.setEnabled(false);
-                        AutonomousBehaviourDialog.this.jTextWriteStateActionStateValueIDBaseIRI2.setEnabled(false);
-                        AutonomousBehaviourDialog.this.jTextWriteStateActionStateValueIDID2.setEnabled(false);
+                        AddAutonomousBehaviourRuleDialog.this.jTextStateChangeTriggerValue1.setEnabled(false);
+                        AddAutonomousBehaviourRuleDialog.this.jTextWriteStateActionStateValueIDBaseIRI1.setEnabled(false);
+                        AddAutonomousBehaviourRuleDialog.this.jTextWriteStateActionStateValueIDID1.setEnabled(false);
+                        AddAutonomousBehaviourRuleDialog.this.jTextStateChangeTriggerValue2.setEnabled(false);
+                        AddAutonomousBehaviourRuleDialog.this.jTextWriteStateActionStateValueIDBaseIRI2.setEnabled(false);
+                        AddAutonomousBehaviourRuleDialog.this.jTextWriteStateActionStateValueIDID2.setEnabled(false);
                         break;
                     case EQUALS:
                     case DIFFERENT_TO:
                     case GREATER_THAN:
                     case LESSER_THAN:
-                        AutonomousBehaviourDialog.this.jTextStateChangeTriggerValue1.setEnabled(true);
-                        AutonomousBehaviourDialog.this.jTextWriteStateActionStateValueIDBaseIRI1.setEnabled(true);
-                        AutonomousBehaviourDialog.this.jTextWriteStateActionStateValueIDID1.setEnabled(true);
-                        AutonomousBehaviourDialog.this.jTextStateChangeTriggerValue2.setEnabled(false);
-                        AutonomousBehaviourDialog.this.jTextWriteStateActionStateValueIDBaseIRI2.setEnabled(false);
-                        AutonomousBehaviourDialog.this.jTextWriteStateActionStateValueIDID2.setEnabled(false);
+                        AddAutonomousBehaviourRuleDialog.this.jTextStateChangeTriggerValue1.setEnabled(true);
+                        AddAutonomousBehaviourRuleDialog.this.jTextWriteStateActionStateValueIDBaseIRI1.setEnabled(true);
+                        AddAutonomousBehaviourRuleDialog.this.jTextWriteStateActionStateValueIDID1.setEnabled(true);
+                        AddAutonomousBehaviourRuleDialog.this.jTextStateChangeTriggerValue2.setEnabled(false);
+                        AddAutonomousBehaviourRuleDialog.this.jTextWriteStateActionStateValueIDBaseIRI2.setEnabled(false);
+                        AddAutonomousBehaviourRuleDialog.this.jTextWriteStateActionStateValueIDID2.setEnabled(false);
                         break;
                     case BETWEEN:
                     case SOME_OF:
-                        AutonomousBehaviourDialog.this.jTextStateChangeTriggerValue1.setEnabled(true);
-                        AutonomousBehaviourDialog.this.jTextWriteStateActionStateValueIDBaseIRI1.setEnabled(true);
-                        AutonomousBehaviourDialog.this.jTextWriteStateActionStateValueIDID1.setEnabled(true);
-                        AutonomousBehaviourDialog.this.jTextStateChangeTriggerValue2.setEnabled(true);
-                        AutonomousBehaviourDialog.this.jTextWriteStateActionStateValueIDBaseIRI2.setEnabled(true);
-                        AutonomousBehaviourDialog.this.jTextWriteStateActionStateValueIDID2.setEnabled(true);
+                        AddAutonomousBehaviourRuleDialog.this.jTextStateChangeTriggerValue1.setEnabled(true);
+                        AddAutonomousBehaviourRuleDialog.this.jTextWriteStateActionStateValueIDBaseIRI1.setEnabled(true);
+                        AddAutonomousBehaviourRuleDialog.this.jTextWriteStateActionStateValueIDID1.setEnabled(true);
+                        AddAutonomousBehaviourRuleDialog.this.jTextStateChangeTriggerValue2.setEnabled(true);
+                        AddAutonomousBehaviourRuleDialog.this.jTextWriteStateActionStateValueIDBaseIRI2.setEnabled(true);
+                        AddAutonomousBehaviourRuleDialog.this.jTextWriteStateActionStateValueIDID2.setEnabled(true);
                         break;
                 }
             }
         });
-
-        this.jTextActionDestination.setText(gatewayAddress);
-
-        jButtonRemoveABRule.setEnabled(false);
 
         hideTriggerPanels();
         jPanelStateChangeTrigger.setVisible(true);
@@ -1084,25 +915,6 @@ public class AutonomousBehaviourDialog extends javax.swing.JDialog
         
     }
 
-
-    /*
-    * If there is a selected row in the rules table, picks its ID
-    *and launches an UniDA gateway operation to delete that rule
-    */
-    private void jButtonRemoveABRuleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRemoveABRuleActionPerformed
-        if (jTableABRules.getSelectedRowCount() > 0)
-        {
-            try
-            {
-                Integer ruleID = (Integer) jTableABRules.getModel().getValueAt(jTableABRules.getSelectedRow(), 4);
-
-                instantiationFacade.getGatewayOperationFacade().rmABRule(new UniDAAddress(gatewayAddress), ruleID);
-            } catch (InternalErrorException ex)
-            {
-                JOptionPane.showMessageDialog(this, ex.toString());
-            }
-        }
-    }//GEN-LAST:event_jButtonRemoveABRuleActionPerformed
 
 
     /*
@@ -1210,11 +1022,6 @@ public class AutonomousBehaviourDialog extends javax.swing.JDialog
         this.setEnabledActionDestination(true);
     }//GEN-LAST:event_jRadioWriteStateActionActionPerformed
 
-    private void jButtonRefreshABRulesActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jButtonRefreshABRulesActionPerformed
-    {//GEN-HEADEREND:event_jButtonRefreshABRulesActionPerformed
-        loadABRules();
-    }//GEN-LAST:event_jButtonRefreshABRulesActionPerformed
-
     private void jRadioChangeScenarioActionActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jRadioChangeScenarioActionActionPerformed
     {//GEN-HEADEREND:event_jRadioChangeScenarioActionActionPerformed
         hideActionPanels();
@@ -1246,7 +1053,7 @@ public class AutonomousBehaviourDialog extends javax.swing.JDialog
             DeviceID deviceID;
             try {
                 deviceID = new DeviceID(
-                        new UniDAAddress(gatewayAddress),
+                        new UniDAAddress(jTextTriggerAddress.getText()),
                         Short.valueOf(jTextTriggerSourceDeviceNumber.getText()));
             } catch (UniDAIDFormatException ex) {
                 JOptionPane.showMessageDialog(this, ex.toString());
@@ -1319,10 +1126,7 @@ public class AutonomousBehaviourDialog extends javax.swing.JDialog
     private javax.swing.ButtonGroup buttonGroupTriggerType;
     private javax.swing.JButton jButtonAddABRule;
     private javax.swing.JButton jButtonAddTrigger;
-    private javax.swing.JButton jButtonRefreshABRules;
-    private javax.swing.JButton jButtonRemoveABRule;
     private javax.swing.JComboBox jComboConditionOperator;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
@@ -1332,6 +1136,7 @@ public class AutonomousBehaviourDialog extends javax.swing.JDialog
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
+    private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel21;
@@ -1365,10 +1170,7 @@ public class AutonomousBehaviourDialog extends javax.swing.JDialog
     private javax.swing.JRadioButton jRadioStateChangeTrigger;
     private javax.swing.JRadioButton jRadioWriteStateAction;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPaneABRules;
-    private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
-    private javax.swing.JTable jTableABRules;
     private javax.swing.JTextField jTextActionDestination;
     private javax.swing.JTextField jTextActionDestinationDeviceNumber;
     private javax.swing.JTextField jTextChangeScenarioActionScenarioID;
@@ -1387,6 +1189,7 @@ public class AutonomousBehaviourDialog extends javax.swing.JDialog
     private javax.swing.JTextField jTextStateChangeTriggerStateID;
     private javax.swing.JTextField jTextStateChangeTriggerValue1;
     private javax.swing.JTextField jTextStateChangeTriggerValue2;
+    private javax.swing.JTextField jTextTriggerAddress;
     private javax.swing.JTextField jTextTriggerSourceDeviceNumber;
     private javax.swing.JTextField jTextWriteStateActionStateIDBaseIRI;
     private javax.swing.JTextField jTextWriteStateActionStateIDID;
@@ -1398,124 +1201,6 @@ public class AutonomousBehaviourDialog extends javax.swing.JDialog
     private javax.swing.JTextField jTextWriteStateActionStateValueIDID2;
     private javax.swing.JTextField jTextWriteStateActionStateValueRAW;
     // End of variables declaration//GEN-END:variables
-
-    
-    /*
-    * Callback that is invoked when an answer for an UniDA autonomous behaviour rules query
-    *is received
-    */
-    private class ABCallback implements IAutonomousBehaviourCallback
-    {
-
-        @Override
-        public void notifyGatewayAutonomousBehaviourRules(OperationTicket ticket, Gateway gateway, List<UniDAABRuleVO> rules)
-        {
-
-            UNIDALibraryBasicGUI.cleanJTable(jTableABRules);
-            int ruleRow = 0;
-
-            for (UniDAABRuleVO rule : rules)
-            {
-                String triggersText = "";
-                for (RuleTrigger trigger : rule.getTriggers())
-                {
-                    triggersText += trigger.toString();
-                }
-                jTableABRules.getModel().setValueAt(triggersText, ruleRow, 0);
-                jTableABRules.getModel().setValueAt(rule.getAction().getType().toString(), ruleRow, 1);
-                jTableABRules.getModel().setValueAt(rule.getAction().toString(), ruleRow, 2);
-                jTableABRules.getModel().setValueAt(rule.getRuleId(), ruleRow, 3);
-                ruleRow++;
-            }
-        }
-
-        @Override
-        public void notifyAutonomousBehaviourScenarios(OperationTicket ticket, List<String> scenarioIDs)
-        {
-            throw new UnsupportedOperationException("Not supported here.");
-        }
-
-        @Override
-        public void notifyAutonomousBehaviourACK(OperationTicket ticket)
-        {
-            throw new UnsupportedOperationException("Not supported yet.");
-        }
-
-        @Override
-        public void notifyExecution(OperationTicket ticket)
-        {
-            throw new UnsupportedOperationException("Not supported yet.");
-        }
-
-        @Override
-        public void notifyFailure(OperationTicket ticket, OperationFailures failure)
-        {
-            JOptionPane.showMessageDialog(AutonomousBehaviourDialog.this, "Oh no!");
-        }
-
-    }
-
-    
-    /*
-    * A different cellRenderer is needed to be able to handle a different 
-    *tooltip text for each cell
-    */
-    private class CustomCellRenderer extends JLabel implements TableCellRenderer
-    {
-
-        // This method is called each time a cell in a column
-        // using this renderer needs to be rendered.
-        @Override
-        public Component getTableCellRendererComponent(JTable table, Object value,
-                boolean isSelected, boolean hasFocus, int rowIndex, int vColIndex)
-        {
-            // 'value' is value contained in the cell located at
-            // (rowIndex, vColIndex)
-
-            if (isSelected)
-            {
-                // cell (and perhaps other cells) are selected
-            }
-
-            if (hasFocus)
-            {
-                // this cell is the anchor and the table has the focus
-            }
-
-            if (null != value)
-            {
-                // Configure the component with the specified value
-                setText(value.toString());
-                // Set tool tip if desired          
-                setToolTipText(value.toString());
-            }
-
-            this.setFont(new java.awt.Font("Lucida Grande", 0, 11));
-
-            // Since the renderer is a component, return itself
-            return this;
-        }
-
-        // The following methods override the defaults for performance reasons
-        @Override
-        public void validate()
-        {
-        }
-
-        @Override
-        public void revalidate()
-        {
-        }
-
-        @Override
-        protected void firePropertyChange(String propertyName, Object oldValue, Object newValue)
-        {
-        }
-
-        @Override
-        public void firePropertyChange(String propertyName, boolean oldValue, boolean newValue)
-        {
-        }
-    }
+       
 
 }

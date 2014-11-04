@@ -38,8 +38,9 @@ import com.unida.library.device.GatewayDeviceIO;
 import com.unida.library.device.IDevice;
 import com.unida.library.device.PhysicalDevice;
 import com.unida.library.manage.im.InMemoryUniDAInstantiationFacade;
+import com.unida.tools.librarybasicgui.dialog.AddAutonomousBehaviourRuleDialog;
 import com.unida.tools.librarybasicgui.dialog.AutonomousBehaviourChangeScenarioDialog;
-import com.unida.tools.librarybasicgui.dialog.AutonomousBehaviourDialog;
+import com.unida.tools.librarybasicgui.dialog.ManageAutonomousBehaviourRulesDialog;
 import com.unida.tools.librarybasicgui.dialog.AutonomousBehaviourQueryScenariosDialog;
 import com.unida.tools.librarybasicgui.dialog.DeviceWriteStateDialog;
 import java.util.Collection;
@@ -129,7 +130,7 @@ public class UNIDALibraryBasicGUI extends javax.swing.JFrame
         jButtonStates.setEnabled(false);
         jButtonState.setEnabled(false);
         jButtonSuscribe.setEnabled(false);
-        jButtonAB.setEnabled(false);
+        jButtonManageABRules.setEnabled(false);
         try
         {
             Collection<Gateway> gateways = instantiationFacade.getDeviceManageFacade().findAllDeviceGateways(0, Integer.MAX_VALUE);
@@ -152,8 +153,8 @@ public class UNIDALibraryBasicGUI extends javax.swing.JFrame
         {
             Collection<Gateway> gateways = instantiationFacade.getDeviceManageFacade().findAllDeviceGateways(0, Integer.MAX_VALUE);
             for (Gateway gateway : gateways)
-            {
-                addOrUpdateGateway(gateway.getId().toString(), gateway.getOperationalState().getState().toString());
+            {                
+                addOrUpdateGateway(gateway.getId().toString(), gateway.getOperationalState().getState().toString(), gateway.getModel());
             }
         } catch (InternalErrorException e)
         {
@@ -161,7 +162,7 @@ public class UNIDALibraryBasicGUI extends javax.swing.JFrame
         }
     }
 
-    private void addOrUpdateGateway(String id, String state)
+    private void addOrUpdateGateway(String id, String state, String description)
     {
         boolean found = false;
         int rowNumber = 0;
@@ -178,6 +179,7 @@ public class UNIDALibraryBasicGUI extends javax.swing.JFrame
         {
             jTableGatewaysInfo.getModel().setValueAt(id, rowNumber, 0);
             jTableGatewaysInfo.getModel().setValueAt(state, rowNumber, 1);
+            jTableGatewaysInfo.getModel().setValueAt(description, rowNumber, 2);
             numberOfGateways++;
         }
     }
@@ -236,7 +238,7 @@ public class UNIDALibraryBasicGUI extends javax.swing.JFrame
         jButtonState.setEnabled(false);
         jButtonWriteState.setEnabled(false);
         jButtonSuscribe.setEnabled(false);
-        jButtonAB.setEnabled(false);
+        jButtonManageABRules.setEnabled(false);
     }
 
     final void initGUITablesState()
@@ -274,12 +276,12 @@ public class UNIDALibraryBasicGUI extends javax.swing.JFrame
                     removeSelectionInJTable(jTableDeviceIOsInfo);
                     if (null != valueAt && valueAt.toString().length() > 0)
                     {
-                        jButtonAB.setEnabled(true);
+                        jButtonManageABRules.setEnabled(true);
                         loadDevices(valueAt.toString());
                         loadIOs(valueAt.toString());
                     } else
                     {
-                        jButtonAB.setEnabled(false);
+                        jButtonManageABRules.setEnabled(false);
                     }
                 }
             }
@@ -338,10 +340,11 @@ public class UNIDALibraryBasicGUI extends javax.swing.JFrame
         jButtonState = new javax.swing.JButton();
         jButtonWriteState = new javax.swing.JButton();
         jButtonSuscribe = new javax.swing.JButton();
-        jButtonAB = new javax.swing.JButton();
+        jButtonManageABRules = new javax.swing.JButton();
         jButtonForceAnnounce = new javax.swing.JButton();
         jButtonChangeScenario = new javax.swing.JButton();
         jButtonQueryScenarios = new javax.swing.JButton();
+        jButtonAddABRule = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setPreferredSize(new java.awt.Dimension(973, 760));
@@ -356,25 +359,25 @@ public class UNIDALibraryBasicGUI extends javax.swing.JFrame
         jTableGatewaysInfo.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][]
             {
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null}
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null}
             },
             new String []
             {
-                "Gateway ID", "State"
+                "Gateway ID", "State", "Description"
             }
         )
         {
             boolean[] canEdit = new boolean []
             {
-                false, false
+                false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex)
@@ -383,6 +386,7 @@ public class UNIDALibraryBasicGUI extends javax.swing.JFrame
             }
         });
         jTableGatewaysInfo.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
+        jTableGatewaysInfo.setMinimumSize(new java.awt.Dimension(0, 0));
         jScrollPaneGatewaysInfo.setViewportView(jTableGatewaysInfo);
 
         jLabel2.setText("Selected Gateway IOs:");
@@ -418,6 +422,7 @@ public class UNIDALibraryBasicGUI extends javax.swing.JFrame
             }
         });
         jTableDeviceIOsInfo.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
+        jTableDeviceIOsInfo.setMinimumSize(null);
         jTableDeviceIOsInfo.setPreferredSize(new java.awt.Dimension(300, 128));
         jScrollPaneDeviceIOsInfo.setViewportView(jTableDeviceIOsInfo);
 
@@ -452,6 +457,7 @@ public class UNIDALibraryBasicGUI extends javax.swing.JFrame
             }
         });
         jTableDevicesInfo.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
+        jTableDevicesInfo.setMinimumSize(null);
         jScrollPaneDevicesInfo.setViewportView(jTableDevicesInfo);
 
         jLabel3.setText("Selected Gateway Devices:");
@@ -524,12 +530,12 @@ public class UNIDALibraryBasicGUI extends javax.swing.JFrame
         });
         jPanelDevicesButtons.add(jButtonSuscribe);
 
-        jButtonAB.setText("Manage Autonomous Behaviours");
-        jButtonAB.addActionListener(new java.awt.event.ActionListener()
+        jButtonManageABRules.setText("Manage Autonomous Behaviour Rules");
+        jButtonManageABRules.addActionListener(new java.awt.event.ActionListener()
         {
             public void actionPerformed(java.awt.event.ActionEvent evt)
             {
-                jButtonABActionPerformed(evt);
+                jButtonManageABRulesActionPerformed(evt);
             }
         });
 
@@ -542,7 +548,7 @@ public class UNIDALibraryBasicGUI extends javax.swing.JFrame
             }
         });
 
-        jButtonChangeScenario.setText("Change Scenario");
+        jButtonChangeScenario.setText("Activate/Deactivate Scenario");
         jButtonChangeScenario.addActionListener(new java.awt.event.ActionListener()
         {
             public void actionPerformed(java.awt.event.ActionEvent evt)
@@ -560,6 +566,15 @@ public class UNIDALibraryBasicGUI extends javax.swing.JFrame
             }
         });
 
+        jButtonAddABRule.setText("Add Autonomous Behaviour Rule");
+        jButtonAddABRule.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                jButtonAddABRuleActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanelGatewaysInfoLayout = new javax.swing.GroupLayout(jPanelGatewaysInfo);
         jPanelGatewaysInfo.setLayout(jPanelGatewaysInfoLayout);
         jPanelGatewaysInfoLayout.setHorizontalGroup(
@@ -568,49 +583,51 @@ public class UNIDALibraryBasicGUI extends javax.swing.JFrame
             .addComponent(jScrollPaneDevicesInfo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jScrollPaneDeviceIOsInfo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(jPanelGatewaysInfoLayout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(jPanelGatewaysInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanelGatewaysInfoLayout.createSequentialGroup()
+                        .addContainerGap()
                         .addGroup(jPanelGatewaysInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanelGatewaysInfoLayout.createSequentialGroup()
+                                .addGap(255, 255, 255)
+                                .addComponent(jPanelGatewaysButtons, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(53, 53, 53)
+                                .addComponent(jButtonManageABRules))
                             .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 361, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel2)
-                            .addComponent(jLabel3))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(jLabel3)))
                     .addGroup(jPanelGatewaysInfoLayout.createSequentialGroup()
-                        .addComponent(jButtonAB)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPanelGatewaysButtons, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(110, 110, 110)
                         .addComponent(jButtonForceAnnounce)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButtonAddABRule)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButtonChangeScenario)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButtonQueryScenarios)
-                        .addGap(258, 258, 258))))
+                        .addComponent(jButtonQueryScenarios)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelGatewaysInfoLayout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jPanelDevicesButtons, javax.swing.GroupLayout.PREFERRED_SIZE, 931, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(84, 84, 84))
+                .addGap(0, 85, Short.MAX_VALUE)
+                .addComponent(jPanelDevicesButtons, javax.swing.GroupLayout.PREFERRED_SIZE, 857, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(74, 74, 74))
         );
         jPanelGatewaysInfoLayout.setVerticalGroup(
             jPanelGatewaysInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelGatewaysInfoLayout.createSequentialGroup()
-                .addContainerGap(22, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanelGatewaysInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButtonForceAnnounce)
+                    .addComponent(jButtonChangeScenario)
+                    .addComponent(jButtonQueryScenarios)
+                    .addComponent(jButtonAddABRule))
+                .addGap(18, 18, 18)
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPaneGatewaysInfo, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanelGatewaysInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelGatewaysInfoLayout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jScrollPaneGatewaysInfo, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jPanelGatewaysButtons, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(51, 51, 51))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelGatewaysInfoLayout.createSequentialGroup()
-                        .addGroup(jPanelGatewaysInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jButtonAB)
-                            .addComponent(jButtonChangeScenario)
-                            .addComponent(jButtonForceAnnounce)
-                            .addComponent(jButtonQueryScenarios))
-                        .addGap(33, 33, 33)))
+                    .addComponent(jPanelGatewaysButtons, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButtonManageABRules))
+                .addGap(36, 36, 36)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPaneDeviceIOsInfo, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -639,15 +656,15 @@ public class UNIDALibraryBasicGUI extends javax.swing.JFrame
         }
     }//GEN-LAST:event_jButtonForceAnnounceActionPerformed
     
-    private void jButtonABActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jButtonABActionPerformed
-    {//GEN-HEADEREND:event_jButtonABActionPerformed
+    private void jButtonManageABRulesActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jButtonManageABRulesActionPerformed
+    {//GEN-HEADEREND:event_jButtonManageABRulesActionPerformed
         Object selectedGateway = jTableGatewaysInfo.getModel().getValueAt(jTableGatewaysInfo.getSelectionModel().getMinSelectionIndex(), 0);
         if (null != selectedGateway)
         {
-            AutonomousBehaviourDialog dialog = new AutonomousBehaviourDialog(this, false, instantiationFacade, selectedGateway.toString());
+            ManageAutonomousBehaviourRulesDialog dialog = new ManageAutonomousBehaviourRulesDialog(this, false, instantiationFacade, selectedGateway.toString());
             dialog.setVisible(true);
         }
-    }//GEN-LAST:event_jButtonABActionPerformed
+    }//GEN-LAST:event_jButtonManageABRulesActionPerformed
 
     private void jButtonSuscribeActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jButtonSuscribeActionPerformed
     {//GEN-HEADEREND:event_jButtonSuscribeActionPerformed
@@ -721,6 +738,12 @@ public class UNIDALibraryBasicGUI extends javax.swing.JFrame
         queryScenariosDialog.setVisible(true);
     }//GEN-LAST:event_jButtonQueryScenariosActionPerformed
 
+    private void jButtonAddABRuleActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jButtonAddABRuleActionPerformed
+    {//GEN-HEADEREND:event_jButtonAddABRuleActionPerformed
+        AddAutonomousBehaviourRuleDialog addABRuleDialog = new AddAutonomousBehaviourRuleDialog(this, false, instantiationFacade);
+        addABRuleDialog.setVisible(true);
+    }//GEN-LAST:event_jButtonAddABRuleActionPerformed
+
     /**
      * ********************************************************************************************************
      */
@@ -790,10 +813,11 @@ public class UNIDALibraryBasicGUI extends javax.swing.JFrame
         });
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButtonAB;
+    private javax.swing.JButton jButtonAddABRule;
     private javax.swing.JButton jButtonChangeScenario;
     private javax.swing.JButton jButtonCommands;
     private javax.swing.JButton jButtonForceAnnounce;
+    private javax.swing.JButton jButtonManageABRules;
     private javax.swing.JButton jButtonOnOffCommands;
     private javax.swing.JButton jButtonQueryScenarios;
     private javax.swing.JButton jButtonState;
