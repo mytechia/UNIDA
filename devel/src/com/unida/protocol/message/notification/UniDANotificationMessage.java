@@ -61,6 +61,7 @@ public class UniDANotificationMessage extends UniDADeviceMessage
     private long opId;
     private String stateId;
     private DeviceStateValue stateValue;
+    private TriggerState triggerState;
 
 
     public UniDANotificationMessage(
@@ -71,12 +72,25 @@ public class UniDANotificationMessage extends UniDADeviceMessage
             String stateId,
             DeviceStateValue stateValue)
     {
+        this(ontologyCodec, opId, deviceId, destination, stateId, stateValue, TriggerState.UNDEFINED);
+    }
+    
+    public UniDANotificationMessage(
+            IUniDAOntologyCodec ontologyCodec,
+            long opId,
+            DeviceID deviceId,
+            UniDAAddress destination,
+            String stateId,
+            DeviceStateValue stateValue,
+            TriggerState triggerState)
+    {
         super(ontologyCodec, deviceId);
         setCommandType(MessageType.Notification.getTypeValue());
         this.setDestination(destination);
         this.opId = opId;
         this.stateId = stateId;
         this.stateValue = stateValue;
+        this.triggerState = triggerState;
     }
 
 
@@ -120,6 +134,8 @@ public class UniDANotificationMessage extends UniDADeviceMessage
             dataStream.write(idData, 0, EndianConversor.INT_SIZE_BYTES);
             
             dataStream.write(stateValue.code(ontologyCodec));
+            
+            dataStream.write(triggerState.getTypeValue());
 
         }
         catch(IOException ioEx) {
@@ -149,6 +165,9 @@ public class UniDANotificationMessage extends UniDADeviceMessage
         this.stateValue = new DeviceStateValue();
         offset = stateValue.decode(bytes, offset, ontologyCodec);
         this.stateValue = this.stateValue.getSpecificImpl();
+        
+        //triggerState
+        this.triggerState = TriggerState.getTypeOf(bytes[offset++]);
         
         return offset;
 
@@ -188,7 +207,12 @@ public class UniDANotificationMessage extends UniDADeviceMessage
 
     @Override
     public String toString() {
-        return super.toString() + "; UniDANotificationMessage{" + "opId=" + opId + ", stateId=" + stateId + ", value=" + stateValue.toString() + '}';
+        return super.toString() + "; UniDANotificationMessage{" 
+                + "opId=" + opId 
+                + ", stateId=" + stateId 
+                + ", value=" + stateValue.toString()
+                + ", triggerState=" + triggerState.toString()
+                + '}';
     }
            
 }
