@@ -347,7 +347,7 @@ public class UNIDALibraryBasicGUI extends javax.swing.JFrame
         jButtonAddABRule = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(973, 760));
+        setPreferredSize(new java.awt.Dimension(973, 780));
         getContentPane().setLayout(new javax.swing.BoxLayout(getContentPane(), javax.swing.BoxLayout.Y_AXIS));
 
         jPanelGatewaysInfo.setPreferredSize(new java.awt.Dimension(973, 320));
@@ -606,7 +606,7 @@ public class UNIDALibraryBasicGUI extends javax.swing.JFrame
                         .addComponent(jButtonQueryScenarios)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelGatewaysInfoLayout.createSequentialGroup()
-                .addGap(0, 85, Short.MAX_VALUE)
+                .addGap(0, 92, Short.MAX_VALUE)
                 .addComponent(jPanelDevicesButtons, javax.swing.GroupLayout.PREFERRED_SIZE, 857, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(74, 74, 74))
         );

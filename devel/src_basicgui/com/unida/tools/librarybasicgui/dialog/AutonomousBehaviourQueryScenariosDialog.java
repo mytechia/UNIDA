@@ -157,7 +157,11 @@ public class AutonomousBehaviourQueryScenariosDialog extends javax.swing.JDialog
             
             for (String scenarioID: scenarioIDs)
             {
-                listModel.addElement(scenarioID);
+                if (!listModel.contains(scenarioID))
+                {
+                    listModel.addElement(scenarioID);
+                }
+                
             }
             
         }
