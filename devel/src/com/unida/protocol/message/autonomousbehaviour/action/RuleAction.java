@@ -100,7 +100,7 @@ public abstract class RuleAction
     @Override
     public String toString()
     {
-        return "RuleAction{" + "actionDestination=" + actionDestination + "}.";
+        return "RuleAction{" + "actionDestination=" + actionDestination + "}";
     }            
     
 }

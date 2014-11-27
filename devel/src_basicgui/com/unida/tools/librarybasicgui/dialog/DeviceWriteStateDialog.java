@@ -101,8 +101,38 @@ public class DeviceWriteStateDialog extends javax.swing.JDialog
             private void saveChange()
             {
                 DomoParsing.instance().changeDefaultOntologyNamespace(jTextStateBaseIRI.getText());
+                DeviceWriteStateDialog.this.jTextValueStateBaseIRI.setText(jTextStateBaseIRI.getText());
             }
         });
+        
+        this.jTextValueStateBaseIRI.setText(DomoParsing.instance().getDefaultOntologyNamespace());
+        this.jTextValueStateBaseIRI.getDocument().addDocumentListener(new DocumentListener()
+        {
+            @Override
+            public void insertUpdate(DocumentEvent e)
+            {
+                saveChange();
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e)
+            {
+                saveChange();
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e)
+            {
+                saveChange();
+            }
+
+            private void saveChange()
+            {
+                DomoParsing.instance().changeDefaultOntologyNamespace(jTextValueStateBaseIRI.getText());
+                DeviceWriteStateDialog.this.jTextStateBaseIRI.setText(jTextValueStateBaseIRI.getText());
+            }
+        });
+        
         this.jTextStateID.requestFocus();
 
     }
@@ -116,7 +146,7 @@ public class DeviceWriteStateDialog extends javax.swing.JDialog
         try
         {
             IDevice device = instantiationFacade.getDeviceManageFacade().findById(deviceId);
-            DeviceStateValue stateValue = new DeviceStateValue(valueID, value);
+            DeviceStateValue stateValue = new DeviceStateValue(DomoParsing.instance().getDefaultOntologyNamespace() + valueID, value);
             DeviceStateMetadata stateMetadata =
                     new DeviceStateMetadata(DomoParsing.instance().getDefaultOntologyNamespace() + stateId, new DeviceStateValue[] {stateValue});            
             this.instantiationFacade.getDeviceOperationFacade().asyncWriteDeviceState(device, stateMetadata, stateValue, new OpCback());
@@ -133,7 +163,8 @@ public class DeviceWriteStateDialog extends javax.swing.JDialog
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents() {
+    private void initComponents()
+    {
 
         jLabel1 = new javax.swing.JLabel();
         jTextInfoExecution = new javax.swing.JTextField();
@@ -146,6 +177,7 @@ public class DeviceWriteStateDialog extends javax.swing.JDialog
         jTextStateBaseIRI = new javax.swing.JTextField();
         jTextValueStateIDIRI = new javax.swing.JTextField();
         jTextValueStateValue = new javax.swing.JTextField();
+        jTextValueStateBaseIRI = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Device write state");
@@ -158,8 +190,10 @@ public class DeviceWriteStateDialog extends javax.swing.JDialog
         jTextInfoExecution.setMinimumSize(new java.awt.Dimension(10, 39));
 
         jButtonSendRequest.setText("Send Request");
-        jButtonSendRequest.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        jButtonSendRequest.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 jButtonSendRequestActionPerformed(evt);
             }
         });
@@ -180,16 +214,11 @@ public class DeviceWriteStateDialog extends javax.swing.JDialog
             .addComponent(jSeparator1)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jTextStateBaseIRI)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextStateID, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jTextValueStateValue, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(148, 148, 148))
-                    .addComponent(jTextValueStateIDIRI)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
@@ -203,7 +232,15 @@ public class DeviceWriteStateDialog extends javax.swing.JDialog
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(136, 136, 136)
                                 .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jTextStateBaseIRI)
+                            .addComponent(jTextValueStateBaseIRI))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jTextValueStateIDIRI, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jTextStateID, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 114, Short.MAX_VALUE))))
                 .addContainerGap())
             .addGroup(layout.createSequentialGroup()
                 .addGap(135, 135, 135)
@@ -222,7 +259,9 @@ public class DeviceWriteStateDialog extends javax.swing.JDialog
                 .addGap(26, 26, 26)
                 .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jTextValueStateIDIRI, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jTextValueStateIDIRI, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextValueStateBaseIRI, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(28, 28, 28)
                 .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -257,6 +296,7 @@ public class DeviceWriteStateDialog extends javax.swing.JDialog
     private javax.swing.JTextField jTextInfoExecution;
     private javax.swing.JTextField jTextStateBaseIRI;
     private javax.swing.JTextField jTextStateID;
+    private javax.swing.JTextField jTextValueStateBaseIRI;
     private javax.swing.JTextField jTextValueStateIDIRI;
     private javax.swing.JTextField jTextValueStateValue;
     // End of variables declaration//GEN-END:variables
