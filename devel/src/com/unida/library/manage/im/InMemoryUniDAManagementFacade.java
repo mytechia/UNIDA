@@ -7,7 +7,6 @@ import com.unida.library.device.ontology.metadata.DeviceClassMetadata;
 import com.unida.library.device.ontology.metadata.GatewayClassMetadata;
 import com.unida.library.device.DeviceGroup;
 import com.unida.library.device.Gateway;
-import com.unida.library.device.GatewayDevices;
 import com.unida.library.device.IDevice;
 import com.unida.library.device.IDeviceIO;
 import com.unida.protocol.UniDAAddress;
@@ -349,60 +348,6 @@ public class InMemoryUniDAManagementFacade implements IUniDAManagementFacade
     public synchronized void markDeviceGatewayAsLost(Gateway devGw) throws InternalErrorException
     {
         this.gatewayMap.get(devGw.getId()).setOperationalState(new OperationalState(OperationalStatesEnum.UNKNOWN));
-    }
-
-
-    @Override
-    public synchronized Collection<GatewayDevices> findAllDeviceGatewayDevices(int startIndex, int lenght) throws InternalErrorException
-    {
-        Collection<Gateway> gwList = this.gatewayMap.values();
-        ArrayList<GatewayDevices> gwDevList = new ArrayList<>(gwList.size());
-        for(Gateway gw : gwList) {
-            gwDevList.add(new GatewayDevices(gw, gw.getDevices()));
-        }
-        return gwDevList;
-    }
-
-
-    @Override
-    public synchronized Collection<GatewayDevices> findDeviceGatewayDevicesByFilters(int startIndex, int count, Location gwLoc, Location devLoc, String gwType, String devClass, Boolean configured, Boolean enabled, Boolean automatic) throws InternalErrorException
-    {
-        throw new UnsupportedOperationException(NOT_SUPPORTED_YET);
-    }
-
-
-    @Override
-    public synchronized Collection<GatewayDevices> findDeviceGatewayDevicesByGatewayLocation(int startIndex, int lenght, Location lcoation) throws InternalErrorException
-    {
-        throw new UnsupportedOperationException(NOT_SUPPORTED_YET);
-    }
-
-
-    @Override
-    public synchronized Collection<GatewayDevices> findDeviceGatewayDevicesByDeviceLocation(int startIndex, int lenght, Location lcoation) throws InternalErrorException
-    {
-        throw new UnsupportedOperationException(NOT_SUPPORTED_YET);
-    }
-
-
-    @Override
-    public synchronized Collection<GatewayDevices> findDeviceGatewayDevicesByGatewayType(int startIndex, int lenght, GatewayClassMetadata type) throws InternalErrorException
-    {
-        throw new UnsupportedOperationException(NOT_SUPPORTED_YET);
-    }
-
-
-    @Override
-    public synchronized Collection<GatewayDevices> findDeviceGatewayDevicesByDeviceClass(int startIndex, int lenght, DeviceClassMetadata devClass) throws InternalErrorException
-    {
-        throw new UnsupportedOperationException(NOT_SUPPORTED_YET);
-    }
-
-
-    @Override
-    public synchronized Collection<GatewayDevices> findDeviceGatewayDevicesByNotConfiguredDevices(int startIndex, int lenght) throws InternalErrorException
-    {
-        throw new UnsupportedOperationException(NOT_SUPPORTED_YET);
     }
 
 }

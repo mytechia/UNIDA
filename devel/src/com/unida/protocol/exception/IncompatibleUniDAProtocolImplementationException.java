@@ -47,22 +47,22 @@ import com.mytechia.commons.framework.exception.InternalErrorException;
  * @author Gervasio Varela
  * @version 1
  */
-public class IncompatibleHI3DALProtocolImplementationException extends InternalErrorException
+public class IncompatibleUniDAProtocolImplementationException extends InternalErrorException
 {
 
-    public IncompatibleHI3DALProtocolImplementationException(Exception exception, String message)
+    public IncompatibleUniDAProtocolImplementationException(Exception exception, String message)
     {
         super(exception, message);
     }
 
 
-    public IncompatibleHI3DALProtocolImplementationException(String message)
+    public IncompatibleUniDAProtocolImplementationException(String message)
     {
         super(message);
     }
 
 
-    public IncompatibleHI3DALProtocolImplementationException(Exception exception)
+    public IncompatibleUniDAProtocolImplementationException(Exception exception)
     {
         super(exception);
     }

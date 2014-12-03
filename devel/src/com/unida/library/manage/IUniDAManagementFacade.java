@@ -30,7 +30,6 @@ import com.unida.library.device.ontology.metadata.DeviceClassMetadata;
 import com.unida.library.device.ontology.metadata.GatewayClassMetadata;
 import com.unida.library.device.DeviceGroup;
 import com.unida.library.device.Gateway;
-import com.unida.library.device.GatewayDevices;
 import com.unida.library.device.IDevice;
 import com.unida.library.device.IDeviceIO;
 import com.unida.library.location.Location;
@@ -62,7 +61,7 @@ public interface IUniDAManagementFacade
 {
 
     /**
-     * Adds a new device to the DAL
+     * Adds a new device to the UniDA
      *
      * @param dev The device to add
      * @return
@@ -71,7 +70,7 @@ public interface IUniDAManagementFacade
     IDevice addNewDevice(IDevice dev) throws InternalErrorException;
 
     /**
-     * Adds a new device to the DAL, associating it to a device IO of a gateway
+     * Adds a new device to the UniDA, associating it to a device IO of a gateway
      *
      * @param dev The device to add
      * @param devIO
@@ -81,7 +80,7 @@ public interface IUniDAManagementFacade
     IDevice addNewDevice(IDevice dev, IDeviceIO devIO) throws InternalErrorException;
 
     /**
-     * Removes a device from the DAL
+     * Removes a device from the UniDA
      *
      * @param dev The device to remove
      * @throws com.mytechia.commons.framework.exception.InternalErrorException
@@ -157,7 +156,7 @@ public interface IUniDAManagementFacade
     IDevice findByCodId(Long codId) throws InternalErrorException, InstanceNotFoundException;
 
     /**
-     * Gets all the devices managed by the DAL by using indexes to navigate the
+     * Gets all the devices managed by the UniDA by using indexes to navigate the
      * device collection.
      *
      * @param startIndex First device to retrieve
@@ -168,7 +167,7 @@ public interface IUniDAManagementFacade
     Collection<IDevice> findAll(int startIndex, int length) throws InternalErrorException;
 
     /**
-     * Gets all the devices managed by the DAL that aren't configured yet by
+     * Gets all the devices managed by the UniDA that aren't configured yet by
      * using indexes to navigate the device collection.
      *
      * @param startIndex First device to retrieve
@@ -179,7 +178,7 @@ public interface IUniDAManagementFacade
     Collection<IDevice> findNotConfiguredDevices(int startIndex, int length) throws InternalErrorException;
 
     /**
-     * Gets the devices managed by the DAL that are at the especified location
+     * Gets the devices managed by the UniDA that are at the especified location
      * by using indexes to navigate the device collection.
      *
      * @param startIndex First device to retrieve
@@ -369,77 +368,6 @@ public interface IUniDAManagementFacade
      * @throws InternalErrorException
      */
     void markDeviceGatewayAsLost(Gateway devGw) throws InternalErrorException;
-
-    /**
-     * Retrieves all the device gateways and its associated devices.
-     *
-     * @param startIndex
-     * @param lenght
-     * @return
-     * @throws InternalErrorException
-     */
-    Collection<GatewayDevices> findAllDeviceGatewayDevices(int startIndex, int lenght) throws InternalErrorException;
-
-    Collection<GatewayDevices> findDeviceGatewayDevicesByFilters(
-            int startIndex, int count,
-            Location gwLoc, Location devLoc, String gwType, String devClass,
-            Boolean configured, Boolean enabled, Boolean automatic)
-            throws InternalErrorException;
-
-    /**
-     * Retrieves the device gateways that have the indicated location and its
-     * associated devices
-     *
-     * @param startIndex
-     * @param lenght
-     * @param lcoation
-     * @return
-     * @throws InternalErrorException
-     */
-    Collection<GatewayDevices> findDeviceGatewayDevicesByGatewayLocation(int startIndex, int lenght, Location lcoation) throws InternalErrorException;
-
-    /**
-     * Retrieves the device that have the indicated location and its devices
-     * gateways
-     *
-     * @param startIndex
-     * @param lenght
-     * @param lcoation
-     * @return
-     * @throws InternalErrorException
-     */
-    Collection<GatewayDevices> findDeviceGatewayDevicesByDeviceLocation(int startIndex, int lenght, Location lcoation) throws InternalErrorException;
-
-    /**
-     * Retrieves the device gateways of an specified type and its devices
-     *
-     * @param startIndex
-     * @param lenght
-     * @param type
-     * @return
-     * @throws InternalErrorException
-     */
-    Collection<GatewayDevices> findDeviceGatewayDevicesByGatewayType(int startIndex, int lenght, GatewayClassMetadata type) throws InternalErrorException;
-
-    /**
-     * Retrieves the devices of an specified class and its device gateways
-     *
-     * @param startIndex
-     * @param lenght
-     * @param devClass
-     * @return
-     * @throws InternalErrorException
-     */
-    Collection<GatewayDevices> findDeviceGatewayDevicesByDeviceClass(int startIndex, int lenght, DeviceClassMetadata devClass) throws InternalErrorException;
-
-    /**
-     * Retrieves the device that aren't configured yet and its device gateways
-     *
-     * @param startIndex
-     * @param lenght
-     * @return
-     * @throws InternalErrorException
-     */
-    Collection<GatewayDevices> findDeviceGatewayDevicesByNotConfiguredDevices(int startIndex, int lenght) throws InternalErrorException;
+   
 
 }

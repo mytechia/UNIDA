@@ -62,6 +62,8 @@ public class DeviceTO
     private boolean group;
 
     private boolean configured;
+    
+    private String name;
 
     private String description;
 
@@ -237,6 +239,15 @@ public class DeviceTO
         return enabled;
     }
 
+    public String getName()
+    {
+        return name;
+    }
+
+    public void setName(String name)
+    {
+        this.name = name;
+    }
 
     public void setConfigured(boolean configured)
     {

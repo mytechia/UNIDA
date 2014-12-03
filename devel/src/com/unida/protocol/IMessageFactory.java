@@ -31,10 +31,10 @@ import com.unida.protocol.message.UniDAMessage;
 
 /**
  * <p><b>
- * HI3 DAL protocol message factory.
+ * UniDA protocol message factory.
  *
  * It contains the logic to create every type of message that is used
- * by the HI3 DAL communications protocol.
+ * by the UniDA communications protocol.
  * 
  * </b>
  *

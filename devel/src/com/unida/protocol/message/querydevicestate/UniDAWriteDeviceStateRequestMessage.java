@@ -137,8 +137,8 @@ public class UniDAWriteDeviceStateRequestMessage extends UniDADeviceMessage
     {
         int hash = 7;
         hash = 41 * hash + (int) (this.opId ^ (this.opId >>> 32));
-        hash = 41 * hash + Objects.hashCode(this.stateId);
-        hash = 41 * hash + Objects.hashCode(this.stateValue);
+        hash = 41 * hash + this.stateId.hashCode();
+        hash = 41 * hash + this.stateValue.hashCode();
         return hash;
     }
 

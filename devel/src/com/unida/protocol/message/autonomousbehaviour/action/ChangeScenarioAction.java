@@ -95,7 +95,7 @@ public class ChangeScenarioAction extends RuleAction
     public int hashCode()
     {
         int hash = 7;
-        hash = 73 * hash + Objects.hashCode(this.scenarioID);
+        hash = 73 * hash + this.scenarioID.hashCode();
         return hash;
     }
 

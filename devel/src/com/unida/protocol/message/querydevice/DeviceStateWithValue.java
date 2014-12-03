@@ -87,8 +87,8 @@ public class DeviceStateWithValue
     public int hashCode()
     {
         int hash = 3;
-        hash = 23 * hash + Objects.hashCode(this.stateId);
-        hash = 23 * hash + Objects.hashCode(this.stateValue);
+        hash = 23 * hash + this.stateId.hashCode();
+        hash = 23 * hash + this.stateValue.hashCode();
         return hash;
     }
 

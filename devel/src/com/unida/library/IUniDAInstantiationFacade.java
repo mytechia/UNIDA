@@ -33,7 +33,7 @@ import com.unida.library.operation.gateway.IGatewayOperationFacade;
 
 /**
  * <p><b>Description:</b>
- * Facade that manages the initialization of the DAL layer and provides access
+ * Facade that manages the initialization of the UniDA layer and provides access
  * to its external facades.
  * </p>
  *

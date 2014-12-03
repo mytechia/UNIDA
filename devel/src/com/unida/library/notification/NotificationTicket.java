@@ -30,7 +30,7 @@ import com.mytechia.commons.util.id.Identifier;
  * <p><b>
  * A ticket that the operation facade issue for every notification suscription.
  * It serves to request information about the notification and it will be used as
- * an identifier when the DAL notifies the reception of data related to that
+ * an identifier when the UniDA notifies the reception of data related to that
  * notification.
  * </b>
  *

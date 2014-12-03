@@ -31,7 +31,7 @@ import com.unida.library.device.ontology.state.DeviceStateValue;
 /**
  * <p><b>
  * This callback must be implemented to receive responses from the specific
- * DAL implementations.
+ * UniDA implementations.
  * </b>
  *
  * </p>

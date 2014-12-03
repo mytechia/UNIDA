@@ -28,7 +28,7 @@ import com.mytechia.commons.framework.modelaction.action.periodic.PeriodicAction
 import com.mytechia.commons.framework.modelaction.action.periodic.PeriodicActionsProcessor;
 import com.mytechia.commons.framework.simplemessageprotocol.exception.CommunicationException;
 import com.unida.library.IUniDAInstantiationFacade;
-import com.unida.library.UniDAFactory;
+import com.unida.library.UniDANetworkFactory;
 import com.unida.library.core.DefaultUniDAFacade;
 import com.unida.library.device.ontology.IDeviceAccessLayerOntologyFacade;
 import com.unida.library.device.ontology.IUniDAOntologyCodec;
@@ -86,7 +86,7 @@ public class InMemoryUniDAInstantiationFacade implements IUniDAInstantiationFaca
     private IUniDAOntologyCodec ontologyCodec;
 
 
-    protected UniDAFactory unidaFactory = null;
+    protected UniDANetworkFactory unidaFactory = null;
 
     protected DefaultUniDAFacade unidaProtocolFacade;
 
@@ -189,7 +189,7 @@ public class InMemoryUniDAInstantiationFacade implements IUniDAInstantiationFaca
         this.unidaProtocolFacade = new DefaultUniDAFacade(this.commChannel, this.deviceManageFacade, this.ontologyFacade, this.ontologyCodec);
         this.unidaProtocolFacade.start();
 
-        this.unidaFactory = new UniDAFactory(this.unidaProtocolFacade);
+        this.unidaFactory = new UniDANetworkFactory(this.unidaProtocolFacade);
 
         IGroupOperationManager gom = 
                 new DefaultGroupOperationManager(unidaFactory, this.deviceManageFacade);

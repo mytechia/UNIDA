@@ -39,7 +39,7 @@ import java.util.logging.Level;
 /**
  * <p><b>
  * It is a thread in charge of providing computing resources to process
- * HI3 DAL protocol messages.
+ * UniDA protocol messages.
  *
  * It associated with a message reception queue from wich it obtains the
  * messages to process.

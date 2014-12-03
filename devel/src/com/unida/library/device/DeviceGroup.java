@@ -104,7 +104,7 @@ public class DeviceGroup extends Device
     @Override
     public String getModel()
     {
-        return "HI3 DAL DeviceGroup";
+        return "UniDA DeviceGroup";
     }
 
 

@@ -61,7 +61,7 @@ public class PhysicalDevice extends Device
     private String model;
 
     /** Manufacturer of the device */
-    private String manufacturer;
+    private String manufacturer;        
 
     private boolean automatic;
 
@@ -203,7 +203,6 @@ public class PhysicalDevice extends Device
         }      
         return false;
     }
-
     
     
 }

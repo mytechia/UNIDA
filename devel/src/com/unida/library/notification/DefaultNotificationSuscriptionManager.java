@@ -29,7 +29,7 @@ import com.unida.library.device.ontology.state.DeviceState;
 import com.unida.library.device.ontology.metadata.DeviceStateMetadata;
 import com.unida.library.device.ontology.state.DeviceStateValue;
 import com.unida.library.core.IUniDANetworkFacade;
-import com.unida.library.UniDAFactory;
+import com.unida.library.UniDANetworkFactory;
 import com.unida.library.device.DeviceGroup;
 import com.unida.library.device.DeviceID;
 import com.unida.library.device.Gateway;
@@ -61,13 +61,13 @@ import java.util.Set;
 public class DefaultNotificationSuscriptionManager implements INotificationSuscriptionManager, INotificationInternalCallback
 {
 
-    private UniDAFactory dalFactory;
+    private UniDANetworkFactory dalFactory;
     private IUniDAManagementFacade deviceManager;
     private NotificationTicketsManager ticketsManager;
     private Map<NotificationTicket, DeviceStateSuscription> suscriptionsByTicket;
     private Map<DeviceID, Set<DeviceStateSuscription>> suscriptionsByDeviceId;
 
-    public DefaultNotificationSuscriptionManager(UniDAFactory dalFactory, IUniDAManagementFacade deviceManager)
+    public DefaultNotificationSuscriptionManager(UniDANetworkFactory dalFactory, IUniDAManagementFacade deviceManager)
     {
         this.dalFactory = dalFactory;
         this.deviceManager = deviceManager;
@@ -187,7 +187,7 @@ public class DefaultNotificationSuscriptionManager implements INotificationSuscr
         } else
         {
             Gateway devGw = getDeviceGateway(dev);
-            IUniDANetworkFacade dalInstance = this.dalFactory.getDALInstance(devGw);
+            IUniDANetworkFacade dalInstance = this.dalFactory.getUniDANetworkInstance(devGw);
             dalInstance.suscribeTo(nt.getId(), dev.getId(), dss.getState().getId(), params, this);
         }
     }
@@ -235,7 +235,7 @@ public class DefaultNotificationSuscriptionManager implements INotificationSuscr
         } else
         {
             Gateway devGw = getDeviceGateway(dev);
-            IUniDANetworkFacade dalInstance = this.dalFactory.getDALInstance(devGw);
+            IUniDANetworkFacade dalInstance = this.dalFactory.getUniDANetworkInstance(devGw);
             dalInstance.unsuscribeFrom(nt.getId(), dev.getId(), dss.getState().getId(), params, this);
         }
     }
@@ -279,7 +279,7 @@ public class DefaultNotificationSuscriptionManager implements INotificationSuscr
             try
             {
                 Gateway devGw = getDeviceGateway(dev);
-                IUniDANetworkFacade dalInstance = this.dalFactory.getDALInstance(devGw);
+                IUniDANetworkFacade dalInstance = this.dalFactory.getUniDANetworkInstance(devGw);
                 for (DeviceStateSuscription s : suscriptions)
                 {
                     dalInstance.renewSuscription(s.getNotificationTicket().getId(), s.getDevice().getId(), s.getState().getId(), s.getParameters(), this);

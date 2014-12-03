@@ -43,7 +43,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
-import java.util.Objects;
+
 
 /**
  * <p><b>Description:</b>
@@ -70,7 +70,7 @@ public class DiscoverUniDAGatewayDevicesReplyMessage extends UniDAMessage {
         setCommandType(MessageType.DiscoverGatewayDevicesReply.getTypeValue());
         setErrorCode(errCode.getTypeValue());
         this.gw = gw;
-        this.devices = new ArrayList<>(devices.size());
+        this.devices = new ArrayList<DeviceTO>(devices.size());
         this.devices.addAll(devices);
         setDestination(UniDAAddress.BROADCAST_ADDRESS);
     }
@@ -175,6 +175,8 @@ public class DiscoverUniDAGatewayDevicesReplyMessage extends UniDAMessage {
                 
                 writeString(dataStream, dev.getManufacturer());
                 
+                
+                
                 writeString(dataStream, dev.getDescription());
 
                 //operational state of the device
@@ -230,7 +232,7 @@ public class DiscoverUniDAGatewayDevicesReplyMessage extends UniDAMessage {
             int numIOs = EndianConversor.byteArrayLittleEndianToShort(bytes, offset); //num IOs
             offset += EndianConversor.SHORT_SIZE_BYTES;
             
-            ArrayList<GatewayDeviceIOTO> gwIoList = new ArrayList<>(numIOs);
+            ArrayList<GatewayDeviceIOTO> gwIoList = new ArrayList<GatewayDeviceIOTO>(numIOs);
             short ioId, statesLen;
             long stateId;
             for(int i=0; i<numIOs; i++) {
@@ -241,7 +243,7 @@ public class DiscoverUniDAGatewayDevicesReplyMessage extends UniDAMessage {
                 statesLen = EndianConversor.byteArrayLittleEndianToShort(bytes, offset);
                 offset += EndianConversor.SHORT_SIZE_BYTES;
                 
-                ArrayList<String> statesList = new ArrayList<>(statesLen);
+                ArrayList<String> statesList = new ArrayList<String>(statesLen);
                 for(int j=0; j<statesLen; j++) {
                     stateId = EndianConversor.byteArrayLittleEndianToUInt(bytes, offset);
                     offset += EndianConversor.INT_SIZE_BYTES;
@@ -265,7 +267,7 @@ public class DiscoverUniDAGatewayDevicesReplyMessage extends UniDAMessage {
             long classId;
             String devClass, devModel, devManufacturer, devDesc;
             ArrayList<GatewayDeviceIOTO> devIoList;
-            this.devices = new ArrayList<>(numDevs);
+            this.devices = new ArrayList<DeviceTO>(numDevs);
             for (int i = 0; i < numDevs; i++) {
 
                 devId = EndianConversor.byteArrayLittleEndianToShort(bytes, offset); //device id
@@ -291,7 +293,7 @@ public class DiscoverUniDAGatewayDevicesReplyMessage extends UniDAMessage {
                 numUsedIOs = EndianConversor.byteArrayLittleEndianToShort(bytes, offset); //num states
                 offset += EndianConversor.SHORT_SIZE_BYTES;
 
-                devIoList = new ArrayList<>(numUsedIOs);
+                devIoList = new ArrayList<GatewayDeviceIOTO>(numUsedIOs);
                 for (int j = 0; j < numUsedIOs; j++) {
                     ioId = EndianConversor.byteArrayLittleEndianToShort(bytes, offset);
                     offset += EndianConversor.SHORT_SIZE_BYTES;
@@ -345,8 +347,8 @@ public class DiscoverUniDAGatewayDevicesReplyMessage extends UniDAMessage {
     @Override
     public int hashCode() {
         int hash = 3;
-        hash = 59 * hash + Objects.hashCode(this.gw);
-        hash = 59 * hash + Objects.hashCode(this.devices);
+        hash = 59 * hash + this.gw.hashCode();
+        hash = 59 * hash + this.devices.hashCode();
         return hash;
     }
 

@@ -30,7 +30,7 @@ import com.mytechia.commons.framework.exception.InternalErrorException;
 
 /**
  * <p><b>
- * Specified that a device gateway is not currently supported by the DAL
+ * Specified that a device gateway is not currently supported by the UniDA
  * because there isn't any availabe IDevicesAccessLayerFacade implementation
  * compatible with it.
  * </b>

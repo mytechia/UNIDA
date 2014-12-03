@@ -92,7 +92,7 @@ public class ScenarioChangeTrigger extends RuleTrigger
     public int hashCode()
     {
         int hash = 5;
-        hash = 71 * hash + Objects.hashCode(this.scenarioID);
+        hash = 71 * hash + this.scenarioID.hashCode();
         return hash;
     }
 

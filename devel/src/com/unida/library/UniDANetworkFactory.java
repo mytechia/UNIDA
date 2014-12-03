@@ -55,51 +55,51 @@ import java.util.concurrent.CopyOnWriteArraySet;
  * @author Gervasio Varela
  * @version 1
  */
-public class UniDAFactory
+public class UniDANetworkFactory
 {
 
-    private Set<IUniDANetworkFacade> dalInstances;
+    private Set<IUniDANetworkFacade> unidaNetworkFacadeInstances;
 
-    /** Default DALFacade to use with HI3 DAL device that are connected
+    /** Default UniDAFacade to use with UniDA device that are connected
      * directly through ethernet-TCP/IP */
-    private DefaultUniDAFacade dalProtocolFacade;
+    private DefaultUniDAFacade unidaNetworkFacade;
 
     
-    public UniDAFactory(DefaultUniDAFacade dalProtocolFacade)
+    public UniDANetworkFactory(DefaultUniDAFacade unidaNetworkFacade)
     {
-        this.dalProtocolFacade = dalProtocolFacade;
-        this.dalInstances = new CopyOnWriteArraySet<>();
+        this.unidaNetworkFacade = unidaNetworkFacade;
+        this.unidaNetworkFacadeInstances = new CopyOnWriteArraySet<>();
     }
 
 
     /** Obtains a IUniDANetworkFacade implementation adequate to interact
      * with the specified device gateway.
      * 
-     * @param gw the gateway for wich a DAL instance is needed
+     * @param gw the gateway for wich a UniDA instance is needed
      * @return 
      * @throws com.unida.library.exception.UnsupportedDeviceGatewayErrorException
      */
-    public IUniDANetworkFacade getDALInstance(Gateway gw) throws UnsupportedDeviceGatewayErrorException
+    public IUniDANetworkFacade getUniDANetworkInstance(Gateway gw) throws UnsupportedDeviceGatewayErrorException
     {
         
         //In the future many facade could exist, one for each concrete implementation
         //of the UNIDA protocol (right now only UDP). In that case, this method
         //must select the appropriate one for the specified gateway
         
-        return this.dalProtocolFacade;
+        return this.unidaNetworkFacade;
         
     }
 
 
-    public void addDALInstance(IUniDANetworkFacade dal)
+    public void addUniDANetworkInstance(IUniDANetworkFacade dal)
     {
-        this.dalInstances.add(dal);
+        this.unidaNetworkFacadeInstances.add(dal);
     }
 
 
-    public void removeDALInstance(IUniDANetworkFacade dal)
+    public void removeUniDANetworkInstance(IUniDANetworkFacade dal)
     {
-        this.dalInstances.remove(dal);
+        this.unidaNetworkFacadeInstances.remove(dal);
     }
 
     

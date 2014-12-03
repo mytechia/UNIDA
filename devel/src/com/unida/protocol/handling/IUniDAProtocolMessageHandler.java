@@ -32,7 +32,7 @@ import com.unida.protocol.handling.exception.UnsupportedMessageTypeErrorExceptio
 /**
  * <p><b>
  * Concrete implementations of this interfaces containts the logic to
- * process different types of HI3 DAL protocol messages.
+ * process different types of UniDA protocol messages.
  * </b>
  *
  * </p>

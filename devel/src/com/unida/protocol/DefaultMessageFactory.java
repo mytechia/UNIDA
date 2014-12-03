@@ -60,10 +60,10 @@ import com.unida.protocol.message.statusreport.UniDAGatewayStatusReportRequestMe
 /**
  * <p>
  * <b>
- * HI3 DAL protocol message factory.
+ * UniDA protocol message factory.
  *
- * It contains the logic to create every type of message that is used by the HI3
- * DAL communications protocol.
+ * It contains the logic to create every type of message that is used by the UniDA
+ * UniDA communications protocol.
  *
  * </b>
  *

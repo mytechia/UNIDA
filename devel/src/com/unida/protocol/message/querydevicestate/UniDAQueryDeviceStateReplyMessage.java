@@ -142,7 +142,7 @@ public class UniDAQueryDeviceStateReplyMessage extends UniDAQueryDeviceStateRequ
     public int hashCode()
     {
         int hash = 5;
-        hash = 79 * hash + Objects.hashCode(this.stateValue);
+        hash = 79 * hash + this.stateValue.hashCode();
         return hash;
     }
 

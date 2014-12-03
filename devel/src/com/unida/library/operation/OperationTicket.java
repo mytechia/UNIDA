@@ -30,7 +30,7 @@ import com.mytechia.commons.util.id.Identifier;
  * A ticket that the operation facade issue for every operation. It is a
  * representation of asynchronous operations to the client. It serves to 
  * request information about its pending operation and it will be used as
- * an identifier when the DAL notifies back results or errors about the
+ * an identifier when the UniDA notifies back results or errors about the
  * operation.
  * </b>
  *

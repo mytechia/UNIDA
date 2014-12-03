@@ -69,6 +69,8 @@ public abstract class Device implements Cloneable, Serializable, IDevice
     private String description;
 
     private DeviceClassMetadata deviceClass;
+    
+    private String name;
 
 
 
@@ -187,6 +189,17 @@ public abstract class Device implements Cloneable, Serializable, IDevice
     public void setDeviceClass(DeviceClassMetadata dcm)
     {
         this.deviceClass = dcm;
+    }
+    
+    
+    public String getName()
+    {
+        return this.name;
+    }
+    
+    public void setName(String name)
+    {
+        this.name = name;
     }
 
 

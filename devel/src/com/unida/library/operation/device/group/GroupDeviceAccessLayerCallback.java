@@ -40,8 +40,8 @@ import java.util.Queue;
 
 /**
  * <p><b>
- * Implementation of the DALCallback that translates it to a
- * IDeviceOperationCallback in order to export the DAL facade throught
+ * Implementation of the UniDACallback that translates it to a
+ * IDeviceOperationCallback in order to export the UniDA facade throught
  * the higher level IDeviceOperationFacade.
  * It uses OperationTicket objects to match operation responses with
  * operation requests.

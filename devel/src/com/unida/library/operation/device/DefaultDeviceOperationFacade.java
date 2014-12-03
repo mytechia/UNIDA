@@ -26,7 +26,7 @@ package com.unida.library.operation.device;
 
 import com.mytechia.commons.framework.exception.InternalErrorException;
 import com.mytechia.commons.framework.modelaction.exception.InstanceNotFoundException;
-import com.unida.library.UniDAFactory;
+import com.unida.library.UniDANetworkFactory;
 import com.unida.library.core.IUniDANetworkFacade;
 import com.unida.library.device.DeviceGroup;
 import com.unida.library.device.Gateway;
@@ -69,14 +69,14 @@ public class DefaultDeviceOperationFacade implements IDeviceOperationFacade
 {
 
     private INotificationSuscriptionManager notificationSuscriptionManager;
-    private UniDAFactory unidaFactory;
+    private UniDANetworkFactory unidaFactory;
     private IGroupOperationManager groupOperationManager;
     private IUniDAManagementFacade unidaManager;
     private OperationTicketManager ticketManager;
     private Queue<DefaultDeviceAccessLayerCallback> deviceAccessLayerCallbackQueue;
 
     public DefaultDeviceOperationFacade(
-            UniDAFactory unidaFactory,
+            UniDANetworkFactory unidaFactory,
             IGroupOperationManager groupManager,
             INotificationSuscriptionManager suscriptionManager,
             IUniDAManagementFacade unidaManager)
@@ -122,7 +122,7 @@ public class DefaultDeviceOperationFacade implements IDeviceOperationFacade
             try
             {
                 Gateway devGw = getDeviceGateway(dev);
-                IUniDANetworkFacade dalInstance = this.unidaFactory.getDALInstance(devGw);
+                IUniDANetworkFacade dalInstance = this.unidaFactory.getUniDANetworkInstance(devGw);
                 DefaultDeviceAccessLayerCallback dalCback = new DefaultDeviceAccessLayerCallback(this, ot, dev, state, callback);
                 addCallback(dalCback);
                 dalInstance.queryDeviceState(ot.getId(), dev.getId(), state.getId(), dalCback);
@@ -150,7 +150,7 @@ public class DefaultDeviceOperationFacade implements IDeviceOperationFacade
             try
             {
                 Gateway devGw = getDeviceGateway(dev);
-                IUniDANetworkFacade dalInstance = this.unidaFactory.getDALInstance(devGw);
+                IUniDANetworkFacade dalInstance = this.unidaFactory.getUniDANetworkInstance(devGw);
                 DefaultDeviceAccessLayerCallback dalCback = new DefaultDeviceAccessLayerCallback(this, ot, dev, state, callback);
                 addCallback(dalCback);
                 dalInstance.writeDeviceState(ot.getId(), dev.getId(), state.getId(), 
@@ -178,7 +178,7 @@ public class DefaultDeviceOperationFacade implements IDeviceOperationFacade
             try
             {
                 Gateway devGw = getDeviceGateway(dev);
-                IUniDANetworkFacade dalInstance = this.unidaFactory.getDALInstance(devGw);
+                IUniDANetworkFacade dalInstance = this.unidaFactory.getUniDANetworkInstance(devGw);
                 DefaultDeviceAccessLayerCallback dalCback = new DefaultDeviceAccessLayerCallback(this, ot, dev, callback);
                 addCallback(dalCback);
                 dalInstance.queryDevice(ot.getId(), dev.getId(), dalCback);
@@ -206,7 +206,7 @@ public class DefaultDeviceOperationFacade implements IDeviceOperationFacade
             try
             {
                 Gateway devGw = getDeviceGateway(dev);
-                IUniDANetworkFacade dalInstance = this.unidaFactory.getDALInstance(devGw);
+                IUniDANetworkFacade dalInstance = this.unidaFactory.getUniDANetworkInstance(devGw);
                 DefaultDeviceAccessLayerCallback dalCback = new DefaultDeviceAccessLayerCallback(this, ot, dev, func, cmd, callback);
                 addCallback(dalCback);
                 dalInstance.sendCommand(ot.getId(), dev.getId(), func.getId(), cmd.getId(), params, dalCback);

@@ -25,7 +25,7 @@ package com.unida.library.operation.device.group;
 
 import com.mytechia.commons.framework.exception.InternalErrorException;
 import com.mytechia.commons.framework.modelaction.exception.InstanceNotFoundException;
-import com.unida.library.UniDAFactory;
+import com.unida.library.UniDANetworkFactory;
 import com.unida.library.core.IUniDANetworkFacade;
 import com.unida.library.device.ontology.metadata.ControlCommandMetadata;
 import com.unida.library.device.ontology.metadata.DeviceStateMetadata;
@@ -63,12 +63,12 @@ public class DefaultGroupOperationManager implements IGroupOperationManager
 {
 
 
-    private UniDAFactory dalFactory;
+    private UniDANetworkFactory dalFactory;
 
     private IUniDAManagementFacade deviceManager;
 
 
-    public DefaultGroupOperationManager(UniDAFactory dalFactory, IUniDAManagementFacade deviceManager)
+    public DefaultGroupOperationManager(UniDANetworkFactory dalFactory, IUniDAManagementFacade deviceManager)
     {
         this.dalFactory = dalFactory;
         this.deviceManager = deviceManager;
@@ -93,7 +93,7 @@ public class DefaultGroupOperationManager implements IGroupOperationManager
 
             for(PhysicalDevice pd : members) {
                 Gateway devGw = this.deviceManager.findDeviceGatewayByCodId(pd.getCodId());
-                IUniDANetworkFacade dalInstance = this.dalFactory.getDALInstance(devGw);                
+                IUniDANetworkFacade dalInstance = this.dalFactory.getUniDANetworkInstance(devGw);                
                 dalInstance.sendCommand(ot.getId(), pd.getId(), func.getId(), cmd.getId(), params, dalCback);
             }
             

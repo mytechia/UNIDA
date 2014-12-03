@@ -71,7 +71,13 @@ public interface IDevice extends Serializable
      * @return 
      */
     DeviceID getId();
-
+    
+    
+    String getName();
+    
+    
+    void setName(String name);
+    
     
     String getDescription();
 

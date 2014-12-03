@@ -31,7 +31,7 @@ import com.unida.protocol.message.UniDAMessage;
 
 /**
  * <p><b>
- * Sends and receives HI3 DAL protocol messages
+ * Sends and receives UniDA protocol messages
  * </b>
  *
  * </p>

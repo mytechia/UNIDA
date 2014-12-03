@@ -36,7 +36,7 @@ import java.util.Collection;
 
 /**
  * <p><b>Description:</b>
- * Manages the access to the ontology concepts needed by the DAL.
+ * Manages the access to the ontology concepts needed by the UniDA.
  *
  * </p>
  *
@@ -62,8 +62,8 @@ public interface IDeviceAccessLayerOntologyFacade
         void loadOntology() throws OntologyLoadingErrorException;
 
 
-	/** Retrieves all the device classes supported by the DAL
-	 * @return all the device classes supported by the DAL
+	/** Retrieves all the device classes supported by the UniDA
+	 * @return all the device classes supported by the UniDA
 	 */
 	Collection<DeviceClassMetadata> getAllDeviceClasses();
 

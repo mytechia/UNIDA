@@ -159,9 +159,9 @@ public class StateChangeTrigger extends RuleTrigger
     public int hashCode()
     {
         int hash = 5;
-        hash = 71 * hash + Objects.hashCode(this.triggerSource);
-        hash = 71 * hash + Objects.hashCode(this.stateId);
-        hash = 71 * hash + Objects.hashCode(this.stateCondition);
+        hash = 71 * hash + this.triggerSource.hashCode();
+        hash = 71 * hash + this.stateId.hashCode();
+        hash = 71 * hash + this.stateCondition.hashCode();
         return hash;
     }
 

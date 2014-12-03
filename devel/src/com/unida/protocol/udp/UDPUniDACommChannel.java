@@ -42,7 +42,7 @@ import java.util.logging.Level;
 /**
  * <p>
  * <b>
- * Sends and receives HI3 DAL protocol messages using UDP sockets
+ * Sends and receives UniDA protocol messages using UDP sockets
  * </b>
  *
  * </p>

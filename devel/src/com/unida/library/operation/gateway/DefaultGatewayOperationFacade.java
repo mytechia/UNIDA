@@ -25,7 +25,7 @@ package com.unida.library.operation.gateway;
 import com.mytechia.commons.framework.exception.InternalErrorException;
 import com.mytechia.commons.framework.modelaction.exception.InstanceNotFoundException;
 import com.mytechia.commons.framework.simplemessageprotocol.exception.CommunicationException;
-import com.unida.library.UniDAFactory;
+import com.unida.library.UniDANetworkFactory;
 import com.unida.library.core.IUniDANetworkFacade;
 import com.unida.library.device.Gateway;
 import com.unida.library.device.ontology.IUniDAOntologyCodec;
@@ -56,7 +56,7 @@ public class DefaultGatewayOperationFacade implements IGatewayOperationFacade
 
     private IUniDAOntologyCodec ontologyCodec;
 
-    private UniDAFactory unidaFactory;
+    private UniDANetworkFactory unidaFactory;
 
     private IUniDAManagementFacade unidaManager;
 
@@ -69,7 +69,7 @@ public class DefaultGatewayOperationFacade implements IGatewayOperationFacade
     public DefaultGatewayOperationFacade(
             IUniDACommChannel commChannel,
             IUniDAOntologyCodec ontologyCodec,
-            UniDAFactory unidaFactory,
+            UniDANetworkFactory unidaFactory,
             IUniDAManagementFacade unidaManager)
     {
         this.ticketManager = new OperationTicketManager();
@@ -106,7 +106,7 @@ public class DefaultGatewayOperationFacade implements IGatewayOperationFacade
                 int nextOpId = getOpId();
                 OperationTicket ot = new OperationTicket(nextOpId, OperationTypes.CHANGE_SCENARIO);
                 
-                IUniDANetworkFacade unidaNetworkInstance = this.unidaFactory.getDALInstance(gateway);
+                IUniDANetworkFacade unidaNetworkInstance = this.unidaFactory.getUniDANetworkInstance(gateway);
                 DefaultGatewayAccessLayerCallback internalCallback = new DefaultGatewayAccessLayerCallback(ot, gateway, this, callback);
                 addCallback(internalCallback);
                 unidaNetworkInstance.changeScenario(nextOpId, gateway.getId(), activate, scenarioId, internalCallback);
@@ -131,7 +131,7 @@ public class DefaultGatewayOperationFacade implements IGatewayOperationFacade
                 int nextOpId = getOpId();
                 OperationTicket ot = new OperationTicket(nextOpId, OperationTypes.QUERY_SCENARIOS);
 
-                IUniDANetworkFacade unidaNetworkInstance = this.unidaFactory.getDALInstance(gateway);
+                IUniDANetworkFacade unidaNetworkInstance = this.unidaFactory.getUniDANetworkInstance(gateway);
                 DefaultGatewayAccessLayerCallback internalCallback = new DefaultGatewayAccessLayerCallback(ot, gateway, this, callback);
                 addCallback(internalCallback);
                 unidaNetworkInstance.queryAutonomousBehaviourScenarios(nextOpId, gateway.getId(), internalCallback);
@@ -203,7 +203,7 @@ public class DefaultGatewayOperationFacade implements IGatewayOperationFacade
         try
         {
             Gateway gateway = this.unidaManager.findDeviceGatewayById(gatewayAddress.toString());
-            IUniDANetworkFacade unidaNetworkInstance = this.unidaFactory.getDALInstance(gateway);
+            IUniDANetworkFacade unidaNetworkInstance = this.unidaFactory.getUniDANetworkInstance(gateway);
             DefaultGatewayAccessLayerCallback internalCallback = new DefaultGatewayAccessLayerCallback(ot, gateway, this, callback);
             addCallback(internalCallback);
             unidaNetworkInstance.queryAutonomousBehaviourRules(nextOpId, gatewayAddress, internalCallback);

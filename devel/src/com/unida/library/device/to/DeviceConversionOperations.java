@@ -26,14 +26,12 @@ package com.unida.library.device.to;
 
 import com.unida.library.device.ontology.metadata.DeviceClassMetadata;
 import com.unida.library.device.ontology.metadata.DeviceStateMetadata;
-import com.unida.library.device.ontology.metadata.GatewayClassMetadata;
 import com.unida.library.device.ontology.IDeviceAccessLayerOntologyFacade;
 import com.unida.library.device.ontology.exception.ClassNotFoundInOntologyException;
 import com.unida.library.device.Device;
 import com.unida.library.device.DeviceGroup;
 import com.unida.library.device.Gateway;
 import com.unida.library.device.GatewayDeviceIO;
-import com.unida.library.device.GatewayDevices;
 import com.unida.library.device.IDevice;
 import com.unida.library.device.IDeviceIO;
 import com.unida.library.device.PhysicalDevice;
@@ -245,60 +243,6 @@ public final class DeviceConversionOperations
 
         DeviceClassMetadata classMd = dalOntFacade.getDeviceClassById(devTO.getDeviceClass());
         return classMd.getStates();
-
-    }
-
-    @Deprecated
-    public static GatewayDevices createDeviceGatewayDevices(GatewayDevicesCTO cto, IDeviceAccessLayerOntologyFacade dalOntFacade) throws ClassNotFoundInOntologyException, UniDAIDFormatException
-    {
-
-        Collection<DeviceTO> dTOs = cto.getDevices();
-        ArrayList<IDevice> devices = new ArrayList<IDevice>(dTOs.size());
-
-        for (DeviceTO dto : dTOs)
-        {
-
-            DeviceClassMetadata deviceClass = dalOntFacade.getDeviceClassById(dto.getDeviceClass());
-
-            if (dto.isGroup())
-            {
-                devices.add(createDeviceGroup(dto, deviceClass));
-            } else if (dto.getId() == null)
-            {
-                DeviceStateMetadata[] supportedStates = DeviceConversionOperations.readDeviceStates(dto, dalOntFacade);
-                devices.add(createDeviceIO(dto, deviceClass, supportedStates));
-            } else
-            {
-                DeviceStateMetadata[] supportedStates = DeviceConversionOperations.readDeviceStates(dto, dalOntFacade);
-                devices.add(createPhysicalDevice(dto, deviceClass));
-            }
-        }
-
-        GatewayClassMetadata gcm = null;
-        if (cto.getDeviceGateway().getGwClass() != null)
-        {
-            gcm = dalOntFacade.getGatewayClassById(cto.getDeviceGateway().getGwClass());
-        } else
-        {
-            gcm = new GatewayClassMetadata(null);
-        }
-        Gateway devGw = createDeviceGateway(cto.getDeviceGateway(), dalOntFacade);
-
-        return new GatewayDevices(devGw, devices);
-
-    }
-
-    public static Collection<GatewayDevices> createDeviceGatewayDevicesCollection(Collection<GatewayDevicesCTO> devs, IDeviceAccessLayerOntologyFacade dalOntFacade) throws ClassNotFoundInOntologyException, UniDAIDFormatException
-    {
-
-        ArrayList<GatewayDevices> result = new ArrayList<GatewayDevices>(devs.size());
-
-        for (GatewayDevicesCTO devCTO : devs)
-        {
-            result.add(createDeviceGatewayDevices(devCTO, dalOntFacade));
-        }
-
-        return result;
 
     }
 

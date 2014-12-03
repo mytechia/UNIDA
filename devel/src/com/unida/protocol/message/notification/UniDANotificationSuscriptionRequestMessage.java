@@ -150,7 +150,7 @@ public class UniDANotificationSuscriptionRequestMessage extends UniDADeviceMessa
     {
         int hash = 5;
         hash = 31 * hash + (int) (this.notificationId ^ (this.notificationId >>> 32));
-        hash = 31 * hash + Objects.hashCode(this.stateChangeTrigger);
+        hash = 31 * hash + this.stateChangeTrigger.hashCode();
         return hash;
     }
 
