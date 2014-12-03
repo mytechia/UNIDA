@@ -63,6 +63,11 @@ public class UniDAABAddMessage extends UniDAMessage
         return this.rule;
     }
     
+    public long getOpId()
+    {
+        return this.opId;
+    }
+    
 
     @Override
     protected int decodeMessagePayload(byte[] bytes, int initIndex) throws MessageFormatException
