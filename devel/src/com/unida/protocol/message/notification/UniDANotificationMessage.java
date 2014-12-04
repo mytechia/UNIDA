@@ -61,7 +61,7 @@ public class UniDANotificationMessage extends UniDADeviceMessage
     private long opId;
     private String stateId;
     private DeviceStateValue stateValue;
-    private TriggerState triggerState;
+    private TriggerCurrentStateEnum triggerState;
 
 
     public UniDANotificationMessage(
@@ -72,7 +72,7 @@ public class UniDANotificationMessage extends UniDADeviceMessage
             String stateId,
             DeviceStateValue stateValue)
     {
-        this(ontologyCodec, opId, deviceId, destination, stateId, stateValue, TriggerState.UNDEFINED);
+        this(ontologyCodec, opId, deviceId, destination, stateId, stateValue, TriggerCurrentStateEnum.UNDEFINED);
     }
     
     public UniDANotificationMessage(
@@ -82,7 +82,7 @@ public class UniDANotificationMessage extends UniDADeviceMessage
             UniDAAddress destination,
             String stateId,
             DeviceStateValue stateValue,
-            TriggerState triggerState)
+            TriggerCurrentStateEnum triggerState)
     {
         super(ontologyCodec, deviceId);
         setCommandType(MessageType.Notification.getTypeValue());
@@ -115,6 +115,11 @@ public class UniDANotificationMessage extends UniDADeviceMessage
     public String getStateId()
     {
         return stateId;
+    }
+    
+    public TriggerCurrentStateEnum getTriggerState()
+    {
+        return this.triggerState;
     }
 
     
@@ -167,7 +172,7 @@ public class UniDANotificationMessage extends UniDADeviceMessage
         this.stateValue = this.stateValue.getSpecificImpl();
         
         //triggerState
-        this.triggerState = TriggerState.getTypeOf(bytes[offset++]);
+        this.triggerState = TriggerCurrentStateEnum.getTypeOf(bytes[offset++]);
         
         return offset;
 

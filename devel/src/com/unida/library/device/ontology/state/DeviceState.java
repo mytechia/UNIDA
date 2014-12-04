@@ -68,6 +68,13 @@ public class DeviceState implements Serializable
         this.metadata = stateId;
         this.value = value;
     }
+    
+    
+    public DeviceState(DeviceStateValue value)
+    {
+        this.metadata = null;
+        this.value = value;
+    }
 
 
     public String getId()
@@ -109,10 +116,7 @@ public class DeviceState implements Serializable
         if (this.metadata != other.metadata && (this.metadata == null || !this.metadata.equals(other.metadata))) {
             return false;
         }
-        if (this.value != other.value && (this.value == null || !this.value.equals(other.value))) {
-            return false;
-        }
-        return true;
+        return !(this.value != other.value && (this.value == null || !this.value.equals(other.value)));
     }
 
 
