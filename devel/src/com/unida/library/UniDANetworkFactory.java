@@ -25,7 +25,7 @@
 package com.unida.library;
 
 
-import com.unida.library.core.DefaultUniDAFacade;
+import com.unida.library.core.DefaultUniDANetworkFacade;
 import com.unida.library.core.IUniDANetworkFacade;
 import com.unida.library.device.Gateway;
 import com.unida.library.exception.UnsupportedDeviceGatewayErrorException;
@@ -62,10 +62,10 @@ public class UniDANetworkFactory
 
     /** Default UniDAFacade to use with UniDA device that are connected
      * directly through ethernet-TCP/IP */
-    private DefaultUniDAFacade unidaNetworkFacade;
+    private DefaultUniDANetworkFacade unidaNetworkFacade;
 
     
-    public UniDANetworkFactory(DefaultUniDAFacade unidaNetworkFacade)
+    public UniDANetworkFactory(DefaultUniDANetworkFacade unidaNetworkFacade)
     {
         this.unidaNetworkFacade = unidaNetworkFacade;
         this.unidaNetworkFacadeInstances = new CopyOnWriteArraySet<>();

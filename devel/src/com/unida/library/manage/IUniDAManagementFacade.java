@@ -23,11 +23,9 @@
  */
 package com.unida.library.manage;
 
+import com.unida.library.IUniDAUserFacade;
 import com.mytechia.commons.framework.exception.InternalErrorException;
 import com.mytechia.commons.framework.modelaction.exception.InstanceNotFoundException;
-import com.unida.library.device.ontology.metadata.ControlFunctionalityMetadata;
-import com.unida.library.device.ontology.metadata.DeviceClassMetadata;
-import com.unida.library.device.ontology.metadata.GatewayClassMetadata;
 import com.unida.library.device.DeviceGroup;
 import com.unida.library.device.Gateway;
 import com.unida.library.device.IDevice;
@@ -57,7 +55,7 @@ import java.util.Collection;
  * @author Gervasio Varela Fernandez
  * @version 1
  */
-public interface IUniDAManagementFacade
+public interface IUniDAManagementFacade extends IUniDAUserFacade
 {
 
     /**
@@ -121,28 +119,7 @@ public interface IUniDAManagementFacade
      */
     void removeMember(IDevice dev, DeviceGroup group) throws InternalErrorException, InstanceNotFoundException;
 
-    Collection<IDevice> findGroupMembers(DeviceGroup group) throws InternalErrorException, InstanceNotFoundException;
-
-    /**
-     * Finds a device by its id
-     *
-     * @param id The id of the device
-     * @return The device with the especified id
-     * @throws com.mytechia.commons.framework.exception.InternalErrorException
-     * @throws
-     * com.mytechia.commons.framework.modelaction.exception.InstanceNotFoundException
-     */
-    IDevice findById(String id) throws InternalErrorException, InstanceNotFoundException;
-
-    /**
-     *
-     * @param deviceIdList
-     * @return
-     * @throws InternalErrorException
-     * @throws InstanceNotFoundException
-     */
-    Collection<IDevice> findById(Collection<String> deviceIdList)
-            throws InternalErrorException, InstanceNotFoundException;
+    Collection<IDevice> findGroupMembers(DeviceGroup group) throws InternalErrorException, InstanceNotFoundException;    
 
     /**
      * Finds a device by its internal cod id
@@ -154,63 +131,7 @@ public interface IUniDAManagementFacade
      * com.mytechia.commons.framework.modelaction.exception.InstanceNotFoundException
      */
     IDevice findByCodId(Long codId) throws InternalErrorException, InstanceNotFoundException;
-
-    /**
-     * Gets all the devices managed by the UniDA by using indexes to navigate the
-     * device collection.
-     *
-     * @param startIndex First device to retrieve
-     * @param length Number of devices to retrieve
-     * @return the devices found
-     * @throws com.mytechia.commons.framework.exception.InternalErrorException
-     */
-    Collection<IDevice> findAll(int startIndex, int length) throws InternalErrorException;
-
-    /**
-     * Gets all the devices managed by the UniDA that aren't configured yet by
-     * using indexes to navigate the device collection.
-     *
-     * @param startIndex First device to retrieve
-     * @param length Number of devices to retrieve
-     * @return the devices found
-     * @throws com.mytechia.commons.framework.exception.InternalErrorException
-     */
-    Collection<IDevice> findNotConfiguredDevices(int startIndex, int length) throws InternalErrorException;
-
-    /**
-     * Gets the devices managed by the UniDA that are at the especified location
-     * by using indexes to navigate the device collection.
-     *
-     * @param startIndex First device to retrieve
-     * @param length Number of devices to retrieve
-     * @param location The location of the device to retrieve
-     * @return the devices found with the especified location
-     * @throws com.mytechia.commons.framework.exception.InternalErrorException
-     */
-    Collection<IDevice> findByLocation(int startIndex, int length, Location location) throws InternalErrorException;
-
-    /**
-     * Finds a device by its functionality
-     *
-     * @param startIndex First device to retrieve
-     * @param length Number of devices to retrieve
-     * @param functionality Functionality to look for
-     * @return the devices found with the especified functionality
-     * @throws com.mytechia.commons.framework.exception.InternalErrorException
-     */
-    Collection<IDevice> findByFunctionality(int startIndex, int length, ControlFunctionalityMetadata functionality) throws InternalErrorException;
-
-    /**
-     * Find devices by the gateway to wich they are associated
-     *
-     * @param devGw
-     * @return
-     * @throws InstanceNotFoundException
-     * @throws InternalErrorException
-     */
-    Collection<IDevice> findByDeviceGateway(Gateway devGw) throws InstanceNotFoundException, InternalErrorException;
-
-    Collection<IDevice> findNotEnabledDevices(DeviceClassMetadata devClass, Location loc, int startIndex, int length) throws InternalErrorException;
+    
 
     /**
      * Adds a new device gateway
@@ -248,37 +169,6 @@ public interface IUniDAManagementFacade
      * @throws InstanceNotFoundException
      */
     Gateway findDeviceGatewayByCodId(Long codId) throws InternalErrorException, InstanceNotFoundException;
-
-    /**
-     * Find device gateway
-     *
-     * @param id
-     * @return
-     * @throws InternalErrorException
-     * @throws InstanceNotFoundException
-     */
-    Gateway findDeviceGatewayById(String id) throws InternalErrorException, InstanceNotFoundException;
-
-    /**
-     * Retrieves all devices gateways
-     *
-     * @param startIndex
-     * @param length
-     * @return
-     * @throws InternalErrorException
-     */
-    Collection<Gateway> findAllDeviceGateways(int startIndex, int length) throws InternalErrorException;
-
-    /**
-     * Retrieves device gateways by its class
-     *
-     * @param gcm
-     * @param startIndex
-     * @param length
-     * @return
-     * @throws InternalErrorException
-     */
-    Collection<Gateway> findDeviceGatewaysByClassId(GatewayClassMetadata gcm, int startIndex, int length) throws InternalErrorException;
 
     /**
      * Associates a previously created device with a device IO in a device
@@ -346,7 +236,7 @@ public interface IUniDAManagementFacade
      * @throws InternalErrorException
      */
     Collection<Location> findAllLocations() throws InternalErrorException;
-
+    
     /**
      * It is called when a gateway is discovered in the device network. If the
      * gateway was not previously known, it creates a new gateway and its

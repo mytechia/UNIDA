@@ -37,6 +37,7 @@ import com.unida.library.device.Gateway;
 import com.unida.library.device.GatewayDeviceIO;
 import com.unida.library.device.IDevice;
 import com.unida.library.device.PhysicalDevice;
+import com.unida.library.manage.IGatewayDiscoveryListener;
 import com.unida.library.manage.im.InMemoryUniDAInstantiationFacade;
 import com.unida.tools.librarybasicgui.dialog.AddAutonomousBehaviourRuleDialog;
 import com.unida.tools.librarybasicgui.dialog.AutonomousBehaviourChangeScenarioDialog;
@@ -61,7 +62,7 @@ import javax.swing.event.ListSelectionListener;
  *
  * @author victor
  */
-public class UNIDALibraryBasicGUI extends javax.swing.JFrame
+public class UNIDALibraryBasicGUI extends javax.swing.JFrame implements IGatewayDiscoveryListener
 {
 
     private InMemoryUniDAInstantiationFacade instantiationFacade;  // only entry point needed for UniDA library
@@ -80,9 +81,6 @@ public class UNIDALibraryBasicGUI extends javax.swing.JFrame
 
         // UniDA
         launchUniDA();
-
-        // This thread will refresh the table that displays UniDA gateways information
-        new Thread(new Refresher()).start();
     }
 
     /*
@@ -96,6 +94,7 @@ public class UNIDALibraryBasicGUI extends javax.swing.JFrame
         try
         {
             instantiationFacade.initialize();
+            instantiationFacade.getDeviceManageFacade().addGatewayDiscoveryListener(this);
         } catch (InternalErrorException e)
         {
             JOptionPane.showMessageDialog(this, e.toString());
@@ -112,6 +111,22 @@ public class UNIDALibraryBasicGUI extends javax.swing.JFrame
     /**
      * ********************************************************************************************************
      */
+    
+    
+    
+    @Override
+    public void notifyGatewayDiscovered(Gateway gateway)
+    {
+        addOrUpdateGateway(gateway.getId().toString(), gateway.getOperationalState().getState().toString(), gateway.getModel());
+    }
+
+    @Override
+    public void notifyGatewayLost(Gateway gateway)
+    {
+        addOrUpdateGateway(gateway.getId().toString(), gateway.getOperationalState().getState().toString(), gateway.getModel());
+    }
+    
+    
     /*
      *  The gateways table is reloaded.
      *  Accordingly, the device-IOs and devices tables are reset. Same with
@@ -140,21 +155,6 @@ public class UNIDALibraryBasicGUI extends javax.swing.JFrame
                 jTableGatewaysInfo.getModel().setValueAt(gateway.getId().toString(), gatewayRow, 0);
                 jTableGatewaysInfo.getModel().setValueAt(gateway.getOperationalState().getState().toString(), gatewayRow, 1);
                 gatewayRow++;
-            }
-        } catch (InternalErrorException e)
-        {
-            JOptionPane.showMessageDialog(this, e.toString());
-        }
-    }
-
-    protected void refreshGatewaysTable()
-    {
-        try
-        {
-            Collection<Gateway> gateways = instantiationFacade.getDeviceManageFacade().findAllDeviceGateways(0, Integer.MAX_VALUE);
-            for (Gateway gateway : gateways)
-            {                
-                addOrUpdateGateway(gateway.getId().toString(), gateway.getOperationalState().getState().toString(), gateway.getModel());
             }
         } catch (InternalErrorException e)
         {
@@ -745,13 +745,13 @@ public class UNIDALibraryBasicGUI extends javax.swing.JFrame
     }//GEN-LAST:event_jButtonAddABRuleActionPerformed
 
     /**
-     * ********************************************************************************************************
-     */
-    /**
      * ************************************* GUI Utility methods **********************************************
      */
+    
+    
     /**
      * ********************************************************************************************************
+     * @param jTable
      */
     /*
      *  Utility method to clean all data currently shown at a JTable
@@ -837,31 +837,5 @@ public class UNIDALibraryBasicGUI extends javax.swing.JFrame
     private javax.swing.JTable jTableDevicesInfo;
     private javax.swing.JTable jTableGatewaysInfo;
     // End of variables declaration//GEN-END:variables
-
-    private class Refresher implements Runnable
-    {
-
-        private boolean on = true;
-
-        @Override
-        public void run()
-        {
-            while (on)
-            {
-                try
-                {
-                    Thread.sleep(1500);
-                } catch (InterruptedException ex)
-                {
-                    JOptionPane.showMessageDialog(UNIDALibraryBasicGUI.this, ex.toString());
-                }
-                UNIDALibraryBasicGUI.this.refreshGatewaysTable();
-            }
-        }
-
-        public void turnOff()
-        {
-            this.on = false;
-        }
-    }
+     
 }

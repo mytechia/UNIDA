@@ -89,7 +89,7 @@ import java.util.logging.Level;
  * @author Gervasio Varela
  * @version 1
  */
-public class DefaultUniDAFacade extends AbstractUniDAFacadeHelper implements IUniDANetworkFacade
+public class DefaultUniDANetworkFacade extends AbstractUniDAFacadeHelper implements IUniDANetworkFacade
 {
 
     protected IUniDACommChannel commChannel;
@@ -100,7 +100,7 @@ public class DefaultUniDAFacade extends AbstractUniDAFacadeHelper implements IUn
     protected IDeviceAccessLayerOntologyFacade ontologyFacade;
     protected IUniDAOntologyCodec ontologyCodec;
 
-    public DefaultUniDAFacade(
+    public DefaultUniDANetworkFacade(
             IUniDACommChannel commChannel,
             IUniDAManagementFacade devManagement,
             IDeviceAccessLayerOntologyFacade ontologyFacade,

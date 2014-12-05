@@ -28,14 +28,14 @@ import com.mytechia.commons.framework.modelaction.action.periodic.PeriodicAction
 import com.mytechia.commons.framework.modelaction.action.periodic.PeriodicActionsProcessor;
 import com.mytechia.commons.framework.simplemessageprotocol.exception.CommunicationException;
 import com.unida.library.IUniDAInstantiationFacade;
+import com.unida.library.IUniDAUserFacade;
 import com.unida.library.UniDANetworkFactory;
-import com.unida.library.core.DefaultUniDAFacade;
+import com.unida.library.core.DefaultUniDANetworkFacade;
 import com.unida.library.device.ontology.IDeviceAccessLayerOntologyFacade;
 import com.unida.library.device.ontology.IUniDAOntologyCodec;
 import com.unida.library.device.ontology.dogont.DogOntCodec;
 import com.unida.library.device.ontology.dogont.DogOntFacade;
 import com.unida.library.device.ontology.exception.OntologyLoadingErrorException;
-import com.unida.library.manage.IUniDAManagementFacade;
 import com.unida.library.manage.discovery.PeriodicCheckGatewayStateAction;
 import com.unida.library.notification.DefaultNotificationSuscriptionManager;
 import com.unida.library.notification.INotificationSuscriptionManager;
@@ -88,7 +88,7 @@ public class InMemoryUniDAInstantiationFacade implements IUniDAInstantiationFaca
 
     protected UniDANetworkFactory unidaFactory = null;
 
-    protected DefaultUniDAFacade unidaProtocolFacade;
+    protected DefaultUniDANetworkFacade unidaProtocolFacade;
 
     protected IUniDACommChannel commChannel;
 
@@ -98,7 +98,7 @@ public class InMemoryUniDAInstantiationFacade implements IUniDAInstantiationFaca
 
 
     @Override
-    public IUniDAManagementFacade getDeviceManageFacade()
+    public IUniDAUserFacade getDeviceManageFacade()
     {
         return deviceManageFacade;
     }
@@ -186,7 +186,7 @@ public class InMemoryUniDAInstantiationFacade implements IUniDAInstantiationFaca
     {
         
         this.commChannel = new UDPUniDACommChannel(new DefaultMessageFactory(ontologyCodec)); //Default port
-        this.unidaProtocolFacade = new DefaultUniDAFacade(this.commChannel, this.deviceManageFacade, this.ontologyFacade, this.ontologyCodec);
+        this.unidaProtocolFacade = new DefaultUniDANetworkFacade(this.commChannel, this.deviceManageFacade, this.ontologyFacade, this.ontologyCodec);
         this.unidaProtocolFacade.start();
 
         this.unidaFactory = new UniDANetworkFactory(this.unidaProtocolFacade);
