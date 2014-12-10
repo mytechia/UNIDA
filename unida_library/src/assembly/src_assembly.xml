@@ -1,0 +1,17 @@
+<assembly>
+    <id>sources</id>
+  
+    <formats>
+        <format>zip</format>
+    </formats>
+  
+    <fileSets>
+        
+        <fileSet>
+            <directory>${basedir}/src/main</directory>
+        </fileSet>
+      
+    </fileSets>
+    
+
+</assembly>

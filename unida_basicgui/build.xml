@@ -1,0 +1,49 @@
+<?xml version="1.0"?>
+<project name="build-project" default="update-changeslog" basedir=".">
+
+    
+                              
+    <target name="check-release-dir">
+         <available property="exist.template.changelog" file="${basedir}/changelog.txt" type="file"/>
+    </target>
+                            
+  
+
+  <target name="update-changelog-file" if="exist.template.changelog" depends="check-release-dir">
+                                        
+                                <taskdef resource="net/sf/antcontrib/antlib.xml" classpathref="maven.plugin.classpath"/>
+                                
+                                <available property="exist.release.dir" file="${release.dir}" type="dir"/>
+                                        
+                                <loadfile property="file" srcfile="changelog.txt"/>
+                                
+                                <echo message="${release.version}${line.separator}" append="true" file="changeslog_tmp"/>
+                                
+                                <echo message="-------------------------" append="true" file="changeslog_tmp"/>
+                                
+                                <echo message="${line.separator}" append="true" file="changeslog_tmp"/>
+
+                                <for param="line" list="${file}" delimiter="${line.separator}">
+                                    <sequential>
+                                        <echo message="- @{line} ${line.separator}" append="true" file="changeslog_tmp"/>
+                                    </sequential>
+                                </for>
+                                        
+                                <echo message="${line.separator}" append="true" file="changeslog_tmp"/>
+                                        
+                                <concat destfile="changeslog_tmp" append="true" fixlastline="yes">
+                                    <filelist dir="." files="${release.dir}/changelog.txt"/>
+                                </concat>
+                                
+                                <move file="changeslog_tmp" tofile="${release.dir}/changelog.txt" />
+                                
+                                <delete file="changelog.txt"/>
+                                
+                                <copy todir="${release}">
+                                    <fileset dir="${release.dir}">
+                                        <include name="changelog.txt"/>
+                                    </fileset>
+                                </copy> 
+                                
+                            </target>
+</project>

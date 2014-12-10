@@ -20,3 +20,5 @@
 /devel/ide_project/unida_java_basicgui_netbeans/dist/
 /devel/ide_project/unida_java_basicgui_netbeans/build/
 .DS_Store
+/unida_library/target/
+/unida_basicgui/target/

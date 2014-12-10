@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+        
+    
+    <modelVersion>4.0.0</modelVersion>
+    <artifactId>unida_basicgui</artifactId>
+    <groupId>com.unida.tools</groupId>
+    <version>1.1.0-SNAPSHOT</version>
+    <packaging>jar</packaging>
+    
+               
+    <scm>
+        <developerConnection>scm:git:https://github.com/GII/UNIDA.git</developerConnection>
+    </scm>
+    
+    <properties>
+        <maven.compiler.source>1.7</maven.compiler.source>
+        <maven.compiler.target>1.7</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven.build.timestamp.format>yyyy_MM_dd</maven.build.timestamp.format>
+        <release.basedir>release</release.basedir>
+        <release.dir>${maven.build.timestamp}_${project.version}</release.dir>
+    </properties>
+
+   <profiles>
+        
+         <profile>
+            <id>release</id>
+            
+            <build>
+            
+                <plugins>        
+                
+                    <!-- el plugin release actualiza el numero de version de todos los proyectos 
+                    (modulo padre y submodulos), genera un tag-->
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-release-plugin</artifactId>
+                        <version>2.5.1</version>
+
+                        <configuration>
+                            <tagNameFormat>v@{project.version}</tagNameFormat>
+                            <preparationGoals>install</preparationGoals>         
+                            <pushChanges>false</pushChanges>
+                        </configuration>
+        
+                    </plugin>
+                    
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-antrun-plugin</artifactId>
+                        <version>1.7</version>
+                        <executions>
+                            <execution>
+                                <id>generate-changelog</id>
+                                <phase>install</phase>
+                                <configuration>
+                            
+                                    <tasks>
+                                        <ant target="update-changelog-file" inheritRefs="true">
+                                            <property name="release.dir" value="${release.basedir}" />
+                                            <property name="project.version" value="${project.version}" />
+                                            <property name="release.version" value="${maven.build.timestamp}_${project.version}" />
+                                            <property name="release" value="${release.basedir}/${release.dir}" />
+                                        </ant>
+                                    </tasks>
+ 
+                                </configuration>
+                                <goals>
+                                    <goal>run</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                        <dependencies>
+                            <dependency>
+                                <groupId>ant-contrib</groupId>
+                                <artifactId>ant-contrib</artifactId>
+                                <version>1.0b3</version>
+                                <exclusions>
+                                    <exclusion>
+                                        <groupId>ant</groupId>
+                                        <artifactId>ant</artifactId>
+                                    </exclusion>
+                                </exclusions>
+                            </dependency>
+                            <dependency>
+                                <groupId>org.apache.ant</groupId>
+                                <artifactId>ant-nodeps</artifactId>
+                                <version>1.8.1</version>
+                            </dependency>
+                        </dependencies>
+                    </plugin>
+                    
+                
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-javadoc-plugin</artifactId>
+                        <version>2.10.1</version>
+                        <executions>
+                            <execution>
+                                <id>zip-javadoc</id>
+                                <phase>install</phase>
+                                <goals>
+                                    <goal>javadoc</goal>
+                                </goals>
+                            </execution>                       
+                        </executions>
+                    </plugin>
+                
+           
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-dependency-plugin</artifactId>
+                        <version>2.5.1</version>
+                        <executions>
+                            <execution>
+                                <id>copy-dependencies</id>
+                                <phase>install</phase>
+                                <goals>
+                                    <goal>copy-dependencies</goal>
+                                </goals>
+                                <configuration>
+                                    <outputDirectory>${project.build.directory}/dependency-jars/</outputDirectory>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+           
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-assembly-plugin</artifactId>
+                        <version>2.4</version>
+                
+                        <executions>
+                            <execution>
+                                <id>generate_source_zip</id>
+                                <phase>install</phase>
+                            
+                                <configuration>
+                                    <descriptor>${basedir}/src/assembly/src_assembly.xml</descriptor>
+                                    <finalName>${project.artifactId}-${project.version}</finalName>
+                                </configuration>
+                            
+                                <goals>
+                                    <goal>single</goal>
+                                </goals>
+                            
+                            </execution>
+                        
+                            <execution>
+                                <id>generate_javadoc_zip</id>
+                                <phase>install</phase>
+                            
+                                <configuration>
+                                    <descriptor>${basedir}/src/assembly/javadoc_assembly.xml</descriptor>
+                                    <finalName>${project.artifactId}-${project.version}</finalName>
+                                </configuration>
+                            
+                                <goals>
+                                    <goal>single</goal>
+                                </goals>
+                            
+                            </execution>
+                        
+                        </executions>
+                    </plugin>           
+                
+                    <!-- Copia todos los recursos al directorio release -->        
+                    <plugin>
+                        <artifactId>maven-resources-plugin</artifactId>
+                        <version>2.7</version>
+                        <executions>
+                            <execution>
+                                <id>copy-resources</id>
+                                <!-- here the phase you need -->
+                                <phase>install</phase>
+                                <goals>
+                                    <goal>copy-resources</goal>
+                                </goals>
+                                <configuration>
+                                    <outputDirectory>${project.basedir}/${release.basedir}/${release.dir}/${project.build.finalName}</outputDirectory>
+                                    <resources>          
+                                        <resource>
+                                            <includes>
+                                                <include>${project.artifactId}-${project.version}.jar</include>
+                                                <include>${project.artifactId}-${project.version}-sources.zip</include>
+                                                <include>${project.artifactId}-${project.version}-javadoc.zip</include>
+                                                <include>dependency-jars/**</include>
+                                            </includes>
+                                            <directory>target</directory>
+                                        </resource>
+                                    </resources>              
+                                </configuration>            
+                            </execution>
+                        </executions>
+                    </plugin>     
+                </plugins>
+       
+            </build>
+            
+        </profile>
+        
+    </profiles>
+    
+
+    
+    <dependencies>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.11</version>
+            <scope>test</scope>
+        </dependency>
+	<dependency>
+                <groupId>org.picocontainer</groupId>
+                <artifactId>picocontainer</artifactId>
+                <version>2.8</version>
+        </dependency>
+        <dependency>
+            <groupId>com.mytechia</groupId>
+            <artifactId>mytechia_commons_library</artifactId>
+            <version>1.0.7-SNAPSHOT</version>
+        </dependency>
+	<dependency>
+            <groupId>com.unida</groupId>
+            <artifactId>unida_library</artifactId>
+            <version>1.1.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+                <groupId>net.sourceforge.owlapi</groupId>
+                <artifactId>owlapi-distribution</artifactId>
+                <version>3.4.10</version>
+        </dependency>
+    </dependencies>
+</project>
+
