@@ -112,6 +112,11 @@ public class Gateway implements Cloneable, Serializable
     {
         return location;
     }
+    
+    public void setLocation(Location location)
+    {
+        this.location = location;
+    }
 
     public String getManufacturer()
     {

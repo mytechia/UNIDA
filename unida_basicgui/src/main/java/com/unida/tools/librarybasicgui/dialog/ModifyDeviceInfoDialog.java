@@ -9,6 +9,7 @@ package com.unida.tools.librarybasicgui.dialog;
 
 import com.mytechia.commons.framework.exception.InternalErrorException;
 import com.unida.library.device.IDevice;
+import com.unida.library.location.StringLiteralLocation;
 import com.unida.library.manage.im.InMemoryUniDAInstantiationFacade;
 import javax.swing.JOptionPane;
 
@@ -129,6 +130,9 @@ public class ModifyDeviceInfoDialog extends javax.swing.JDialog
         try
         {
             
+            device.setName(jTextName.getText());
+            device.setDescription(jTextDescription.getText());
+            device.setLocation(new StringLiteralLocation(jTextLocation.getText()));
                        
             this.instantiationFacade.getDeviceOperationFacade().asyncModifyDeviceInfo(
                     device,

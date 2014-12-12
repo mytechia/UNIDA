@@ -96,10 +96,8 @@
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="jPanelGatewaysButtons" min="-2" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="jButtonManageABRules" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jButtonModifyGatewayInfo" alignment="0" min="-2" max="-2" attributes="0"/>
-                      </Group>
+                      <Component id="jButtonModifyGatewayInfo" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="jButtonManageABRules" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="36" max="-2" attributes="0"/>
                   <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
@@ -405,12 +403,12 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonSuscribeActionPerformed"/>
               </Events>
             </Component>
-            <Component class="javax.swing.JButton" name="jButtonModify">
+            <Component class="javax.swing.JButton" name="jButtonModifyDevice">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Modify"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonModifyActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonModifyDeviceActionPerformed"/>
               </Events>
             </Component>
           </SubComponents>

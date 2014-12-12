@@ -256,6 +256,8 @@ public class UNIDALibraryBasicGUI extends javax.swing.JFrame implements IGateway
         jButtonWriteState.setEnabled(false);
         jButtonSuscribe.setEnabled(false);
         jButtonManageABRules.setEnabled(false);
+        jButtonModifyGatewayInfo.setEnabled(false);
+        jButtonModifyDevice.setEnabled(false);
     }
 
     final void initGUITablesState()
@@ -289,16 +291,19 @@ public class UNIDALibraryBasicGUI extends javax.swing.JFrame implements IGateway
                     jButtonWriteState.setEnabled(false);
                     jButtonState.setEnabled(false);
                     jButtonSuscribe.setEnabled(false);
+                    jButtonModifyDevice.setEnabled(false);                    
                     removeSelectionInJTable(jTableDevicesInfo);
                     removeSelectionInJTable(jTableDeviceIOsInfo);
                     if (null != valueAt && valueAt.toString().length() > 0)
                     {
                         jButtonManageABRules.setEnabled(true);
+                        jButtonModifyGatewayInfo.setEnabled(true);
                         loadDevices(valueAt.toString());
                         loadIOs(valueAt.toString());
                     } else
                     {
                         jButtonManageABRules.setEnabled(false);
+                        jButtonModifyGatewayInfo.setEnabled(false);
                     }
                 }
             }
@@ -324,6 +329,7 @@ public class UNIDALibraryBasicGUI extends javax.swing.JFrame implements IGateway
                     jButtonState.setEnabled(true);
                     jButtonSuscribe.setEnabled(true);
                     jButtonWriteState.setEnabled(true);
+                    jButtonModifyDevice.setEnabled(true);
                 }
             }
         });
@@ -357,7 +363,7 @@ public class UNIDALibraryBasicGUI extends javax.swing.JFrame implements IGateway
         jButtonState = new javax.swing.JButton();
         jButtonWriteState = new javax.swing.JButton();
         jButtonSuscribe = new javax.swing.JButton();
-        jButtonModify = new javax.swing.JButton();
+        jButtonModifyDevice = new javax.swing.JButton();
         jButtonManageABRules = new javax.swing.JButton();
         jButtonForceAnnounce = new javax.swing.JButton();
         jButtonChangeScenario = new javax.swing.JButton();
@@ -548,15 +554,15 @@ public class UNIDALibraryBasicGUI extends javax.swing.JFrame implements IGateway
         });
         jPanelDevicesButtons.add(jButtonSuscribe);
 
-        jButtonModify.setText("Modify");
-        jButtonModify.addActionListener(new java.awt.event.ActionListener()
+        jButtonModifyDevice.setText("Modify");
+        jButtonModifyDevice.addActionListener(new java.awt.event.ActionListener()
         {
             public void actionPerformed(java.awt.event.ActionEvent evt)
             {
-                jButtonModifyActionPerformed(evt);
+                jButtonModifyDeviceActionPerformed(evt);
             }
         });
-        jPanelDevicesButtons.add(jButtonModify);
+        jPanelDevicesButtons.add(jButtonModifyDevice);
 
         jButtonManageABRules.setText("Manage Autonomous Behaviour Rules");
         jButtonManageABRules.addActionListener(new java.awt.event.ActionListener()
@@ -665,9 +671,8 @@ public class UNIDALibraryBasicGUI extends javax.swing.JFrame implements IGateway
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanelGatewaysInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanelGatewaysButtons, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanelGatewaysInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jButtonManageABRules)
-                        .addComponent(jButtonModifyGatewayInfo)))
+                    .addComponent(jButtonModifyGatewayInfo)
+                    .addComponent(jButtonManageABRules))
                 .addGap(36, 36, 36)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -803,8 +808,8 @@ public class UNIDALibraryBasicGUI extends javax.swing.JFrame implements IGateway
         }
     }//GEN-LAST:event_jButtonModifyGatewayInfoActionPerformed
 
-    private void jButtonModifyActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jButtonModifyActionPerformed
-    {//GEN-HEADEREND:event_jButtonModifyActionPerformed
+    private void jButtonModifyDeviceActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jButtonModifyDeviceActionPerformed
+    {//GEN-HEADEREND:event_jButtonModifyDeviceActionPerformed
         Object selectedDevice = jTableDevicesInfo.getModel().getValueAt(jTableDevicesInfo.getSelectionModel().getMinSelectionIndex(), 0);
         if (null != selectedDevice)
         {
@@ -821,7 +826,7 @@ public class UNIDALibraryBasicGUI extends javax.swing.JFrame implements IGateway
             }
             
         }
-    }//GEN-LAST:event_jButtonModifyActionPerformed
+    }//GEN-LAST:event_jButtonModifyDeviceActionPerformed
 
     /**
      * ************************************* GUI Utility methods
@@ -896,7 +901,7 @@ public class UNIDALibraryBasicGUI extends javax.swing.JFrame implements IGateway
     private javax.swing.JButton jButtonCommands;
     private javax.swing.JButton jButtonForceAnnounce;
     private javax.swing.JButton jButtonManageABRules;
-    private javax.swing.JButton jButtonModify;
+    private javax.swing.JButton jButtonModifyDevice;
     private javax.swing.JButton jButtonModifyGatewayInfo;
     private javax.swing.JButton jButtonOnOffCommands;
     private javax.swing.JButton jButtonQueryScenarios;

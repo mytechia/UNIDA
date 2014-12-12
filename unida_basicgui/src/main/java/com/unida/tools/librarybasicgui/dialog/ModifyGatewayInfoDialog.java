@@ -9,6 +9,7 @@ package com.unida.tools.librarybasicgui.dialog;
 
 import com.mytechia.commons.framework.exception.InternalErrorException;
 import com.unida.library.device.Gateway;
+import com.unida.library.location.StringLiteralLocation;
 import com.unida.library.manage.im.InMemoryUniDAInstantiationFacade;
 import javax.swing.JOptionPane;
 
@@ -128,6 +129,10 @@ public class ModifyGatewayInfoDialog extends javax.swing.JDialog
     {//GEN-HEADEREND:event_jButtonSendRequestActionPerformed
         try
         {
+            
+            gateway.setName(jTextName.getText());
+            gateway.setDescription(jTextDescription.getText());
+            gateway.setLocation(new StringLiteralLocation(jTextLocation.getText()));
                        
             this.instantiationFacade.getGatewayOperationFacade().modifyGatewayInfo(
                     gateway.getId(), 

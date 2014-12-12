@@ -108,13 +108,13 @@ public class UniDAModifyDeviceInfoMessage extends UniDADeviceMessage
         this.opId = EndianConversor.byteArrayLittleEndianToLong(bytes, offset);
         offset += EndianConversor.LONG_SIZE_BYTES;
         
-        initIndex += Message.readStringFromBytes(string, bytes, initIndex);
+        offset += Message.readStringFromBytes(string, bytes, offset);
         this.name = string.toString();
 
-        initIndex += Message.readStringFromBytes(string, bytes, initIndex);
+        offset += Message.readStringFromBytes(string, bytes, offset);
         this.description = string.toString();
 
-        initIndex += Message.readStringFromBytes(string, bytes, initIndex);
+        offset += Message.readStringFromBytes(string, bytes, offset);
         this.location = string.toString();
 
         return offset;
