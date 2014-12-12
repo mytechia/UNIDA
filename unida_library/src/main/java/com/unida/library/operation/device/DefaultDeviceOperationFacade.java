@@ -190,6 +190,31 @@ public class DefaultDeviceOperationFacade implements IDeviceOperationFacade
         }
 
     }
+    
+    @Override
+    public OperationTicket asyncModifyDeviceInfo(IDevice dev, String name, String description, String location, IDeviceOperationCallback callback) throws InternalErrorException
+    {
+        OperationTicket ot = this.ticketManager.issueTicket(OperationTypes.MODIFY_DEVICE_INFO);
+        
+        if (dev.isGroup())
+        {
+            return this.groupOperationManager.asyncModifyDeviceInfo(ot, dev, name, description, location);
+        } else
+        {
+            try
+            {
+                Gateway devGw = getDeviceGateway(dev);
+                IUniDANetworkFacade dalInstance = this.unidaFactory.getUniDANetworkInstance(devGw);
+                DefaultDeviceAccessLayerCallback dalCback = new DefaultDeviceAccessLayerCallback(this, ot, dev, callback);
+                addCallback(dalCback);
+                dalInstance.modifyDeviceInfo(ot.getId(), null, name, description, location, dalCback);
+                return ot;
+            } catch (InstanceNotFoundException ex)
+            {
+                throw new InternalErrorException(ex);
+            }
+        }
+    }
 
     @Override
     public OperationTicket asyncSendCommand(IDevice dev, ControlFunctionalityMetadata func, ControlCommandMetadata cmd, String[] params, IDeviceOperationCallback callback)
@@ -235,7 +260,7 @@ public class DefaultDeviceOperationFacade implements IDeviceOperationFacade
             throws InternalErrorException
     {
         this.notificationSuscriptionManager.unsuscribeFrom(nt, dev, state, params, callback);
-    }
+    }    
 
     
 }

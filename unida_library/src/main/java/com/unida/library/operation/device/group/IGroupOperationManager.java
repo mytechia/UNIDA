@@ -73,5 +73,8 @@ public interface IGroupOperationManager
         public OperationTicket asyncWriteDeviceState(OperationTicket ticket, IDevice dev, 
                 DeviceStateMetadata state, DeviceStateValue stateValue, IDeviceOperationCallback callback)
                 throws InternalErrorException;
+        
+        public OperationTicket asyncModifyDeviceInfo(OperationTicket ot, IDevice dev, String name, String description, String location)
+                throws InternalErrorException;
 	
 }

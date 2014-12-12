@@ -83,6 +83,12 @@ public interface IUniDANetworkFacade
     void changeScenario(long notificationId, UniDAAddress gatewayAddress, boolean activate, String scenarioId, IAutonomousBehaviourInternalCallback callback)
             throws CommunicationException;
     
+    void modifyGatewayInfo(long opId, UniDAAddress gatewayAddress, String name, String description, String location)
+            throws CommunicationException;
+    
+    void modifyDeviceInfo(long opId, DeviceID deviceId, String name, String description, String location, IOperationInternalCallback callback)
+            throws CommunicationException;
+    
     void queryAutonomousBehaviourRules(long notificationId, UniDAAddress gatewayAddress, IAutonomousBehaviourInternalCallback callback)
             throws CommunicationException;
     

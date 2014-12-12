@@ -61,6 +61,8 @@ import com.unida.protocol.message.autonomousbehaviour.UniDAABQueryScenariosReque
 import com.unida.protocol.message.discovery.DiscoverUniDAGatewayDevicesReplyMessage;
 import com.unida.protocol.message.discovery.DiscoverUniDAGatewayDevicesRequestMessage;
 import com.unida.protocol.message.discovery.UniDAGatewayHeartbeatMessage;
+import com.unida.protocol.message.modifyinfo.UniDAModifyDeviceInfoMessage;
+import com.unida.protocol.message.modifyinfo.UniDAModifyGatewayInfoMessage;
 import com.unida.protocol.message.notification.UniDANotificationMessage;
 import com.unida.protocol.message.notification.UniDANotificationSuscriptionRequestMessage;
 import com.unida.protocol.message.notification.UniDANotificationUnsuscriptionRequestMessage;
@@ -189,6 +191,23 @@ public class DefaultUniDANetworkFacade extends AbstractUniDAFacadeHelper impleme
         this.commChannel.sendMessage(deviceId, 
                 new UniDAWriteDeviceStateRequestMessage(this.ontologyCodec, opId, deviceId, stateId, new DeviceStateValue(stateValueId, stateValue)));
     }
+    
+    @Override
+    public void modifyGatewayInfo(long opId, UniDAAddress gatewayAddress, String name, String description, String location) throws CommunicationException
+    {
+        this.commChannel.sendMessage(
+                gatewayAddress,
+                new UniDAModifyGatewayInfoMessage(gatewayAddress, ontologyCodec, opId, name, description, location));
+    }
+
+    @Override
+    public void modifyDeviceInfo(long opId, DeviceID deviceId, String name, String description, String location, IOperationInternalCallback callback) throws CommunicationException
+    {
+        addOperationCallback(opId, deviceId, null);
+        this.commChannel.sendMessage(
+                deviceId, 
+                new UniDAModifyDeviceInfoMessage(ontologyCodec, opId, deviceId, name, description, location));
+    }
 
     @Override
     public void sendCommand(long opId, DeviceID deviceId, String funcId, String cmdId,
@@ -249,7 +268,7 @@ public class DefaultUniDANetworkFacade extends AbstractUniDAFacadeHelper impleme
     {
         addAutonomousBehaviourCallback(notificationId, gatewayAddress, callback);
         this.commChannel.sendMessage(gatewayAddress, new UniDAABChangeScenarioMessage(ontologyCodec, gatewayAddress, notificationId, activate, scenarioId));
-    }
+    }   
        
 
     private class UniDAQueryDeviceStateReplyMessageHandler implements IUniDAProtocolMessageHandler

@@ -96,6 +96,22 @@ public interface IDeviceOperationFacade
     OperationTicket asyncWriteDeviceState(IDevice dev, DeviceStateMetadata state,
             DeviceStateValue stateValue, IDeviceOperationCallback callback)
             throws InternalErrorException;
+    
+    /**
+     *  Modifies the attributtes of a device
+     * 
+     * @param dev
+     * @param name
+     * @param description
+     * @param location
+     * @param callback
+     * @return
+     * @throws InternalErrorException
+     */
+    OperationTicket asyncModifyDeviceInfo(IDevice dev,
+            String name, String description, String location,
+            IDeviceOperationCallback callback)
+            throws InternalErrorException;
 
     /**
      * Sends a command to a device

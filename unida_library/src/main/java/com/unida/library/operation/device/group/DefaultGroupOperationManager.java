@@ -148,6 +148,12 @@ public class DefaultGroupOperationManager implements IGroupOperationManager
     {
         throw new InternalErrorException(new UnsupportedOperationException("Not supported yet."));
     }
+
+    @Override
+    public OperationTicket asyncModifyDeviceInfo(OperationTicket ot, IDevice dev, String name, String description, String location) throws InternalErrorException
+    {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
 	
 
 	

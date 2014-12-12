@@ -214,6 +214,23 @@ public class DefaultGatewayOperationFacade implements IGatewayOperationFacade
             throw new InternalErrorException(ex);
         }
     }
+    
+    @Override
+    public void modifyGatewayInfo(UniDAAddress gatewayAddress, String name, String description, String location) throws InternalErrorException
+    {
+        int nextOpId = getOpId();
+        
+        try
+        {
+            Gateway gateway = this.unidaManager.findDeviceGatewayById(gatewayAddress.toString());
+            IUniDANetworkFacade unidaNetworkInstance = this.unidaFactory.getUniDANetworkInstance(gateway);       
+            unidaNetworkInstance.modifyGatewayInfo(nextOpId, gatewayAddress, name, description, location);        
+
+        } catch (InstanceNotFoundException ex)
+        {
+            throw new InternalErrorException(ex);
+        }
+    }
 
     void addCallback(DefaultGatewayAccessLayerCallback callback)
     {

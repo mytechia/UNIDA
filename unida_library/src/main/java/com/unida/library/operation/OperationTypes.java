@@ -51,6 +51,8 @@ public enum OperationTypes
     SUSCRIBE_TO, //suscribe to a device notification    
     QUERY_AUTONOMOUS_BEHAVIOUR, //a query of the autonomous behaviour rules handled by a gateway
     QUERY_SCENARIOS, //a query of the autonomous behaviour scenarios used by rules in a gateway
-    CHANGE_SCENARIO //a command to change the current autonomous behaviour scenario of a gateway
+    CHANGE_SCENARIO, //a command to change the current autonomous behaviour scenario of a gateway
+    MOFIFY_GATEWAY_INFO,
+    MODIFY_DEVICE_INFO
     
 }

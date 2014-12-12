@@ -40,6 +40,8 @@ public interface IGatewayOperationFacade
         
     public void forceAnnounce() throws InternalErrorException;
     
+    public void modifyGatewayInfo(UniDAAddress gatewayAddress, String name, String description, String location) throws InternalErrorException;
+    
     public void changeABScenario(boolean activate, String scenarioId, IAutonomousBehaviourCallback callback) throws InternalErrorException;
         
     public void addABRule(UniDAABRuleVO rule) throws InternalErrorException;
