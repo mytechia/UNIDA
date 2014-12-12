@@ -62,6 +62,8 @@ public enum MessageType {
     ABQueryScenariosRequest         ((byte) 22),
     ABQueryScenariosReply           ((byte) 23),
     ABACK                           ((byte) 25),
+    ModifyGatewayInfo               ((byte) 30),
+    ModifyDeviceInfo                ((byte) 31),
     DebugInit                       ((byte) 101),
     DebugData                       ((byte) 106);
     
@@ -128,6 +130,10 @@ public enum MessageType {
             return ABQueryScenariosReply;
         else if (typeValue == ABACK.typeValue)
             return ABACK;
+        else if (typeValue == ModifyGatewayInfo.typeValue)
+            return ModifyGatewayInfo;
+        else if (typeValue == ModifyDeviceInfo.typeValue)
+            return ModifyDeviceInfo;
         else
             return null;
     }

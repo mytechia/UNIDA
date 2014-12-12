@@ -46,7 +46,7 @@ public class UniDAABQueryRequestMessage extends UniDAMessage
         super(destination, ontologyCodec);        
         this.opId = opId;
         setCommandType(MessageType.ABQueryRequest.getTypeValue());
-        setErrorCode(ErrorCode.Null.getTypeValue());
+        setErrorCode(ErrorCode.Ok.getTypeValue());
         setData(new byte[0]);
     }
 
