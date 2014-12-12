@@ -117,13 +117,19 @@ public class UNIDALibraryBasicGUI extends javax.swing.JFrame implements IGateway
     @Override
     public void notifyGatewayDiscovered(Gateway gateway)
     {
-        addOrUpdateGateway(gateway.getId().toString(), gateway.getOperationalState().getState().toString(), gateway.getModel());
+        addOrUpdateGateway(
+                gateway.getId().toString(), gateway.getOperationalState().getState().toString(),
+                gateway.getModel(), gateway.getManufacturer(),
+                gateway.getName(), gateway.getModel(), gateway.getLocation().toString());
     }
 
     @Override
     public void notifyGatewayLost(Gateway gateway)
     {
-        addOrUpdateGateway(gateway.getId().toString(), gateway.getOperationalState().getState().toString(), gateway.getModel());
+        addOrUpdateGateway(
+                gateway.getId().toString(), gateway.getOperationalState().getState().toString(),
+                gateway.getModel(), gateway.getManufacturer(),
+                gateway.getName(), gateway.getModel(), gateway.getLocation().toString());
     }
     
     
@@ -162,7 +168,10 @@ public class UNIDALibraryBasicGUI extends javax.swing.JFrame implements IGateway
         }
     }
 
-    private void addOrUpdateGateway(String id, String state, String description)
+    private void addOrUpdateGateway(
+            String id, String state, 
+            String model, String manufacturer,
+            String name, String description, String location)
     {
         boolean found = false;
         int rowNumber = 0;
@@ -179,7 +188,11 @@ public class UNIDALibraryBasicGUI extends javax.swing.JFrame implements IGateway
         {
             jTableGatewaysInfo.getModel().setValueAt(id, rowNumber, 0);
             jTableGatewaysInfo.getModel().setValueAt(state, rowNumber, 1);
-            jTableGatewaysInfo.getModel().setValueAt(description, rowNumber, 2);
+            jTableGatewaysInfo.getModel().setValueAt(model, rowNumber, 2);
+            jTableGatewaysInfo.getModel().setValueAt(manufacturer, rowNumber, 3);
+            jTableGatewaysInfo.getModel().setValueAt(name, rowNumber, 4);
+            jTableGatewaysInfo.getModel().setValueAt(description, rowNumber, 5);
+            jTableGatewaysInfo.getModel().setValueAt(location, rowNumber, 6);
             numberOfGateways++;
         }
     }
@@ -200,6 +213,11 @@ public class UNIDALibraryBasicGUI extends javax.swing.JFrame implements IGateway
                 jTableDevicesInfo.getModel().setValueAt(device.getId().toString(), deviceRow, 0);
                 jTableDevicesInfo.getModel().setValueAt(device.getDeviceClass().getShortClassId(), deviceRow, 1);
                 jTableDevicesInfo.getModel().setValueAt(DomoParsing.connectedIOsToString(device.getConnectedIOs()), deviceRow, 2);
+                jTableDevicesInfo.getModel().setValueAt(device.getModel(), deviceRow, 3);
+                jTableDevicesInfo.getModel().setValueAt(device.getManufacturer(), deviceRow, 4);
+                jTableDevicesInfo.getModel().setValueAt(device.getName(), deviceRow, 5);
+                jTableDevicesInfo.getModel().setValueAt(device.getDescription(), deviceRow, 6);
+                jTableDevicesInfo.getModel().setValueAt(device.getLocation(), deviceRow, 7);
                 deviceRow++;
             }
         } catch (InternalErrorException | InstanceNotFoundException e)
@@ -359,25 +377,25 @@ public class UNIDALibraryBasicGUI extends javax.swing.JFrame implements IGateway
         jTableGatewaysInfo.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][]
             {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null}
             },
             new String []
             {
-                "Gateway ID", "State", "Description"
+                "Gateway ID", "State", "Model", "Manufacturer", "Name", "Description", "Location"
             }
         )
         {
             boolean[] canEdit = new boolean []
             {
-                false, false, false
+                false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex)
@@ -431,24 +449,24 @@ public class UNIDALibraryBasicGUI extends javax.swing.JFrame implements IGateway
         jTableDevicesInfo.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][]
             {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null}
             },
             new String []
             {
-                "Device ID", "DeviceType", "Conected IOs"
+                "Device ID", "DeviceType", "Conected IOs", "model", "manufacturer", "name", "description", "location"
             }
         )
         {
             boolean[] canEdit = new boolean []
             {
-                false, false, false
+                false, false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex)
@@ -457,7 +475,6 @@ public class UNIDALibraryBasicGUI extends javax.swing.JFrame implements IGateway
             }
         });
         jTableDevicesInfo.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
-        jTableDevicesInfo.setMinimumSize(null);
         jScrollPaneDevicesInfo.setViewportView(jTableDevicesInfo);
 
         jLabel3.setText("Selected Gateway Devices:");

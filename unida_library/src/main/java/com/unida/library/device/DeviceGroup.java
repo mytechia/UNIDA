@@ -53,10 +53,10 @@ public class DeviceGroup extends Device
 
     public DeviceGroup(
             Long codId, short id, Location location, OperationalState operationalState,
-            boolean visible, String description,
+            boolean visible, String name, String description,
             DeviceClassMetadata deviceClass)
     {
-        super(codId, UniDAAddress.GROUPS_GATEWAY_ID, id, location, operationalState, visible, description, deviceClass);
+        super(codId, UniDAAddress.GROUPS_GATEWAY_ID, id, location, operationalState, visible, name, description, deviceClass);
         //this.members = new ArrayList<Device>();
     }
 
@@ -144,6 +144,7 @@ public class DeviceGroup extends Device
                 getLocation(),
                 getOperationalState(),
                 isEnabled(),
+                getName(),
                 getDescription(),
                 getDeviceClass());
 

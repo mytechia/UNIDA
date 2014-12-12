@@ -34,6 +34,7 @@ import com.unida.protocol.UniDAAddress;
 import com.unida.library.device.to.DeviceTO;
 import com.unida.library.device.to.GatewayDeviceIOTO;
 import com.unida.library.device.to.GatewayTO;
+import com.unida.library.location.StringLiteralLocation;
 import com.unida.protocol.message.ErrorCode;
 import com.unida.protocol.message.MessageType;
 import com.unida.protocol.message.UniDAMessage;
@@ -127,6 +128,15 @@ public class DiscoverUniDAGatewayDevicesReplyMessage extends UniDAMessage {
 
             //gateway manufacturer
             writeString(dataStream, gw.getManufacturer());
+            
+            //gateway name
+            writeString(dataStream, gw.getName());
+            
+            //gateway description
+            writeString(dataStream, gw.getDescription());
+            
+            //gateway location
+            writeString(dataStream, gw.getLocation().toString());
 
             //operational state of the gateway
             EndianConversor.shortToLittleEndian((short) this.gw.getOperationalState(), lenData, 0);
@@ -171,13 +181,20 @@ public class DiscoverUniDAGatewayDevicesReplyMessage extends UniDAMessage {
                 EndianConversor.uintToLittleEndian(getOntologyCodec().encodeId(dev.getDeviceClass()), idData, 0);
                 dataStream.write(idData, 0, EndianConversor.INT_SIZE_BYTES);                
 
+                //device model 
                 writeString(dataStream, dev.getModel());
                 
+                //device manufacturer
                 writeString(dataStream, dev.getManufacturer());
                 
+                //device name
+                writeString(dataStream, dev.getName());
                 
-                
+                //device description
                 writeString(dataStream, dev.getDescription());
+                
+                //device location
+                writeString(dataStream, dev.getLocation().toString());
 
                 //operational state of the device
                 EndianConversor.shortToLittleEndian((short) this.gw.getOperationalState(), lenData, 0);
@@ -225,6 +242,18 @@ public class DiscoverUniDAGatewayDevicesReplyMessage extends UniDAMessage {
             //gateway manufacturer
             offset += readString(string, bytes, offset);
             String gwManufacturer = string.toString();
+            
+            //gateway name
+            offset += readString(string, bytes, offset);
+            String gwName = string.toString();
+            
+            //gateway description
+            offset += readString(string, bytes, offset);
+            String gwDescription = string.toString();
+            
+            //gateway location
+            offset += readString(string, bytes, offset);
+            String gwLocation = string.toString();
 
             int opState = EndianConversor.byteArrayLittleEndianToShort(bytes, offset);
             offset += EndianConversor.SHORT_SIZE_BYTES;
@@ -265,7 +294,7 @@ public class DiscoverUniDAGatewayDevicesReplyMessage extends UniDAMessage {
             short devId, devOpState;
             int numUsedIOs;
             long classId;
-            String devClass, devModel, devManufacturer, devDesc;
+            String devClass, devModel, devManufacturer, devDesc, devName, devLocation;
             ArrayList<GatewayDeviceIOTO> devIoList;
             this.devices = new ArrayList<DeviceTO>(numDevs);
             for (int i = 0; i < numDevs; i++) {
@@ -284,7 +313,13 @@ public class DiscoverUniDAGatewayDevicesReplyMessage extends UniDAMessage {
                 devManufacturer = string.toString();
                 
                 offset += readString(string, bytes, offset);
+                devName = string.toString();
+                
+                offset += readString(string, bytes, offset);
                 devDesc = string.toString();
+                
+                offset += readString(string, bytes, offset);
+                devLocation = string.toString();
                     
                 devOpState = EndianConversor.byteArrayLittleEndianToShort(bytes, offset);
                 offset += EndianConversor.SHORT_SIZE_BYTES;
@@ -303,11 +338,12 @@ public class DiscoverUniDAGatewayDevicesReplyMessage extends UniDAMessage {
                     }
                 }
 
-                this.devices.add(new DeviceTO(devId, this.source.toString(), null, true, false, true, true, devDesc, devModel, devManufacturer, devClass, devOpState, new Date(), devIoList));
+                this.devices.add(new DeviceTO(devId, this.source.toString(), new StringLiteralLocation(devLocation), true, false, true, true,
+                        devName, devDesc, devModel, devManufacturer, devClass, devOpState, new Date(), devIoList));
 
             }
-
-            this.gw = new GatewayTO(this.source.toString(), gwModel, gwManufacturer, true, null, gwClass, 0l, "1", opState, new Date(), gwIoList, devices);
+            
+            this.gw = new GatewayTO(this.source.toString(), gwModel, gwManufacturer, true, gwName, gwDescription, new StringLiteralLocation(gwLocation), gwClass, 0l, "1", opState, new Date(), gwIoList, devices);
             
             return offset;
         } catch (UniDAIDFormatException ex) {

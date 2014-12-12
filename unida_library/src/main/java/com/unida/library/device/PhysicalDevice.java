@@ -71,10 +71,10 @@ public class PhysicalDevice extends Device
     
     public PhysicalDevice(
             Long codId, UniDAAddress gatewayId, short deviceId, Location location, boolean configured, OperationalState operationalState,
-            boolean visible, String description, DeviceClassMetadata deviceClass,
+            boolean visible, String name, String description, DeviceClassMetadata deviceClass,
             String model, String manufacturer, boolean automatic)
     {
-        super(codId, gatewayId, deviceId, location, operationalState, visible, description, deviceClass);
+        super(codId, gatewayId, deviceId, location, operationalState, visible, name, description, deviceClass);
         this.configured = configured;
         this.model = model;
         this.manufacturer = manufacturer;
@@ -173,6 +173,7 @@ public class PhysicalDevice extends Device
                 isConfigured(),
                 getOperationalState(),
                 isEnabled(),
+                getName(),
                 getDescription(),
                 getDeviceClass(),
                 getModel(),

@@ -80,7 +80,7 @@ public final class DeviceConversionOperations
                 PhysicalDevice d = new PhysicalDevice(
                         devTO.getCodId(), new UniDAAddress(devTO.getGatewayID()), devTO.getId(), devTO.getLocation(),
                         devTO.isConfigured(), new OperationalState(devTO.getOperationalState(), devTO.getOperationalStateLastChangeTime()),
-                        devTO.isEnabled(), devTO.getDescription(), deviceClass,
+                        devTO.isEnabled(), devTO.getName(), devTO.getDescription(), deviceClass,
                         devTO.getModel(), devTO.getManufacturer(), devTO.isAutomatic());
                 return d;
             } else
@@ -127,7 +127,7 @@ public final class DeviceConversionOperations
             PhysicalDevice d = new PhysicalDevice(
                     devTO.getCodId(), null, devTO.getId(), devTO.getLocation(),
                     devTO.isConfigured(), new OperationalState(OperationalStatesEnum.DISCONNECTED, new Date()),
-                    devTO.isEnabled(), devTO.getDescription(), deviceClass,
+                    devTO.isEnabled(), devTO.getName(), devTO.getDescription(), deviceClass,
                     devTO.getModel(), devTO.getManufacturer(), devTO.isAutomatic());
             return d;
         } else
@@ -144,7 +144,7 @@ public final class DeviceConversionOperations
             return new DeviceGroup(
                     devTO.getCodId(), devTO.getId(), devTO.getLocation(),
                     new OperationalState(OperationalStatesEnum.OK, new Date()),
-                    devTO.isEnabled(), devTO.getDescription(), deviceClass);
+                    devTO.isEnabled(), devTO.getName(), devTO.getDescription(), deviceClass);
         } else
         {
             return null;
@@ -156,7 +156,7 @@ public final class DeviceConversionOperations
         return new DeviceTO(
                 device.getCodId(), device.getId().getDeviceId(), null, device.getLocation(),
                 device.isEnabled(), false, device.isConfigured(), device.isAutomatic(),
-                device.getDescription(), device.getModel(),
+                device.getName(), device.getDescription(), device.getModel(),
                 device.getManufacturer(),
                 device.getDeviceClass().getClassId(),
                 device.getOperationalState().getStateValue(), device.getOperationalState().getChangeTime(),
@@ -169,7 +169,7 @@ public final class DeviceConversionOperations
         return new DeviceTO(
                 device.getId().getDeviceId(), device.getId().getGatewayId().toString(), device.getLocation(),
                 device.isEnabled(), false, device.isConfigured(), device.isAutomatic(),
-                device.getDescription(), device.getModel(),
+                device.getName(), device.getDescription(), device.getModel(),
                 device.getManufacturer(), device.getDeviceClass().getClassId(),
                 device.getOperationalState().getStateValue(), device.getOperationalState().getChangeTime(),
                 createDeviceIOTOCollection(device.getConnectedIOs()));
@@ -181,7 +181,7 @@ public final class DeviceConversionOperations
         return new DeviceTO(
                 devGroup.getCodId(), devGroup.getId().getDeviceId(), null, devGroup.getLocation(),
                 true, true, true, true,
-                devGroup.getDescription(), "unida-group", "GII",
+                devGroup.getDescription(), devGroup.getDescription(), "unida-group", "GII",
                 devGroup.getDeviceClass().getClassId(),
                 devGroup.getOperationalState().getStateValue(), devGroup.getOperationalState().getChangeTime(), new ArrayList<GatewayDeviceIOTO>(0));
     }
@@ -212,7 +212,8 @@ public final class DeviceConversionOperations
 
         return new Gateway(
                 devGwTO.getCodId(), new UniDAAddress(devGwTO.getId()), devGwTO.getModel(),
-                devGwTO.getManufacturer(), devGwTO.isEnabled(), devGwTO.getLocation(), dalOntFacade.getGatewayClassById(devGwTO.getGwClass()),
+                devGwTO.getManufacturer(), devGwTO.isEnabled(), devGwTO.getName(), devGwTO.getDescription(),
+                devGwTO.getLocation(), dalOntFacade.getGatewayClassById(devGwTO.getGwClass()),
                 devGwTO.getInstallationId(),
                 new OperationalState(devGwTO.getOperationalState(), devGwTO.getOperationalStateLastChange()),
                 deviceIOCollection,
@@ -231,7 +232,9 @@ public final class DeviceConversionOperations
 
         return new GatewayTO(
                 devGw.getCodId(), devGw.getId().toString(), devGw.getModel(),
-                devGw.getManufacturer(), devGw.isEnabled(), devGw.getLocation(),
+                devGw.getManufacturer(), devGw.isEnabled(), 
+                devGw.getName(), devGw.getDescription(),
+                devGw.getLocation(),
                 devGw.getType().getClassId(), devGw.getInstallationId(), new String(devGw.getId().getAddress()),
                 devGw.getOperationalState().getStateValue(),
                 devGw.getOperationalState().getChangeTime(), createDeviceIOTOCollection(ioList), createDeviceTOList(devGw.getDevices()));

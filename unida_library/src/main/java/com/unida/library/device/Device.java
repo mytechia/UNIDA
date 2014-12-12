@@ -87,9 +87,9 @@ public abstract class Device implements Cloneable, Serializable, IDevice
     public Device(
             Long codId, UniDAAddress gatewayId, short deviceId, Location location,
             OperationalState operationalState, boolean enabled,
-            String description, DeviceClassMetadata deviceClass)
+            String name, String description, DeviceClassMetadata deviceClass)
     {
-        this(codId, location, operationalState, enabled, description, deviceClass);
+        this(codId, location, operationalState, enabled, name, description, deviceClass);
         setId(gatewayId, deviceId);
     }
 
@@ -97,13 +97,14 @@ public abstract class Device implements Cloneable, Serializable, IDevice
     public Device(
             Long codId, Location location,
             OperationalState operationalState, boolean enabled,
-            String description, DeviceClassMetadata deviceClass)
+            String name, String description, DeviceClassMetadata deviceClass)
     {
         this.codId = codId;
         this.id = null;
         this.location = location;
         this.operationalState = operationalState;
         this.enabled = enabled;
+        this.name = name;
         this.description = description;
         this.deviceClass = deviceClass;
     }
@@ -192,11 +193,14 @@ public abstract class Device implements Cloneable, Serializable, IDevice
     }
     
     
+    @Override
     public String getName()
     {
         return this.name;
     }
     
+    
+    @Override
     public void setName(String name)
     {
         this.name = name;

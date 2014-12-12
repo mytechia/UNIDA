@@ -93,7 +93,7 @@ public class DeviceTO
      */
     public DeviceTO(Long codId, Short id, String gatewayId)
     {
-        this(codId, id, gatewayId, null, false, false, false, false, null, null, null, null, OperationalStatesEnum.UNKNOWN.getStateValue(), new Date(), new ArrayList<GatewayDeviceIOTO>(0));
+        this(codId, id, gatewayId, null, false, false, false, false, null, null, null, null, null, OperationalStatesEnum.UNKNOWN.getStateValue(), new Date(), new ArrayList<GatewayDeviceIOTO>(0));
     }
 
 
@@ -102,7 +102,7 @@ public class DeviceTO
      */
     public DeviceTO(Short id, String gwId, Location location,
             boolean enabled, boolean group, boolean configured, boolean automatic, 
-            String description, String model, String manufacturer,
+            String name, String description, String model, String manufacturer,
             String deviceClass, int operationalState, Date operationalStateLastChange,
             Collection<GatewayDeviceIOTO> connectedIOs)
     {
@@ -111,6 +111,7 @@ public class DeviceTO
         this.enabled = enabled;
         this.group = group;
         this.configured = configured;
+        this.name = name;
         this.description = description;
         this.deviceClass = deviceClass;
         this.automatic = automatic;
@@ -128,11 +129,11 @@ public class DeviceTO
      */
     public DeviceTO(Long codId, Short id, String gwId, Location location,
             boolean enabled, boolean group, boolean configured, boolean automatic, 
-            String description, String model, String manufacturer,
+            String name, String description, String model, String manufacturer,
             String deviceClass, int operationalState, Date operationalStateLastChange,
             Collection<GatewayDeviceIOTO> connectedIOs)
     {
-        this(id, gwId, location, enabled, group, configured, automatic, description, model,
+        this(id, gwId, location, enabled, group, configured, automatic, name, description, model,
                 manufacturer, deviceClass, operationalState, operationalStateLastChange, connectedIOs);
         this.codId = codId;
     }

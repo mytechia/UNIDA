@@ -52,8 +52,10 @@ public class GatewayTO
     private String id;
     private String model;
     private String manufacturer;
+    private String name;
     private boolean enabled;
     private Location location;
+    private String description;
     private String gwClass;
     private Long installationId;
     private String address;
@@ -68,13 +70,15 @@ public class GatewayTO
     /** Creates a new device gateway to be inserted in the database.
      */
     public GatewayTO(
-            String id, String model, String manufacturer, boolean enabled, Location location,
+            String id, String model, String manufacturer, boolean enabled, String name, String description, Location location,
             String gwType, Long installationId, String address, int operationalState, Date operationalStateLastChange,
             Collection<GatewayDeviceIOTO> ioList, Collection<DeviceTO> deviceList)
     {
         this.id = id;
         this.model = model;
         this.manufacturer = manufacturer;
+        this.name = name;
+        this.description = description;
         this.enabled = enabled;
         this.location = location;
         this.gwClass = gwType;
@@ -90,7 +94,7 @@ public class GatewayTO
     /** Creates a new device gateway from information of the database.
      */
     public GatewayTO(
-            Long codId, String id, String model, String manufacturer, boolean enabled, Location location,
+            Long codId, String id, String model, String manufacturer, boolean enabled, String name, String description, Location location,
             String gwType, Long installationId, String address, int operationalState, Date operationalStateLastChange,
             Collection<GatewayDeviceIOTO> ioList, Collection<DeviceTO> deviceList)
     {
@@ -98,6 +102,8 @@ public class GatewayTO
         this.id = id;
         this.model = model;
         this.manufacturer = manufacturer;
+        this.name = name;
+        this.description = description;
         this.enabled = enabled;
         this.location = location;
         this.gwClass = gwType;
@@ -178,6 +184,26 @@ public class GatewayTO
     {
         this.location = location;
     }
+
+    public String getName()
+    {
+        return name;
+    }
+
+    public void setName(String name)
+    {
+        this.name = name;
+    }
+
+    public String getDescription()
+    {
+        return description;
+    }
+
+    public void setDescription(String description)
+    {
+        this.description = description;
+    }        
 
 
     public void setManufacturer(String manufacturer)

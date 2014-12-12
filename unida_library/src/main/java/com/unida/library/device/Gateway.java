@@ -63,6 +63,7 @@ public class Gateway implements Cloneable, Serializable
     private UniDAAddress id;
     private String model;
     private String manufacturer;
+    private String description;
     private String name;
     private boolean enabled; //whether the gateway can be used by high-level layers or not -> user configurable
     private Location location;
@@ -74,7 +75,7 @@ public class Gateway implements Cloneable, Serializable
 
     public Gateway(
             Long codId, UniDAAddress id, String model, String manufacturer, boolean enabled,
-            Location location, GatewayClassMetadata type, Long installationId,
+            String name, String description, Location location, GatewayClassMetadata type, Long installationId,
             OperationalState operationalState, Collection<GatewayDeviceIO> ioList, Collection<IDevice> deviceList)
     {
         this.codId = codId;
@@ -82,6 +83,8 @@ public class Gateway implements Cloneable, Serializable
         this.model = model;
         this.manufacturer = manufacturer;
         this.enabled = enabled;
+        this.name = name;
+        this.description = description;
         this.location = location;
         this.type = type;
         this.installationId = installationId;
@@ -130,6 +133,16 @@ public class Gateway implements Cloneable, Serializable
         this.name = name;
     }
 
+    public String getDescription()
+    {
+        return description;
+    }
+
+    public void setDescription(String description)
+    {
+        this.description = description;
+    }
+    
     public GatewayClassMetadata getType()
     {
         return type;
