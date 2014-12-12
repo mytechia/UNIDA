@@ -47,8 +47,6 @@ import com.unida.tools.librarybasicgui.dialog.DeviceWriteStateDialog;
 import com.unida.tools.librarybasicgui.dialog.ModifyDeviceInfoDialog;
 import com.unida.tools.librarybasicgui.dialog.ModifyGatewayInfoDialog;
 import java.util.Collection;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
@@ -122,7 +120,7 @@ public class UNIDALibraryBasicGUI extends javax.swing.JFrame implements IGateway
         addOrUpdateGateway(
                 gateway.getId().toString(), gateway.getOperationalState().getState().toString(),
                 gateway.getModel(), gateway.getManufacturer(),
-                gateway.getName(), gateway.getModel(), gateway.getLocation().toString());
+                gateway.getName(), gateway.getDescription(), gateway.getLocation().toString());
     }
 
     @Override
@@ -131,7 +129,7 @@ public class UNIDALibraryBasicGUI extends javax.swing.JFrame implements IGateway
         addOrUpdateGateway(
                 gateway.getId().toString(), gateway.getOperationalState().getState().toString(),
                 gateway.getModel(), gateway.getManufacturer(),
-                gateway.getName(), gateway.getModel(), gateway.getLocation().toString());
+                gateway.getName(), gateway.getDescription(), gateway.getLocation().toString());
     }
 
     /*

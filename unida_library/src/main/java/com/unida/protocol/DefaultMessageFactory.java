@@ -45,6 +45,8 @@ import com.unida.protocol.message.debug.UnidaDebugInitMessage;
 import com.unida.protocol.message.discovery.DiscoverUniDAGatewayDevicesReplyMessage;
 import com.unida.protocol.message.discovery.DiscoverUniDAGatewayDevicesRequestMessage;
 import com.unida.protocol.message.discovery.UniDAGatewayHeartbeatMessage;
+import com.unida.protocol.message.modifyinfo.UniDAModifyDeviceInfoMessage;
+import com.unida.protocol.message.modifyinfo.UniDAModifyGatewayInfoMessage;
 import com.unida.protocol.message.notification.UniDANotificationMessage;
 import com.unida.protocol.message.notification.UniDANotificationSuscriptionRequestMessage;
 import com.unida.protocol.message.notification.UniDANotificationUnsuscriptionRequestMessage;
@@ -167,6 +169,12 @@ public class DefaultMessageFactory implements IMessageFactory
         } else if (msgType == MessageType.ABQueryScenariosReply.getTypeValue())
         {
             return createUnidaABQueryScenariosReply(msgType, msgData);
+        } else if (msgType == MessageType.ModifyGatewayInfo.getTypeValue())
+        {
+            return createModifyUnidaGatewayMessage(msgType, msgData);
+        } else if (msgType == MessageType.ModifyDeviceInfo.getTypeValue())
+        {
+            return createModifyUnidaDeviceMessage(msgType, msgData);
         } else if (msgType == MessageType.ABACK.getTypeValue())
         {
             return createUnidaABACKMessage(msgType, msgData);
@@ -224,6 +232,32 @@ public class DefaultMessageFactory implements IMessageFactory
         if (msgType == MessageType.DiscoverGatewayDevicesReply.getTypeValue())
         {
             return new DiscoverUniDAGatewayDevicesReplyMessage(msgData, ontologyCodec);
+        } else
+        {
+            return null;
+        }
+
+    }
+    
+    UniDAModifyGatewayInfoMessage createModifyUnidaGatewayMessage(byte msgType, byte[] msgData) throws MessageFormatException
+    {
+
+        if (msgType == MessageType.ModifyGatewayInfo.getTypeValue())
+        {
+            return new UniDAModifyGatewayInfoMessage(msgData, ontologyCodec);
+        } else
+        {
+            return null;
+        }
+
+    }
+    
+    UniDAModifyDeviceInfoMessage createModifyUnidaDeviceMessage(byte msgType, byte[] msgData) throws MessageFormatException
+    {
+
+        if (msgType == MessageType.ModifyDeviceInfo.getTypeValue())
+        {
+            return new UniDAModifyDeviceInfoMessage(msgData, ontologyCodec);
         } else
         {
             return null;
