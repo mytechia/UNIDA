@@ -132,8 +132,21 @@ public class UniDAModifyDeviceInfoMessage extends UniDADeviceMessage
     {
         return super.toString() + "<-UniDAModifyDeviceInfoMessage{" + "opId=" + opId + ", name=" + name + ", description=" + description + ", location=" + location + '}';
     }
-    
-    
+
+    public String getName()
+    {
+        return name;
+    }
+
+    public String getDescription()
+    {
+        return description;
+    }
+
+    public String getLocation()
+    {
+        return location;
+    }        
 
     @Override
     public int hashCode()

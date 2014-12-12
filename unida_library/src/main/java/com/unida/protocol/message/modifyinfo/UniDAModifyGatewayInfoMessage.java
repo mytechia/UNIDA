@@ -109,6 +109,22 @@ public class UniDAModifyGatewayInfoMessage extends UniDAMessage
         return dataStream.toByteArray();
     }
 
+    public String getName()
+    {
+        return name;
+    }
+
+    public String getDescription()
+    {
+        return description;
+    }
+
+    public String getLocation()
+    {
+        return location;
+    }
+        
+
     @Override
     public String toString()
     {
