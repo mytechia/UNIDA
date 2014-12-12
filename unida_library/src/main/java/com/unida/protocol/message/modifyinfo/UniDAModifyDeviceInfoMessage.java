@@ -52,7 +52,7 @@ public class UniDAModifyDeviceInfoMessage extends UniDADeviceMessage
             String name, String description, String location)
     {
         super(ontologyCodec, deviceId);
-        setCommandType(MessageType.QueryDeviceStates.getTypeValue());
+        setCommandType(MessageType.ModifyDeviceInfo.getTypeValue());
         setErrorCode(ErrorCode.Null.getTypeValue());
         this.opId = opId;
         this.name = name;
