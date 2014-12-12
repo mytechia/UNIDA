@@ -207,7 +207,7 @@ public class DefaultDeviceOperationFacade implements IDeviceOperationFacade
                 IUniDANetworkFacade dalInstance = this.unidaFactory.getUniDANetworkInstance(devGw);
                 DefaultDeviceAccessLayerCallback dalCback = new DefaultDeviceAccessLayerCallback(this, ot, dev, callback);
                 addCallback(dalCback);
-                dalInstance.modifyDeviceInfo(ot.getId(), null, name, description, location, dalCback);
+                dalInstance.modifyDeviceInfo(ot.getId(), dev.getId(), name, description, location, dalCback);
                 return ot;
             } catch (InstanceNotFoundException ex)
             {
