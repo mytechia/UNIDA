@@ -8,10 +8,8 @@
 package com.unida.tools.librarybasicgui.dialog;
 
 import com.mytechia.commons.framework.exception.InternalErrorException;
-import com.mytechia.commons.framework.modelaction.exception.InstanceNotFoundException;
 import com.unida.library.device.IDevice;
 import com.unida.library.manage.im.InMemoryUniDAInstantiationFacade;
-import com.unida.protocol.UniDAAddress;
 import javax.swing.JOptionPane;
 
 /**
@@ -22,26 +20,25 @@ public class ModifyDeviceInfoDialog extends javax.swing.JDialog
 {
     
     private InMemoryUniDAInstantiationFacade instantiationFacade;
-    private String deviceId;
+    private IDevice device;
 
     /**
      * Creates new form ModifyGatewayInfoDialog
      */
     public ModifyDeviceInfoDialog(java.awt.Frame parent, boolean modal,
-            InMemoryUniDAInstantiationFacade instantiationFacade, String deviceId,
-            String name, String description, String location)
+            InMemoryUniDAInstantiationFacade instantiationFacade, IDevice device)
     {
         super(parent, modal);
         initComponents();
         
-        this.jTextName.setText(name);
-        this.jTextDescription.setText(description);
-        this.jTextLocation.setText(location);
+        this.jTextName.setText(device.getName());
+        this.jTextDescription.setText(device.getDescription());
+        this.jTextLocation.setText(device.getLocation().toString());
         
         this.instantiationFacade = instantiationFacade;
-        this.deviceId = deviceId;
+        this.device = device;
 
-        this.setTitle(this.getTitle() + ": " + deviceId);
+        this.setTitle(this.getTitle() + ": " + device.getId().toString());
     }
 
     /**
@@ -130,7 +127,7 @@ public class ModifyDeviceInfoDialog extends javax.swing.JDialog
     {//GEN-HEADEREND:event_jButtonSendRequestActionPerformed
         try
         {
-            IDevice device = instantiationFacade.getDeviceManageFacade().findById(deviceId);
+            
                        
             this.instantiationFacade.getDeviceOperationFacade().asyncModifyDeviceInfo(
                     device,
@@ -139,7 +136,7 @@ public class ModifyDeviceInfoDialog extends javax.swing.JDialog
                     jTextLocation.getText(),
                     null);
             
-        } catch (InternalErrorException | InstanceNotFoundException ex)
+        } catch (InternalErrorException ex)
         {
             JOptionPane.showMessageDialog(this, ex.toString());
         }

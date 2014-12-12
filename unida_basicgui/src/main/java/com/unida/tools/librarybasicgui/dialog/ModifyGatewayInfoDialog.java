@@ -8,7 +8,6 @@
 package com.unida.tools.librarybasicgui.dialog;
 
 import com.mytechia.commons.framework.exception.InternalErrorException;
-import com.mytechia.commons.framework.modelaction.exception.InstanceNotFoundException;
 import com.unida.library.device.Gateway;
 import com.unida.library.manage.im.InMemoryUniDAInstantiationFacade;
 import javax.swing.JOptionPane;
@@ -21,26 +20,25 @@ public class ModifyGatewayInfoDialog extends javax.swing.JDialog
 {
     
     private InMemoryUniDAInstantiationFacade instantiationFacade;
-    private String gatewayAddress;
+    private Gateway gateway;
 
     /**
      * Creates new form ModifyGatewayInfoDialog
      */
     public ModifyGatewayInfoDialog(java.awt.Frame parent, boolean modal,
-            InMemoryUniDAInstantiationFacade instantiationFacade, String gatewayAddress,
-            String name, String description, String location)
+            InMemoryUniDAInstantiationFacade instantiationFacade, Gateway gateway)
     {
         super(parent, modal);
         initComponents();
         
-        this.jTextName.setText(name);
-        this.jTextDescription.setText(description);
-        this.jTextLocation.setText(location);
+        this.jTextName.setText(gateway.getName());
+        this.jTextDescription.setText(gateway.getDescription());
+        this.jTextLocation.setText(gateway.getLocation().toString());
         
         this.instantiationFacade = instantiationFacade;
-        this.gatewayAddress = gatewayAddress;
+        this.gateway = gateway;
 
-        this.setTitle(this.getTitle() + ": " + gatewayAddress);
+        this.setTitle(this.getTitle() + ": " + gateway.getId());
     }
 
     /**
@@ -129,14 +127,13 @@ public class ModifyGatewayInfoDialog extends javax.swing.JDialog
     {//GEN-HEADEREND:event_jButtonSendRequestActionPerformed
         try
         {
-            Gateway gateway = instantiationFacade.getDeviceManageFacade().findDeviceGatewayById(gatewayAddress);
                        
             this.instantiationFacade.getGatewayOperationFacade().modifyGatewayInfo(
                     gateway.getId(), 
                     jTextName.getText(), 
                     jTextDescription.getText(),
                     jTextLocation.getText());
-        } catch (InternalErrorException | InstanceNotFoundException ex)
+        } catch (InternalErrorException  ex)
         {
             JOptionPane.showMessageDialog(this, ex.toString());
         }
