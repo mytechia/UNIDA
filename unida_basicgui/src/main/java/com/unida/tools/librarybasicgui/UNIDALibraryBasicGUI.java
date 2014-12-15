@@ -131,6 +131,18 @@ public class UNIDALibraryBasicGUI extends javax.swing.JFrame implements IGateway
                 gateway.getModel(), gateway.getManufacturer(),
                 gateway.getName(), gateway.getDescription(), gateway.getLocation().toString());
     }
+    
+    
+    public void reloadDevices(String gatewayId)
+    {
+        
+        Object valueAt = jTableGatewaysInfo.getModel().getValueAt(jTableGatewaysInfo.getSelectedRow(), 0);
+        if (null != valueAt && valueAt.equals(gatewayId))
+        {
+            this.loadDevices(gatewayId);
+        }
+        
+    }
 
     /*
      *  The gateways table is reloaded.
@@ -180,6 +192,11 @@ public class UNIDALibraryBasicGUI extends javax.swing.JFrame implements IGateway
             {
                 found = true;
                 jTableGatewaysInfo.getModel().setValueAt(state, rowNumber, 1);
+                jTableGatewaysInfo.getModel().setValueAt(model, rowNumber, 2);
+                jTableGatewaysInfo.getModel().setValueAt(manufacturer, rowNumber, 3);
+                jTableGatewaysInfo.getModel().setValueAt(name, rowNumber, 4);
+                jTableGatewaysInfo.getModel().setValueAt(description, rowNumber, 5);
+                jTableGatewaysInfo.getModel().setValueAt(location, rowNumber, 6);
             }
             rowNumber++;
         }
@@ -291,7 +308,7 @@ public class UNIDALibraryBasicGUI extends javax.swing.JFrame implements IGateway
                     jButtonWriteState.setEnabled(false);
                     jButtonState.setEnabled(false);
                     jButtonSuscribe.setEnabled(false);
-                    jButtonModifyDevice.setEnabled(false);                    
+                    jButtonModifyDevice.setEnabled(false);
                     removeSelectionInJTable(jTableDevicesInfo);
                     removeSelectionInJTable(jTableDeviceIOsInfo);
                     if (null != valueAt && valueAt.toString().length() > 0)
@@ -333,7 +350,7 @@ public class UNIDALibraryBasicGUI extends javax.swing.JFrame implements IGateway
                 }
             }
         });
-    }
+    }        
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -819,12 +836,12 @@ public class UNIDALibraryBasicGUI extends javax.swing.JFrame implements IGateway
                 ModifyDeviceInfoDialog modifyDeviceDialog
                         = new ModifyDeviceInfoDialog(this, false, instantiationFacade, device);
                 modifyDeviceDialog.setVisible(true);
-                
+
             } catch (InternalErrorException | InstanceNotFoundException ex)
             {
                 JOptionPane.showMessageDialog(this, ex.toString());
             }
-            
+
         }
     }//GEN-LAST:event_jButtonModifyDeviceActionPerformed
 

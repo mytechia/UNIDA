@@ -11,6 +11,7 @@ import com.mytechia.commons.framework.exception.InternalErrorException;
 import com.unida.library.device.IDevice;
 import com.unida.library.location.StringLiteralLocation;
 import com.unida.library.manage.im.InMemoryUniDAInstantiationFacade;
+import com.unida.tools.librarybasicgui.UNIDALibraryBasicGUI;
 import javax.swing.JOptionPane;
 
 /**
@@ -19,19 +20,21 @@ import javax.swing.JOptionPane;
  */
 public class ModifyDeviceInfoDialog extends javax.swing.JDialog
 {
-    
+ 
+    private UNIDALibraryBasicGUI basicGUI;
     private InMemoryUniDAInstantiationFacade instantiationFacade;
     private IDevice device;
 
     /**
      * Creates new form ModifyGatewayInfoDialog
      */
-    public ModifyDeviceInfoDialog(java.awt.Frame parent, boolean modal,
+    public ModifyDeviceInfoDialog(UNIDALibraryBasicGUI parent, boolean modal,
             InMemoryUniDAInstantiationFacade instantiationFacade, IDevice device)
     {
         super(parent, modal);
         initComponents();
         
+        this.basicGUI = parent;
         this.jTextName.setText(device.getName());
         this.jTextDescription.setText(device.getDescription());
         this.jTextLocation.setText(device.getLocation().toString());
@@ -140,6 +143,8 @@ public class ModifyDeviceInfoDialog extends javax.swing.JDialog
                     jTextDescription.getText(),
                     jTextLocation.getText(),
                     null);
+            
+            this.basicGUI.reloadDevices(device.getId().getGatewayId().toString());
             
         } catch (InternalErrorException ex)
         {

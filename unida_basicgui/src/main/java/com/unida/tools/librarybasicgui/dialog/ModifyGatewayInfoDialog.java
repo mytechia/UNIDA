@@ -11,6 +11,7 @@ import com.mytechia.commons.framework.exception.InternalErrorException;
 import com.unida.library.device.Gateway;
 import com.unida.library.location.StringLiteralLocation;
 import com.unida.library.manage.im.InMemoryUniDAInstantiationFacade;
+import com.unida.tools.librarybasicgui.UNIDALibraryBasicGUI;
 import javax.swing.JOptionPane;
 
 /**
@@ -20,18 +21,20 @@ import javax.swing.JOptionPane;
 public class ModifyGatewayInfoDialog extends javax.swing.JDialog
 {
     
+    private UNIDALibraryBasicGUI basicGUI;
     private InMemoryUniDAInstantiationFacade instantiationFacade;
     private Gateway gateway;
 
     /**
      * Creates new form ModifyGatewayInfoDialog
      */
-    public ModifyGatewayInfoDialog(java.awt.Frame parent, boolean modal,
+    public ModifyGatewayInfoDialog(UNIDALibraryBasicGUI parent, boolean modal,
             InMemoryUniDAInstantiationFacade instantiationFacade, Gateway gateway)
     {
         super(parent, modal);
         initComponents();
         
+        this.basicGUI = parent;
         this.jTextName.setText(gateway.getName());
         this.jTextDescription.setText(gateway.getDescription());
         this.jTextLocation.setText(gateway.getLocation().toString());
@@ -139,6 +142,9 @@ public class ModifyGatewayInfoDialog extends javax.swing.JDialog
                     jTextName.getText(), 
                     jTextDescription.getText(),
                     jTextLocation.getText());
+            
+            this.basicGUI.notifyGatewayDiscovered(gateway);
+            
         } catch (InternalErrorException  ex)
         {
             JOptionPane.showMessageDialog(this, ex.toString());
