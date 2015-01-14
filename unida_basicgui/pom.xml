@@ -11,8 +11,8 @@
                
     <scm>
         <developerConnection>scm:git:https://github.com/GII/UNIDA.git</developerConnection>
-      <tag>HEAD</tag>
-  </scm>
+        <tag>HEAD</tag>
+    </scm>
     
     <properties>
         <maven.compiler.source>1.7</maven.compiler.source>
@@ -23,9 +23,9 @@
         <release.dir>${maven.build.timestamp}_${project.version}</release.dir>
     </properties>
 
-   <profiles>
+    <profiles>
         
-         <profile>
+        <profile>
             <id>release</id>
             
             <build>
@@ -226,30 +226,52 @@
     
     <dependencies>
         <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>4.11</version>
-            <scope>test</scope>
-        </dependency>
-	<dependency>
-                <groupId>org.picocontainer</groupId>
-                <artifactId>picocontainer</artifactId>
-                <version>2.8</version>
+            <groupId>org.picocontainer</groupId>
+            <artifactId>picocontainer</artifactId>
+            <version>2.8</version>
         </dependency>
         <dependency>
             <groupId>com.mytechia</groupId>
             <artifactId>mytechia_commons_library</artifactId>
             <version>1.0.7</version>
         </dependency>
-	<dependency>
+        <dependency>
             <groupId>com.unida</groupId>
             <artifactId>unida_library</artifactId>
             <version>1.1.0</version>
         </dependency>
         <dependency>
-                <groupId>net.sourceforge.owlapi</groupId>
-                <artifactId>owlapi-distribution</artifactId>
-                <version>3.4.10</version>
+            <groupId>net.sourceforge.owlapi</groupId>
+            <artifactId>owlapi-impl</artifactId>
+            <version>3.5.1</version>
+        </dependency>
+        <dependency>
+            <groupId>net.sourceforge.owlapi</groupId>
+            <artifactId>owlapi-api</artifactId>
+            <version>3.5.1</version>
+        </dependency>
+        <dependency>
+            <groupId>net.sourceforge.owlapi</groupId>
+            <artifactId>owlapi-apibinding</artifactId>
+            <version>3.5.1</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.apache.felix</groupId>
+                    <artifactId>org.osgi.core</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>net.sourceforge.owlapi</groupId>
+                    <artifactId>owlapi-oboformat</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>net.sourceforge.owlapi</groupId>
+                    <artifactId>owlapi-tools</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>net.sourceforge.owlapi</groupId>
+                    <artifactId>owlapi-parsers</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
     </dependencies>
 </project>
