@@ -16,7 +16,7 @@ Downloads
 ### UniDA Framework
 
 
-The UniDA Framework provides an integral solution for building systems that require the integration and interoperation of multiple devices and hardware technologies, like building automation systems, ubiquitous computing systems or ambient intelligence systems.
+The <a href="http://www.gii.udc.es/unida">UniDA Framework</a> provides an integral solution for building systems that require the integration and interoperation of multiple devices and hardware technologies, like building automation systems, ubiquitous computing systems or ambient intelligence systems.
 
 UniDA is designed to make easier the development of systems that use hardware devices to operate in Human Interaction Environments (HIE). HIEs must be understood as any place where people carry out their daily life, including their work, family life, leisure and social life, interacting with technology to enhance or facilitate the experience. The integration of technology in these environments has been achieved in a disorderly and incompatible way, with devices operating in isolated islands with artificial edges delimited by the manufacturers. UniDA provides developers and installers with a uniform conceptual framework capable of modelling an HIE, together with a set of libraries, tools and devices to build distributed instrumentation networks with support for transparent integration of other technologies.
 
