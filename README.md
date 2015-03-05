@@ -6,9 +6,9 @@
 &nbsp; || &nbsp;
 <a href="https://github.com/GII/UNIDA/wiki">Documentation</a> 
 &nbsp; || &nbsp;
-Downloads 
+<a href="https://github.com/GII/UNIDA/wiki/Downloads">Downloads</a>
 &nbsp; || &nbsp;
-<a href="https://github.com/GII/UNIDA/tree/master/devel">Sources</a> 
+<a href="https://github.com/GII/UNIDA/tree/master/unida_library/src">Sources</a> 
 </p>
 
 ***
