@@ -28,5 +28,7 @@ The paper [UniDA: Uniform Device Access Framework for Human Interaction Environm
 
 A detailed documentation of the UniDA Framework is available in this project <a href="https://github.com/GII/UNIDA/wiki">Wiki</a>.
 
+Further information can be found in the project's website: <a href="http://www.gii.udc.es/unida">http://www.gii.udc.es/unida</a>
+
 
 *Legal notice: UniDA was developed by the Integrated Group for Engineering Research (GII) of the University of A Coruña for and jointly with Mytech Ingeniería Aplicada S.L. who is its the sole owner. Nevertheless, as its research partner, GII can freely participate in any type of research and development project or publication that implies UniDA and that may improve its capabilities or extend its application to new realms as long as it informs Mytech Ingeniería Aplicada S.L. and preserves its rights under the AGPLv3 license of UniDA.*
