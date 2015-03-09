@@ -48,7 +48,7 @@ import java.util.logging.Level;
  * multi-core processing capabilities.
  * </b>
  *
- * </p>
+ *
  *
  * <p>
  * <b>Creation date:</b> 30-01-2010</p>
@@ -58,7 +58,7 @@ import java.util.logging.Level;
  * <ul>
  * <li>1 - 30-01-2010 Initial release</li>
  * </ul>
- * </p>
+ *
  *
  * @author Gervasio Varela
  * @version 1

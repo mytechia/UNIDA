@@ -241,18 +241,6 @@
                     <groupId>org.apache.felix</groupId>
                     <artifactId>org.osgi.core</artifactId>
                 </exclusion>
-                <exclusion>
-                    <groupId>net.sourceforge.owlapi</groupId>
-                    <artifactId>owlapi-oboformat</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>net.sourceforge.owlapi</groupId>
-                    <artifactId>owlapi-tools</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>net.sourceforge.owlapi</groupId>
-                    <artifactId>owlapi-parsers</artifactId>
-                </exclusion>
             </exclusions>
         </dependency>
     </dependencies>

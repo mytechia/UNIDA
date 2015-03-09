@@ -42,7 +42,7 @@ import java.net.UnknownHostException;
  * there should be an implementation of this interface.
  * </b>
  *
- * </p>
+ *
  *
  * <p>
  * <b>Creation date:</b> 11-ene-2010</p>
@@ -53,7 +53,7 @@ import java.net.UnknownHostException;
  * <li>2 - 5-feb-2013 Update to support the new style of device IDs</li>
  * <li>1 - 11-ene-2010 Initial release</li>
  * </ul>
- * </p>
+ *
  *
  * @author Gervasio Varela
  * @version 1

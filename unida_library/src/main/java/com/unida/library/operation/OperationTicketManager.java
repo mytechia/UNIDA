@@ -25,7 +25,7 @@ package com.unida.library.operation;
 /**
  * <p>
  * <b>Description:</b>
- * </p>
+ *
  *
  * <p>
  * <b>Creation date:</b>
@@ -34,9 +34,9 @@ package com.unida.library.operation;
  * <p>
  * <b>Changelog:</b>
  * <ul>
- * <li> 1 , 08-04-2014 -> Initial release</li>
+ * <li> 1 , 08-04-2014 - Initial release</li>
  * </ul>
- * </p>
+ *
  *
  * @author Victor Sonora Pombo
  * @version 1

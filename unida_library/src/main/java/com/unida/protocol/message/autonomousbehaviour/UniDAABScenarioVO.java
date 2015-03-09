@@ -28,11 +28,11 @@ package com.unida.protocol.message.autonomousbehaviour;
  *  Simple VO class that holds information about scenarios for autonomous
  * behaviour rules.
  *  An scenario is intented to handle a group of rules.
- * </p>
+ *
  * 
  * <p>
  *  Responsabilities:
- * </p>
+ *
  * <ul>
  * <li>know its rules (not implemented for this version.</li>
  * <li>know its identifier.</li>
@@ -41,16 +41,16 @@ package com.unida.protocol.message.autonomousbehaviour;
  * 
  * <p>
  * 
- * </p>
+ *
  *
  * <p><b>Creation date:</b> 
  * 11-09-2014 </p>
  *
- * <p><b>Changelog:</b>
+ * <p><b>Changelog:</b></p>
  * <ul>
- * <li> 1 , 11-09-2014 -> Initial release</li>
+ * <li> 1 , 11-09-2014 - Initial release</li>
  * </ul>
- * </p>
+ *
  * @author Victor Sonora Pombo
  * @version 1
  */

@@ -31,7 +31,7 @@ import java.util.List;
  * <b>Description:</b>
  * Callback to internally manage the reception of information about autonomous
  * behaviour operations
- * </p>
+ *
  *
  * <p>
  * <b>Creation date:</b>
@@ -40,9 +40,9 @@ import java.util.List;
  * <p>
  * <b>Changelog:</b>
  * <ul>
- * <li> 1 , 08-04-2014 -> Initial release</li>
+ * <li> 1 , 08-04-2014 - Initial release</li>
  * </ul>
- * </p>
+ *
  *
  * @author Victor Sonora Pombo
  * @version 1

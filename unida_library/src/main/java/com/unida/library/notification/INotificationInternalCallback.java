@@ -31,7 +31,7 @@ import com.unida.library.device.ontology.state.DeviceStateValue;
  * <b>Description:</b>
  * Callback to internally manage the reception of information about a
  * notification that a given device fires up.
- * </p>
+ *
  *
  * <p>
  * <b>Creation date:</b> 15-1-2009</p>
@@ -41,7 +41,7 @@ import com.unida.library.device.ontology.state.DeviceStateValue;
  * <ul>
  * <li>1 - 15-1-2009 Initial release</li>
  * </ul>
- * </p>
+ *
  *
  * @author Gervasio Varela Fernandez
  * @version 1

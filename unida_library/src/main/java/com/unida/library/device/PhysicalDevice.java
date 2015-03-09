@@ -32,22 +32,22 @@ import java.util.Collection;
 
 
 /**
- * <p><b>Description:</b>
+ * <p><b>Description:</b></p>
  * Virtual representation of a hardware device (light switch, presence sensor,
  * etc.).
  *
  * A device can have multiple types of states.
  *
- * </p>
+ *
  *
  * <p><b>Creation date:</b> 28-dic-2009</p>
  *
- * <p><b>Changelog:</b>
+ * <p><b>Changelog:</b></p>
  * <ul>
- * <li>2 - 7-feb-2013 Added support for the new style of device IOs<\li>
+ * <li>2 - 7-feb-2013 Added support for the new style of device IOs</li>
  * <li>1 - 28-dic-2009 Initial release</li>
  * </ul>
- * </p>
+ *
  *
  * @author Gervasio Varela Fernandez
  * @version 1

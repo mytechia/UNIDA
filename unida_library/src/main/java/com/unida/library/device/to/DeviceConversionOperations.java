@@ -48,7 +48,7 @@ import java.util.HashMap;
  * <p>
  * Functions to convert from model objects to TO and viceversa
  *
- * </p>
+ *
  *
  * <p>
  * <b>Creation date:</b> 11-ene-2010</p>
@@ -58,7 +58,7 @@ import java.util.HashMap;
  * <ul>
  * <li>1 - 11-ene-2010 Initial release</li>
  * </ul>
- * </p>
+ *
  *
  * @author Gervasio Varela
  * @version 1

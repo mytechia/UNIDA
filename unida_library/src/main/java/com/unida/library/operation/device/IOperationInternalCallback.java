@@ -34,15 +34,15 @@ import com.unida.library.device.ontology.state.DeviceStateValue;
  * UniDA implementations.
  * </b>
  *
- * </p>
+ *
  *
  * <p><b>Creation date:</b> 15-01-2010</p>
  *
- * <p><b>Changelog:</b>
+ * <p><b>Changelog:</b></p>
  * <ul>
  * <li>1 - 15-01-2010 Initial release</li>
  * </ul>
- * </p>
+ *
  *
  * @author Gervasio Varela
  * @version 1

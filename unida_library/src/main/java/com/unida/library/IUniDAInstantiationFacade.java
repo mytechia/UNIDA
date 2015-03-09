@@ -31,18 +31,18 @@ import com.unida.library.operation.gateway.IGatewayOperationFacade;
 
 
 /**
- * <p><b>Description:</b>
+ * <p><b>Description:</b></p>
  * Facade that manages the initialization of the UniDA layer and provides access
  * to its external facades.
- * </p>
+ *
  *
  * <p><b>Creation date:</b> 27-01-2010</p>
  *
- * <p><b>Changelog:</b>
+ * <p><b>Changelog:</b></p>
  * <ul>
  * <li>1 - 27-01-2010 Initial release.</li>
  * </ul>
- * </p>
+ *
  *
  * @author Alejandro Paz
  * @version 1

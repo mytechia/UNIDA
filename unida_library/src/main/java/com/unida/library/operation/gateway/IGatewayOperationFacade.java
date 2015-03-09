@@ -31,7 +31,7 @@ import com.unida.protocol.message.autonomousbehaviour.UniDAABRuleVO;
  * <p>
  * <b>Description:</b>
  * Interface to the operations that act on UniDA gateways
- * </p>
+ *
  * 
  * @author Victor Sonora Pombo
  */

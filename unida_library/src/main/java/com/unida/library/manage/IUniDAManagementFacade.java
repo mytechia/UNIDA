@@ -40,7 +40,7 @@ import java.util.Collection;
  * Interface to manage the devices controlled by the UniDA library. It provides
  * support to add, remove and edit device and groups of devices.
  *
- * </p>
+ *
  *
  * <p>
  * <b>Creation date:</b> 28-dic-2009</p>
@@ -50,7 +50,7 @@ import java.util.Collection;
  * <ul>
  * <li>1 - 28-dic-2009 Initial release</li>
  * </ul>
- * </p>
+ *
  *
  * @author Gervasio Varela Fernandez
  * @version 1

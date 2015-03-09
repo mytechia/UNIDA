@@ -47,16 +47,16 @@ import java.util.Queue;
  * operation requests.
  * </b>
  *
- * </p>
+ *
  *
  * <p><b>Creation date:</b> 18-01-2010</p>
  *
- * <p><b>Changelog:</b>
+ * <p><b>Changelog:</b></p>
  * <ul>
  * <li>2 - 5-feb-2013 Update to support the new style of device IDs</li>
  * <li>1 - 18-01-2010 Initial release</li>
  * </ul>
- * </p>
+ *
  *
  * @author Gervasio Varela
  * @version 1

@@ -27,7 +27,7 @@ import java.util.HashMap;
  * In memory implementation of the UniDA management operations.
  * </b>
  *
- * </p>
+ *
  *
  * <p>
  * <b>Creation date:</b> 8-feb-2013</p>
@@ -37,7 +37,7 @@ import java.util.HashMap;
  * <ul>
  * <li>1 - 8-feb-2013 Initial release</li>
  * </ul>
- * </p>
+ *
  *
  * @author Gervasio Varela, Alejandro Paz
  * @version 1

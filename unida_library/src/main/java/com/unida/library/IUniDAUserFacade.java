@@ -37,16 +37,16 @@ import java.util.Collection;
  * <p>
  * <b>Description:</b>
  *  Interface with methods to find UniDA gateways and devices.
- * </p>
+ *
  *
  * <p><b>Creation date:</b> 
  * 05-12-2014 </p>
  *
- * <p><b>Changelog:</b>
+ * <p><b>Changelog:</b></p>
  * <ul>
- * <li> 1 , 05-12-2014 -> Initial release</li>
+ * <li> 1 , 05-12-2014 - Initial release</li>
  * </ul>
- * </p>
+ *
  * @author Victor Sonora Pombo
  * @version 1
  */

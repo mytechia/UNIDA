@@ -35,15 +35,15 @@ import java.net.UnknownHostException;
  * <p><b>
  * </b>
  *
- * </p>
+ *
  *
  * <p><b>Creation date:</b> 29-01-2010</p>
  *
- * <p><b>Changelog:</b>
+ * <p><b>Changelog:</b></p>
  * <ul>
  * <li>1 - 29-01-2010 Initial release</li>
  * </ul>
- * </p>
+ *
  *
  * @author Gervasio Varela
  * @version 1
@@ -56,9 +56,6 @@ public class UDPUniDACommunicationChannelImplementation extends UDPCommunication
   
 
 
-    /**
-     * @param endPointIP the IP of the commuter that is at the other side of the communication channel
-     */
     public UDPUniDACommunicationChannelImplementation(int port) throws UnknownHostException, SocketException
     {
         super(port);

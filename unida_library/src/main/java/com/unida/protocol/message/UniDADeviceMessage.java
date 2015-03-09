@@ -39,8 +39,8 @@ import java.io.IOException;
  *
  * <p><b>Creation date:</b> 28-09-2010</p>
  *
- * <p><b>Changelog:</b> <ul> <li>1 - 28-09-2010 Initial release</li>
- * </ul> </p>
+ * <p><b>Changelog:</b></p> <ul> <li>1 - 28-09-2010 Initial release</li>
+ * </ul>
  *
  * @author Gervasio Varela
  * @version 1

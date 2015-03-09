@@ -81,12 +81,12 @@ import java.util.Date;
 import java.util.logging.Level;
 
 /**
- * <p><b> </b>
- *
- * </p>
- *
- * <p><b>Creation date:</b> 19-01-2010</p> <p><b>Changelog:</b> <ul> <li>1
- * - 19-01-2010 Initial release</li> </ul> </p>
+
+ * <p><b>Creation date:</b> 19-01-2010</p> 
+ * <p><b>Changelog:</b> </p>
+ * <ul> 
+ * <li>1 - 19-01-2010 Initial release</li> 
+ * </ul> 
  *
  * @author Gervasio Varela
  * @version 1

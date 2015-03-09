@@ -33,7 +33,7 @@ import java.util.Collection;
  * <b>Description:</b>
  * Implementations of this interface manage the suscription of client of the
  * UniDA to notifications fired up by the hardware devices.
- * </p>
+ *
  *
  * <p>
  * <b>Creation date:</b> 15-1-2009</p>
@@ -43,7 +43,7 @@ import java.util.Collection;
  * <ul>
  * <li>1 - 15-1-2009 Initial release</li>
  * </ul>
- * </p>
+ *
  *
  * @author Gervasio Varela Fernandez
  * @version 1

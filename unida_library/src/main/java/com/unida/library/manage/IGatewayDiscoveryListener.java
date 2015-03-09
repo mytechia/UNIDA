@@ -28,16 +28,16 @@ import com.unida.library.device.Gateway;
  * <p>
  * <b>Description:</b>
  *  A callback that handles notifications of detected UniDA gateways.
- * </p>
+ *
  *
  * <p><b>Creation date:</b> 
  * 05-12-2014 </p>
  *
- * <p><b>Changelog:</b>
+ * <p><b>Changelog:</b></p>
  * <ul>
- * <li> 1 , 05-12-2014 -> Initial release</li>
+ * <li> 1 , 05-12-2014 - Initial release</li>
  * </ul>
- * </p>
+ *
  * @author Victor Sonora Pombo
  * @version 1
  */

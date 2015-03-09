@@ -26,22 +26,22 @@ package com.unida.library.device.ontology.metadata;
 import java.io.Serializable;
 
 /**
- * <p><b>Description:</b>
+ * <p><b>Description:</b></p>
  * A control functionality specifies the commands that can be used to
  * control the behaviour of a device.
  * 
  * Representation of a control functionality according to the
  * device ontology description.
  *
- * </p>
+ *
  *
  * <p><b>Creation date:</b> 28-dic-2009</p>
  *
- * <p><b>Changelog:</b>
+ * <p><b>Changelog:</b></p>
  * <ul>
  * <li>1 - 28-dic-2009 Initial release</li>
  * </ul>
- * </p>
+ *
  *
  * @author Gervasio Varela Fernandez
  * @version 1

@@ -28,9 +28,9 @@ import java.util.Objects;
  * <p>
  * <b>Changelog:</b>
  * <ul>
- * <li> 1 , 12-12-2014 -> Initial release</li>
+ * <li> 1 , 12-12-2014 - Initial release</li>
  * </ul>
- * </p>
+ *
  *
  * @author Victor Sonora Pombo
  * @version 1

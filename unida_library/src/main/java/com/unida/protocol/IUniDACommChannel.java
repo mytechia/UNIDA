@@ -34,15 +34,15 @@ import com.unida.protocol.message.UniDAMessage;
  * Sends and receives UniDA protocol messages
  * </b>
  *
- * </p>
+ *
  *
  * <p><b>Creation date:</b> 30-01-2010</p>
  *
- * <p><b>Changelog:</b>
+ * <p><b>Changelog:</b></p>
  * <ul>
  * <li>1 - 30-01-2010 Initial release</li>
  * </ul>
- * </p>
+ *
  *
  * @author Gervasio Varela
  * @version 1

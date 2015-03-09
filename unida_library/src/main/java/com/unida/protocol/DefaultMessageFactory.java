@@ -69,7 +69,7 @@ import com.unida.protocol.message.statusreport.UniDAGatewayStatusReportRequestMe
  *
  * </b>
  *
- * </p>
+ *
  *
  * <p>
  * <b>Creation date:</b> 26-01-2010</p>
@@ -79,7 +79,7 @@ import com.unida.protocol.message.statusreport.UniDAGatewayStatusReportRequestMe
  * <ul>
  * <li>1 - 26-01-2010 Initial release</li>
  * </ul>
- * </p>
+ *
  *
  * @author Gervasio Varela
  * @version 1

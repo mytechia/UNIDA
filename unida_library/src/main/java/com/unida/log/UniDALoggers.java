@@ -34,15 +34,15 @@ import java.util.logging.Logger;
  * They can be accessed directly as public static attributes:
  * UniDALoggers.LIBRARY.log(Level.INFO, "Info message");
  *
- * </p>
+ *
  *
  * <p><b>Creation date:</b> 11-03-2010</p>
  *
- * <p><b>Changelog:</b>
+ * <p><b>Changelog:</b></p>
  * <ul>
  * <li>1 - 11-03-2010 Initial release</li>
  * </ul>
- * </p>
+ *
  *
  * @author Gervasio Varela
  * @version 1

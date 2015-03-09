@@ -30,23 +30,23 @@ import com.unida.library.location.Location;
 import java.io.Serializable;
 
 /**
- * <p><b>Description:</b>
+ * <p><b>Description:</b></p>
  * Virtual representation of a device in the UniDA library.
  *
  * A device can have multiple types of states.
  *
  * And is connected to the UniDA network through some device IOs of a gateway
  *
- * </p>
+ *
  *
  * <p><b>Creation date:</b> 28-dic-2009</p>
  *
- * <p><b>Changelog:</b>
+ * <p><b>Changelog:</b></p>
  * <ul>
  * <li>2 - 5-feb-2013 From now on a device is connected to a gateway through multiple device IOs</li>
  * <li>1 - 28-dic-2009 Initial release</li>
  * </ul>
- * </p>
+ *
  *
  * @author Gervasio Varela Fernandez
  * @version 2
@@ -76,13 +76,12 @@ public abstract class Device implements Cloneable, Serializable, IDevice
 
     /** Creates a new device object
      *
-     * @param id Device's id
+     * @param codId Device's id
      * @param location  Device's location
      * @param operationalState Current operation state of the device
      * @param enabled Whether the device is visible outside the library or not
      * @param description Human readable description of the device
      * @param deviceClass Type of the device
-     * @param hub
      */
     public Device(
             Long codId, UniDAAddress gatewayId, short deviceId, Location location,

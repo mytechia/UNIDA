@@ -30,19 +30,19 @@ import java.util.Collection;
 import java.util.LinkedList;
 
 /**
- * <p><b>Description:</b>
+ * <p><b>Description:</b></p>
  * Holds the information required to process state notifications coming
  * from the devices.
  *
- * </p>
+ *
  *
  * <p><b>Creation date:</b> 28-dic-2009</p>
  *
- * <p><b>Changelog:</b>
+ * <p><b>Changelog:</b></p>
  * <ul>
  * <li>1 - 28-dic-2009 Initial release</li>
  * </ul>
- * </p>
+ *
  *
  * @author Gervasio Varela Fernandez
  * @version 1
