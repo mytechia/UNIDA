@@ -41,7 +41,7 @@ import java.io.Serializable;
  * Its ID and values are set according to the ones specified on the device
  * description ontology.
  *
- * </p>
+ *
  *
  * <p>
  * <b>Creation date:</b> 28-dic-2009</p>
@@ -51,7 +51,7 @@ import java.io.Serializable;
  * <ul>
  * <li>1 - 28-dic-2009 Initial release</li>
  * </ul>
- * </p>
+ *
  *
  * @author Gervasio Varela Fernandez
  * @version 1

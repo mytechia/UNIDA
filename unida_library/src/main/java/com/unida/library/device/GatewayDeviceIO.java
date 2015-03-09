@@ -30,21 +30,21 @@ import java.util.Collection;
 
 
 /**
- * <p><b>Description:</b>
+ * <p><b>Description:</b></p>
  * Represents a physical connection available in a gateway to connect 
  * physical devices to the UniDA network.
  * 
  * It can support different states, so different devices can be connected
  * to a device IO.
- * </p>
+ *
  *
  * <p><b>Creation date:</b> 7-feb-2013</p>
  *
- * <p><b>Changelog:</b>
+ * <p><b>Changelog:</b></p>
  * <ul>
  * <li>1 - 7-feb-2013 Initial release</li>
  * </ul>
- * </p>
+ *
  *
  * @author Gervasio Varela
  * @version 1

@@ -42,7 +42,7 @@ import java.util.Set;
  * <b>
  * </b>
  *
- * </p>
+ *
  *
  * <p>
  * <b>Creation date:</b> 01-02-2010</p>
@@ -52,7 +52,7 @@ import java.util.Set;
  * <ul>
  * <li>1 - 01-02-2010 Initial release</li>
  * </ul>
- * </p>
+ *
  *
  * @author Gervasio Varela
  * @version 1
@@ -261,7 +261,7 @@ public abstract class AbstractUniDAFacadeHelper
      * expired because it hasn't been answered in time.
      * </b>
      *
-     * </p>
+     *
      *
      * <p>
      * <b>Creation date:</b> 15-02-2010</p>
@@ -271,7 +271,7 @@ public abstract class AbstractUniDAFacadeHelper
      * <ul>
      * <li>1 - 15-02-2010 Initial release</li>
      * </ul>
-     * </p>
+     *
      *
      * @author Gervasio Varela
      * @version 1

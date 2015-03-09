@@ -28,17 +28,17 @@ import com.unida.protocol.message.autonomousbehaviour.UniDAABRuleVO;
 import java.util.List;
 
 /**
- * <p><b>Description:</b>
- * </p>
+ * <p><b>Description:</b></p>
+ *
  *
  * <p><b>Creation date:</b> 
  * 08-04-2014 </p>
  *
- * <p><b>Changelog:</b>
+ * <p><b>Changelog:</b></p>
  * <ul>
- * <li> 1 , 08-04-2014 -> Initial release</li>
+ * <li> 1 , 08-04-2014 - Initial release</li>
  * </ul>
- * </p>
+ *
  * @author Victor Sonora Pombo
  * @version 1
  */

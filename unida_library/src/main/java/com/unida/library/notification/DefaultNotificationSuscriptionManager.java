@@ -52,8 +52,8 @@ import java.util.Set;
  * <b>Creation date:</b> 15-1-2009</p>
  *
  * <p>
- * <b>Changelog:</b> <ul> <li>1 - 15-1-2009 Initial release</li>
- * </ul> </p>
+ * <b>Changelog:</b> </p> <ul> <li>1 - 15-1-2009 Initial release</li>
+ * </ul> 
  *
  * @author Gervasio Varela Fernandez
  * @version 1

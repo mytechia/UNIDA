@@ -43,16 +43,16 @@ import java.util.Collection;
  *
  * </b>
  *
- * </p>
+ *
  *
  * <p><b>Creation date:</b> 25-02-2010</p>
  *
- * <p><b>Changelog:</b>
+ * <p><b>Changelog:</b></p>
  * <ul>
  * <li>2 - 7-feb-2013 The interface have been changed to match the new device IO style</li>
  * <li>1 - 25-02-2010 Initial release</li>
  * </ul>
- * </p>
+ *
  *
  * @author Gervasio Varela
  * @version 1

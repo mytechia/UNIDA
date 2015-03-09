@@ -71,7 +71,6 @@ public class AddAutonomousBehaviourRuleDialog extends javax.swing.JDialog
      * @param parent
      * @param modal
      * @param instantiationFacade
-     * @param gatewayAddress
      */
     public AddAutonomousBehaviourRuleDialog(java.awt.Frame parent, boolean modal,
             InMemoryUniDAInstantiationFacade instantiationFacade)

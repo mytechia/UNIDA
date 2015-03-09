@@ -39,7 +39,7 @@ import java.util.logging.Logger;
  * <b>Description:</b>
  * Periodically checks if some gateway has been lost because it is not sending
  * anymore its periodic annoucement messages.
- * </p>
+ *
  *
  * <p>
  * <b>Creation date:</b> 14-04-2010</p>
@@ -49,7 +49,7 @@ import java.util.logging.Logger;
  * <ul>
  * <li>1 - 14-04-2010 Initial release</li>
  * </ul>
- * </p>
+ *
  *
  * @author Gervasio Varela
  * @version 1

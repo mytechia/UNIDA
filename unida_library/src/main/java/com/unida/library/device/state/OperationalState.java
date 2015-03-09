@@ -27,17 +27,17 @@ import java.util.Date;
 
 
 /**
- * <p><b>Description:</b>
+ * <p><b>Description:</b></p>
  * Represents the state of operation of a device.
- * </p>
+ *
  *
  * <p><b>Creation date:</b> 13-04-2010</p>
  *
- * <p><b>Changelog:</b>
+ * <p><b>Changelog:</b></p>
  * <ul>
  * <li>1 - 13-04-2010 Initial release</li>
  * </ul>
- * </p>
+ *
  *
  * @author Gervasio Varela
  * @version 1

@@ -40,7 +40,7 @@ import com.unida.library.notification.NotificationTicket;
  * support to issue commands to the devices, access to its state, notifications,
  * etc.
  *
- * </p>
+ *
  *
  * <p>
  * <b>Creation date:</b> 28-dic-2009</p>
@@ -50,7 +50,7 @@ import com.unida.library.notification.NotificationTicket;
  * <ul>
  * <li>1 - 28-dic-2009 Initial release</li>
  * </ul>
- * </p>
+ *
  *
  * @author Gervasio Varela Fernandez
  * @version 1

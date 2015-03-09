@@ -31,19 +31,19 @@ import com.unida.library.device.ontology.metadata.ControlFunctionalityMetadata;
 import java.util.Collection;
 
 /**
- * <p><b>Description:</b>
+ * <p><b>Description:</b></p>
  * This interface must be implemented by all classes that want to execute
  * asynchronous operations on the devices controlled by the UniDA library.
  *
- * </p>
+ *
  *
  * <p><b>Creation date:</b> 28-dic-2009</p>
  *
- * <p><b>Changelog:</b>
+ * <p><b>Changelog:</b></p>
  * <ul>
  * <li>1 - 28-dic-2009 Initial release</li>
  * </ul>
- * </p>
+ *
  *
  * @author Gervasio Varela Fernandez
  * @version 1

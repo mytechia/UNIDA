@@ -28,18 +28,18 @@ import com.mytechia.commons.framework.simplemessageprotocol.exception.MessageFor
 
 
 /**
- * <p><b>Description:</b>
+ * <p><b>Description:</b></p>
  * 
  *
- * </p>
+ *
  *
  * <p><b>Creation date:</b> 5-feb-2013</p>
  *
- * <p><b>Changelog:</b>
+ * <p><b>Changelog:</b></p>
  * <ul>
  * <li>1 - 5-feb-2013 Initial release</li>
  * </ul>
- * </p>
+ *
  *
  * @author Gervasio Varela Fernandez - Integrated Group for Engineering Research
  * @version 1

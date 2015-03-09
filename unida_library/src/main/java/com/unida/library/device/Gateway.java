@@ -44,14 +44,15 @@ import java.util.Collection;
  * hardware device directly connected to a computer (or a virtual software
  * device).
  *
- * </p>
+ *
  *
  * <p>
  * <b>Creation date:</b> 28-dic-2009</p>
  *
  * <p>
- * <b>Changelog:</b> <ul> <li>1 - 28-dic-2009 Initial release</li>
- * </ul> </p>
+ * <b>Changelog:</b>  </p>
+ * <ul> <li>1 - 28-dic-2009 Initial release</li>
+ * </ul>
  *
  * @author Gervasio Varela Fernandez
  * @version 1

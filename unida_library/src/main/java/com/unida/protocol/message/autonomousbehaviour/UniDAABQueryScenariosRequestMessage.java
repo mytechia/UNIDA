@@ -37,11 +37,11 @@ import java.io.IOException;
  * <p><b>Creation date:</b> 
  * 16-09-2014 </p>
  *
- * <p><b>Changelog:</b>
+ * <p><b>Changelog:</b></p>
  * <ul>
- * <li> 1 , 16-09-2014 -> Initial release</li>
+ * <li> 1 , 16-09-2014 - Initial release</li>
  * </ul>
- * </p>
+ *
  * @author Victor Sonora Pombo
  * @version 1
  */

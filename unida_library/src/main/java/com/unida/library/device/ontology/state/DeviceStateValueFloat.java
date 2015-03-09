@@ -26,17 +26,17 @@
 package com.unida.library.device.ontology.state;
 
 /**
- * <p><b>Description:</b>
- * </p>
+ * <p><b>Description:</b></p>
+ *
  *
  * <p><b>Creation date:</b> 
  * 23-04-2014 </p>
  *
- * <p><b>Changelog:</b>
+ * <p><b>Changelog:</b></p>
  * <ul>
- * <li> 1 , 23-04-2014 -> Initial release</li>
+ * <li> 1 , 23-04-2014 - Initial release</li>
  * </ul>
- * </p>
+ *
  * @author Victor Sonora Pombo
  * @version 1
  */

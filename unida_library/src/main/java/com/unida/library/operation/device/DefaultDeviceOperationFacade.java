@@ -48,19 +48,19 @@ import java.util.LinkedList;
 import java.util.Queue;
 
 /**
- * <p><b>Description:</b>
+ * <p><b>Description:</b></p>
  * Default implementation of the IDeviceOperationFacade. It provides an entry
  * point to interact with the real hardware devices through send command
  * operations, read state operations and notification suscription.
- * </p>
+ *
  *
  * <p><b>Creation date:</b> 15-01-2010</p>
  *
- * <p><b>Changelog:</b>
+ * <p><b>Changelog:</b></p>
  * <ul>
  * <li>1 - 15-01-2010 Initial release</li>
  * </ul>
- * </p>
+ *
  *
  * @author Gervasio Varela Fernandez
  * @version 1

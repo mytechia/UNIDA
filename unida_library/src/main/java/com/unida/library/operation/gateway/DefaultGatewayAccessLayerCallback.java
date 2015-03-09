@@ -30,21 +30,21 @@ import com.unida.protocol.message.autonomousbehaviour.UniDAABRuleVO;
 import java.util.List;
 
 /**
- * <p><b>Description:</b>
+ * <p><b>Description:</b></p>
  * Implementation of the IAutonomousBehaviourInternalCallback that translates it to a
  * IAutonomousBehaviourCallback in order to export the UniDA facade throught the
  * higher level IGatewayOperationFacade. It uses OperationTicket objects to match
  * operation responses with operation requests.
- * </p>
+ *
  *
  * <p><b>Creation date:</b> 
  * 08-04-2014 </p>
  *
- * <p><b>Changelog:</b>
+ * <p><b>Changelog:</b></p>
  * <ul>
- * <li> 1 , 08-04-2014 -> Initial release</li>
+ * <li> 1 , 08-04-2014 - Initial release</li>
  * </ul>
- * </p>
+ *
  * @author Victor Sonora Pombo
  * @version 1
  */

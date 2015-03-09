@@ -39,11 +39,11 @@ import java.util.Objects;
  *
  * <p><b>Creation date:</b> 08-ene-2010</p>
  *
- * <p><b>Changelog:</b>
+ * <p><b>Changelog:</b></p>
  * <ul>
  * <li>1 - 08-ene-2010 Initial release</li>
  * </ul>
- * </p>
+ *
  *
  * @author Gervasio Varela
  * @version 1
@@ -89,7 +89,7 @@ public class DeviceTO
      *
      * @param codId CodId subrogate of the device in the database
      * @param id Id of the real device in the network of devices
-     * @param ioId Id of the gateway IO the device is connected to
+     * @param gatewayId Id of the gateway IO the device is connected to
      */
     public DeviceTO(Long codId, Short id, String gatewayId)
     {

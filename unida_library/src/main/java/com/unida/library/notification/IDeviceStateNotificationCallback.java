@@ -26,19 +26,19 @@ import com.unida.library.device.IDevice;
 import com.unida.library.device.ontology.state.DeviceState;
 
 /**
- * <p><b>Description:</b>
+ * <p><b>Description:</b></p>
  * All client classes that want to receive state notification from devices must
  * implement this interface.
  *
- * </p>
+ *
  *
  * <p><b>Creation date:</b> 28-dic-2009</p>
  *
- * <p><b>Changelog:</b>
+ * <p><b>Changelog:</b></p>
  * <ul>
  * <li>1 - 28-dic-2009 Initial release</li>
  * </ul>
- * </p>
+ *
  *
  * @author Gervasio Varela Fernandez
  * @version 1

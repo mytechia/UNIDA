@@ -43,7 +43,7 @@ import java.util.Objects;
  * <b>
  * UniDANotificationSuscriptionRequestMessage
  * </b>
- * </p>
+ *
  *
  * <p>
  * <b>Creation date:</b> 27-01-2010</p>
@@ -54,7 +54,7 @@ import java.util.Objects;
  * <li>1 - 27-01-2010 Initial release</li>
  * <li>2 - 02-04-2014 Refactor to use StateChangeTrigger </li>
  * </ul>
- * </p>
+ *
  *
  * @author Gervasio Varela
  * @author Victor Sonora

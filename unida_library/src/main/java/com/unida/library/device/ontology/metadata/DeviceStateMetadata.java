@@ -29,18 +29,18 @@ import java.util.Arrays;
 
 
 /**
- * <p><b>Description:</b>
+ * <p><b>Description:</b></p>
  * Identifier of a device state type on the device description ontology.
  *
- * </p>
+ *
  *
  * <p><b>Creation date:</b> 28-dic-2009</p>
  *
- * <p><b>Changelog:</b>
+ * <p><b>Changelog:</b></p>
  * <ul>
  * <li>1 - 28-dic-2009 Initial release</li>
  * </ul>
- * </p>
+ *
  *
  * @author Gervasio Varela Fernandez
  * @version 1

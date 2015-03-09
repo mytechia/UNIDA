@@ -37,7 +37,7 @@ import java.io.IOException;
  * <b>Description:</b>
  * Represents a basic message in the UniDA network protocol
  *
- * </p>
+ *
  *
  * <p>
  * <b>Creation date:</b> 29-01-2010</p>
@@ -48,7 +48,7 @@ import java.io.IOException;
  * <li>2 - 7-feb-2013 Added source and destination fields</li>
  * <li>1 - 29-01-2010 Initial release</li>
  * </ul>
- * </p>
+ *
  *
  * @author Gervasio Varela
  * @version 1

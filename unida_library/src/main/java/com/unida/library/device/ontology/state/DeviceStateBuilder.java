@@ -28,7 +28,7 @@ import java.util.List;
 /**
  * <p>
  * <b>Description:</b>
- * </p>
+ *
  *
  * <p>
  * <b>Creation date:</b>
@@ -37,9 +37,9 @@ import java.util.List;
  * <p>
  * <b>Changelog:</b>
  * <ul>
- * <li> 1 , 24-04-2014 -> Initial release</li>
+ * <li> 1 , 24-04-2014 - Initial release</li>
  * </ul>
- * </p>
+ *
  *
  * @author Victor Sonora Pombo
  * @version 1

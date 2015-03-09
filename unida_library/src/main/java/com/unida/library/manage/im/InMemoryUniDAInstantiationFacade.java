@@ -51,17 +51,17 @@ import com.unida.protocol.udp.UDPUniDACommChannel;
 import java.util.ArrayList;
 
 /**
- * <p><b>Description:</b>
+ * <p><b>Description:</b></p>
  * Default implementation of the IUniDAInstantiationFacade interface.
- * </p>
+ *
  *
  * <p><b>Creation date:</b> 27-01-2013</p>
  *
- * <p><b>Changelog:</b>
+ * <p><b>Changelog:</b></p>
  * <ul>
  * <li>1 - 27-01-2013 Initial release.</li>
  * </ul>
- * </p>
+ *
  *
  * @author Victor Sonora
  * @version 1
