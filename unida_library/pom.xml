@@ -30,6 +30,13 @@
     <organization>
         <name>Mytech Ingenieria Aplicada</name>
     </organization>
+    
+    <licenses>
+        <license>
+            <name>GNU Affero General Public License Version 3</name>
+            <url>http://www.gnu.org/licenses/agpl-3.0.html</url>
+        </license>
+    </licenses>
                
     <scm>
         <developerConnection>scm:git:https://github.com/GII/UNIDA.git</developerConnection>
