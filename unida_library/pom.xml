@@ -244,7 +244,7 @@
         <dependency>
             <groupId>com.mytechia</groupId>
             <artifactId>mytechia_commons_library</artifactId>
-            <version>1.0.7</version>
+            <version>1.0.8</version>
         </dependency>
         <dependency>
             <groupId>net.sourceforge.owlapi</groupId>
