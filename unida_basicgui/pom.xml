@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
     <artifactId>unida_basicgui</artifactId>
     <groupId>com.unida.tools</groupId>
-    <version>1.1.1-SNAPSHOT</version>
+    <version>1.1.1</version>
     <packaging>jar</packaging>
     
     <name>${project.groupId}:${project.artifactId}</name>
@@ -30,7 +30,7 @@
         <developerConnection>scm:git:https://github.com/GII/UNIDA.git</developerConnection>
         <connection>scm:git:https://github.com/GII/UNIDA.git</connection>
         <url>https://github.com/GII/UNIDA.git</url>
-        <tag>HEAD</tag>
+        <tag>v1.1.1</tag>
     </scm>
     
     <licenses>
