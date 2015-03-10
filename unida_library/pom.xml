@@ -8,9 +8,33 @@
     <version>1.1.1-SNAPSHOT</version>
     <packaging>jar</packaging>
     
+    <name>${project.groupId}:${project.artifactId}</name>
+    <description>A library that allows applications to implement their device access code decoupled from the particularities of the physical devices, 
+        using a homogeneous API to control and use heterogeneous devices. </description>
+    
+    <developers>
+        <developer>
+            <name>Gervasio Varela</name>
+            <url>https://github.com/gervarela</url>
+        </developer>
+        <developer>
+            <name>Alejandro Paz</name>
+            <url>https://github.com/alejandropl</url>
+        </developer>
+        <developer>
+            <name>Victor Sonora Pombo</name>
+            <url>https://github.com/VictorP</url>
+        </developer>
+    </developers>
+    
+    <organization>
+        <name>Mytech Ingenieria Aplicada</name>
+    </organization>
                
     <scm>
         <developerConnection>scm:git:https://github.com/GII/UNIDA.git</developerConnection>
+        <connection>scm:git:https://github.com/GII/UNIDA.git</connection>
+        <url>https://github.com/GII/UNIDA.git</url>
         <tag>HEAD</tag>
     </scm>
     
