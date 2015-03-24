@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
     <artifactId>unida_library</artifactId>
     <groupId>com.hi3project.unida</groupId>
-    <version>1.1.2</version>
+    <version>1.1.3-SNAPSHOT</version>
     <packaging>jar</packaging>
     <url>http://www.gii.udc.es/unida</url>
     
@@ -43,7 +43,7 @@
         <developerConnection>scm:git:https://github.com/GII/UNIDA.git</developerConnection>
         <connection>scm:git:https://github.com/GII/UNIDA.git</connection>
         <url>https://github.com/GII/UNIDA.git</url>
-        <tag>v1.1.2</tag>
+        <tag>HEAD</tag>
     </scm>
     
     <properties>
