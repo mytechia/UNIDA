@@ -4,9 +4,10 @@
     
     <modelVersion>4.0.0</modelVersion>
     <artifactId>unida_basicgui</artifactId>
-    <groupId>com.unida.tools</groupId>
-    <version>1.1.1</version>
+    <groupId>com.hi3project.unida.tools</groupId>
+    <version>1.1.2-SNAPSHOT</version>
     <packaging>jar</packaging>
+    <url>http://www.gii.udc.es/unida</url>
     
     <name>${project.groupId}:${project.artifactId}</name>
     <description>A standalone control and management tool for UniDA Devices built on top of the UniDA Library.</description>
@@ -30,7 +31,7 @@
         <developerConnection>scm:git:https://github.com/GII/UNIDA.git</developerConnection>
         <connection>scm:git:https://github.com/GII/UNIDA.git</connection>
         <url>https://github.com/GII/UNIDA.git</url>
-        <tag>v1.1.1</tag>
+        <tag>HEAD</tag>
     </scm>
     
     <licenses>
@@ -53,6 +54,13 @@
         
         <profile>
             <id>release</id>
+            
+            <distributionManagement>
+                <snapshotRepository>
+                    <id>ossrh</id>
+                    <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+                </snapshotRepository>
+            </distributionManagement>
             
             <build>
             
@@ -210,8 +218,13 @@
                                         <resource>
                                             <includes>
                                                 <include>${project.artifactId}-${project.version}.jar</include>
-                                                <include>${project.artifactId}-${project.version}-sources.zip</include>
-                                                <include>${project.artifactId}-${project.version}-javadoc.zip</include>
+                                                <include>${project.artifactId}-${project.version}.jar.asc</include>
+                                                <include>${project.artifactId}-${project.version}.pom</include>
+                                                <include>${project.artifactId}-${project.version}.pom.asc</include>
+                                                <include>${project.artifactId}-${project.version}-sources.jar</include>
+                                                <include>${project.artifactId}-${project.version}-sources.jar.asc</include>
+                                                <include>${project.artifactId}-${project.version}-javadoc.jar</include>
+                                                <include>${project.artifactId}-${project.version}-javadoc.jar.asc</include>
                                                 <include>dependency-jars/**</include>
                                             </includes>
                                             <directory>target</directory>
@@ -220,7 +233,20 @@
                                 </configuration>            
                             </execution>
                         </executions>
-                    </plugin>     
+                    </plugin>
+                    
+                    <plugin>
+                        <groupId>org.sonatype.plugins</groupId>
+                        <artifactId>nexus-staging-maven-plugin</artifactId>
+                        <version>1.6.3</version>
+                        <extensions>true</extensions>
+                        <configuration>
+                            <serverId>ossrh</serverId>
+                            <nexusUrl>https://oss.sonatype.org/</nexusUrl>
+                            <autoReleaseAfterClose>false</autoReleaseAfterClose>
+                        </configuration>
+                    </plugin>
+                        
                 </plugins>
        
             </build>
@@ -241,7 +267,7 @@
                         <manifest>
                             <addClasspath>true</addClasspath>
                             <classpathPrefix>dependency-jars/</classpathPrefix>
-                            <mainClass>com.unida.tools.librarybasicgui.UNIDALibraryBasicGUI</mainClass>
+                            <mainClass>com.hi3project.unida.tools.librarybasicgui.UNIDALibraryBasicGUI</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
@@ -262,9 +288,9 @@
             <version>1.0.8</version>
         </dependency>
         <dependency>
-            <groupId>com.unida</groupId>
+            <groupId>com.hi3project.unida</groupId>
             <artifactId>unida_library</artifactId>
-            <version>1.1.1</version>
+            <version>1.1.2-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>net.sourceforge.owlapi</groupId>
@@ -280,24 +306,6 @@
             <groupId>net.sourceforge.owlapi</groupId>
             <artifactId>owlapi-apibinding</artifactId>
             <version>3.5.1</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.apache.felix</groupId>
-                    <artifactId>org.osgi.core</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>net.sourceforge.owlapi</groupId>
-                    <artifactId>owlapi-oboformat</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>net.sourceforge.owlapi</groupId>
-                    <artifactId>owlapi-tools</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>net.sourceforge.owlapi</groupId>
-                    <artifactId>owlapi-parsers</artifactId>
-                </exclusion>
-            </exclusions>
         </dependency>
     </dependencies>
 </project>

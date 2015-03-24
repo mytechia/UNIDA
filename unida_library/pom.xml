@@ -4,9 +4,10 @@
     
     <modelVersion>4.0.0</modelVersion>
     <artifactId>unida_library</artifactId>
-    <groupId>com.unida</groupId>
+    <groupId>com.hi3project.unida</groupId>
     <version>1.1.2-SNAPSHOT</version>
     <packaging>jar</packaging>
+    <url>http://www.gii.udc.es/unida</url>
     
     <name>${project.groupId}:${project.artifactId}</name>
     <description>A library that allows applications to implement their device access code decoupled from the particularities of the physical devices, 
@@ -58,6 +59,13 @@
         
         <profile>
             <id>release</id>
+            
+            <distributionManagement>
+                <snapshotRepository>
+                    <id>ossrh</id>
+                    <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+                </snapshotRepository>
+            </distributionManagement>
             
             <build>
             
@@ -215,8 +223,13 @@
                                         <resource>
                                             <includes>
                                                 <include>${project.artifactId}-${project.version}.jar</include>
-                                                <include>${project.artifactId}-${project.version}-sources.zip</include>
-                                                <include>${project.artifactId}-${project.version}-javadoc.zip</include>
+                                                <include>${project.artifactId}-${project.version}.jar.asc</include>
+                                                <include>${project.artifactId}-${project.version}.pom</include>
+                                                <include>${project.artifactId}-${project.version}.pom.asc</include>
+                                                <include>${project.artifactId}-${project.version}-sources.jar</include>
+                                                <include>${project.artifactId}-${project.version}-sources.jar.asc</include>
+                                                <include>${project.artifactId}-${project.version}-javadoc.jar</include>
+                                                <include>${project.artifactId}-${project.version}-javadoc.jar.asc</include>
                                                 <include>dependency-jars/**</include>
                                             </includes>
                                             <directory>target</directory>
@@ -225,7 +238,20 @@
                                 </configuration>            
                             </execution>
                         </executions>
-                    </plugin>     
+                    </plugin>
+                    
+                    <plugin>
+                        <groupId>org.sonatype.plugins</groupId>
+                        <artifactId>nexus-staging-maven-plugin</artifactId>
+                        <version>1.6.3</version>
+                        <extensions>true</extensions>
+                        <configuration>
+                            <serverId>ossrh</serverId>
+                            <nexusUrl>https://oss.sonatype.org/</nexusUrl>
+                            <autoReleaseAfterClose>false</autoReleaseAfterClose>
+                        </configuration>
+                    </plugin>
+                    
                 </plugins>
        
             </build>
