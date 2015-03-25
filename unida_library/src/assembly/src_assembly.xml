@@ -2,7 +2,7 @@
     <id>sources</id>
   
     <formats>
-        <format>zip</format>
+        <format>jar</format>
     </formats>
   
     <fileSets>

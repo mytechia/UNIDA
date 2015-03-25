@@ -86,10 +86,10 @@ public class DogOntFacade implements IDeviceAccessLayerOntologyFacade
     private OWLOntologyManager ontManager;
     private OWLOntology ontology;
     private OWLOntology ontologyWithDOGONT;
-    public static final String DOGONT_ONTOLOGY_PROPERTIES_FILE_PATH = "/com/unida/library/device/ontology/dogont/generatedDOGOnt.properties";
+    public static final String DOGONT_ONTOLOGY_PROPERTIES_FILE_PATH = "/com/hi3project/unida/library/device/ontology/dogont/generatedDOGOnt.properties";
     private static final String DOGONT_ONTOLOGY_BASE_URI = "http://elite.polito.gl/ontologies/dogont.owl";
-    private static final String DOGONT_ONTOLOGY_BASE_PATH = "/com/unida/library/device/ontology/dogont/dogont.owl";
-    private static final String DOGONT_ONTOLOGY_UNIDA_SPECIFIC_PATH = "/com/unida/library/device/ontology/dogont/unidado.owl";
+    private static final String DOGONT_ONTOLOGY_BASE_PATH = "/com/hi3project/unida/library/device/ontology/dogont/dogont.owl";
+    private static final String DOGONT_ONTOLOGY_UNIDA_SPECIFIC_PATH = "/com/hi3project/unida/library/device/ontology/dogont/unidado.owl";
     private static final String PROPERTY_FUNCTIONALITY = "hasFunctionality";
     private static final String PROPERTY_STATE = "hasState";
     private static final String PROPERTY_WRITABLE_STATE = "hasWritableState";
