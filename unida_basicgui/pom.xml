@@ -301,8 +301,8 @@
         </dependency>
         <dependency>
             <groupId>com.mytechia</groupId>
-            <artifactId>mytechia_commons_library</artifactId>
-            <version>1.0.8</version>
+            <artifactId>mytechia-commons-library</artifactId>
+            <version>1.0.9-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>com.hi3project.unida</groupId>
