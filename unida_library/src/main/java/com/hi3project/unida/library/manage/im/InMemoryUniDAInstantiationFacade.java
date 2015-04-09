@@ -30,6 +30,7 @@ import com.mytechia.commons.framework.simplemessageprotocol.exception.Communicat
 import com.hi3project.unida.library.IUniDAInstantiationFacade;
 import com.hi3project.unida.library.IUniDAUserFacade;
 import com.hi3project.unida.library.UniDANetworkFactory;
+import com.hi3project.unida.library.conf.UnidaLibraryConfiguration;
 import com.hi3project.unida.library.core.DefaultUniDANetworkFacade;
 import com.hi3project.unida.library.device.ontology.IDeviceAccessLayerOntologyFacade;
 import com.hi3project.unida.library.device.ontology.IUniDAOntologyCodec;
@@ -72,6 +73,8 @@ public class InMemoryUniDAInstantiationFacade implements IUniDAInstantiationFaca
 
     private boolean initialized = false;
     
+    private String ip = null;
+    
 
     private INotificationSuscriptionManager notificationManager = null;
     
@@ -95,6 +98,16 @@ public class InMemoryUniDAInstantiationFacade implements IUniDAInstantiationFaca
     protected PeriodicActionsProcessor periodicActionsProcessor;
               
      
+    public InMemoryUniDAInstantiationFacade() 
+    {
+        this.ip = null;
+    }
+    
+    public InMemoryUniDAInstantiationFacade(String ip)
+    {
+        this.ip = ip;
+        UnidaLibraryConfiguration.getInstance().setParam(UnidaLibraryConfiguration.LOCAL_IP, ip);
+    }
 
 
     @Override
@@ -185,7 +198,14 @@ public class InMemoryUniDAInstantiationFacade implements IUniDAInstantiationFaca
     protected void setupDeviceOperationFacade() throws CommunicationException
     {
         
-        this.commChannel = new UDPUniDACommChannel(new DefaultMessageFactory(ontologyCodec)); //Default port
+        if (null != ip)
+        {
+            this.commChannel = new UDPUniDACommChannel(ip, new DefaultMessageFactory(ontologyCodec)); //Default port
+        } else
+        {
+            this.commChannel = new UDPUniDACommChannel(new DefaultMessageFactory(ontologyCodec)); //Default port
+        }
+        
         this.unidaProtocolFacade = new DefaultUniDANetworkFacade(this.commChannel, this.deviceManageFacade, this.ontologyFacade, this.ontologyCodec);
         this.unidaProtocolFacade.start();
 
