@@ -73,10 +73,88 @@
    //
    ///////////////////////////////////////////////////////////////////////////////////////
     -->
+    
+    
+    
+    <!-- http://elite.polito.it/ontologies/dogont.owl#KonnexGateway -->
 
+    <owl:Class rdf:about="http://elite.polito.it/ontologies/DOGHouseModel.owl#KonnexGateway">
+        <rdfs:subClassOf rdf:resource="http://elite.polito.it/ontologies/dogont.owl#DomoticNetworkComponent"/>
+    </owl:Class>
+
+
+    <!-- http://elite.polito.it/ontologies/dogont.owl#UNIDAComponent -->
+
+    <owl:Class rdf:about="http://elite.polito.it/ontologies/dogont.owl#UNIDAComponent">
+        <rdfs:subClassOf rdf:resource="http://elite.polito.it/ontologies/dogont.owl#DomoticNetworkComponent"/>
+    </owl:Class>
     
 
 
+    <!-- http://elite.polito.it/ontologies/dogont.owl#UNIDADomoGateway -->
+
+    <owl:Class rdf:about="http://elite.polito.it/ontologies/dogont.owl#UNIDADomoGateway">
+        <rdfs:subClassOf rdf:resource="http://elite.polito.it/ontologies/dogont.owl#UNIDAUDPGateway"/>
+    </owl:Class>
+    
+
+
+    <!-- http://elite.polito.it/ontologies/dogont.owl#UNIDADomoMiniGateway -->
+
+    <owl:Class rdf:about="http://elite.polito.it/ontologies/dogont.owl#UNIDADomoMiniGateway">
+        <rdfs:subClassOf rdf:resource="http://elite.polito.it/ontologies/dogont.owl#UNIDAUDPGateway"/>
+    </owl:Class>
+    
+
+
+    <!-- http://elite.polito.it/ontologies/dogont.owl#UNIDAGenericGateway -->
+
+    <owl:Class rdf:about="http://elite.polito.it/ontologies/dogont.owl#UNIDAGenericGateway">
+        <rdfs:subClassOf rdf:resource="http://elite.polito.it/ontologies/dogont.owl#UNIDAUDPGateway"/>
+    </owl:Class>
+    
+
+
+    <!-- http://elite.polito.it/ontologies/dogont.owl#UNIDAUDPGateway -->
+
+    <owl:Class rdf:about="http://elite.polito.it/ontologies/dogont.owl#UNIDAUDPGateway">
+        <rdfs:subClassOf rdf:resource="http://elite.polito.it/ontologies/dogont.owl#HomeGateway"/>
+        <rdfs:subClassOf rdf:resource="http://elite.polito.it/ontologies/dogont.owl#UNIDAComponent"/>
+        <rdfs:comment xml:lang="en">A gateway that is natively compatible with the UNIDA UDP communication protocol.</rdfs:comment>
+    </owl:Class>
+    
+    
+    
+    <!-- http://elite.polito.it/ontologies/dogont.owl#StringStateValue -->
+
+    <owl:Class rdf:about="http://elite.polito.it/ontologies/dogont.owl#StringStateValue">
+        <rdfs:subClassOf rdf:resource="http://elite.polito.it/ontologies/dogont.owl#StateValue"/>
+    </owl:Class>
+
+
+
+    <!-- http://elite.polito.it/ontologies/dogont.owl#IntegerStateValue -->
+
+    <owl:Class rdf:about="http://elite.polito.it/ontologies/dogont.owl#IntegerStateValue">
+        <rdfs:subClassOf rdf:resource="http://elite.polito.it/ontologies/dogont.owl#StateValue"/>
+    </owl:Class>
+
+
+
+    <!-- http://elite.polito.it/ontologies/dogont.owl#FloatStateValue -->
+
+    <owl:Class rdf:about="http://elite.polito.it/ontologies/dogont.owl#FloatStateValue">
+        <rdfs:subClassOf rdf:resource="http://elite.polito.it/ontologies/dogont.owl#StateValue"/>
+    </owl:Class>
+    
+    
+    
+    <!-- http://elite.polito.it/ontologies/dogont.owl#RGBLightStateValue -->
+
+    <owl:Class rdf:about="http://elite.polito.it/ontologies/dogont.owl#RGBLightStateValue">
+        <rdfs:subClassOf rdf:resource="http://elite.polito.it/ontologies/dogont.owl#StateValue"/>
+    </owl:Class>
+    
     <!-- http://elite.polito.it/ontologies/dogont.owl#BatteryChargingStateValue -->
 
     <owl:Class rdf:about="http://elite.polito.it/ontologies/dogont.owl#BatteryChargingStateValue">
@@ -148,6 +226,65 @@
         <rdfs:subClassOf rdf:resource="http://elite.polito.it/ontologies/dogont.owl#DiscreteValue"/>
     </owl:Class>
     
+    
+    
+     <!-- http://elite.polito.it/ontologies/dogont.owl#NumericValueState -->
+
+    <owl:Class rdf:about="http://elite.polito.it/ontologies/dogont.owl#NumericValueState">
+        <rdfs:label rdf:datatype="&xsd;string">NumericValueState</rdfs:label>
+        <rdfs:subClassOf rdf:resource="http://elite.polito.it/ontologies/dogont.owl#ContinuousState"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://elite.polito.it/ontologies/dogont.owl#hasStateValue"/>
+                <owl:someValuesFrom rdf:resource="http://elite.polito.it/ontologies/dogont.owl#IntegerStateValue"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <owl:disjointWith rdf:resource="http://elite.polito.it/ontologies/dogont.owl#TunerState"/>
+        <rdfs:comment rdf:datatype="&xsd;string">Models a generic numeric value</rdfs:comment>
+    </owl:Class>
+    
+    
+    <!-- http://elite.polito.it/ontologies/DOGHouseModel.owl#GPSState -->
+
+    <owl:Class rdf:about="http://elite.polito.it/ontologies/dogont.owl#GPSState">
+        <rdfs:subClassOf rdf:resource="http://elite.polito.it/ontologies/dogont.owl#StringState"/>
+    </owl:Class>
+    
+    
+    <!-- http://elite.polito.it/ontologies/DOGHouseModel.owl#IdListState -->
+
+    <owl:Class rdf:about="http://elite.polito.it/ontologies/dogont.owl#IdListState">
+        <rdfs:subClassOf rdf:resource="http://elite.polito.it/ontologies/dogont.owl#StringState"/>
+    </owl:Class>
+    
+    
+    <!-- http://elite.polito.it/ontologies/DOGHouseModel.owl#MediaSourceListState -->
+
+    <owl:Class rdf:about="http://elite.polito.it/ontologies/dogont.owl#MediaSourceListState">
+        <rdfs:subClassOf rdf:resource="http://elite.polito.it/ontologies/dogont.owl#StringState"/>
+    </owl:Class>
+    
+    
+    <!-- http://elite.polito.it/ontologies/DOGHouseModel.owl#MediaSourceSelectionState -->
+
+    <owl:Class rdf:about="http://elite.polito.it/ontologies/dogont.owl#MediaSourceSelectionState">
+        <rdfs:subClassOf rdf:resource="http://elite.polito.it/ontologies/dogont.owl#StringState"/>
+    </owl:Class>
+    
+    
+    <!-- http://elite.polito.it/ontologies/DOGHouseModel.owl#StringState -->
+
+    <owl:Class rdf:about="http://elite.polito.it/ontologies/dogont.owl#StringState">
+        <rdfs:subClassOf rdf:resource="http://elite.polito.it/ontologies/dogont.owl#DiscreteState"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://elite.polito.it/ontologies/dogont.owl#hasStateValue"/>
+                <owl:someValuesFrom rdf:resource="http://elite.polito.it/ontologies/dogont.owl#StringStateValue"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:comment xml:lang="en">A state whose value is formated as a string.</rdfs:comment>
+    </owl:Class>
+    
 
 
     <!-- http://elite.polito.it/ontologies/dogont.owl#Controllable -->
@@ -161,6 +298,7 @@
         </rdfs:subClassOf>
     </owl:Class>
     
+   
     
     
     <!-- http://elite.polito.it/ontologies/dogont.owl#DimmerLamp -->
@@ -268,100 +406,42 @@
     </owl:Class>
     
     
-   
-   <!-- http://elite.polito.it/ontologies/dogont.owl#NumericValueState -->
+    <!-- http://elite.polito.it/ontologies/DOGHouseModel.owl#BluetoothMACSensor -->
 
-    <owl:Class rdf:about="http://elite.polito.it/ontologies/dogont.owl#NumericValueState">
-        <rdfs:label rdf:datatype="&xsd;string">NumericValueState</rdfs:label>
-        <rdfs:subClassOf rdf:resource="http://elite.polito.it/ontologies/dogont.owl#ContinuousState"/>
+    <owl:Class rdf:about="http://elite.polito.it/ontologies/dogont.owl#BluetoothMACSensor">
+        <rdfs:subClassOf rdf:resource="http://elite.polito.it/ontologies/dogont.owl#Sensor"/>
         <rdfs:subClassOf>
             <owl:Restriction>
-                <owl:onProperty rdf:resource="http://elite.polito.it/ontologies/dogont.owl#hasStateValue"/>
-                <owl:someValuesFrom rdf:resource="http://elite.polito.it/ontologies/dogont.owl#IntegerStateValue"/>
+                <owl:onProperty rdf:resource="http://elite.polito.it/ontologies/dogont.owl#hasFunctionality"/>
+                <owl:allValuesFrom>
+                    <owl:Class>
+                        <owl:unionOf rdf:parseType="Collection">
+                            <rdf:Description rdf:about="http://elite.polito.it/ontologies/dogont.owl#BluetoothMACSensingFunctionality"/>
+                            <rdf:Description rdf:about="http://elite.polito.it/ontologies/dogont.owl#StateChangeNotificationFunctionality"/>
+                        </owl:unionOf>
+                    </owl:Class>
+                </owl:allValuesFrom>
             </owl:Restriction>
         </rdfs:subClassOf>
-        <owl:disjointWith rdf:resource="http://elite.polito.it/ontologies/dogont.owl#TunerState"/>
-        <rdfs:comment rdf:datatype="&xsd;string">Models a generic numeric value</rdfs:comment>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://elite.polito.it/ontologies/dogont.owl#hasState"/>
+                <owl:allValuesFrom rdf:resource="http://elite.polito.it/ontologies/dogont.owl#IdListState"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
     </owl:Class>
     
     
-    <!-- http://elite.polito.it/ontologies/dogont.owl#KonnexGateway -->
-
-    <owl:Class rdf:about="http://elite.polito.it/ontologies/DOGHouseModel.owl#KonnexGateway">
-        <rdfs:subClassOf rdf:resource="http://elite.polito.it/ontologies/dogont.owl#DomoticNetworkComponent"/>
-    </owl:Class>
-
-    <!-- http://elite.polito.it/ontologies/dogont.owl#UNIDAComponent -->
-
-    <owl:Class rdf:about="http://elite.polito.it/ontologies/dogont.owl#UNIDAComponent">
-        <rdfs:subClassOf rdf:resource="http://elite.polito.it/ontologies/dogont.owl#DomoticNetworkComponent"/>
-    </owl:Class>
+ 
     
+    <!-- http://elite.polito.it/ontologies/DOGHouseModel.owl#BluetoothMACSensingFunctionality -->
 
-
-    <!-- http://elite.polito.it/ontologies/dogont.owl#UNIDADomoGateway -->
-
-    <owl:Class rdf:about="http://elite.polito.it/ontologies/dogont.owl#UNIDADomoGateway">
-        <rdfs:subClassOf rdf:resource="http://elite.polito.it/ontologies/dogont.owl#UNIDAUDPGateway"/>
+    <owl:Class rdf:about="http://elite.polito.it/ontologies/dogont.owl#BluetoothMACSensingFunctionality">
+        <rdfs:subClassOf rdf:resource="http://elite.polito.it/ontologies/dogont.owl#StringValuedFunctionality"/>
     </owl:Class>
     
 
 
-    <!-- http://elite.polito.it/ontologies/dogont.owl#UNIDADomoMiniGateway -->
-
-    <owl:Class rdf:about="http://elite.polito.it/ontologies/dogont.owl#UNIDADomoMiniGateway">
-        <rdfs:subClassOf rdf:resource="http://elite.polito.it/ontologies/dogont.owl#UNIDAUDPGateway"/>
-    </owl:Class>
-    
-
-
-    <!-- http://elite.polito.it/ontologies/dogont.owl#UNIDAGenericGateway -->
-
-    <owl:Class rdf:about="http://elite.polito.it/ontologies/dogont.owl#UNIDAGenericGateway">
-        <rdfs:subClassOf rdf:resource="http://elite.polito.it/ontologies/dogont.owl#UNIDAUDPGateway"/>
-    </owl:Class>
-    
-
-
-    <!-- http://elite.polito.it/ontologies/dogont.owl#UNIDAUDPGateway -->
-
-    <owl:Class rdf:about="http://elite.polito.it/ontologies/dogont.owl#UNIDAUDPGateway">
-        <rdfs:subClassOf rdf:resource="http://elite.polito.it/ontologies/dogont.owl#HomeGateway"/>
-        <rdfs:subClassOf rdf:resource="http://elite.polito.it/ontologies/dogont.owl#UNIDAComponent"/>
-        <rdfs:comment xml:lang="en">A gateway that is natively compatible with the UNIDA UDP communication protocol.</rdfs:comment>
-    </owl:Class>
-    
-    
-    
-    <!-- http://elite.polito.it/ontologies/dogont.owl#StringStateValue -->
-
-    <owl:Class rdf:about="http://elite.polito.it/ontologies/dogont.owl#StringStateValue">
-        <rdfs:subClassOf rdf:resource="http://elite.polito.it/ontologies/dogont.owl#StateValue"/>
-    </owl:Class>
-
-
-
-    <!-- http://elite.polito.it/ontologies/dogont.owl#IntegerStateValue -->
-
-    <owl:Class rdf:about="http://elite.polito.it/ontologies/dogont.owl#IntegerStateValue">
-        <rdfs:subClassOf rdf:resource="http://elite.polito.it/ontologies/dogont.owl#StateValue"/>
-    </owl:Class>
-
-
-
-    <!-- http://elite.polito.it/ontologies/dogont.owl#FloatStateValue -->
-
-    <owl:Class rdf:about="http://elite.polito.it/ontologies/dogont.owl#FloatStateValue">
-        <rdfs:subClassOf rdf:resource="http://elite.polito.it/ontologies/dogont.owl#StateValue"/>
-    </owl:Class>
-    
-    
-    
-    <!-- http://elite.polito.it/ontologies/dogont.owl#RGBLightStateValue -->
-
-    <owl:Class rdf:about="http://elite.polito.it/ontologies/dogont.owl#RGBLightStateValue">
-        <rdfs:subClassOf rdf:resource="http://elite.polito.it/ontologies/dogont.owl#StateValue"/>
-    </owl:Class>
     
     
 </rdf:RDF>
