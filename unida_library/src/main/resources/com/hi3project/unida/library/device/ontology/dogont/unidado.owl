@@ -406,6 +406,31 @@
     </owl:Class>
     
     
+    
+    <!-- http://elite.polito.it/ontologies/dogont.owl#SimpleSpeaker -->
+
+    <owl:Class rdf:about="http://elite.polito.it/ontologies/dogont.owl#SimpleSpeaker">
+        <rdfs:label rdf:datatype="&xsd;string">SimpleSpeaker</rdfs:label>
+        <rdfs:subClassOf rdf:resource="http://elite.polito.it/ontologies/dogont.owl#Communication"/>
+        <owl:disjointWith rdf:resource="http://elite.polito.it/ontologies/dogont.owl#Fax"/>
+        <owl:disjointWith rdf:resource="http://elite.polito.it/ontologies/dogont.owl#Interphone"/>
+        <owl:disjointWith rdf:resource="http://elite.polito.it/ontologies/dogont.owl#Phone"/>
+        <owl:disjointWith rdf:resource="http://elite.polito.it/ontologies/dogont.owl#AnsweringMachine"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://elite.polito.it/ontologies/dogont.owl#hasState"/>
+                <owl:someValuesFrom rdf:resource="http://elite.polito.it/ontologies/dogont.owl#VolumeLevelState"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://elite.polito.it/ontologies/dogont.owl#hasWritableState"/>
+                <owl:someValuesFrom rdf:resource="http://elite.polito.it/ontologies/dogont.owl#VolumeLevelState"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+    </owl:Class>
+    
+    
     <!-- http://elite.polito.it/ontologies/DOGHouseModel.owl#BluetoothMACSensor -->
 
     <owl:Class rdf:about="http://elite.polito.it/ontologies/dogont.owl#BluetoothMACSensor">
