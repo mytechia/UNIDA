@@ -75,6 +75,12 @@
     -->
     
     
+    <!-- http://elite.polito.it/ontologies/dogont.owl#VibratorInterface -->
+
+    <owl:Class rdf:about="http://elite.polito.it/ontologies/dogont.owl#VibratorInterface">
+        <rdfs:subClassOf rdf:resource="http://elite.polito.it/ontologies/dogont.owl#DomoticNetworkComponent"/>
+    </owl:Class>
+    
     
     <!-- http://elite.polito.it/ontologies/dogont.owl#KonnexGateway -->
 
