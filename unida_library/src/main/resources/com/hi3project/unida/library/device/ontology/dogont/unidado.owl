@@ -316,6 +316,12 @@
                 <owl:someValuesFrom rdf:resource="http://elite.polito.it/ontologies/dogont.owl#OnOffState"/>
             </owl:Restriction>
         </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://elite.polito.it/ontologies/dogont.owl#LightIntensityState"/>
+                <owl:someValuesFrom rdf:resource="http://elite.polito.it/ontologies/dogont.owl#OnOffState"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>        
     </owl:Class>
     
 
