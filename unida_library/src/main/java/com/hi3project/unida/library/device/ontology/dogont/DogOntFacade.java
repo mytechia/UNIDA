@@ -140,12 +140,12 @@ public class DogOntFacade implements IDeviceAccessLayerOntologyFacade
         ArrayList<DeviceClassMetadata> devices = new ArrayList<>();
         for (OWLClass d : descendants)
         {
-            String name = d.getIRI().getFragment();
+            String name = d.getIRI().toString();
             if (!name.equalsIgnoreCase(NOTHING))
             {
                 if (d.getSubClasses(ontology).isEmpty())
                 {
-                    devices.add(this.getDeviceClassById(d.getIRI().getFragment()));
+                    devices.add(this.getDeviceClassById(d.getIRI().toString()));
                 }
             }
 
@@ -211,10 +211,10 @@ public class DogOntFacade implements IDeviceAccessLayerOntologyFacade
         int i = 0;
         for (OWLClassExpression s : states)
         {
-            statesMetadata[i] = this.getDeviceStateById(s.asOWLClass().getIRI().getFragment());
+            statesMetadata[i] = this.getDeviceStateById(s.asOWLClass().getIRI().toString());
             for (OWLClassExpression ws : writableStates)
             {
-                if (statesMetadata[i].getId().equals(ws.asOWLClass().getIRI().getFragment()))
+                if (statesMetadata[i].getId().equals(ws.asOWLClass().getIRI().toString()))
                 {
                     statesMetadata[i].setIsWritable(true);
                 }
@@ -234,7 +234,7 @@ public class DogOntFacade implements IDeviceAccessLayerOntologyFacade
             Set<OWLClass> ancestors = ancestorsVisitor.getClasses();
             if (ancestors.contains(NOTIFICATION_FUNCTIONALITY))
             {
-                notifFuncsMetadata.add(this.getNotificationFunctionalityById(f.asOWLClass().getIRI().getFragment()));
+                notifFuncsMetadata.add(this.getNotificationFunctionalityById(f.asOWLClass().getIRI().toString()));
             } else if (ancestors.contains(FUNCTIONALITY))
             {
                 /* if (a.contains(CONTROL_FUNCTIONALITY))
@@ -242,7 +242,7 @@ public class DogOntFacade implements IDeviceAccessLayerOntologyFacade
                  * nor a notification functionality. QueryFunctionality, but
                  * currently it is mapped as a control one.
                  */
-                controlFuncsMetadata.add(this.getControlFunctionalityById(f.asOWLClass().getIRI().getFragment()));
+                controlFuncsMetadata.add(this.getControlFunctionalityById(f.asOWLClass().getIRI().toString()));
             }
 
         }
@@ -306,7 +306,7 @@ public class DogOntFacade implements IDeviceAccessLayerOntologyFacade
             }
             if (npdr.isNParamsDescription())
             {
-                String cmdId = cmdClass.getIRI().getFragment();
+                String cmdId = cmdClass.getIRI().toString();
                 cmdMetadataList.add(
                         new ControlCommandMetadata(cmdId, npdr.getNParams()));
             }
@@ -332,7 +332,7 @@ public class DogOntFacade implements IDeviceAccessLayerOntologyFacade
         }
         if (npdr.isNParamsDescription())
         {
-            cmdId = cmdClass.getIRI().getFragment();
+            cmdId = cmdClass.getIRI().toString();
             numParams = npdr.getNParams();
         }
 
@@ -370,7 +370,7 @@ public class DogOntFacade implements IDeviceAccessLayerOntologyFacade
             }
             if (npdr.isNParamsDescription())
             {
-                String notifId = notifClass.getIRI().getFragment();
+                String notifId = notifClass.getIRI().toString();
                 notifMetadataList.add(
                         new NotificationMetadata(notifId, npdr.getNParams()));
             }
@@ -427,10 +427,10 @@ public class DogOntFacade implements IDeviceAccessLayerOntologyFacade
         ArrayList<DeviceClassMetadata> devices = new ArrayList<>();
         for (OWLClass d : subclases)
         {
-            String name = d.getIRI().getFragment();
+            String name = d.getIRI().toString();
             if (!name.equalsIgnoreCase(NOTHING))
             {
-                devices.add(this.getDeviceClassById(d.getIRI().getFragment()));
+                devices.add(this.getDeviceClassById(d.getIRI().toString()));
             }
         }
 
