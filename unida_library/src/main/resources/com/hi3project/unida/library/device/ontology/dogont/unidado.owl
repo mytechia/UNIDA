@@ -336,18 +336,27 @@
                 <owl:someValuesFrom rdf:resource="http://elite.polito.it/ontologies/dogont.owl#BatteryState"/>
             </owl:Restriction>
         </rdfs:subClassOf>
+        
         <rdfs:subClassOf>
             <owl:Restriction>
                 <owl:onProperty rdf:resource="http://elite.polito.it/ontologies/dogont.owl#hasState"/>
                 <owl:someValuesFrom rdf:resource="http://elite.polito.it/ontologies/dogont.owl#BatteryLevelState"/>
             </owl:Restriction>
         </rdfs:subClassOf>
+        
         <rdfs:subClassOf>
             <owl:Restriction>
                 <owl:onProperty rdf:resource="http://elite.polito.it/ontologies/dogont.owl#hasState"/>
                 <owl:someValuesFrom rdf:resource="http://elite.polito.it/ontologies/dogont.owl#VolumeLevelState"/>
             </owl:Restriction>
         </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://elite.polito.it/ontologies/dogont.owl#hasWritableState"/>
+                <owl:someValuesFrom rdf:resource="http://elite.polito.it/ontologies/dogont.owl#VolumeLevelState"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        
         <rdfs:subClassOf>
             <owl:Restriction>
                 <owl:onProperty rdf:resource="http://elite.polito.it/ontologies/dogont.owl#hasFunctionality"/>
