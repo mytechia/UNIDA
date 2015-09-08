@@ -37,7 +37,7 @@
          xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
          xmlns:swrlb="http://www.w3.org/2003/11/swrlb#"
          xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
-    <owl:Ontology rdf:about="http://mytechia.com/unida/ontologies/unidado.owl">
+    <owl:Ontology rdf:about="http://hi3project.com/vineyard/test/unida/unidado.owl">
         <rdfs:comment>UNIDA-DO - UNIDA Device Ontology</rdfs:comment>
         <owl:versionInfo xml:lang="en">0.1</owl:versionInfo>
         <owl:imports rdf:resource="http://elite.polito.it/ontologies/dogont.owl"/>
