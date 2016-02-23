@@ -28,9 +28,9 @@
     </developers>
                
     <scm>
-        <developerConnection>scm:git:https://github.com/GII/UNIDA.git</developerConnection>
-        <connection>scm:git:https://github.com/GII/UNIDA.git</connection>
-        <url>https://github.com/GII/UNIDA.git</url>
+        <developerConnection>scm:git:https://github.com/mytechia/UNIDA.git</developerConnection>
+        <connection>scm:git:https://github.com/mytechia/UNIDA.git</connection>
+        <url>https://github.com/mytechia/UNIDA.git</url>
         <tag>HEAD</tag>
     </scm>
     
@@ -314,6 +314,24 @@
     <build>
         <plugins>
             <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <version>2.5.1</version>
+                <executions>
+                    <execution>
+                        <id>copy-dependencies</id>
+                        <phase>install</phase>
+                        <goals>
+                            <goal>copy-dependencies</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${project.build.directory}/dependency-jars/</outputDirectory>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
                 <!-- Build an executable JAR -->
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
@@ -364,5 +382,17 @@
             <version>3.5.1</version>
         </dependency>
     </dependencies>
+
+
+    <distributionManagement>
+
+        <repository>
+            <id>nexus-snapshots</id>
+            <name>Snapshots en el repositorio de por aquí</name>
+            <url>http://bizancio:7080/nexus/content/repositories/snapshots/</url>
+        </repository>
+
+    </distributionManagement>
+
 </project>
 
