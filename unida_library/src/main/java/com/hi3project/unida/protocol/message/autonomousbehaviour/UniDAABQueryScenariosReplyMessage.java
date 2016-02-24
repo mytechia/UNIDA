@@ -22,7 +22,6 @@
 
 package com.hi3project.unida.protocol.message.autonomousbehaviour;
 
-import com.mytechia.commons.framework.simplemessageprotocol.Message;
 import com.mytechia.commons.framework.simplemessageprotocol.exception.MessageFormatException;
 import com.mytechia.commons.util.conversion.EndianConversor;
 import com.hi3project.unida.library.device.ontology.IUniDAOntologyCodec;
@@ -102,7 +101,7 @@ public class UniDAABQueryScenariosReplyMessage extends UniDAMessage
         StringBuilder string = new StringBuilder(20);
         for (short i = 0; i < scenariosNumber; i++)
         {
-            initIndex += Message.readStringFromBytes(string, bytes, initIndex);
+            initIndex += readStringFromBytes(string, bytes, initIndex);
             this.scenarioIDs.add(string.toString());
         }
         

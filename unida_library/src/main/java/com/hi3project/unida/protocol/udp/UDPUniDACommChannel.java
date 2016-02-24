@@ -105,7 +105,7 @@ public class UDPUniDACommChannel implements IUniDACommChannel
         try
         {
 
-            this.commChannel.send(createUDPAddress(dev.getGatewayId()), msg.codeMessage());
+            this.commChannel.send(createUDPAddress(dev.getGatewayId()), msg);
 
             UniDALoggers.LIBRARY.log(Level.INFO, "Sent message: {0}", msg.toString());
 
@@ -123,7 +123,7 @@ public class UDPUniDACommChannel implements IUniDACommChannel
         try
         {
 
-            this.commChannel.send(createUDPAddress(gw), msg.codeMessage());
+            this.commChannel.send(createUDPAddress(gw), msg);
 
             UniDALoggers.LIBRARY.log(Level.INFO, "Sent message: {0}", msg.toString());
 
@@ -142,7 +142,7 @@ public class UDPUniDACommChannel implements IUniDACommChannel
     @Override
     public void broadcastMessage(UniDAMessage msg) throws CommunicationException
     {
-        this.commChannel.broadcast(msg.codeMessage());
+        this.commChannel.broadcast(msg);
         UniDALoggers.LIBRARY.log(Level.INFO, "Broadcast message: {0}", msg.toString());
     }
 

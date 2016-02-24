@@ -22,7 +22,7 @@
 
 package com.hi3project.unida.protocol.message.autonomousbehaviour.action;
 
-import com.mytechia.commons.framework.simplemessageprotocol.Message;
+import com.mytechia.commons.framework.simplemessageprotocol.Command;
 import com.mytechia.commons.framework.simplemessageprotocol.exception.MessageFormatException;
 import com.mytechia.commons.util.conversion.EndianConversor;
 import com.hi3project.unida.library.device.ontology.IUniDAOntologyCodec;
@@ -92,7 +92,7 @@ public class CommandExecutionAction extends RuleAction
             dataStream.write(lenData);
             for (String param : this.getParams())
             {
-                Message.writeStringInStream(dataStream, param);
+                Command.writeStringInStream(dataStream, param);
             }
             
             } catch (IOException ioEx) {
@@ -123,7 +123,7 @@ public class CommandExecutionAction extends RuleAction
         initIndex += EndianConversor.SHORT_SIZE_BYTES;
         this.params = new String[numParams];
         for(int i=0; i<numParams; i++) {
-            initIndex += Message.readStringFromBytes(string, bytes, initIndex);
+            initIndex += Command.readStringFromBytes(string, bytes, initIndex);
             this.getParams()[i] = string.toString();
         }
 

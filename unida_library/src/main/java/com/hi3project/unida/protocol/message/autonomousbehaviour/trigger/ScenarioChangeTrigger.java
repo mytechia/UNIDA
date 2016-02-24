@@ -22,7 +22,7 @@
 
 package com.hi3project.unida.protocol.message.autonomousbehaviour.trigger;
 
-import com.mytechia.commons.framework.simplemessageprotocol.Message;
+import com.mytechia.commons.framework.simplemessageprotocol.Command;
 import com.mytechia.commons.framework.simplemessageprotocol.exception.MessageFormatException;
 import com.hi3project.unida.library.device.ontology.IUniDAOntologyCodec;
 import java.io.ByteArrayOutputStream;
@@ -57,7 +57,7 @@ public class ScenarioChangeTrigger extends RuleTrigger
         try
         {
             // Scenario
-            Message.writeStringInStream(dataStream, this.scenarioID);
+            Command.writeStringInStream(dataStream, this.scenarioID);
             
         } catch (IOException ex)
         {
@@ -71,7 +71,7 @@ public class ScenarioChangeTrigger extends RuleTrigger
     {
         // Scenario
         StringBuilder string = new StringBuilder(20);
-        initIndex += Message.readStringFromBytes(string, bytes, initIndex);
+        initIndex += Command.readStringFromBytes(string, bytes, initIndex);
         this.scenarioID = string.toString();
         
         return initIndex;

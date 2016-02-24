@@ -22,9 +22,10 @@
 
 package com.hi3project.unida.protocol.message.autonomousbehaviour.action;
 
-import com.mytechia.commons.framework.simplemessageprotocol.Message;
+
 import com.mytechia.commons.framework.simplemessageprotocol.exception.MessageFormatException;
 import com.hi3project.unida.library.device.ontology.IUniDAOntologyCodec;
+import com.mytechia.commons.framework.simplemessageprotocol.Command;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.Objects;
@@ -57,7 +58,7 @@ public class ChangeScenarioAction extends RuleAction
         try
         {
             // Scenario
-            Message.writeStringInStream(dataStream, this.scenarioID);
+            Command.writeStringInStream(dataStream, this.scenarioID);
             
         } catch (IOException ex)
         {
@@ -74,7 +75,7 @@ public class ChangeScenarioAction extends RuleAction
         
         // Scenario
         StringBuilder string = new StringBuilder(20);
-        initIndex += Message.readStringFromBytes(string, bytes, initIndex);
+        initIndex += Command.readStringFromBytes(string, bytes, initIndex);
         this.scenarioID = string.toString();
         
         return initIndex;

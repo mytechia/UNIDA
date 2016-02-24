@@ -7,7 +7,7 @@
  */
 package com.hi3project.unida.protocol.message.modifyinfo;
 
-import com.mytechia.commons.framework.simplemessageprotocol.Message;
+import com.mytechia.commons.framework.simplemessageprotocol.Command;
 import com.mytechia.commons.framework.simplemessageprotocol.exception.MessageFormatException;
 import com.mytechia.commons.util.conversion.EndianConversor;
 import com.hi3project.unida.library.device.DeviceID;
@@ -108,13 +108,13 @@ public class UniDAModifyDeviceInfoMessage extends UniDADeviceMessage
         this.opId = EndianConversor.byteArrayLittleEndianToLong(bytes, offset);
         offset += EndianConversor.LONG_SIZE_BYTES;
         
-        offset += Message.readStringFromBytes(string, bytes, offset);
+        offset += readStringFromBytes(string, bytes, offset);
         this.name = string.toString();
 
-        offset += Message.readStringFromBytes(string, bytes, offset);
+        offset += readStringFromBytes(string, bytes, offset);
         this.description = string.toString();
 
-        offset += Message.readStringFromBytes(string, bytes, offset);
+        offset += readStringFromBytes(string, bytes, offset);
         this.location = string.toString();
 
         return offset;

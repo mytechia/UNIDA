@@ -24,10 +24,10 @@
  */
 package com.hi3project.unida.library.device.ontology.state;
 
-import com.mytechia.commons.framework.simplemessageprotocol.Message;
 import com.mytechia.commons.framework.simplemessageprotocol.exception.MessageFormatException;
 import com.mytechia.commons.util.conversion.EndianConversor;
 import com.hi3project.unida.library.device.ontology.IUniDAOntologyCodec;
+import com.mytechia.commons.framework.simplemessageprotocol.Command;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.Serializable;
@@ -112,7 +112,7 @@ public class DeviceStateValue implements Serializable
             EndianConversor.uintToLittleEndian(ontologyCodec.encodeId(this.id), idData, 0);
             dataStream.write(idData, 0, EndianConversor.INT_SIZE_BYTES);
 
-            Message.writeStringInStream(dataStream, this.value);
+            Command.writeStringInStream(dataStream, this.value);
 
         } catch (IOException ioEx)
         {
@@ -135,7 +135,7 @@ public class DeviceStateValue implements Serializable
         offset += EndianConversor.INT_SIZE_BYTES;
 
         //value
-        offset += Message.readStringFromBytes(string, bytes, offset);
+        offset += Command.readStringFromBytes(string, bytes, offset);
         this.value = string.toString();
 
         return offset;

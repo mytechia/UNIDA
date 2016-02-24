@@ -7,7 +7,7 @@
  */
 package com.hi3project.unida.protocol.message.modifyinfo;
 
-import com.mytechia.commons.framework.simplemessageprotocol.Message;
+import com.mytechia.commons.framework.simplemessageprotocol.Command;
 import com.mytechia.commons.framework.simplemessageprotocol.exception.MessageFormatException;
 import com.mytechia.commons.util.conversion.EndianConversor;
 import com.hi3project.unida.library.device.ontology.IUniDAOntologyCodec;
@@ -72,13 +72,13 @@ public class UniDAModifyGatewayInfoMessage extends UniDAMessage
 
         StringBuilder string = new StringBuilder(100);
 
-        initIndex += Message.readStringFromBytes(string, bytes, initIndex);
+        initIndex += Command.readStringFromBytes(string, bytes, initIndex);
         this.name = string.toString();
 
-        initIndex += Message.readStringFromBytes(string, bytes, initIndex);
+        initIndex += Command.readStringFromBytes(string, bytes, initIndex);
         this.description = string.toString();
 
-        initIndex += Message.readStringFromBytes(string, bytes, initIndex);
+        initIndex += Command.readStringFromBytes(string, bytes, initIndex);
         this.location = string.toString();
 
         return initIndex;
