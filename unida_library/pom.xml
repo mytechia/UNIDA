@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
     <artifactId>unida-library</artifactId>
     <groupId>com.hi3project.unida</groupId>
-    <version>1.1.4-SNAPSHOT</version>
+    <version>1.1.4</version>
     <packaging>jar</packaging>
     <url>http://www.gii.udc.es/unida</url>
     
@@ -333,7 +333,12 @@
         <dependency>
             <groupId>com.mytechia</groupId>
             <artifactId>mytechia-commons-library</artifactId>
-            <version>1.0.9</version>
+            <version>1.2.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.mytechia</groupId>
+            <artifactId>simple-message-protocol</artifactId>
+            <version>1.0.0</version>
         </dependency>
         <dependency>
             <groupId>net.sourceforge.owlapi</groupId>
@@ -362,7 +367,7 @@
 
         <repository>
             <id>nexus-snapshots</id>
-            <name>Snapshots en el repositorio de por aquí</name>
+            <name>Snapshots (local)</name>
             <url>http://bizancio:7080/nexus/content/repositories/snapshots/</url>
         </repository>
 
