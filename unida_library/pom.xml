@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
     <artifactId>unida-library</artifactId>
     <groupId>com.hi3project.unida</groupId>
-    <version>1.1.4</version>
+    <version>1.1.5-SNAPSHOT</version>
     <packaging>jar</packaging>
     <url>http://www.gii.udc.es/unida</url>
     
