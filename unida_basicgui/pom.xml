@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
     <artifactId>unida-basicgui</artifactId>
     <groupId>com.hi3project.unida.tools</groupId>
-    <version>1.1.4-SNAPSHOT</version>
+    <version>1.1.4</version>
     <packaging>jar</packaging>
     <url>http://www.gii.udc.es/unida</url>
     
@@ -369,7 +369,7 @@
         <dependency>
             <groupId>com.hi3project.unida</groupId>
             <artifactId>unida-library</artifactId>
-            <version>1.1.4-SNAPSHOT</version>
+            <version>1.1.4</version>
         </dependency>
         <dependency>
             <groupId>net.sourceforge.owlapi</groupId>
